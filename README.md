@@ -70,7 +70,6 @@ Distributed ecological technology
 
 按照微服务设计规划预估所需服务器数量，这里以 Linux 虚拟机为例，从物理机分配资源。
 
-服务器资源预估方法在[《微服务架构设计（上）》](https://gitbook.cn/gitchat/activity/5dce1a66e244774863b05bfb)Chat 中有介绍，其具体实践在[《微服务架构设计（下）》](https://gitbook.cn/gitchat/activity/5ddb97b01f33d46119067827)讲解，这里我们就只以服务器资源划分后的测试环境结果清单来实操。
 
 拿到服务器资源后，我们也首先列出服务器资源清单，包含主机名、IP 地址、CPU、内存、磁盘、IO、网络等配置，初步判断一下是否满足需求。然后再依次进行以下操作。
 
@@ -806,4 +805,5 @@ vi /etc/rc.d/rc.local
 /OAS/z346/zookeeper-3.4.6/bin/zkServer.sh start
 ```
 
-																																												write by  yliang 2020/9/8
+
+Write by yliang 2020/9/8
