@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.ThirdServiceConfigDao">
+
+	<resultMap id="selectResult" type="com.meishi.merchant.model.ThirdServiceConfig">
+		<result column="ID" property="id" />
+		<result column="COMPANY_ID" property="companyId" />
+		<result column="BRAND_ID" property="brandId" />
+		<result column="STORE_ID" property="storeId" />
+		<result column="SERVICE" property="service" />
+		<result column="DESCRIPTION" property="description" />
+		<result column="LINK_URL" property="linkUrl" />
+		<result column="LINK_LABEL" property="linkLabel" />
+		<result column="TYPE" property="type" />
+		<result column="STATUS" property="status" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="UPDATE_TIME" property="updateTime" />
+		<result column="CREATE_ID" property="createId" />
+		<result column="UPDATE_ID" property="updateId" />
+	</resultMap>
+
+	<sql id="sqlTemplate">
+		SELECT 
+			ID,COMPANY_ID,BRAND_ID,STORE_ID,SERVICE,DESCRIPTION,LINK_URL,LINK_LABEL,TYPE,STATUS,CREATE_TIME,UPDATE_TIME,CREATE_ID,UPDATE_ID
+	</sql>
+
+	<insert id="save" parameterType="com.meishi.merchant.model.ThirdServiceConfig">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		INSERT INTO third_service_config(
+			COMPANY_ID,
+			BRAND_ID,
+			STORE_ID,
+			SERVICE,
+			DESCRIPTION,
+			LINK_URL,
+			LINK_LABEL,
+			TYPE,
+			STATUS,
+			CREATE_TIME,
+			UPDATE_TIME,
+			CREATE_ID,
+			UPDATE_ID,
+			IS_DELETED)
+		VALUES 
+			(#{companyId},
+			#{brandId},
+			#{storeId},
+			#{service},
+			#{description},
+			#{linkUrl},
+			#{linkLabel},
+			#{type},
+			#{status},
+			now(),
+			now(),
+			#{createId},
+			#{createId},
+			0)
+	</insert>
+	
+	<select id="get" parameterType="long" resultMap="selectResult">
+		<include refid="sqlTemplate" />
+		FROM
+			third_service_config
+		WHERE
+			IS_DELETED = 0
+		AND
+			ID = #{id} 
+	</select>
+	
+	<select id="getListByStoreId" parameterType="long" resultMap="selectResult">
+		<include refid="sqlTemplate" />
+		FROM
+			third_service_config
+		WHERE
+			IS_DELETED = 0
+		AND
+			STORE_ID = #{storeId} 
+		ORDER BY TYPE
+	</select>
+	
+	<select id="getListByBrandId" parameterType="long" resultMap="selectResult">
+		<include refid="sqlTemplate" />
+		FROM
+			third_service_config
+		WHERE
+			IS_DELETED = 0
+		AND
+			BRAND_ID = #{brandId} 
+		ORDER BY TYPE
+	</select>
+	
+	<update id="update" parameterType="map">
+    	UPDATE
+    		third_service_config 
+    	SET
+    		UPDATE_ID = #{updateId},
+    		UPDATE_TIME = now()
+    	<if test="service != null">
+    		,SERVICE = #{service}
+    	</if>
+    	<if test="description != null">
+    		,DESCRIPTION = #{description}
+    	</if>
+    	<if test="linkUrl != null">
+    		,LINK_URL = #{linkUrl}
+    	</if>
+    	<if test="linkLabel != null">
+    		,LINK_LABEL = #{linkLabel}
+    	</if>
+    	<if test="type != null">
+    		,TYPE = #{type}
+    	</if>
+    	<if test="status != null">
+    		,STATUS = #{status}
+    	</if>
+    	WHERE
+    		ID = #{id} 
+  	</update>
+	 
+	<update id="deleteById" parameterType="map">
+    	UPDATE
+    		third_service_config 
+    	SET
+    		IS_DELETED = 1,
+    		UPDATE_ID = #{updateId},
+    		UPDATE_TIME = now()
+    	WHERE
+    		ID = #{id} 
+  	</update>
+	
+</mapper>

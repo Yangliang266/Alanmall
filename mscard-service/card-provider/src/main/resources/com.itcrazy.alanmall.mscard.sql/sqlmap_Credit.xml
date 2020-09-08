@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.CreditDao">
+  <resultMap id="CreditHistoryResult" type="com.itcrazy.alanmall.mscard.model.Credit">
+  	<result column="CARD_NO" property="cardNo" />
+  	<result column="NAME" property="name" />
+  	<result column="MOTHER_CARD_NO" property="motherCardNo" />
+  	<result column="USER_NAME" property="userName" />
+	<result column="SEX" property="sex" />
+	<result column="TELEPHONE" property="telephone" />
+	<result column="ID_NUMBER" property="idNumber" />
+	<result column="RECHARGE_BALANCE" property="rechargeBalance" />
+	<result column="REWARD" property="reward" />
+	<result column="CREDIT_STATUS" property="creditStatus" />
+	<result column="CREDIT_MAX_QUOTA" property="creditMaxQuota" />
+	<result column="CREDIT" property="credit" />
+	<result column="CARD_TYPE" property="cardType" />
+	<result column="CATEGORY_ID" property="categoryId" />
+	<result column="ALL_JOIN_BRANDS" property="allJoinBrands" />
+	<result column="IS_CREDIT" property="isCredit" />
+	<result column="CREDIT_QUOTA" property="creditQuota" />
+	<result column="CODE" property="code" />
+	<result column="TYPE" property="type" />
+	<result column="MOTHER_TYPE" property="motherType" />
+  </resultMap>
+
+  <sql id="sqlSelectIf">
+     <if test="cardNo != null and cardNo != ''">
+		AND
+		ci.CARD_NO = #{cardNo}
+	 </if>
+  </sql>
+
+  <sql id="sqlSelectChildIf">
+     <if test="motherCardNo != null and motherCardNo != ''">
+		AND
+		ci.MOTHER_CARD_NO = #{motherCardNo}
+	 </if>
+  </sql>
+
+  <!-- 母卡记录 -->
+  <select id="getPageList" resultMap="CreditHistoryResult" parameterType="com.itcrazy.alanmall.mscard.dto.CreditDto">
+ 	SELECT
+ 	  (CASE WHEN (SELECT COUNT(CARD_NO) FROM card_actived_information WHERE MOTHER_CARD_NO=#{cardNo} AND COMPANY_ID=#{companyId}) != 0 THEN '母卡'
+		ELSE (CASE WHEN (SELECT MOTHER_CARD_NO FROM card_actived_information WHERE CARD_NO=#{cardNo} AND COMPANY_ID=#{companyId}) IS NOT NULL THEN '子卡'
+    	ELSE '' END) END) AS CARD_TYPE,
+      ci.CARD_NO,
+	  cc.NAME,
+	  cc.ID AS CATEGORY_ID,
+	  cc.ALL_JOIN_BRANDS,
+	  ci.MOTHER_CARD_NO,
+	  rc.USER_NAME,
+	  rc.SEX,
+	  rc.TELEPHONE,
+	  rc.ID_NUMBER,
+	  ci.RECHARGE_BALANCE,
+	  ci.REWARD,
+	  ci.CREDIT_STATUS,
+	  ci.CREDIT_MAX_QUOTA,
+	  ci.CREDIT,
+	  cc.IS_CREDIT,
+	  ci.MOTHER_TYPE
+	FROM
+	  card_actived_information ci
+	LEFT JOIN
+	  registered_card rc
+	ON
+	  ci.CARD_NO = rc.CARD_NO
+    AND
+	  ci.COMPANY_ID = rc.COMPANY_ID
+	LEFT JOIN
+	  card_category cc
+	ON
+	  ci.CATEGORY = cc.ID
+	WHERE
+	  ci.COMPANY_ID = #{companyId}
+	  AND ci.IS_DELETED = 0
+	<include refid="sqlSelectIf"/>
+
+    </select>
+
+  <!-- 子卡记录 -->
+  <select id="getCreditHistory" resultMap="CreditHistoryResult" parameterType="com.itcrazy.alanmall.mscard.dto.CreditDto">
+    SELECT
+      ci.CARD_NO,
+	  rc.USER_NAME,
+	  rc.SEX,
+	  rc.TELEPHONE,
+	  rc.ID_NUMBER,
+	  ci.CREDIT_STATUS,
+	  ci.CREDIT_MAX_QUOTA,
+	  ci.STATUS
+	FROM
+	  card_actived_information ci
+	LEFT JOIN
+	  registered_card rc
+	ON
+	  ci.CARD_NO = rc.CARD_NO
+	AND
+	  ci.COMPANY_ID = rc.COMPANY_ID
+	WHERE
+	  ci.COMPANY_ID = #{companyId} AND ci.IS_DELETED = 0
+    <include refid="sqlSelectChildIf"/>
+    ORDER BY
+	  ci.CARD_NO DESC
+	LIMIT #{start}, #{limit}
+    </select>
+
+    <!-- 分页 -->
+	<select id="getHistoryPageTotal" resultType="integer" parameterType="com.itcrazy.alanmall.mscard.dto.CreditDto">
+		SELECT
+		  COUNT(ci.CARD_NO)
+		FROM
+	      card_actived_information ci
+	    LEFT JOIN
+	      registered_card rc
+	    ON
+	      ci.CARD_NO = rc.CARD_NO
+	    AND
+	      ci.COMPANY_ID = rc.COMPANY_ID
+	    WHERE
+	      ci.COMPANY_ID = #{companyId} AND ci.IS_DELETED = 0
+    <include refid="sqlSelectChildIf"/>
+	</select>
+
+  <!-- 查询子卡的最高挂帐额度 -->
+	<select id="getMaxCreditMaxQuota" resultType="String"
+		parameterType="com.itcrazy.alanmall.mscard.dto.CreditDto">
+		SELECT
+		  CREDIT_MAX_QUOTA
+		FROM
+			card_actived_information
+		WHERE MOTHER_CARD_NO=#{cardNo}
+  	    AND COMPANY_ID=#{companyId}
+		ORDER BY
+			CREDIT_MAX_QUOTA DESC
+		LIMIT 1
+	</select>
+
+	<select id="getCreditById" resultMap="CreditHistoryResult" parameterType="com.itcrazy.alanmall.mscard.dto.CreditDto">
+  		SELECT
+			CODE,CREDIT_QUOTA,TYPE
+  		FROM
+  		credit_setting
+  		WHERE
+
+  	    CARD_NO = #{cardNo}
+		AND IS_DELETED = 0
+		AND COMPANY_ID = #{companyId}
+  	</select>
+
+</mapper>

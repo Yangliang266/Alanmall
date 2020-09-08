@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.user.dao.ModuleDao">
+
+  <resultMap id="ModuleResult" type="com.meishi.user.model.Module">    
+  	<result column="ID" property="id" />
+  	<result column="PARENT_ID" property="parentId" />
+  	<result column="NAME" property="name" />
+  	<result column="status" property="status" />
+  	<result column="show_order" property="showOrder" />
+  	<result column="business_Id" property="businessId" />
+  	<result column="system" property="system" />
+  </resultMap>
+  
+  
+  <sql id="sqlTemplate">
+		select id,parent_id,name,status,show_order,business_id,m.system
+	</sql>
+	
+	<select id="get" resultMap="ModuleResult" parameterType="long">
+ 	 	<include refid="sqlTemplate" />
+  		from module m where id=#{id}
+  	</select>
+	<select id="getPageList" resultMap="ModuleResult"  parameterType="com.meishi.user.dto.ModuleDto">
+		select m.id,m.parent_id,m.name,m.status,m.show_order,m.business_id,m.system
+  		from module m 
+  		<if test="companyRoleId!=null or officeRoleId!=null">
+  		 join role_module rm on m.id=rm.module_id 
+  		</if>
+  		where m.status=0 
+  		<if test="businessIdStr!=null">
+  		and m.business_id in (${businessIdStr} )
+  		</if>
+  		<if test="companyRoleId!=null">
+  		and rm.is_deleted=0 and  rm.role_id=#{companyRoleId}
+  		</if>
+  		<if test="officeRoleId!=null">
+  		and rm.is_deleted=0 and  rm.role_id=#{officeRoleId} 
+  		</if>
+  		<if test="system!=null">
+  		and m.system=#{system}
+  		</if>
+  		<if test="parentId!=null">
+  		and m.parent_id=#{parentId}
+  		</if>
+  		<if test="roleLevelId!=null">
+  		and m.role_level_ids like concat('%,',#{roleLevelId},',%')
+  		</if>
+  		order by m.show_order asc
+	</select>
+	
+ 
+	
+</mapper>

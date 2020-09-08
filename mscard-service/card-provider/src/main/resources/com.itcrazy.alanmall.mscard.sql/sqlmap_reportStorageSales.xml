@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ <mapper namespace="com.meishi.cardReport.dao.ReportStorageSalesDao">
+  <resultMap id="ReportStorageSales" type="com.meishi.card.model.ReportStorageSales">
+    <result column="SALE_ORDER_ID" property="saleOrderId" />
+    <result column="CARD_NO" property="cardNo" />
+    <result column="MOTHER_CARD_NO" property="motherCardNo" />
+    <result column="MOTHER_TYPE" property="motherType" />
+    <result column="CATEGORY" property="category" />
+    <result column="CATEGORY_NAME" property="categoryName" />
+    <result column="CONSUME_TIME" property="consumeTime" />
+    <result column="STATUS" property="status" />
+    <result column="RELEASE_STORE" property="releaseStore" />
+    <result column="STORE" property="store" />
+    <result column="BILL" property="bill" />
+    <result column="REWARD" property="reward" />
+    <result column="CREDIT_BILL" property="creditBill" />
+    <result column="REMARKS" property="remarks" />
+    <result column="IS_DELETED" property="isDeleted" />
+  </resultMap>
+     <sql id="sqlSelectIf">
+        WHERE
+        cast(ol.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+        AND cast(ol.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+        <if test="cardNo != null and cardNo !='' ">
+ 		AND ((ssh.CARD_NO like concat("%",#{cardNo},"%")) OR (ssh.MOTHER_CARD_NO like concat("%",#{cardNo},"%")) OR
+ 		     (csh.CARD_NO like concat("%",#{cardNo},"%")) OR (csh.MOTHER_CARD_NO like concat("%",#{cardNo},"%")))
+ 		</if>
+        <if test="stores!=null and stores!=''" >
+        AND ol.STORE IN (${stores})
+        </if>
+        <if test="releaseStores!=null and releaseStores!=''" >
+        AND ((ssh.RELEASE_STORE IN (${releaseStores})) OR (csh.RELEASE_STORE IN (${releaseStores})))
+        </if>
+    </sql>
+
+    <select id="getReportStorageSalesList" resultMap="ReportStorageSales" parameterType="com.meishi.card.dto.ReportStorageSalesDto">
+        SELECT
+            ol.ID AS SALE_ORDER_ID,
+			(CASE WHEN ssh.CARD_NO IS NULL THEN csh.CARD_NO ELSE ssh.CARD_NO END) AS CARD_NO,
+			(CASE WHEN ssh.MOTHER_CARD_NO IS NULL THEN csh.MOTHER_CARD_NO ELSE ssh.MOTHER_CARD_NO END) AS MOTHER_CARD_NO,
+			(CASE WHEN ssh.MOTHER_TYPE IS NULL THEN csh.MOTHER_TYPE ELSE ssh.MOTHER_TYPE END) AS MOTHER_TYPE,
+			cc.NAME AS CATEGORY_NAME,
+			(CASE WHEN ssh.CONSUME_TIME IS NULL THEN csh.CONSUME_TIME ELSE ssh.CONSUME_TIME END) AS CONSUME_TIME,
+			(CASE WHEN ssh.RELEASE_STORE IS NULL THEN csh.RELEASE_STORE ELSE ssh.RELEASE_STORE END) AS RELEASE_STORE,
+			(CASE WHEN ssh.STORE IS NULL THEN csh.STORE ELSE ssh.STORE END) AS STORE,
+			ol.`STATUS` AS STATUS,
+			(CASE WHEN ssh.BILL IS NULL THEN 0 ELSE ssh.BILL END) AS BILL,
+			(CASE WHEN ssh.REWARD IS NULL THEN 0 ELSE ssh.REWARD END) AS REWARD,
+			(CASE WHEN csh.CREDIT_BILL IS NULL THEN 0 ELSE csh.CREDIT_BILL END) AS CREDIT_BILL,
+			(CASE WHEN ssh.REMARKS IS NULL THEN '' ELSE ssh.REMARKS END) AS REMARKS,
+			0 AS IS_DELETED
+         FROM
+        <if test="limitToday != null and limitToday == 1" >
+        	 order_list ol
+             LEFT JOIN storage_sales_history ssh ON ol.ID = ssh.ID
+             LEFT JOIN credit_sales_history csh ON ol.ID = csh.ID
+             LEFT JOIN card_category cc ON ol.CATEGORY = cc.ID
+        </if>
+        <if test="limitToday == null or limitToday != 1" >
+        	 report_order_list ol
+             LEFT JOIN report_storage_sales_history ssh ON ol.ID = ssh.ID
+             LEFT JOIN report_credit_sales_history csh ON ol.ID = csh.ID
+             LEFT JOIN report_card_category cc ON ol.CATEGORY = cc.ID
+        </if>
+        <include refid="sqlSelectIf"/>
+        AND ol.PAY_MODE != '2,'
+
+        union all
+        (
+        SELECT
+            ol.ID AS SALE_ORDER_ID,
+			(CASE WHEN ssh.CARD_NO IS NULL THEN csh.CARD_NO ELSE ssh.CARD_NO END) AS CARD_NO,
+			(CASE WHEN ssh.MOTHER_CARD_NO IS NULL THEN csh.MOTHER_CARD_NO ELSE ssh.MOTHER_CARD_NO END) AS MOTHER_CARD_NO,
+			(CASE WHEN ssh.MOTHER_TYPE IS NULL THEN csh.MOTHER_TYPE ELSE ssh.MOTHER_TYPE END) AS MOTHER_TYPE,
+			cc.NAME AS CATEGORY_NAME,
+			ol.UPDATE_TIME AS CONSUME_TIME,
+			(CASE WHEN ssh.RELEASE_STORE IS NULL THEN csh.RELEASE_STORE ELSE ssh.RELEASE_STORE END) AS RELEASE_STORE,
+			(CASE WHEN ssh.STORE IS NULL THEN csh.STORE ELSE ssh.STORE END) AS STORE,
+			ol.`STATUS` AS STATUS,
+			(CASE WHEN -ssh.BILL IS NULL THEN 0 ELSE -ssh.BILL END) AS BILL,
+			(CASE WHEN -ssh.REWARD IS NULL THEN 0 ELSE -ssh.REWARD END) AS REWARD,
+			(CASE WHEN -csh.CREDIT_BILL IS NULL THEN 0 ELSE -csh.CREDIT_BILL END) AS CREDIT_BILL,
+			(CASE WHEN ssh.REMARKS IS NULL THEN '' ELSE ssh.REMARKS END) AS REMARKS,
+			(CASE WHEN ssh.IS_DELETED IS NULL THEN csh.IS_DELETED ELSE ssh.IS_DELETED END) AS IS_DELETED
+         FROM
+        <if test="limitToday != null and limitToday == 1" >
+        	 order_list ol
+             LEFT JOIN storage_sales_history ssh ON ol.ID = ssh.ID
+             LEFT JOIN credit_sales_history csh ON ol.ID = csh.ID
+             LEFT JOIN card_category cc ON ol.CATEGORY = cc.ID
+        </if>
+        <if test="limitToday == null or limitToday != 1" >
+        	 report_order_list ol
+             LEFT JOIN report_storage_sales_history ssh ON ol.ID = ssh.ID
+             LEFT JOIN report_credit_sales_history csh ON ol.ID = csh.ID
+             LEFT JOIN report_card_category cc ON ol.CATEGORY = cc.ID
+        </if>
+        <include refid="sqlSelectIf"/>
+        AND ol.PAY_MODE != '2,'
+        AND (ssh.IS_DELETED = 1 OR csh.IS_DELETED = 1))
+        ORDER BY 1 DESC   <!-- 原始为 ORDER BY ol.ID DESC 但是使用 union all 会有影响，所以使用索引 -->
+        LIMIT #{start},#{limit}
+   </select>
+
+
+	<select id="getReportStorageSalesTotal" resultType="integer" parameterType="com.meishi.card.dto.ReportStorageSalesDto">
+        SELECT
+            COUNT(t.CARD_NO)
+         FROM
+         (SELECT
+            ol.ID AS SALE_ORDER_ID,
+			(CASE WHEN ssh.CARD_NO IS NULL THEN csh.CARD_NO ELSE ssh.CARD_NO END) AS CARD_NO,
+			(CASE WHEN ssh.MOTHER_CARD_NO IS NULL THEN csh.MOTHER_CARD_NO ELSE ssh.MOTHER_CARD_NO END) AS MOTHER_CARD_NO,
+			(CASE WHEN ssh.MOTHER_TYPE IS NULL THEN csh.MOTHER_TYPE ELSE ssh.MOTHER_TYPE END) AS MOTHER_TYPE,
+			cc.NAME AS CATEGORY_NAME,
+			(CASE WHEN ssh.CONSUME_TIME IS NULL THEN csh.CONSUME_TIME ELSE ssh.CONSUME_TIME END) AS CONSUME_TIME,
+			(CASE WHEN ssh.RELEASE_STORE IS NULL THEN csh.RELEASE_STORE ELSE ssh.RELEASE_STORE END) AS RELEASE_STORE,
+			(CASE WHEN ssh.STORE IS NULL THEN csh.STORE ELSE ssh.STORE END) AS STORE,
+			ol.`STATUS` AS STATUS,
+			(CASE WHEN ssh.BILL IS NULL THEN 0 ELSE ssh.BILL END) AS BILL,
+			(CASE WHEN ssh.REWARD IS NULL THEN 0 ELSE ssh.REWARD END) AS REWARD,
+			(CASE WHEN csh.CREDIT_BILL IS NULL THEN 0 ELSE csh.CREDIT_BILL END) AS CREDIT_BILL,
+			(CASE WHEN ssh.REMARKS IS NULL THEN '' ELSE ssh.REMARKS END) AS REMARKS,
+			0 AS IS_DELETED
+         FROM
+        <if test="limitToday != null and limitToday == 1" >
+        	 order_list ol
+             LEFT JOIN storage_sales_history ssh ON ol.ID = ssh.ID
+             LEFT JOIN credit_sales_history csh ON ol.ID = csh.ID
+             LEFT JOIN card_category cc ON ol.CATEGORY = cc.ID
+        </if>
+        <if test="limitToday == null or limitToday != 1" >
+        	 report_order_list ol
+             LEFT JOIN report_storage_sales_history ssh ON ol.ID = ssh.ID
+             LEFT JOIN report_credit_sales_history csh ON ol.ID = csh.ID
+             LEFT JOIN report_card_category cc ON ol.CATEGORY = cc.ID
+        </if>
+        <include refid="sqlSelectIf"/>
+        AND ol.PAY_MODE != '2,'
+
+        union all
+        (
+        SELECT
+            ol.ID AS SALE_ORDER_ID,
+			(CASE WHEN ssh.CARD_NO IS NULL THEN csh.CARD_NO ELSE ssh.CARD_NO END) AS CARD_NO,
+			(CASE WHEN ssh.MOTHER_CARD_NO IS NULL THEN csh.MOTHER_CARD_NO ELSE ssh.MOTHER_CARD_NO END) AS MOTHER_CARD_NO,
+			(CASE WHEN ssh.MOTHER_TYPE IS NULL THEN csh.MOTHER_TYPE ELSE ssh.MOTHER_TYPE END) AS MOTHER_TYPE,
+			cc.NAME AS CATEGORY_NAME,
+			ol.UPDATE_TIME AS CONSUME_TIME,
+			(CASE WHEN ssh.RELEASE_STORE IS NULL THEN csh.RELEASE_STORE ELSE ssh.RELEASE_STORE END) AS RELEASE_STORE,
+			(CASE WHEN ssh.STORE IS NULL THEN csh.STORE ELSE ssh.STORE END) AS STORE,
+			ol.`STATUS` AS STATUS,
+			(CASE WHEN -ssh.BILL IS NULL THEN 0 ELSE -ssh.BILL END) AS BILL,
+			(CASE WHEN -ssh.REWARD IS NULL THEN 0 ELSE -ssh.REWARD END) AS REWARD,
+			(CASE WHEN -csh.CREDIT_BILL IS NULL THEN 0 ELSE -csh.CREDIT_BILL END) AS CREDIT_BILL,
+			(CASE WHEN ssh.REMARKS IS NULL THEN '' ELSE ssh.REMARKS END) AS REMARKS,
+			(CASE WHEN ssh.IS_DELETED IS NULL THEN csh.IS_DELETED ELSE ssh.IS_DELETED END) AS IS_DELETED
+         FROM
+        <if test="limitToday != null and limitToday == 1" >
+        	 order_list ol
+             LEFT JOIN storage_sales_history ssh ON ol.ID = ssh.ID
+             LEFT JOIN credit_sales_history csh ON ol.ID = csh.ID
+             LEFT JOIN card_category cc ON ol.CATEGORY = cc.ID
+        </if>
+        <if test="limitToday == null or limitToday != 1" >
+        	 report_order_list ol
+             LEFT JOIN report_storage_sales_history ssh ON ol.ID = ssh.ID
+             LEFT JOIN report_credit_sales_history csh ON ol.ID = csh.ID
+             LEFT JOIN report_card_category cc ON ol.CATEGORY = cc.ID
+        </if>
+        <include refid="sqlSelectIf"/>
+        AND ol.PAY_MODE != '2,'
+        AND (ssh.IS_DELETED = 1 OR csh.IS_DELETED = 1))) t
+    </select>
+
+	<select id="getTotalReportStorageSales" resultMap="ReportStorageSales" parameterType="com.meishi.card.dto.ReportStorageSalesDto">
+         SELECT
+                SUM(t.BILL) AS BILL,
+                SUM(t.REWARD) AS REWARD,
+                SUM(t.CREDIT_BILL) AS CREDIT_BILL
+         FROM
+         (
+         SELECT
+            ol.ID AS SALE_ORDER_ID,
+			(CASE WHEN ssh.CARD_NO IS NULL THEN csh.CARD_NO ELSE ssh.CARD_NO END) AS CARD_NO,
+			(CASE WHEN ssh.MOTHER_CARD_NO IS NULL THEN csh.MOTHER_CARD_NO ELSE ssh.MOTHER_CARD_NO END) AS MOTHER_CARD_NO,
+			(CASE WHEN ssh.MOTHER_TYPE IS NULL THEN csh.MOTHER_TYPE ELSE ssh.MOTHER_TYPE END) AS MOTHER_TYPE,
+			cc.NAME AS CATEGORY_NAME,
+			(CASE WHEN ssh.CONSUME_TIME IS NULL THEN csh.CONSUME_TIME ELSE ssh.CONSUME_TIME END) AS CONSUME_TIME,
+			(CASE WHEN ssh.RELEASE_STORE IS NULL THEN csh.RELEASE_STORE ELSE ssh.RELEASE_STORE END) AS RELEASE_STORE,
+			(CASE WHEN ssh.STORE IS NULL THEN csh.STORE ELSE ssh.STORE END) AS STORE,
+			ol.`STATUS` AS STATUS,
+			(CASE WHEN ssh.BILL IS NULL THEN 0 ELSE ssh.BILL END) AS BILL,
+			(CASE WHEN ssh.REWARD IS NULL THEN 0 ELSE ssh.REWARD END) AS REWARD,
+			(CASE WHEN csh.CREDIT_BILL IS NULL THEN 0 ELSE csh.CREDIT_BILL END) AS CREDIT_BILL,
+			(CASE WHEN ssh.REMARKS IS NULL THEN '' ELSE ssh.REMARKS END) AS REMARKS,
+			0 AS IS_DELETED
+         FROM
+        <if test="limitToday != null and limitToday == 1" >
+        	 order_list ol
+             LEFT JOIN storage_sales_history ssh ON ol.ID = ssh.ID
+             LEFT JOIN credit_sales_history csh ON ol.ID = csh.ID
+             LEFT JOIN card_category cc ON ol.CATEGORY = cc.ID
+        </if>
+        <if test="limitToday == null or limitToday != 1" >
+        	 report_order_list ol
+             LEFT JOIN report_storage_sales_history ssh ON ol.ID = ssh.ID
+             LEFT JOIN report_credit_sales_history csh ON ol.ID = csh.ID
+             LEFT JOIN report_card_category cc ON ol.CATEGORY = cc.ID
+        </if>
+        <include refid="sqlSelectIf"/>
+        AND ol.PAY_MODE != '2,'
+
+        union all
+        (
+        SELECT
+            ol.ID AS SALE_ORDER_ID,
+			(CASE WHEN ssh.CARD_NO IS NULL THEN csh.CARD_NO ELSE ssh.CARD_NO END) AS CARD_NO,
+			(CASE WHEN ssh.MOTHER_CARD_NO IS NULL THEN csh.MOTHER_CARD_NO ELSE ssh.MOTHER_CARD_NO END) AS MOTHER_CARD_NO,
+			(CASE WHEN ssh.MOTHER_TYPE IS NULL THEN csh.MOTHER_TYPE ELSE ssh.MOTHER_TYPE END) AS MOTHER_TYPE,
+			cc.NAME AS CATEGORY_NAME,
+			ol.UPDATE_TIME AS CONSUME_TIME,
+			(CASE WHEN ssh.RELEASE_STORE IS NULL THEN csh.RELEASE_STORE ELSE ssh.RELEASE_STORE END) AS RELEASE_STORE,
+			(CASE WHEN ssh.STORE IS NULL THEN csh.STORE ELSE ssh.STORE END) AS STORE,
+			ol.`STATUS` AS STATUS,
+			(CASE WHEN -ssh.BILL IS NULL THEN 0 ELSE -ssh.BILL END) AS BILL,
+			(CASE WHEN -ssh.REWARD IS NULL THEN 0 ELSE -ssh.REWARD END) AS REWARD,
+			(CASE WHEN -csh.CREDIT_BILL IS NULL THEN 0 ELSE -csh.CREDIT_BILL END) AS CREDIT_BILL,
+			(CASE WHEN ssh.REMARKS IS NULL THEN '' ELSE ssh.REMARKS END) AS REMARKS,
+			(CASE WHEN ssh.IS_DELETED IS NULL THEN csh.IS_DELETED ELSE ssh.IS_DELETED END) AS IS_DELETED
+         FROM
+        <if test="limitToday != null and limitToday == 1" >
+        	 order_list ol
+             LEFT JOIN storage_sales_history ssh ON ol.ID = ssh.ID
+             LEFT JOIN credit_sales_history csh ON ol.ID = csh.ID
+             LEFT JOIN card_category cc ON ol.CATEGORY = cc.ID
+        </if>
+        <if test="limitToday == null or limitToday != 1" >
+             report_order_list ol
+             LEFT JOIN report_storage_sales_history ssh ON ol.ID = ssh.ID
+             LEFT JOIN report_credit_sales_history csh ON ol.ID = csh.ID
+             LEFT JOIN report_card_category cc ON ol.CATEGORY = cc.ID
+        </if>
+        <include refid="sqlSelectIf"/>
+        AND ol.PAY_MODE != '2,'
+        AND (ssh.IS_DELETED = 1 OR csh.IS_DELETED = 1))) t
+   </select>
+</mapper>
+

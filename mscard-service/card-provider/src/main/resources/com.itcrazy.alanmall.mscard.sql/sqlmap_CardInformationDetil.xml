@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.CardInformationDetilDao">
+
+
+	<resultMap id="CardInforDetilResult" type="com.itcrazy.alanmall.mscard.model.CardInformation">
+		<result column="CARD_NO" property="cardNo" />
+		<result column="MOTHER_CARD_NO" property="motherCardNo" />
+		<result column="SERIAL_NO" property="serialNo" />
+		<result column="CATEGORY" property="category" />
+		<result column="STATUS" property="status" />
+		<result column="STORE" property="store" />
+		<result column="CREDIT_STATUS" property="creditStatus" />
+		<result column="CREDIT_MAX_QUOTA" property="creditMaxQuota" />
+		<result column="CREATE_ID" property="createId" />
+		<result column="CREATE_TIME" property="createTime"/>
+	  <result column="NAME" property="name"/>
+	</resultMap>
+
+	<sql id="sqlTemplate">
+	   SELECT c.SERIAL_NO,c.CREATE_TIME,c.CREATE_ID,c.CATEGORY,cc.NAME,c.STATUS,c.CARD_NO
+	</sql>
+	<!-- 根据批次号获得所对应的卡号 -->
+	<select id="getPageDetilList" resultMap="CardInforDetilResult" parameterType="com.itcrazy.alanmall.mscard.dto.CardInformationDto">
+
+			<include refid="sqlTemplate" />
+
+			FROM card_information c
+			LEFT JOIN card_category cc ON c.CATEGORY = cc.ID
+			WHERE 1=1
+
+			AND c.IS_DELETED = 0
+			AND cc.IS_DELETED = 0
+
+			<if test="serialNo != null and serialNo != '' ">
+			AND SERIAL_NO=#{serialNo}
+			</if>
+			<if test="companyId != null and companyId != ''">
+			AND c.COMPANY_ID = #{companyId}
+			</if>
+	     	 LIMIT #{start},#{limit}
+	 </select>
+
+	<select id="getPageDetilTotal" resultType="integer">
+	  		SELECT count(c.CARD_NO)
+	  		FROM
+	  		card_information c
+	  		LEFT JOIN card_category cc ON c.CATEGORY = cc.ID
+	  		WHERE 1=1
+
+	  		AND c.IS_DELETED = 0
+			AND cc.IS_DELETED = 0
+
+	  		<if test="serialNo != null and serialNo != '' ">
+	  		AND SERIAL_NO=#{serialNo}
+	  		</if>
+	  		<if test="companyId != null and companyId !=''">
+			AND c.COMPANY_ID = #{companyId}
+			</if>
+	</select>
+
+</mapper>

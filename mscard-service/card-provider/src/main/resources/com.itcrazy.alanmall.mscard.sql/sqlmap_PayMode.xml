@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.PayModeDao">
+
+
+  <resultMap id="PayModeResult" type="com.itcrazy.alanmall.mscard.model.PayMode">
+  	<result column="ID" property="id" />
+  	<result column="NAME" property="name" />
+  	<result column="STATUS" property="status" />
+  </resultMap>
+
+  <select id="getPageList" resultMap="PayModeResult" parameterType="com.itcrazy.alanmall.mscard.dto.PayModeDto">
+  		SELECT ID,NAME,STATUS,(CASE WHEN ID IN (SELECT DISTINCT PAY_MODE FROM recharge_history) THEN '' ELSE '删除' END) AS DEL
+		FROM pay_mode
+		WHERE 1=1
+		<if test="status!=null" >
+  		 AND STATUS=#{status}
+  		</if>
+		<if test="isDeleted!=null" >
+  		 AND IS_DELETED=#{isDeleted}
+  		</if>
+		<if test="companyId!=null" >
+  		 AND COMPANY_ID=#{companyId}
+  		</if>
+  		ORDER BY ID
+   </select>
+
+   <update id="update" parameterType="com.itcrazy.alanmall.mscard.model.PayMode">
+  	UPDATE pay_mode SET UPDATE_TIME=NOW(),UPDATE_ID=#{updateId}
+  	<if test="name!=null" >
+  		  ,NAME=#{name}
+  	</if>
+  	<if test="status!=null" >
+  		  ,STATUS=#{status}
+  	</if>
+  	<if test="isDeleted!=null" >
+  		  ,IS_DELETED=#{isDeleted}
+  	</if>
+  	<if test="companyId!=null" >
+  		  ,COMPANY_ID=#{companyId}
+  	</if>
+  	<if test="id!=null" >
+  		  WHERE ID=#{id}
+  	</if>
+  </update>
+
+  <insert id="save" parameterType="com.itcrazy.alanmall.mscard.model.PayMode">
+		INSERT INTO pay_mode(
+		NAME,STATUS,CREATE_TIME,CREATE_ID,IS_DELETED,COMPANY_ID)
+		VALUES
+		(#{name},#{status},NOW(),#{createId},0,#{companyId})
+	</insert>
+</mapper>

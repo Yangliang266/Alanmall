@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.CountyDao">
+
+	<resultMap id="countyResult" type="com.meishi.merchant.model.County">
+		<result column="ID" property="id" />
+		<result column="COUNTY_CNAME" property="countyCname" />
+		<result column="COUNTY_POSTCODE" property="countyPostcode" />
+		<result column="CITY_ID" property="cityId" />
+		<result column="IS_DELETED" property="isDeleted" />
+	</resultMap>
+
+	<sql id="sqlTemplate">
+	select ID,COUNTY_CNAME,COUNTY_POSTCODE,CITY_ID
+	</sql>
+	<select id="getCountyListById" resultMap="countyResult" parameterType="long">
+		 <include refid="sqlTemplate" />
+		 from county  where CITY_ID=#{cityId}
+	</select>
+	
+	<select id="get" resultMap="countyResult" parameterType="long">
+		<include refid="sqlTemplate" />
+		 from county  where ID=#{id}
+	</select>
+
+	<select id="getCountyByCode" resultMap="countyResult" parameterType="string">
+		<include refid="sqlTemplate" />
+		 from county  where code=#{code} and is_deleted=0
+	</select>
+	
+	<select id="getCountyByName" resultMap="countyResult" parameterType="string">
+		<include refid="sqlTemplate" />
+		 from county  where COUNTY_CNAME=#{name} and is_deleted=0
+	</select>
+</mapper>

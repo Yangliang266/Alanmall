@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.FacilityInfoDao">
+
+	<resultMap id="FacilityInfoResult" type="com.meishi.merchant.model.FacilityInfo">
+		<result column="ID" property="id" />
+		<result column="deviceNo" property="deviceNo" />
+		<result column="POLL_CODS" property="pollCods" />
+		<result column="COMPANY_ID" property="companyId" />
+		<result column="STORE_ID" property="storeId" />
+		<result column="STATUS" property="status" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="LAST_ALTERNATELY" property="lastAlternately" />
+		<result column="IS_DELETED" property="isDeleted" />
+	</resultMap>
+
+	<sql id="sqlTemplate">
+		select ID,deviceNo,POLL_CODS,COMPANY_ID,STORE_ID,STATUS,CREATE_TIME,LAST_ALTERNATELY,IS_DELETED
+	</sql>
+
+	<select id="get" resultMap="FacilityInfoResult" parameterType="com.meishi.merchant.dto.FacilityInfoDto">
+		<include refid="sqlTemplate" />
+		from facilityInfo  where IS_DELETED=0
+		<if test="deviceNo!=null">
+			and deviceNo=#{deviceNo}
+		</if>
+		<if test="pollCods!=null">
+			and POLL_CODS=#{pollCods}
+		</if>
+		<if test="companyId!=null">
+			and COMPANY_ID=#{companyId}
+		</if>
+		<if test="storeId!=null">
+			and STORE_ID=#{storeId}
+		</if>
+		<if test="status!=null">
+			and STATUS=#{status}
+		</if>
+		<if test="createTime!=null">
+			and CREATE_TIME=#{createTime}
+		</if>
+		<if test="lastAlternately!=null">
+			and LAST_ALTERNATELY=#{lastAlternately}
+		</if>
+		<if test="id!=null">
+			and ID=#{id}
+		</if>
+	</select>
+	
+	<select id="getFacilityInfoByKey" resultMap="FacilityInfoResult" parameterType="java.lang.String">
+		<include refid="sqlTemplate" />
+		from facilityInfo  where  POLL_CODS=#{0} and IS_DELETED=0
+	</select>
+	
+	<select id="getFacilityInfoByDeviceNo" resultMap="FacilityInfoResult" parameterType="java.lang.String">
+		<include refid="sqlTemplate" />
+		from facilityInfo  where  deviceNo=#{0} and IS_DELETED=0
+	</select>
+	
+	<select id="getPageList" resultMap="FacilityInfoResult" parameterType="com.meishi.merchant.dto.FacilityInfoDto">
+		<include refid="sqlTemplate" />
+		from facilityInfo  where IS_DELETED=0
+		<if test="deviceNo!=null">
+			and deviceNo=#{deviceNo}
+		</if>
+		<if test="pollCods!=null">
+			and POLL_CODS=#{pollCods}
+		</if>
+		<if test="companyId!=null">
+			and COMPANY_ID=#{companyId}
+		</if>
+		<if test="storeId!=null">
+			and STORE_ID=#{storeId}
+		</if>
+		<if test="status!=null">
+			and STATUS=#{status}
+		</if>
+		<if test="createTime!=null">
+			and CREATE_TIME=#{createTime}
+		</if>
+		<if test="lastAlternately!=null">
+			and LAST_ALTERNATELY=#{lastAlternately}
+		</if>
+		<if test="id!=null">
+			and ID=#{id}
+		</if>
+		
+		ORDER BY ID DESC
+		
+		LIMIT #{start},#{limit}
+	</select>
+	
+	<select id="getPageTotal" resultType="integer"
+		parameterType="com.meishi.merchant.dto.FacilityInfoChgDto">
+		select count(*) 
+		from facilityInfo where IS_DELETED = 0 
+		<if test="deviceNo!=null">
+			and deviceNo=#{deviceNo}
+		</if>
+		<if test="pollCods!=null">
+			and POLL_CODS=#{pollCods}
+		</if>
+		<if test="companyId!=null">
+			and COMPANY_ID=#{companyId}
+		</if>
+		<if test="storeId!=null">
+			and STORE_ID=#{storeId}
+		</if>
+		<if test="status!=null">
+			and STATUS=#{status}
+		</if>
+		<if test="createTime!=null">
+			and CREATE_TIME=#{createTime}
+		</if>
+		<if test="lastAlternately!=null">
+			and LAST_ALTERNATELY=#{lastAlternately}
+		</if>
+		<if test="id!=null">
+			and ID=#{id}
+		</if>
+	</select>
+
+	<insert id="save" parameterType="com.meishi.merchant.model.FacilityInfo">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into facilityInfo(
+		id,deviceNo,POLL_CODS,COMPANY_ID,STORE_ID,STATUS,CREATE_TIME,LAST_ALTERNATELY,IS_DELETED)
+		values
+		(#{id},#{deviceNo},#{pollCods},#{companyId},#{storeId},#{status},now(),now(),0)
+	</insert>
+
+	<update id="update" parameterType="com.meishi.merchant.model.FacilityInfo">
+		update facilityInfo set LAST_ALTERNATELY=now()
+		<if test="deviceNo!=null">
+			,deviceNo=#{deviceNo}
+		</if>
+		<if test="pollCods!=null">
+			,POLL_CODS=#{pollCods}
+		</if>
+		<if test="companyId!=null">
+			,COMPANY_ID=#{companyId}
+		</if>
+		<if test="storeId!=null">
+			,STORE_ID=#{storeId}
+		</if>
+		<if test="status!=null">
+			,STATUS=#{status}
+		</if>
+		<if test="createTime!=null">
+			,CREATE_TIME=#{createTime}
+		</if>
+		<if test="isDeleted!=null">
+			,IS_DELETED=#{isDeleted}
+		</if>
+		where ID=#{id}
+	</update>
+
+	<update id="remove" parameterType="com.meishi.merchant.model.FacilityInfo">
+		update facilityInfo set IS_DELETED=1 where ID=#{id} and COMPANY_ID=#{companyId} and STORE_ID=#{storeId}
+	</update>
+	
+</mapper>

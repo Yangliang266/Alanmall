@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.ParameterDao">
+
+
+  <resultMap id="ParameterResult" type="com.itcrazy.alanmall.mscard.model.Parameter">
+  	<result column="TYPE" property="type" />
+  	<result column="PWD" property="pwd" />
+  	<result column="PREFIX" property="prefix" />
+  	<result column="LENGTH" property="length" />
+  </resultMap>
+
+  <select id="getParamDetail" resultMap="ParameterResult" parameterType="com.itcrazy.alanmall.mscard.dto.CardBaseDto">
+
+  		SELECT TYPE,PWD,PREFIX,LENGTH
+		FROM card_system_parameter
+		WHERE 1=1
+		<if test="isDeleted!=null" >
+  		 AND IS_DELETED=#{isDeleted}
+  		</if>
+		<if test="companyId!=null" >
+  		 AND COMPANY_ID=#{companyId}
+  		</if>
+   </select>
+
+   <insert id="save" parameterType="com.itcrazy.alanmall.mscard.model.Parameter">
+		INSERT INTO card_system_parameter(
+		TYPE,PWD,PREFIX,LENGTH,CREATE_TIME,CREATE_ID,IS_DELETED,COMPANY_ID)
+		VALUES
+		(#{type},#{pwd},#{prefix},#{length},NOW(),#{createId},0,#{companyId})
+	</insert>
+
+	<update id="update" parameterType="com.itcrazy.alanmall.mscard.model.Parameter">
+  	UPDATE card_system_parameter SET UPDATE_TIME=NOW(),UPDATE_ID=#{updateId}
+  	<if test="type!=null" >
+  		  ,TYPE=#{type}
+  	</if>
+  	<if test="prefix!=null" >
+  		  ,PREFIX=#{prefix}
+  	</if>
+  	<if test="length!=null" >
+  		  ,LENGTH=#{length}
+  	</if>
+  	<if test="companyId!=null" >
+  		  WHERE COMPANY_ID=#{companyId}
+  	</if>
+  </update>
+</mapper>

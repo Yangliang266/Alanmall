@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.RechargeRevokeDao">
+  	<resultMap id="RechargeResult" type="com.itcrazy.alanmall.mscard.model.RechargeHistory">
+  		<result column="ID" property="id" />
+  		<result column="CARD_NO" property="cardNo" />
+  		<result column="CATEGORY_NAME" property="categoryName" />
+  		<result column="STATUS" property="status" />
+  		<result column="STORE" property="rechargeStore" />
+  		<result column="PAY_MODE" property="payModeStr" />
+  		<result column="RECHARGE" property="rechargeAmount" />
+  		<result column="REWARD" property="reward" />
+  		<result column="CREATE_TIME" property="rechargeTime" />
+  		<result column="CREATE_ID" property="rechargePerson" />
+  		<result column="ACTION_TYPE" property="actionType" />
+  	</resultMap>
+
+	<sql id="getPageTemplate">
+    	FROM
+			recharge_history rh
+		LEFT JOIN card_information ci ON rh.CARD_NO = ci.CARD_NO
+		LEFT JOIN card_category cc ON ci.CATEGORY = cc.ID
+		LEFT JOIN pay_mode pm ON rh.PAY_MODE = pm.ID
+		LEFT JOIN
+		      (SELECT
+	            CARD_NO, CREATE_TIME
+	        FROM
+	            storage_sales_history
+	        WHERE
+	            CARD_NO = #{cardNo}
+	        AND COMPANY_ID = #{companyId}
+	        AND IS_DELETED = 0
+	        ORDER BY CREATE_TIME DESC
+	        LIMIT 1) ssh ON rh.CARD_NO = ssh.CARD_NO
+		WHERE
+			rh.CARD_NO = #{cardNo}
+		AND	rh.COMPANY_ID = #{companyId}
+		AND rh.IS_DELETED = 0
+		AND (ISNULL(rh.ACTION_TYPE) OR rh.ACTION_TYPE != 1) <!-- 不是撤销的记录 -->
+        AND date(rh.CREATE_TIME) = curdate() <!-- 当天的记录 -->
+        <!-- 此卡最近一次消费之后的记录 -->
+        AND IF ( ISNULL(ssh.CREATE_TIME), 1 = 1, TIMESTAMPDIFF(SECOND,rh.CREATE_TIME,ssh.CREATE_TIME)  <![CDATA[ < ]]> 0)
+  	</sql>
+
+  	<select id="getPageList" resultMap="RechargeResult" parameterType="com.itcrazy.alanmall.mscard.dto.RechargeDto">
+  		SELECT
+  		    rh.ID,
+			rh.CARD_NO,
+			cc.`NAME` AS CATEGORY_NAME,
+			ci.`STATUS`,
+			rh.STORE,
+			pm.`NAME` AS PAY_MODE,
+			rh.RECHARGE,
+			rh.REWARD,
+			rh.CREATE_TIME,
+			rh.CREATE_ID
+		<include refid="getPageTemplate" />
+		ORDER BY
+			rh.CREATE_TIME DESC
+  		LIMIT #{start}, #{limit}
+   	</select>
+
+	<select id="getPageTotal" resultType="integer">
+  		SELECT
+  			COUNT(rh.CARD_NO)
+		<include refid="getPageTemplate" />
+  	</select>
+
+  	<select id="insertRechargeHistory"  parameterType="com.itcrazy.alanmall.mscard.model.RechargeHistory">
+		INSERT INTO
+			recharge_history
+			(CARD_NO, STORE, PAY_MODE, RECHARGE, REWARD,
+			CREATE_TIME, CREATE_ID, IS_DELETED,COMPANY_ID)
+		VALUES
+			(#{cardNo}, #{rechargeStore}, #{payMode}, #{rechargeAmount}, #{reward},
+			NOW(),#{createId}, 0, #{companyId})
+  	</select>
+
+  	<update id="revokeById">
+  	     UPDATE
+  	         recharge_history
+  	     SET
+  	         ACTION_TYPE = 1, REMARKS=#{remarks},
+  	         UPDATE_ID=#{userId},UPDATE_TIME = NOW()
+  	     WHERE
+  	         ID = #{id}
+  	</update>
+</mapper>

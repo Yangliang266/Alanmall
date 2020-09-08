@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.ProvinceDao">
+
+	<resultMap id="provinceResult" type="com.meishi.merchant.model.Province">
+		<result column="ID" property="id" />
+		<result column="PROVINCE_CNAME" property="provinceCname" />
+		<result column="POST_CODE" property="postCode" />
+		<result column="COUNTRY_ID" property="countryId" />
+		<result column="CODE" property="code" />
+		<result column="FIRST_PINYIN" property="firstPinyin" />
+	</resultMap>
+
+	<sql id="sqlTemplate">
+		select ID,PROVINCE_CNAME,POST_CODE,COUNTRY_ID,CODE,FIRST_PINYIN
+	</sql>
+	<select id="getAll" resultMap="provinceResult">
+		<include refid="sqlTemplate" />
+		from province where status=0
+	</select>
+	<select id="get" resultMap="provinceResult">
+		<include refid="sqlTemplate" />
+		 from province where id=#{id}
+	</select>
+
+	<select id="getProvinceByCode" resultMap="provinceResult">
+		<include refid="sqlTemplate" />
+		from province where status=0 and
+		code=#{code}
+	</select>
+	
+	<select id="getProvinceByName" resultMap="provinceResult">
+		<include refid="sqlTemplate" />
+		from province where status=0 and
+		PROVINCE_CNAME=#{name}
+	</select>
+	
+	<!-- 根据微平台ID，获取店铺对应的省份信息 -->
+	<select id="getProvinceByWechatConfigId" parameterType="java.lang.Long" resultMap="provinceResult">
+		SELECT
+			DISTINCT p.ID, p.PROVINCE_CNAME
+		FROM
+			province p
+		INNER JOIN
+			store s
+		ON 
+			p.ID = s.PROVINCE_ID
+		INNER JOIN
+			wechat_config wc
+		ON 
+			s.BRAND_ID = wc.BRAND_ID
+		WHERE
+			p.STATUS = 0
+		AND
+			s.STATUS = 0
+		AND
+			p.IS_DELETED = 0
+		AND
+			s.IS_DELETED = 0
+		<if test="_parameter != null">
+			AND wc.ID = #{_parameter}
+		</if>
+		ORDER BY p.ID ASC 
+	</select>
+	
+	<!-- 根据配置文件中的城市ID,获取相关的城市信息 -->
+	<select id="getProvinceForWangxiangyuan" parameterType="string" resultMap="provinceResult">
+		<include refid="sqlTemplate" />
+			 FROM 
+			 	province
+			 WHERE
+			 	STATUS = 0
+			 AND
+			 	IS_DELETED = 0
+		<if test="_parameter != null">
+			AND ID IN (${_parameter})
+		</if>
+	</select>
+
+
+</mapper>

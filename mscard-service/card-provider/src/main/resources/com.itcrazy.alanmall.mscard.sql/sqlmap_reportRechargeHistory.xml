@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.cardReport.dao.ReportRechargeHistoryDao">
+ 	<resultMap id="RechargeResult" type="com.meishi.card.model.RechargeHistory">
+  		<result column="CARD_NO" property="cardNo" />
+  		<result column="CATEGORY_NAME" property="categoryName" />
+  		<result column="STORE" property="rechargeStore" />
+  		<result column="PAY_MODE" property="payModeStr" />
+  		<result column="RECHARGE" property="rechargeAmount" />
+  		<result column="REWARD" property="reward" />
+  		<result column="CREATE_TIME" property="rechargeTime" />
+  		<result column="ACTION_TYPE" property="actionType" />
+  		<result column="CREATE_ID" property="rechargePerson" />
+  		<result column="UPDATE_TIME" property="updateTime" />
+  	</resultMap>
+<select id="getRechargeHistoryList" resultMap="RechargeResult" parameterType="com.meishi.card.dto.ReportRechargeHistoryDto">
+  		(SELECT
+			rh.CARD_NO,
+			cc.`NAME` AS CATEGORY_NAME,
+			rh.STORE,
+			rh.ACTION_TYPE,
+			pm.`NAME` AS PAY_MODE,
+			rh.RECHARGE,
+			rh.REWARD,
+			rh.CREATE_TIME,
+			rh.CREATE_ID
+		FROM
+			report_recharge_history rh
+		LEFT JOIN report_card_information ci ON rh.CARD_NO = ci.CARD_NO
+		LEFT JOIN report_card_category cc ON ci.CATEGORY = cc.ID
+		LEFT JOIN report_pay_mode pm ON rh.PAY_MODE = pm.ID
+		WHERE
+			1 = 1
+		AND	rh.COMPANY_ID = #{companyId}
+		AND rh.IS_DELETED = 0
+		AND ci.IS_DELETED = 0
+		AND cc.IS_DELETED = 0
+		AND (pm.IS_DELETED = 0 or pm.IS_DELETED is null)
+		<if test="rechargeTimeBegin != null and rechargeTimeBegin.toString() !='' ">
+		AND  cast(rh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{rechargeTimeBegin} as date)
+		</if>
+		<if test="rechargeTimeEnd != null and rechargeTimeEnd.toString() !='' ">
+		AND  cast(rh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{rechargeTimeEnd} as date)
+		</if>
+		<if test="stores != null and stores != ''">
+		AND  rh.STORE IN (${stores})
+		</if>
+		<if test="cardNo != null and cardNo !='' ">
+ 		AND rh.CARD_NO like concat("%",#{cardNo},"%")
+ 		</if>)
+        union all
+        (SELECT
+			rh.CARD_NO,
+			cc.`NAME` AS CATEGORY_NAME,
+			rh.STORE,
+			rh.ACTION_TYPE,
+			pm.`NAME` AS PAY_MODE,
+			-rh.RECHARGE,
+			-rh.REWARD,
+			rh.UPDATE_TIME AS CREATE_TIME,
+			rh.CREATE_ID
+		FROM
+			report_recharge_history rh
+		LEFT JOIN report_card_information ci ON rh.CARD_NO = ci.CARD_NO
+		LEFT JOIN report_card_category cc ON ci.CATEGORY = cc.ID
+		LEFT JOIN report_pay_mode pm ON rh.PAY_MODE = pm.ID
+		WHERE
+			ACTION_TYPE = 1
+		AND	rh.COMPANY_ID = #{companyId}
+		AND rh.IS_DELETED = 0
+		AND ci.IS_DELETED = 0
+		AND cc.IS_DELETED = 0
+		AND (pm.IS_DELETED = 0 or pm.IS_DELETED is null)
+		<if test="rechargeTimeBegin != null and rechargeTimeBegin.toString() !='' ">
+		AND  cast(rh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{rechargeTimeBegin} as date)
+		</if>
+		<if test="rechargeTimeEnd != null and rechargeTimeEnd.toString() !='' ">
+		AND  cast(rh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{rechargeTimeEnd} as date)
+		</if>
+		<if test="stores != null and stores != ''">
+		AND  rh.STORE IN (${stores})
+		</if>
+		<if test="cardNo != null and cardNo !='' ">
+ 		AND rh.CARD_NO like concat("%",#{cardNo},"%")
+ 		</if>)
+		ORDER BY
+			CREATE_TIME DESC
+  		LIMIT #{start}, #{limit}
+   	</select>
+
+   	<select id="getTotalRechargeHistory" resultMap="RechargeResult" parameterType="com.meishi.card.dto.ReportRechargeHistoryDto">
+   		SELECT
+   		(CASE WHEN SUM(RECHARGE) IS NULL THEN 0 ELSE SUM(RECHARGE) END) AS RECHARGE,
+   		(CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END) AS REWARD
+   		FROM
+		(
+		SELECT
+			rh.CARD_NO,
+			cc.`NAME` AS CATEGORY_NAME,
+			rh.STORE,
+			rh.ACTION_TYPE,
+			pm.`NAME` AS PAY_MODE,
+			rh.RECHARGE,
+			rh.REWARD,
+			rh.CREATE_TIME,
+			rh.CREATE_ID,
+			rh.UPDATE_TIME
+		FROM
+			report_recharge_history rh
+		LEFT JOIN report_card_information ci ON rh.CARD_NO = ci.CARD_NO
+		LEFT JOIN report_card_category cc ON ci.CATEGORY = cc.ID
+		LEFT JOIN report_pay_mode pm ON rh.PAY_MODE = pm.ID
+		WHERE
+			ACTION_TYPE IS NULL
+		AND	rh.COMPANY_ID = #{companyId}
+		AND rh.IS_DELETED = 0
+		AND ci.IS_DELETED = 0
+		AND cc.IS_DELETED = 0
+		AND (pm.IS_DELETED = 0 or pm.IS_DELETED is null)
+		<if test="rechargeTimeBegin != null and rechargeTimeBegin.toString() !='' ">
+		AND  cast(rh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{rechargeTimeBegin} as date)
+		</if>
+		<if test="rechargeTimeEnd != null and rechargeTimeEnd.toString() !='' ">
+		AND  cast(rh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{rechargeTimeEnd} as date)
+		</if>
+		<if test="stores != null and stores != ''">
+		AND  rh.STORE IN (${stores})
+		</if>
+		<if test="cardNo != null and cardNo !='' ">
+ 		AND rh.CARD_NO like concat("%",#{cardNo},"%")
+ 		</if>) t
+
+   	</select>
+
+   	<select id="getRechargeHistoryTotal" resultType="integer" parameterType="com.meishi.card.dto.ReportRechargeHistoryDto">
+  		SELECT count(CARD_NO) from
+  		((SELECT
+			rh.CARD_NO
+		FROM
+			report_recharge_history rh
+		LEFT JOIN report_card_information ci ON rh.CARD_NO = ci.CARD_NO
+		LEFT JOIN report_card_category cc ON ci.CATEGORY = cc.ID
+		LEFT JOIN report_pay_mode pm ON rh.PAY_MODE = pm.ID
+		WHERE
+			1=1
+		AND	rh.COMPANY_ID = #{companyId}
+		AND rh.IS_DELETED = 0
+		AND ci.IS_DELETED = 0
+		AND cc.IS_DELETED = 0
+		AND (pm.IS_DELETED = 0 or pm.IS_DELETED is null)
+		<if test="rechargeTimeBegin != null and rechargeTimeBegin.toString() !='' ">
+		AND  cast(rh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{rechargeTimeBegin} as date)
+		</if>
+		<if test="rechargeTimeEnd != null and rechargeTimeEnd.toString() !='' ">
+		AND  cast(rh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{rechargeTimeEnd} as date)
+		</if>
+		<if test="stores != null and stores != ''">
+		AND  rh.STORE IN (${stores})
+		</if>
+		<if test="cardNo != null and cardNo !='' ">
+ 		AND rh.CARD_NO like concat("%",#{cardNo},"%")
+ 		</if>)
+		union all
+		(
+		SELECT
+			rh.CARD_NO
+		FROM
+			report_recharge_history rh
+		LEFT JOIN report_card_information ci ON rh.CARD_NO = ci.CARD_NO
+		LEFT JOIN report_card_category cc ON ci.CATEGORY = cc.ID
+		LEFT JOIN report_pay_mode pm ON rh.PAY_MODE = pm.ID
+		WHERE
+			ACTION_TYPE = 1
+		AND	rh.COMPANY_ID = #{companyId}
+		AND rh.IS_DELETED = 0
+		AND ci.IS_DELETED = 0
+		AND cc.IS_DELETED = 0
+		AND (pm.IS_DELETED = 0 or pm.IS_DELETED is null)
+		<if test="rechargeTimeBegin != null and rechargeTimeBegin.toString() !='' ">
+		AND  cast(rh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{rechargeTimeBegin} as date)
+		</if>
+		<if test="rechargeTimeEnd != null and rechargeTimeEnd.toString() !='' ">
+		AND  cast(rh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{rechargeTimeEnd} as date)
+		</if>
+		<if test="stores != null and stores != ''">
+		AND  rh.STORE IN (${stores})
+		</if>
+		<if test="cardNo != null and cardNo !='' ">
+ 		AND rh.CARD_NO like concat("%",#{cardNo},"%")
+ 		</if>)) t
+   	</select>
+</mapper>

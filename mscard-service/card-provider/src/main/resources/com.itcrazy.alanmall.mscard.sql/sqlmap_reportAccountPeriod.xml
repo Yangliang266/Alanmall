@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.cardReport.dao.ReportAccountPeriodDao">
+  <resultMap id="ReportAccountPeriodResult" type="com.meishi.card.model.ReportAccountPeriod">
+	<result column="CARD_NO" property="cardNo" />
+  	<result column="STATUS" property="status" />
+  	<result column="NAME" property="name" />
+  	<result column="USER_NAME" property="userName" />
+  	<result column="BEFORE_BALANCE_SUM" property="beforeBalanceSum" />
+  	<result column="BEFORE_REWARD_SUM" property="beforeRewardSum" />
+  	<result column="RECHARGE_BALANCE" property="rechargeBalance" />
+  	<result column="REWARD_BALANCE" property="rewardBalance" />
+  	<result column="STORAGE_BILL" property="storageBill" />
+  	<result column="STORAGE_REWARD" property="storageReward" />
+  	<result column="SURPLUS_BALANCE" property="surplusBalance" />
+  	<result column="SURPLUS_REWARD" property="surplusReward" />
+  </resultMap>
+
+  <select id="getReportAccountPeriodList" resultMap="ReportAccountPeriodResult" parameterType="com.meishi.card.dto.ReportAccountPeriodDto">
+		SELECT rci.CARD_NO,rrc.USER_NAME,rci.`STATUS`,rcc.`NAME`,
+		<!-- 日出余额(本金) -->
+		((SELECT CASE WHEN SUM(RECHARGE) IS NULL THEN 0 ELSE SUM(RECHARGE) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))
+		-
+		(SELECT CASE WHEN SUM(BILL) IS NULL THEN 0 ELSE SUM(BILL) END FROM
+			report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))) AS BEFORE_BALANCE_SUM,
+		<!-- 日出余额（奖励） -->
+		((SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))
+		-
+		(SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))) AS BEFORE_REWARD_SUM,
+		<!-- 充值金额(本金) -->
+		(SELECT CASE WHEN SUM(RECHARGE) IS NULL THEN 0 ELSE SUM(RECHARGE) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+			AND DATE_FORMAT(rrh.CREATE_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores})) AS RECHARGE_BALANCE,
+		<!-- 充值金额（奖励） -->
+		(SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+			AND DATE_FORMAT(rrh.CREATE_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores})) AS REWARD_BALANCE,
+		<!-- 消费金额（本金） -->
+		(SELECT CASE WHEN SUM(BILL) IS NULL THEN 0 ELSE SUM(BILL) END FROM
+			report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+		AND DATE_FORMAT(rssh.CONSUME_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores})) AS STORAGE_BILL,
+		<!-- 消费金额（奖励） -->
+		(SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+		report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+			AND DATE_FORMAT(rssh.CONSUME_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores})) AS STORAGE_REWARD,
+		<!-- 卡内结余（本金） -->
+		(((SELECT CASE WHEN SUM(RECHARGE) IS NULL THEN 0 ELSE SUM(RECHARGE) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))
+		-
+		(SELECT CASE WHEN SUM(BILL) IS NULL THEN 0 ELSE SUM(BILL) END FROM
+			report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores})))
+		+
+		(SELECT CASE WHEN SUM(RECHARGE) IS NULL THEN 0 ELSE SUM(RECHARGE) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+			AND DATE_FORMAT(rrh.CREATE_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))
+		-
+		(SELECT CASE WHEN SUM(BILL) IS NULL THEN 0 ELSE SUM(BILL) END FROM
+			report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+		    AND DATE_FORMAT(rssh.CONSUME_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))) AS SURPLUS_BALANCE,
+		<!-- 卡内结余（奖励） -->
+		(((SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))
+		-
+		(SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores})))
+		+
+		(SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+			AND DATE_FORMAT(rrh.CREATE_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))
+		-
+		(SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+			AND DATE_FORMAT(rssh.CONSUME_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))) AS SURPLUS_REWARD
+		FROM
+			report_card_information rci
+		LEFT JOIN report_card_category rcc ON rci.CATEGORY = rcc.ID
+		LEFT JOIN report_registered_card rrc on rci.CARD_NO = rrc.CARD_NO
+			AND rci.COMPANY_ID = rrc.COMPANY_ID
+		WHERE
+			rci.IS_DELETED = 0
+			AND rci.COMPANY_ID = #{companyId}
+			AND rci.STORE in(#{releaseStores})
+		GROUP BY rci.CARD_NO
+		limit #{start},#{limit}
+  </select>
+
+ <select id="getReportAccountPeriodSum" resultMap="ReportAccountPeriodResult" parameterType="com.meishi.card.dto.ReportAccountPeriodDto">
+		SELECT
+		(CASE WHEN SUM(BEFORE_BALANCE_SUM) IS NULL THEN 0 ELSE SUM(BEFORE_BALANCE_SUM) END) AS BEFORE_BALANCE_SUM,
+		(CASE WHEN SUM(BEFORE_REWARD_SUM) IS NULL THEN 0 ELSE SUM(BEFORE_REWARD_SUM) END) AS BEFORE_REWARD_SUM,
+		(CASE WHEN SUM(RECHARGE_BALANCE) IS NULL THEN 0 ELSE SUM(RECHARGE_BALANCE) END) AS RECHARGE_BALANCE,
+		(CASE WHEN SUM(REWARD_BALANCE) IS NULL THEN 0 ELSE SUM(REWARD_BALANCE) END) REWARD_BALANCE,
+		(CASE WHEN SUM(STORAGE_BILL) IS NULL THEN 0 ELSE SUM(STORAGE_BILL) END) AS STORAGE_BILL,
+		(CASE WHEN SUM(STORAGE_REWARD) IS NULL THEN 0 ELSE SUM(STORAGE_REWARD) END) AS STORAGE_REWARD,
+		(CASE WHEN SUM(SURPLUS_BALANCE) IS NULL THEN 0 ELSE SUM(SURPLUS_BALANCE) END) AS SURPLUS_BALANCE,
+		(CASE WHEN SUM(SURPLUS_REWARD) IS NULL THEN 0 ELSE SUM(SURPLUS_REWARD) END) AS SURPLUS_REWARD FROM
+		(
+		SELECT rci.CARD_NO,rrc.USER_NAME,rci.`STATUS`,rcc.`NAME`,
+		<!-- 日出余额(本金) -->
+		((SELECT CASE WHEN SUM(RECHARGE) IS NULL THEN 0 ELSE SUM(RECHARGE) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))
+		-
+		(SELECT CASE WHEN SUM(BILL) IS NULL THEN 0 ELSE SUM(BILL) END FROM
+			report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))) AS BEFORE_BALANCE_SUM,
+		<!-- 日出余额（奖励） -->
+		((SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))
+		-
+		(SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))) AS BEFORE_REWARD_SUM,
+		<!-- 充值金额(本金) -->
+		(SELECT CASE WHEN SUM(RECHARGE) IS NULL THEN 0 ELSE SUM(RECHARGE) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+			AND DATE_FORMAT(rrh.CREATE_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores})) AS RECHARGE_BALANCE,
+		<!-- 充值金额（奖励） -->
+		(SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+			AND DATE_FORMAT(rrh.CREATE_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores})) AS REWARD_BALANCE,
+		<!-- 消费金额（本金） -->
+		(SELECT CASE WHEN SUM(BILL) IS NULL THEN 0 ELSE SUM(BILL) END FROM
+			report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+		AND DATE_FORMAT(rssh.CONSUME_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores})) AS STORAGE_BILL,
+		<!-- 消费金额（奖励） -->
+		(SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+		report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+			AND DATE_FORMAT(rssh.CONSUME_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores})) AS STORAGE_REWARD,
+		<!-- 卡内结余（本金） -->
+		(((SELECT CASE WHEN SUM(RECHARGE) IS NULL THEN 0 ELSE SUM(RECHARGE) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))
+		-
+		(SELECT CASE WHEN SUM(BILL) IS NULL THEN 0 ELSE SUM(BILL) END FROM
+			report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores})))
+		+
+		(SELECT CASE WHEN SUM(RECHARGE) IS NULL THEN 0 ELSE SUM(RECHARGE) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+			AND DATE_FORMAT(rrh.CREATE_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))
+		-
+		(SELECT CASE WHEN SUM(BILL) IS NULL THEN 0 ELSE SUM(BILL) END FROM
+			report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+		    AND DATE_FORMAT(rssh.CONSUME_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))) AS SURPLUS_BALANCE,
+		<!-- 卡内结余（奖励） -->
+		(((SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))
+		-
+		(SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores})))
+		+
+		(SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			report_recharge_history AS rrh
+		WHERE
+			cast(rrh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+			AND DATE_FORMAT(rrh.CREATE_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rrh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))
+		-
+		(SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			report_storage_sales_history AS rssh
+		WHERE
+			cast(rssh.CONSUME_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date)
+			AND DATE_FORMAT(rssh.CONSUME_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date)
+			AND rssh.CARD_NO = rci.CARD_NO
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND STORE in(#{releaseStores}))) AS SURPLUS_REWARD
+		FROM
+			report_card_information rci
+		LEFT JOIN report_card_category rcc ON rci.CATEGORY = rcc.ID
+		LEFT JOIN report_registered_card rrc on rci.CARD_NO = rrc.CARD_NO
+			AND rci.COMPANY_ID = rrc.COMPANY_ID
+		WHERE
+			rci.IS_DELETED = 0
+			AND rci.COMPANY_ID = #{companyId}
+			AND rci.STORE in(#{releaseStores})
+		GROUP BY rci.CARD_NO) t
+  </select>
+
+  <!-- 总记录数  -->
+  <select id="getReportAccountPeriodTotal" resultType="integer" parameterType="com.meishi.card.dto.ReportAccountPeriodDto">
+		SELECT COUNT(rci.CARD_NO) FROM
+			report_card_information rci
+		LEFT JOIN report_card_category rcc ON rci.CATEGORY = rcc.ID
+		LEFT JOIN report_registered_card rrc on rci.CARD_NO = rrc.CARD_NO
+		WHERE
+			rci.IS_DELETED = 0
+			AND rci.COMPANY_ID = #{companyId}
+			AND rci.STORE in(#{releaseStores})
+  </select>
+
+
+</mapper>

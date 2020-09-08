@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.BusinessCircleDao">
+
+	<resultMap id="businessCircleResult" type="com.meishi.merchant.model.BusinessCircle">
+		<result column="ID" property="id" />
+		<result column="NAME" property="name" />
+		<result column="CITY_ID" property="cityId" />
+	</resultMap>
+
+	<!-- 获取商圈信息一览 -->
+	<select id="getBusinessCircleListByCityId" parameterType="Long" resultMap="businessCircleResult" >
+		SELECT
+			ID,
+			NAME,
+			CITY_ID
+		FROM
+			business_circle
+		WHERE
+			CITY_ID = #{cityId} and status=0
+	</select>
+
+	<select id="get" parameterType="Long" resultMap="businessCircleResult" >
+		SELECT
+			ID,
+			NAME,
+			CITY_ID
+		FROM
+			business_circle
+		WHERE
+			id = #{id} and status=0
+	</select>
+	
+	<select id="getBusinessCircleListByProvinceId" parameterType="Long" resultMap="businessCircleResult" >
+		SELECT
+			bc.ID,
+			bc.NAME,
+			bc.CITY_ID
+		FROM
+			business_circle bc join city c on bc.city_id=c.id
+		WHERE
+			 c.province_id=#{provinceId} and bc.status=0
+	</select>
+	
+</mapper>

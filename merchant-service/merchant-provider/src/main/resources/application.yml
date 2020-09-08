@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+mybatis:
+  mapper-locations: classpath*:com/itcrazy/alanmall/merchant/sql/sqlmap_*.xml"
+  type-aliases-package: com.itcrazy.alanmall.merchant.model
+
+server:
+  port: 8091

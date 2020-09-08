@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.cardReport.dao.ReportCenterInventoryDao">
+  <resultMap id="ReportCenterInventory" type="com.meishi.card.model.ReportCenterInventory">
+        <result column="INIT_NUM" property="openingInventory" />
+		<result column="SALES_NUM" property="saleCard" />
+		<result column="IN_NUM" property="cardIn" />
+		<result column="OUT_NUM" property="cardOut" />
+		<result column="CATEGORY" property="category" />
+		<result column="CATEGORY_NAME" property="categoryName" />
+  </resultMap>
+
+
+  <sql id="sqlGetReportCenterInventoryList">
+		FROM report_card_information i
+		LEFT JOIN report_card_category c ON i.CATEGORY = c.ID
+		WHERE i.IS_DELETED = 0
+		AND i.COMPANY_ID = #{companyId}
+		AND i.STORE IS NOT NULL
+		<if test="releaseStores != null and releaseStores != '' ">
+		     AND i.STORE IN (${releaseStores})
+		</if>
+		GROUP BY i.STORE,i.CATEGORY
+  </sql>
+
+
+  <select id="getReportCenterInventoryList"  resultMap="ReportCenterInventory" parameterType="com.meishi.card.dto.ReportCenterInventoryDto">
+
+	SELECT i.STORE,c.NAME AS CATEGORY_NAME,
+	((SELECT COUNT(wi.CARD_NO) FROM report_store_warehouse_in wi
+	LEFT JOIN report_card_information ci ON wi.CARD_NO = ci.CARD_NO AND wi.COMPANY_ID = ci.COMPANY_ID
+	WHERE wi.IS_DELETED = 0 AND wi.COMPANY_ID = #{companyId} AND cast(wi.CREATE_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date) AND wi.STORE_TO = i.STORE AND ci.CATEGORY = i.CATEGORY)
+	-
+	(SELECT COUNT(CARD_NO) FROM report_card_information
+	WHERE IS_DELETED = 0 AND COMPANY_ID = #{companyId} AND cast(PUBLISH_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin}  as date) AND STORE = i.STORE AND CATEGORY = i.CATEGORY)
+	-
+	(SELECT COUNT(wo.CARD_NO) FROM report_store_warehouse_out wo
+	LEFT JOIN report_card_information ci ON wo.CARD_NO = ci.CARD_NO AND wo.COMPANY_ID = ci.COMPANY_ID
+	WHERE wo.IS_DELETED = 0 AND wo.COMPANY_ID = #{companyId} AND cast(wo.CREATE_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin}  as date) AND wo.STORE_FROM = i.STORE AND ci.CATEGORY = i.CATEGORY)) AS INIT_NUM,
+
+	(SELECT COUNT(CARD_NO) FROM report_card_information
+	WHERE IS_DELETED = 0 AND COMPANY_ID = #{companyId} AND cast(PUBLISH_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin}  as date) AND DATE_FORMAT(PUBLISH_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date) AND STORE = i.STORE AND CATEGORY = i.CATEGORY) AS SALES_NUM,
+
+	(SELECT COUNT(wo.CARD_NO) FROM report_store_warehouse_out wo
+	LEFT JOIN report_card_information ci ON wo.CARD_NO = ci.CARD_NO AND wo.COMPANY_ID = ci.COMPANY_ID
+	WHERE wo.IS_DELETED = 0 AND wo.COMPANY_ID = #{companyId} AND cast(wo.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date) AND DATE_FORMAT(wo.CREATE_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date) AND wo.STORE_FROM = i.STORE AND ci.CATEGORY = i.CATEGORY) AS OUT_NUM,
+
+	(SELECT COUNT(wi.CARD_NO) FROM report_store_warehouse_in wi
+	LEFT JOIN report_card_information ci ON wi.CARD_NO = ci.CARD_NO AND wi.COMPANY_ID = ci.COMPANY_ID
+	WHERE wi.IS_DELETED = 0 AND wi.COMPANY_ID = #{companyId} AND cast(wi.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date) AND DATE_FORMAT(wi.CREATE_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd}  as date) AND wi.STORE_TO = i.STORE AND ci.CATEGORY = i.CATEGORY) AS IN_NUM
+		<include refid="sqlGetReportCenterInventoryList"/>
+
+     ORDER BY ID DESC
+  		LIMIT #{start}, #{limit}
+
+  </select>
+
+
+   <select id="getReportCenterInventoryTotal" resultType="integer" parameterType="com.meishi.card.dto.ReportCenterInventoryDto">
+		SELECT
+  			COUNT(CATEGORY)
+  		FROM
+  			(SELECT COUNT(i.CATEGORY) AS CATEGORY
+	  		<include refid="sqlGetReportCenterInventoryList" />) a
+	</select>
+
+  <select id="getTotalInfo" resultMap="ReportCenterInventory" parameterType="com.meishi.card.dto.ReportCenterInventoryDto">
+	SELECT
+  			SUM(INIT_NUM) AS INIT_NUM,
+  			SUM(SALES_NUM) AS SALES_NUM,
+  			SUM(IN_NUM) AS IN_NUM,
+  			SUM(OUT_NUM) AS OUT_NUM
+
+
+   FROM
+
+  		(SELECT i.STORE,c.NAME AS CATEGORY_NAME,
+	((SELECT COUNT(wi.CARD_NO) FROM report_store_warehouse_in wi
+	LEFT JOIN report_card_information ci ON wi.CARD_NO = ci.CARD_NO AND wi.COMPANY_ID = ci.COMPANY_ID
+	WHERE wi.IS_DELETED = 0 AND wi.COMPANY_ID = #{companyId} AND cast(wi.CREATE_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin} as date) AND wi.STORE_TO = i.STORE AND ci.CATEGORY = i.CATEGORY)
+	-
+	(SELECT COUNT(CARD_NO) FROM report_card_information
+	WHERE IS_DELETED = 0 AND COMPANY_ID = #{companyId} AND cast(PUBLISH_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin}  as date) AND STORE = i.STORE AND CATEGORY = i.CATEGORY)
+	-
+	(SELECT COUNT(wo.CARD_NO) FROM report_store_warehouse_out wo
+	LEFT JOIN report_card_information ci ON wo.CARD_NO = ci.CARD_NO AND wo.COMPANY_ID = ci.COMPANY_ID
+	WHERE wo.IS_DELETED = 0 AND wo.COMPANY_ID = #{companyId} AND cast(wo.CREATE_TIME as date) <![CDATA[ < ]]> cast(#{timeBegin}  as date) AND wo.STORE_FROM = i.STORE AND ci.CATEGORY = i.CATEGORY)) AS INIT_NUM,
+
+	(SELECT COUNT(CARD_NO) FROM report_card_information
+	WHERE IS_DELETED = 0 AND COMPANY_ID = #{companyId} AND cast(PUBLISH_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin}  as date) AND DATE_FORMAT(PUBLISH_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date) AND STORE = i.STORE AND CATEGORY = i.CATEGORY) AS SALES_NUM,
+
+	(SELECT COUNT(wo.CARD_NO) FROM report_store_warehouse_out wo
+	LEFT JOIN report_card_information ci ON wo.CARD_NO = ci.CARD_NO AND wo.COMPANY_ID = ci.COMPANY_ID
+	WHERE wo.IS_DELETED = 0 AND wo.COMPANY_ID = #{companyId} AND cast(wo.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date) AND DATE_FORMAT(wo.CREATE_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd} as date) AND wo.STORE_FROM = i.STORE AND ci.CATEGORY = i.CATEGORY) AS OUT_NUM,
+
+	(SELECT COUNT(wi.CARD_NO) FROM report_store_warehouse_in wi
+	LEFT JOIN report_card_information ci ON wi.CARD_NO = ci.CARD_NO AND wi.COMPANY_ID = ci.COMPANY_ID
+	WHERE wi.IS_DELETED = 0 AND wi.COMPANY_ID = #{companyId} AND cast(wi.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{timeBegin} as date) AND DATE_FORMAT(wi.CREATE_TIME,"%Y-%m-%d") <![CDATA[ <= ]]> cast(#{timeEnd}  as date) AND wi.STORE_TO = i.STORE AND ci.CATEGORY = i.CATEGORY) AS IN_NUM
+		<include refid="sqlGetReportCenterInventoryList"/>
+
+     ORDER BY ID DESC
+) AS t
+
+	</select>
+</mapper>

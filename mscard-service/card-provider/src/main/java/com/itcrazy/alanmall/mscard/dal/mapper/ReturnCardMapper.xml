@@ -1,0 +1,2020 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itcrazy.alanmall.mscard.dal.mapper.ReturnCardMapper">
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECEIPT_NO" jdbcType="CHAR" property="receiptNo" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECEIPT_NO, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card (ID, CARD_NO, RECEIPT_NO, 
+      CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+      UPDATE_ID, IS_DELETED, COMPANY_ID, 
+      REASON)
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{receiptNo,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, 
+      #{reason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECEIPT_NO" jdbcType="CHAR" property="receiptNo" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECEIPT_NO, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card (ID, CARD_NO, RECEIPT_NO, 
+      CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+      UPDATE_ID, IS_DELETED, COMPANY_ID, 
+      REASON)
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{receiptNo,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, 
+      #{reason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECEIPT_NO" jdbcType="CHAR" property="receiptNo" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECEIPT_NO, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card (ID, CARD_NO, RECEIPT_NO, 
+      CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+      UPDATE_ID, IS_DELETED, COMPANY_ID, 
+      REASON)
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{receiptNo,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, 
+      #{reason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECEIPT_NO" jdbcType="CHAR" property="receiptNo" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECEIPT_NO, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card (ID, CARD_NO, RECEIPT_NO, 
+      CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+      UPDATE_ID, IS_DELETED, COMPANY_ID, 
+      REASON)
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{receiptNo,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, 
+      #{reason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECEIPT_NO" jdbcType="CHAR" property="receiptNo" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECEIPT_NO, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card (ID, CARD_NO, RECEIPT_NO, 
+      CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+      UPDATE_ID, IS_DELETED, COMPANY_ID, 
+      REASON)
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{receiptNo,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, 
+      #{reason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECEIPT_NO" jdbcType="CHAR" property="receiptNo" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECEIPT_NO, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card (ID, CARD_NO, RECEIPT_NO, 
+      CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+      UPDATE_ID, IS_DELETED, COMPANY_ID, 
+      REASON)
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{receiptNo,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, 
+      #{reason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECEIPT_NO" jdbcType="CHAR" property="receiptNo" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECEIPT_NO, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card (ID, CARD_NO, RECEIPT_NO, 
+      CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+      UPDATE_ID, IS_DELETED, COMPANY_ID, 
+      REASON)
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{receiptNo,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, 
+      #{reason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECEIPT_NO" jdbcType="CHAR" property="receiptNo" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECEIPT_NO, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card (ID, CARD_NO, RECEIPT_NO, 
+      CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+      UPDATE_ID, IS_DELETED, COMPANY_ID, 
+      REASON)
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{receiptNo,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, 
+      #{reason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECEIPT_NO" jdbcType="CHAR" property="receiptNo" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECEIPT_NO, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card (ID, CARD_NO, RECEIPT_NO, 
+      CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+      UPDATE_ID, IS_DELETED, COMPANY_ID, 
+      REASON)
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{receiptNo,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, 
+      #{reason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECEIPT_NO" jdbcType="CHAR" property="receiptNo" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECEIPT_NO, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card (ID, CARD_NO, RECEIPT_NO, 
+      CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+      UPDATE_ID, IS_DELETED, COMPANY_ID, 
+      REASON)
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{receiptNo,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, 
+      #{reason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECEIPT_NO" jdbcType="CHAR" property="receiptNo" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECEIPT_NO, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card (ID, CARD_NO, RECEIPT_NO, 
+      CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+      UPDATE_ID, IS_DELETED, COMPANY_ID, 
+      REASON)
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{receiptNo,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, 
+      #{reason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECEIPT_NO" jdbcType="CHAR" property="receiptNo" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECEIPT_NO, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from return_card
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card (ID, CARD_NO, RECEIPT_NO, 
+      CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+      UPDATE_ID, IS_DELETED, COMPANY_ID, 
+      REASON)
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{receiptNo,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, 
+      #{reason,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    insert into return_card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptNo != null">
+        RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.ReturnCard">
+    update return_card
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECEIPT_NO = #{receiptNo,jdbcType=CHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

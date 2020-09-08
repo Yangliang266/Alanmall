@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.BackCardDao">
+  <resultMap id="BackCardHistoryResult" type="com.itcrazy.alanmall.mscard.model.BackCard">
+  	<result column="CARD_NO" property="cardNo" />
+  	<result column="STATUS" property="status" />
+  	<result column="NAME" property="name" />
+  	<result column="USER_NAME" property="userName" />
+	<result column="SEX" property="sex" />
+	<result column="TELEPHONE" property="telephone" />
+	<result column="ID_NUMBER" property="idNumber" />
+	<result column="RECHARGE_BALANCE" property="rechargeBalance" />
+	<result column="REWARD" property="reward" />
+	<result column="CREDIT" property="credit" />
+	<result column="STORE" property="store" />
+	<result column="CATEGORY" property="category" />
+	<result column="MOTHER_CARD_NO" property="motherCardNo" />
+	<result column="CREDIT_STATUS" property="creditStatus" />
+	<result column="CREDIT_MAX_QUOTA" property="creditMaxQuota" />
+	<result column="PAY_MODE" property="payMode" />
+	<result column="RETURN_PRICE" property="returnPrice" />
+	<result column="REASON" property="reason" />
+	<result column="IS_NAMED" property="isNamed" />
+	<result column="FILE_NAME" property="fileName" />
+	<result column="PAY_MODE_ID" property="payModeId" />
+	<result column="PAY_MODE_NAME" property="payModeName" />
+  </resultMap>
+
+  <sql id="sqlSelectIf">
+     <if test="cardNo != null and cardNo != ''">
+		AND
+		ci.CARD_NO = #{cardNo}
+	 </if>
+  </sql>
+
+
+  <select id="getPayModeList" resultMap="BackCardHistoryResult" parameterType="com.itcrazy.alanmall.mscard.dto.BackCardDto">
+		SELECT
+		`ID` as PAY_MODE_ID,
+		`NAME` as PAY_MODE_NAME
+		FROM pay_mode
+		WHERE IS_DELETED = 0
+		AND COMPANY_ID = #{companyId}
+  </select>
+
+  <!-- 卡记录 -->
+  <select id="getPageList" resultMap="BackCardHistoryResult" parameterType="com.itcrazy.alanmall.mscard.dto.BackCardDto">
+  		SELECT
+			ci.CARD_NO,
+			ci.`STATUS`,
+			cc.`NAME`,
+			rc.USER_NAME,
+			rc.SEX,
+			rc.TELEPHONE,
+			rc.ID_NUMBER,
+			(SELECT CASE WHEN SUM(RECHARGE_BALANCE) IS NULL THEN 0 ELSE SUM(RECHARGE_BALANCE) END FROM
+			card_actived_information
+			WHERE CARD_NO = #{cardNo}
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0) as RECHARGE_BALANCE,
+			(SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			card_actived_information
+			WHERE CARD_NO = #{cardNo}
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0) as REWARD,
+			(SELECT CASE WHEN SUM(CREDIT) IS NULL THEN 0 ELSE SUM(CREDIT) END FROM
+			card_actived_information
+			WHERE CARD_NO = #{cardNo}
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0) as CREDIT,
+			ci.STORE,
+			ci.CATEGORY,
+			ci.MOTHER_CARD_NO,
+			ci.CREDIT_STATUS,
+			ci.CREDIT_MAX_QUOTA,
+			cc.IS_NAMED
+		FROM
+			card_actived_information ci
+		LEFT JOIN registered_card rc on ci.CARD_NO = rc.CARD_NO
+			and ci.COMPANY_ID = rc.COMPANY_ID
+		LEFT JOIN card_category cc on ci.CATEGORY = cc.ID
+		WHERE
+			ci.COMPANY_ID = #{companyId}
+			AND ci.IS_DELETED = 0
+		<include refid="sqlSelectIf"/>
+  </select>
+
+  <!-- 已退卡信息查询 -->
+  <select id="getPageHistory" resultMap="BackCardHistoryResult" parameterType="com.itcrazy.alanmall.mscard.dto.BackCardDto">
+		SELECT
+			ci.CARD_NO,
+			ci.`STATUS`,
+			cc.`NAME`,
+			rc.USER_NAME,
+			rc.SEX,
+			rc.TELEPHONE,
+			rc.ID_NUMBER,
+		((SELECT CASE WHEN SUM(RECHARGE_BALANCE) IS NULL THEN 0 ELSE SUM(RECHARGE_BALANCE) END FROM
+			custom_return_history
+		WHERE CARD_NO = #{cardNo}
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0)
+		-
+		(SELECT CASE WHEN SUM(RETURN_PRICE) IS NULL THEN 0 ELSE SUM(RETURN_PRICE) END FROM
+			custom_return_history
+		WHERE CARD_NO = #{cardNo}
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0)) as RECHARGE_BALANCE,
+		(SELECT CASE WHEN SUM(REWARD) IS NULL THEN 0 ELSE SUM(REWARD) END FROM
+			card_information
+		WHERE CARD_NO = #{cardNo}
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0) as REWARD,
+		(SELECT CASE WHEN SUM(CREDIT) IS NULL THEN 0 ELSE SUM(CREDIT) END FROM
+			card_information
+		WHERE CARD_NO = #{cardNo}
+			AND COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0) as CREDIT,
+		crh.FILE_NAME,
+		ci.STORE,
+		ci.CATEGORY,
+		ci.MOTHER_CARD_NO,
+		ci.CREDIT_STATUS,
+		ci.CREDIT_MAX_QUOTA,
+		cc.IS_NAMED
+		FROM
+			custom_return_history crh
+		LEFT JOIN card_information ci ON ci.CARD_NO = crh.CARD_NO
+		LEFT JOIN registered_card rc on ci.CARD_NO = rc.CARD_NO
+			AND ci.COMPANY_ID = rc.COMPANY_ID
+		LEFT JOIN card_category cc on ci.CATEGORY = cc.ID
+		WHERE
+			ci.COMPANY_ID = #{companyId}
+			AND ci.IS_DELETED = 0
+			AND ci.CARD_NO = #{cardNo}
+  </select>
+
+  <!-- 已退卡余额查询 -->
+  <select id="getDialogHistory" resultMap="BackCardHistoryResult" parameterType="com.itcrazy.alanmall.mscard.dto.BackCardDto">
+		SELECT RETURN_PRICE,PAY_MODE,REASON
+		FROM
+			custom_return_history
+		where COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+			AND CARD_NO = #{cardNo}
+  </select>
+
+  <!--余额退款记录数  -->
+  <select id="getCustomReturnHistoryCount" resultType="integer" parameterType="com.itcrazy.alanmall.mscard.dto.BackCardDto">
+		SELECT COUNT(CARD_NO)
+		FROM
+			custom_return_history
+		WHERE CARD_NO = #{cardNo}
+  </select>
+
+  <!-- active记录数 -->
+  <select id="getActivedInformationCount" resultType="integer" parameterType="com.itcrazy.alanmall.mscard.dto.BackCardDto">
+		SELECT COUNT(CARD_NO)
+		FROM card_actived_information
+		WHERE CARD_NO = #{cardNo}
+  </select>
+
+  <update id="updateCardInformationBalance" parameterType="com.itcrazy.alanmall.mscard.dto.BackCardDto">
+	  	UPDATE
+	  		card_information
+	  	SET
+	  		RECHARGE_BALANCE = #{rechargeBalance} - #{returnPrice},
+	  		UPDATE_TIME = NOW(), UPDATE_ID = #{updateId}
+	  	WHERE
+	  		CARD_NO = #{cardNo}
+	  	AND
+	  		COMPANY_ID = #{companyId}
+  </update>
+
+  <update id="updateInformation" parameterType="com.itcrazy.alanmall.mscard.model.CardInformation">
+		UPDATE card_information SET UPDATE_TIME=NOW(),UPDATE_ID=#{updateId},STATUS=#{status},CREDIT_MAX_QUOTA=0,RECHARGE_BALANCE = 0,REWARD = 0,CREDIT = 0
+		WHERE
+			CARD_NO=#{cardNo}
+			AND COMPANY_ID=#{companyId}
+			AND IS_DELETED = 0
+  </update>
+
+
+  <update id="updateActiveBalance" parameterType="com.itcrazy.alanmall.mscard.dto.BackCardDto">
+	  	UPDATE
+	  		card_actived_information
+	  	SET
+	  		RECHARGE_BALANCE = #{rechargeBalance} - #{returnPrice},
+	  		UPDATE_TIME = NOW(), UPDATE_ID = #{updateId}
+	  	WHERE
+	  		CARD_NO = #{cardNo}
+	  	AND
+	  		COMPANY_ID = #{companyId}
+  </update>
+
+  <update id="updateMother" parameterType="com.itcrazy.alanmall.mscard.dto.BackCardDto">
+	  	UPDATE
+	  		card_actived_information
+	  	SET
+	  		MOTHER_CARD_NO = null,MOTHER_TYPE = null,UPDATE_TIME = NOW(), UPDATE_ID = #{updateId}
+	  	WHERE
+	  		MOTHER_CARD_NO = #{cardNo}
+	  	AND
+	  		COMPANY_ID = #{companyId}
+  </update>
+
+
+
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.UnionRecmdRecordDao" >
+  <resultMap id="BaseResultMap" type="com.meishi.merchant.model.UnionRecmdRecord" >
+    <id column="id" property="id" />
+    <result column="consu_brand_id" property="consuBrandId" />
+    <result column="wechat_user_id" property="wechatUserId" />
+    <result column="recmd_brand_id" property="recmdBrandId" />
+    <result column="type" property="type" />
+    <result column="recmd_resource_id" property="recmdResourceId" />
+    <result column="create_time" property="createTime" />
+  </resultMap>
+  <sql id="sqlTemplate" >
+  	select
+    id, consu_brand_id, wechat_user_id, recmd_brand_id, type, recmd_resource_id, create_time
+  </sql>
+  
+  <insert id="save" parameterType="com.meishi.merchant.model.UnionRecmdRecord">
+  	<selectKey resultType="java.lang.Long" order="AFTER"
+		keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID
+	</selectKey>
+	insert into union_recmd_record 
+		(id, consu_brand_id, wechat_user_id, recmd_brand_id, type, recmd_resource_id, create_time)
+    values 
+    	(#{id}, #{consuBrandId}, #{wechatUserId}, #{recmdBrandId}, #{type}, #{recmdResourceId}, now())
+  </insert>
+  
+  <select id="getLastRecmd" parameterType="com.meishi.merchant.model.UnionRecmdRecord" resultMap="BaseResultMap">
+  	<include refid="sqlTemplate" />
+  	from
+		union_recmd_record
+	where 1=1
+	<if test="consuBrandId != null">
+	and	consu_brand_id = #{consuBrandId} 
+	</if>
+	<if test="wechatUserId != null">
+	and wechat_user_id = #{wechatUserId}
+	</if>
+	<if test="recmdBrandId != null">
+	and recmd_brand_id = #{recmdBrandId}
+	</if>
+	order by create_time DESC
+	limit 0,1
+  </select>
+  
+</mapper>

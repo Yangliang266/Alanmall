@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.user.dao.BusinessDao">
+  
+  <resultMap id="BusinessResult" type="com.meishi.user.model.Business">    
+  	<result column="ID" property="id" />
+  	<result column="NAME" property="name" />
+  	<result column="status" property="status" />
+  	<result column="remark" property="remark" />
+  </resultMap>
+  
+  <sql id="sqlTemplate">
+     select id,name,status,remark
+  </sql>
+  <select id="get" resultMap="BusinessResult">
+   <include refid="sqlTemplate" />
+     <![CDATA[
+  		from business where id=#{id}
+     ]]>
+  </select>
+  
+  <select id="getAll" resultMap="BusinessResult">
+   <include refid="sqlTemplate" />
+     <![CDATA[
+  		from business 
+     ]]>
+  </select>
+</mapper>

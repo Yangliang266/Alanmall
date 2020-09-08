@@ -1,0 +1,56 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/card?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redisson:
+    address:
+      nexus.maven.com:6379
+#      192.168.1.101:7291,
+#      192.168.1.101:7292,
+#      192.168.1.105:7293,
+#      192.168.1.105:7294,
+#      192.168.1.106:7295,
+#      192.168.1.106:7296
+    timeout: 3000
+    data-base: 0
+
+#  jedis:
+##    address: nexus.maven.com
+##    port: 6379
+#    redis-address:
+##      addressAndPort: 192.168.1.106:7291
+#      clusterAddressAndPort1: 192.168.1.101:7291
+#      clusterAddressAndPort2: 192.168.1.101:7292
+#      clusterAddressAndPort3: 192.168.1.105:7293
+#      clusterAddressAndPort4: 192.168.1.105:7294
+#      clusterAddressAndPort5: 192.168.1.106:7295
+#      clusterAddressAndPort6: 192.168.1.106:7296
+
+
+
+dubbo:
+  application:
+    name: user-service
+    owner: mathyoung
+  protocol:
+    name: dubbo
+    port: 20991
+  registry:
+    address: zookeeper://nexus.maven.com:2181
+    check: true
+    group: dubbo-dev
+    simplified: true
+  metadata-report:
+    address: zookeeper://nexus.maven.com:2181
+    retry-times: 30
+    cycle-report: false
+    group: dubbo-dev
+  scan:
+    basePackages: com.itcrazy.alanmall.user.service
+
+
+
+
+

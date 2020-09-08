@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.CompanyAlipayDao">
+
+	<resultMap id="CompanyAlipayResult" type="com.meishi.common.client.alipay.model.CompanyAlipay">
+		<result column="ID" property="id" />
+		<result column="COMPANY_ID" property="companyId" />
+		<result column="BRAND_ID" property="brandId" />
+		<result column="STORE_ID" property="storeId" />
+		<result column="PARTNER" property="partner" />
+		<result column="APP_ID" property="appId" />
+		<result column="PRIVATE_KEY" property="privateKey" />
+		<result column="PUBLIC_KEY"  property="publicKey"/>
+		<result column="MD5_KEY" property="md5Key" />
+		<result column="SIGN_TYPE" property="signType"/>
+		<result column="CREATE_TIME" property="createTime"/>
+		<result column="UPDATE_TIME" property="updateTime"/>
+		<result column="CREATE_ID" property="createId"/>
+		<result column="UPDATE_ID" property="updateId"/>
+		<result column="IS_DELETED" property="isDeleted"/>
+		<result column="APPLY_CARD_URL" property="applyCardUrl"/>
+	</resultMap>
+	<sql id="sqlTemplate">
+		SELECT ID,COMPANY_ID,BRAND_ID,STORE_ID,PARTNER,APP_ID,PRIVATE_KEY,PUBLIC_KEY,MD5_KEY,SIGN_TYPE,CREATE_TIME,UPDATE_TIME,CREATE_ID,UPDATE_ID,IS_DELETED,APPLY_CARD_URL
+	</sql>
+	
+	<select id="get" resultMap="CompanyAlipayResult">
+		<include refid="sqlTemplate" />
+		from company_alipay where is_deleted=0 and ID=#{id}
+	</select>
+
+	<insert id="save" parameterType="com.meishi.common.client.alipay.model.CompanyAlipay">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into
+		company_alipay(ID,COMPANY_ID,BRAND_ID,STORE_ID,PARTNER,APP_ID,PRIVATE_KEY,PUBLIC_KEY,MD5_KEY,SIGN_TYPE,CREATE_TIME,UPDATE_TIME,CREATE_ID,UPDATE_ID,IS_DELETED,APPLY_CARD_URL)
+		values
+		(#{id},#{companyId},#{brandId},#{storeId},#{partner},#{appId},#{privateKey},#{publicKey},#{md5Key},#{signType},now(),now(),#{createId},#{updateId},0,#{applyCardUrl})
+
+	</insert>
+
+	<update id="remove" parameterType="com.meishi.common.client.alipay.model.CompanyAlipay">
+		update company_alipay set
+		update_time=now(),update_id=#{updateId},is_deleted=1
+		where is_deleted=0
+        <if test="id != null">
+            and id=#{id}
+        </if>
+         <if test="storeId != null">
+            and STORE_ID=#{storeId }
+        </if>
+	</update>
+	
+	<update id="deleteByAppId" parameterType="com.meishi.common.client.alipay.model.CompanyAlipay">
+        update company_alipay set
+        update_time=now(),update_id=#{updateId},is_deleted=1
+        where is_deleted=0
+        <if test="id != null">
+            and id=#{id}
+        </if>
+       <if test="appId != null and partner != null">
+            AND APP_ID=#{appId} AND PARTNER=#{partner}
+        </if>
+        <if test="appId != null and partner == null">
+             AND APP_ID=#{appId}  AND PARTNER is null
+        </if>
+    </update> 
+	
+	<update id="update" parameterType="com.meishi.common.client.alipay.model.CompanyAlipay">
+		update company_alipay set update_time=now(),update_id=#{updateId}
+		<if test="partner != null">
+			,PARTNER=#{partner}
+		</if>
+		<if test="appId != null">
+			,APP_ID=#{appId}
+		</if>
+		<if test="privateKey != null">
+			,PRIVATE_KEY=#{privateKey}
+		</if>
+		<if test="md5Key != null">
+			,MD5_KEY=#{md5Key}
+		</if>
+		<if test="signType != null">
+			,SIGN_TYPE=#{signType}
+		</if>
+		<if test="applyCardUrl != null">
+			,APPLY_CARD_URL=#{applyCardUrl}
+		</if>
+		where ID=#{id}
+	</update>
+
+
+	<!-- 分页查询 -->
+	<select id="getPageList" parameterType="com.meishi.merchant.dto.CompanyAlipayDto"
+		resultMap="CompanyAlipayResult">
+		<include refid="sqlTemplate" />
+		from company_alipay
+		where is_deleted=0
+		<if test="companyId != null">
+            AND COMPANY_ID=#{companyId}
+        </if>
+		<if test="brandId != null">
+			AND BRAND_ID=#{brandId}
+		</if>
+		<if test="appId != null">
+            AND APP_ID=#{appId}
+        </if>
+        <if test="partner != null">
+            AND PARTNER=#{partner}
+        </if>
+		<if test="storeId != null">
+            AND STORE_ID=#{storeId}
+        </if>
+		ORDER BY ID DESC 
+		LIMIT #{start},#{limit}
+
+	</select>
+
+	<select id="getPageTotal" parameterType="com.meishi.merchant.dto.CompanyAlipayDto"
+		resultType="integer">
+		select count(ID) from company_alipay
+		where is_deleted=0
+		<if test="brandId != null">
+			AND BRAND_ID=#{brandId}
+		</if>
+		<if test="partner != null">
+			AND PARTNER=#{partner}
+		</if>
+	</select>
+	<!-- 分页查询结束 -->
+
+	<update id="deleteCompanyAlipayConfig" parameterType="java.util.List">
+	    <foreach collection="list" item="item" index="index" separator=";" >   
+		    update company_alipay set 
+	        update_time=now(),update_id=#{item.updateId},is_deleted=1 
+	        where IS_DELETED =0  and STORE_ID = #{item.storeId}
+        </foreach>
+	</update>
+
+<!--     <update id="deleteCompanyAlipayConfig" parameterType="com.meishi.merchant.dto.CompanyAlipayDto"> -->
+<!--         update company_alipay set  -->
+<!--         update_time=now(),update_id=#{updateId},is_deleted=1  -->
+<!--         where IS_DELETED =0  and STORE_ID in (${storeIds}) -->
+<!--     </update> -->
+	<!-- 批量保存ali配置文件 -->
+	<insert id="saveBatch" useGeneratedKeys="true" parameterType="java.util.List">
+	        insert into
+	        company_alipay(ID,COMPANY_ID,BRAND_ID,STORE_ID,PARTNER,APP_ID,PRIVATE_KEY,PUBLIC_KEY,MD5_KEY,SIGN_TYPE,CREATE_TIME,UPDATE_TIME,CREATE_ID,UPDATE_ID,IS_DELETED,APPLY_CARD_URL,SIGN)
+	        values
+	        <foreach collection="list" item="item" index="index" separator="," >   
+	            (#{item.id},#{item.companyId},#{item.brandId},#{item.storeId},#{item.partner},#{item.appId},#{item.privateKey},#{item.publicKey},#{item.md5Key}
+	            ,#{item.signType},now(),now(),#{item.createId},#{item.updateId},0,#{item.applyCardUrl})
+        </foreach>
+	</insert>
+</mapper>

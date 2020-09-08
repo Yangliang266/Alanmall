@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.HeadWarehouseInDao">
+	<resultMap id="HeadWarehouseInResult" type="com.itcrazy.alanmall.mscard.model.HeadWarehouseIn">
+		<result column="CARD_NO" property="cardNo" />
+		<result column="RECEIPT_NO" property="receiptNo" />
+		<result column="HEAD_IN_PERSON" property="headinPerson" />
+		<result column="HEAD_IN_TIME" property="headinTime" />
+		<result column="SERIAL_NO" property="serialNo" />
+		<result column="STATUS" property="status" />
+		<result column="CREATE_ID" property="createId" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="NAME" property="name" />
+	</resultMap>
+
+	<sql id="getPagePrepareTemplate">
+			FROM
+			  card_information ci
+			INNER JOIN
+			  card_category cc
+			ON
+			  ci.CATEGORY = cc.ID
+			WHERE
+			  ci.STATUS = 1
+			  AND ci.IS_DELETED = 0
+			  AND cc.IS_DELETED = 0
+			  AND ci.COMPANY_ID = #{companyId}
+		<if test="serialNo != null and serialNo != ''">
+			AND ci.SERIAL_NO like concat("%",#{serialNo},"%")
+		</if>
+		<if test="cardNo != null and cardNo !='' ">
+			AND ci.CARD_NO <![CDATA[ >= ]]> #{cardNo}
+		</if>
+		<if test="cardNoEnd != null and cardNoEnd !='' ">
+			AND ci.CARD_NO <![CDATA[ <= ]]> #{cardNoEnd}
+		</if>
+		<if test="createTimeBegin != null and createTimeBegin.toString() !='' ">
+			AND  cast(ci.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{createTimeBegin} as date)
+		</if>
+		<if test="createTimeEnd != null and createTimeEnd.toString() !='' ">
+			AND  cast(ci.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{createTimeEnd} as date)
+		</if>
+	</sql>
+
+	<!-- 制卡状态 -->
+	<select id="getPagePrepare" resultMap="HeadWarehouseInResult"
+		parameterType="com.itcrazy.alanmall.mscard.dto.HeadWarehouseInDto">
+		SELECT
+		  ci.SERIAL_NO,
+		  ci.CARD_NO,
+		  cc.NAME,
+		  ci.STATUS,
+		  ci.CREATE_TIME,
+		  ci.CREATE_ID
+		  <include refid="getPagePrepareTemplate" />
+		ORDER BY
+		  ci.CARD_NO DESC
+		LIMIT #{start}, #{limit}
+	</select>
+
+	<!-- 制卡状态的分页 -->
+	<select id="getPreparePageTotal" resultType="integer"
+		parameterType="com.itcrazy.alanmall.mscard.dto.HeadWarehouseInDto">
+		SELECT
+		  COUNT(ci.CARD_NO)
+		<include refid="getPagePrepareTemplate" />
+	</select>
+
+	<sql id="getPageHistoryTemplate">
+		FROM
+		  head_warehouse_in h
+		INNER JOIN
+		  card_information ci
+		ON
+		  ci.CARD_NO = h.CARD_NO
+	    AND
+	      ci.COMPANY_ID = h.COMPANY_ID
+		INNER JOIN
+		  card_category cc
+		ON
+		  ci.CATEGORY = cc.ID
+		WHERE
+		  h.IS_DELETED = 0
+		  AND h.COMPANY_ID = #{companyId}
+
+		<if test="serialNo != null and serialNo != ''">
+			AND ci.SERIAL_NO like concat("%",#{serialNo},"%")
+		</if>
+		<if test="cardNo != null and cardNo !='' ">
+			AND ci.CARD_NO <![CDATA[ >= ]]> #{cardNo}
+		</if>
+		<if test="cardNoEnd != null and cardNoEnd !='' ">
+			AND ci.CARD_NO <![CDATA[ <= ]]> #{cardNoEnd}
+		</if>
+		<if test="receiptNo != null and receiptNo != ''">
+		    AND h.RECEIPT_NO like CONCAT("%",#{receiptNo},"%")
+		</if>
+		<if test="createTimeBegin != null and createTimeBegin.toString() !='' ">
+			AND  cast(ci.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{createTimeBegin} as date)
+		</if>
+		<if test="createTimeEnd != null and createTimeEnd.toString() !='' ">
+			AND  cast(ci.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{createTimeEnd} as date)
+		</if>
+	</sql>
+
+	<!-- 历史记录 -->
+    <select id="getPageHistory" resultMap="HeadWarehouseInResult"
+		parameterType="com.itcrazy.alanmall.mscard.dto.HeadWarehouseInDto">
+		SELECT
+		  ci.SERIAL_NO,
+		  h.RECEIPT_NO,
+		  ci.CARD_NO,
+		  cc. NAME,
+		  ci. STATUS,
+		  ci.CREATE_TIME,
+		  ci.CREATE_ID,
+		  h.CREATE_TIME AS HEAD_IN_TIME,
+		  h.CREATE_ID AS HEAD_IN_PERSON
+		<include refid="getPageHistoryTemplate" />
+		ORDER BY
+		h.RECEIPT_NO DESC,
+		ci.CARD_NO DESC
+		LIMIT #{start}, #{limit}
+	</select>
+
+	<select id="getHistoryPageTotal" resultType="integer"
+		parameterType="com.itcrazy.alanmall.mscard.dto.HeadWarehouseInDto">
+        SELECT
+		  COUNT(ci.CARD_NO)
+		<include refid="getPageHistoryTemplate" />
+	</select>
+
+	<select id="getMaxReciptNo" resultType="string"
+		parameterType="com.itcrazy.alanmall.mscard.dto.HeadWarehouseInDto">
+		SELECT
+		  RECEIPT_NO
+		FROM
+			head_warehouse_in
+		WHERE
+			COMPANY_ID = #{companyId}
+		ORDER BY
+			CREATE_TIME DESC
+		LIMIT 1
+	</select>
+
+	<update id="updateCardInformation" parameterType="com.itcrazy.alanmall.mscard.model.HeadWarehouseIn">
+		UPDATE
+		  card_information as ci
+		SET ci.`STATUS` = 4, ci.UPDATE_ID = #{updateId}, ci.UPDATE_TIME = NOW()
+		WHERE ci.CARD_NO = #{cardNo} AND COMPANY_ID = #{companyId}
+	</update>
+
+	<!-- 添加数据 -->
+	<insert id="insertHeadWarehouseIn" parameterType="com.itcrazy.alanmall.mscard.model.HeadWarehouseIn">
+		INSERT INTO
+		  head_warehouse_in
+		(CARD_NO,RECEIPT_NO,CREATE_TIME,CREATE_ID,IS_DELETED,COMPANY_ID)
+		VALUES(#{cardNo},#{receiptNo},NOW(),#{createId},0,#{companyId})
+	</insert>
+</mapper>

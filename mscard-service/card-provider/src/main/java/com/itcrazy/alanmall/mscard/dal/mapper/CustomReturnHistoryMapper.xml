@@ -1,0 +1,2788 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itcrazy.alanmall.mscard.dal.mapper.CustomReturnHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECHARGE_BALANCE" jdbcType="INTEGER" property="rechargeBalance" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREDIT" jdbcType="DECIMAL" property="credit" />
+    <result column="RETURN_PRICE" jdbcType="DECIMAL" property="returnPrice" />
+    <result column="PAY_MODE" jdbcType="INTEGER" property="payMode" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECHARGE_BALANCE, REWARD, CREDIT, RETURN_PRICE, PAY_MODE, FILE_NAME, 
+    CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history (ID, CARD_NO, RECHARGE_BALANCE, 
+      REWARD, CREDIT, RETURN_PRICE, 
+      PAY_MODE, FILE_NAME, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, REASON
+      )
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{rechargeBalance,jdbcType=INTEGER}, 
+      #{reward,jdbcType=INTEGER}, #{credit,jdbcType=DECIMAL}, #{returnPrice,jdbcType=DECIMAL}, 
+      #{payMode,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{reason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="credit != null">
+        CREDIT,
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE,
+      </if>
+      <if test="payMode != null">
+        PAY_MODE,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        CREDIT = #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        PAY_MODE = #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECHARGE_BALANCE" jdbcType="INTEGER" property="rechargeBalance" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREDIT" jdbcType="DECIMAL" property="credit" />
+    <result column="RETURN_PRICE" jdbcType="DECIMAL" property="returnPrice" />
+    <result column="PAY_MODE" jdbcType="INTEGER" property="payMode" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECHARGE_BALANCE, REWARD, CREDIT, RETURN_PRICE, PAY_MODE, FILE_NAME, 
+    CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history (ID, CARD_NO, RECHARGE_BALANCE, 
+      REWARD, CREDIT, RETURN_PRICE, 
+      PAY_MODE, FILE_NAME, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, REASON
+      )
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{rechargeBalance,jdbcType=INTEGER}, 
+      #{reward,jdbcType=INTEGER}, #{credit,jdbcType=DECIMAL}, #{returnPrice,jdbcType=DECIMAL}, 
+      #{payMode,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{reason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="credit != null">
+        CREDIT,
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE,
+      </if>
+      <if test="payMode != null">
+        PAY_MODE,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        CREDIT = #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        PAY_MODE = #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECHARGE_BALANCE" jdbcType="INTEGER" property="rechargeBalance" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREDIT" jdbcType="DECIMAL" property="credit" />
+    <result column="RETURN_PRICE" jdbcType="DECIMAL" property="returnPrice" />
+    <result column="PAY_MODE" jdbcType="INTEGER" property="payMode" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECHARGE_BALANCE, REWARD, CREDIT, RETURN_PRICE, PAY_MODE, FILE_NAME, 
+    CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history (ID, CARD_NO, RECHARGE_BALANCE, 
+      REWARD, CREDIT, RETURN_PRICE, 
+      PAY_MODE, FILE_NAME, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, REASON
+      )
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{rechargeBalance,jdbcType=INTEGER}, 
+      #{reward,jdbcType=INTEGER}, #{credit,jdbcType=DECIMAL}, #{returnPrice,jdbcType=DECIMAL}, 
+      #{payMode,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{reason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="credit != null">
+        CREDIT,
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE,
+      </if>
+      <if test="payMode != null">
+        PAY_MODE,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        CREDIT = #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        PAY_MODE = #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECHARGE_BALANCE" jdbcType="INTEGER" property="rechargeBalance" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREDIT" jdbcType="DECIMAL" property="credit" />
+    <result column="RETURN_PRICE" jdbcType="DECIMAL" property="returnPrice" />
+    <result column="PAY_MODE" jdbcType="INTEGER" property="payMode" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECHARGE_BALANCE, REWARD, CREDIT, RETURN_PRICE, PAY_MODE, FILE_NAME, 
+    CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history (ID, CARD_NO, RECHARGE_BALANCE, 
+      REWARD, CREDIT, RETURN_PRICE, 
+      PAY_MODE, FILE_NAME, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, REASON
+      )
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{rechargeBalance,jdbcType=INTEGER}, 
+      #{reward,jdbcType=INTEGER}, #{credit,jdbcType=DECIMAL}, #{returnPrice,jdbcType=DECIMAL}, 
+      #{payMode,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{reason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="credit != null">
+        CREDIT,
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE,
+      </if>
+      <if test="payMode != null">
+        PAY_MODE,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        CREDIT = #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        PAY_MODE = #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECHARGE_BALANCE" jdbcType="INTEGER" property="rechargeBalance" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREDIT" jdbcType="DECIMAL" property="credit" />
+    <result column="RETURN_PRICE" jdbcType="DECIMAL" property="returnPrice" />
+    <result column="PAY_MODE" jdbcType="INTEGER" property="payMode" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECHARGE_BALANCE, REWARD, CREDIT, RETURN_PRICE, PAY_MODE, FILE_NAME, 
+    CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history (ID, CARD_NO, RECHARGE_BALANCE, 
+      REWARD, CREDIT, RETURN_PRICE, 
+      PAY_MODE, FILE_NAME, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, REASON
+      )
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{rechargeBalance,jdbcType=INTEGER}, 
+      #{reward,jdbcType=INTEGER}, #{credit,jdbcType=DECIMAL}, #{returnPrice,jdbcType=DECIMAL}, 
+      #{payMode,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{reason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="credit != null">
+        CREDIT,
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE,
+      </if>
+      <if test="payMode != null">
+        PAY_MODE,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        CREDIT = #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        PAY_MODE = #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECHARGE_BALANCE" jdbcType="INTEGER" property="rechargeBalance" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREDIT" jdbcType="DECIMAL" property="credit" />
+    <result column="RETURN_PRICE" jdbcType="DECIMAL" property="returnPrice" />
+    <result column="PAY_MODE" jdbcType="INTEGER" property="payMode" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECHARGE_BALANCE, REWARD, CREDIT, RETURN_PRICE, PAY_MODE, FILE_NAME, 
+    CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history (ID, CARD_NO, RECHARGE_BALANCE, 
+      REWARD, CREDIT, RETURN_PRICE, 
+      PAY_MODE, FILE_NAME, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, REASON
+      )
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{rechargeBalance,jdbcType=INTEGER}, 
+      #{reward,jdbcType=INTEGER}, #{credit,jdbcType=DECIMAL}, #{returnPrice,jdbcType=DECIMAL}, 
+      #{payMode,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{reason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="credit != null">
+        CREDIT,
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE,
+      </if>
+      <if test="payMode != null">
+        PAY_MODE,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        CREDIT = #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        PAY_MODE = #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECHARGE_BALANCE" jdbcType="INTEGER" property="rechargeBalance" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREDIT" jdbcType="DECIMAL" property="credit" />
+    <result column="RETURN_PRICE" jdbcType="DECIMAL" property="returnPrice" />
+    <result column="PAY_MODE" jdbcType="INTEGER" property="payMode" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECHARGE_BALANCE, REWARD, CREDIT, RETURN_PRICE, PAY_MODE, FILE_NAME, 
+    CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history (ID, CARD_NO, RECHARGE_BALANCE, 
+      REWARD, CREDIT, RETURN_PRICE, 
+      PAY_MODE, FILE_NAME, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, REASON
+      )
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{rechargeBalance,jdbcType=INTEGER}, 
+      #{reward,jdbcType=INTEGER}, #{credit,jdbcType=DECIMAL}, #{returnPrice,jdbcType=DECIMAL}, 
+      #{payMode,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{reason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="credit != null">
+        CREDIT,
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE,
+      </if>
+      <if test="payMode != null">
+        PAY_MODE,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        CREDIT = #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        PAY_MODE = #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECHARGE_BALANCE" jdbcType="INTEGER" property="rechargeBalance" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREDIT" jdbcType="DECIMAL" property="credit" />
+    <result column="RETURN_PRICE" jdbcType="DECIMAL" property="returnPrice" />
+    <result column="PAY_MODE" jdbcType="INTEGER" property="payMode" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECHARGE_BALANCE, REWARD, CREDIT, RETURN_PRICE, PAY_MODE, FILE_NAME, 
+    CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history (ID, CARD_NO, RECHARGE_BALANCE, 
+      REWARD, CREDIT, RETURN_PRICE, 
+      PAY_MODE, FILE_NAME, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, REASON
+      )
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{rechargeBalance,jdbcType=INTEGER}, 
+      #{reward,jdbcType=INTEGER}, #{credit,jdbcType=DECIMAL}, #{returnPrice,jdbcType=DECIMAL}, 
+      #{payMode,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{reason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="credit != null">
+        CREDIT,
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE,
+      </if>
+      <if test="payMode != null">
+        PAY_MODE,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        CREDIT = #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        PAY_MODE = #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECHARGE_BALANCE" jdbcType="INTEGER" property="rechargeBalance" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREDIT" jdbcType="DECIMAL" property="credit" />
+    <result column="RETURN_PRICE" jdbcType="DECIMAL" property="returnPrice" />
+    <result column="PAY_MODE" jdbcType="INTEGER" property="payMode" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECHARGE_BALANCE, REWARD, CREDIT, RETURN_PRICE, PAY_MODE, FILE_NAME, 
+    CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history (ID, CARD_NO, RECHARGE_BALANCE, 
+      REWARD, CREDIT, RETURN_PRICE, 
+      PAY_MODE, FILE_NAME, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, REASON
+      )
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{rechargeBalance,jdbcType=INTEGER}, 
+      #{reward,jdbcType=INTEGER}, #{credit,jdbcType=DECIMAL}, #{returnPrice,jdbcType=DECIMAL}, 
+      #{payMode,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{reason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="credit != null">
+        CREDIT,
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE,
+      </if>
+      <if test="payMode != null">
+        PAY_MODE,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        CREDIT = #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        PAY_MODE = #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECHARGE_BALANCE" jdbcType="INTEGER" property="rechargeBalance" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREDIT" jdbcType="DECIMAL" property="credit" />
+    <result column="RETURN_PRICE" jdbcType="DECIMAL" property="returnPrice" />
+    <result column="PAY_MODE" jdbcType="INTEGER" property="payMode" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECHARGE_BALANCE, REWARD, CREDIT, RETURN_PRICE, PAY_MODE, FILE_NAME, 
+    CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history (ID, CARD_NO, RECHARGE_BALANCE, 
+      REWARD, CREDIT, RETURN_PRICE, 
+      PAY_MODE, FILE_NAME, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, REASON
+      )
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{rechargeBalance,jdbcType=INTEGER}, 
+      #{reward,jdbcType=INTEGER}, #{credit,jdbcType=DECIMAL}, #{returnPrice,jdbcType=DECIMAL}, 
+      #{payMode,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{reason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="credit != null">
+        CREDIT,
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE,
+      </if>
+      <if test="payMode != null">
+        PAY_MODE,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        CREDIT = #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        PAY_MODE = #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECHARGE_BALANCE" jdbcType="INTEGER" property="rechargeBalance" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREDIT" jdbcType="DECIMAL" property="credit" />
+    <result column="RETURN_PRICE" jdbcType="DECIMAL" property="returnPrice" />
+    <result column="PAY_MODE" jdbcType="INTEGER" property="payMode" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECHARGE_BALANCE, REWARD, CREDIT, RETURN_PRICE, PAY_MODE, FILE_NAME, 
+    CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history (ID, CARD_NO, RECHARGE_BALANCE, 
+      REWARD, CREDIT, RETURN_PRICE, 
+      PAY_MODE, FILE_NAME, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, REASON
+      )
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{rechargeBalance,jdbcType=INTEGER}, 
+      #{reward,jdbcType=INTEGER}, #{credit,jdbcType=DECIMAL}, #{returnPrice,jdbcType=DECIMAL}, 
+      #{payMode,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{reason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="credit != null">
+        CREDIT,
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE,
+      </if>
+      <if test="payMode != null">
+        PAY_MODE,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        CREDIT = #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        PAY_MODE = #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="RECHARGE_BALANCE" jdbcType="INTEGER" property="rechargeBalance" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREDIT" jdbcType="DECIMAL" property="credit" />
+    <result column="RETURN_PRICE" jdbcType="DECIMAL" property="returnPrice" />
+    <result column="PAY_MODE" jdbcType="INTEGER" property="payMode" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    <result column="REASON" jdbcType="LONGVARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, RECHARGE_BALANCE, REWARD, CREDIT, RETURN_PRICE, PAY_MODE, FILE_NAME, 
+    CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REASON
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from custom_return_history
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history (ID, CARD_NO, RECHARGE_BALANCE, 
+      REWARD, CREDIT, RETURN_PRICE, 
+      PAY_MODE, FILE_NAME, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, REASON
+      )
+    values (#{id,jdbcType=BIGINT}, #{cardNo,jdbcType=VARCHAR}, #{rechargeBalance,jdbcType=INTEGER}, 
+      #{reward,jdbcType=INTEGER}, #{credit,jdbcType=DECIMAL}, #{returnPrice,jdbcType=DECIMAL}, 
+      #{payMode,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{reason,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    insert into custom_return_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="credit != null">
+        CREDIT,
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE,
+      </if>
+      <if test="payMode != null">
+        PAY_MODE,
+      </if>
+      <if test="fileName != null">
+        FILE_NAME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="reason != null">
+        REASON,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="rechargeBalance != null">
+        RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        CREDIT = #{credit,jdbcType=DECIMAL},
+      </if>
+      <if test="returnPrice != null">
+        RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="payMode != null">
+        PAY_MODE = #{payMode,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null">
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="reason != null">
+        REASON = #{reason,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REASON = #{reason,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.CustomReturnHistory">
+    update custom_return_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      RECHARGE_BALANCE = #{rechargeBalance,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREDIT = #{credit,jdbcType=DECIMAL},
+      RETURN_PRICE = #{returnPrice,jdbcType=DECIMAL},
+      PAY_MODE = #{payMode,jdbcType=INTEGER},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.OrderListDao">
+
+  <resultMap id="OrderListResult" type="com.itcrazy.alanmall.mscard.model.OrderList">
+  	<result column="ID" property="orderNo" />
+  	<result column="STATUS" property="status" />
+  	<result column="PAY_MODE" property="consumeMode" />
+  	<result column="TELEPHONE" property="telephone" />
+  	<result column="STORE" property="store" />
+  	<result column="BILL" property="bill" />
+  	<result column="REWARD" property="addReward" />
+  	<result column="COMPANY_ID" property="companyId" />
+  	<result column="STORAGE_BILL" property="storageBill" />
+  	<result column="STORAGE_REWARD" property="storageReward" />
+  	<result column="CREDIT_BILL" property="creditBill" />
+  	<result column="PAY_MODE_BILL" property="payModeBill" />
+  	<result column="OTHER_PAY_MODE" property="otherPayMode" />
+  	<result column="CREATE_TIME" property="createTime" />
+  	<result column="STORAGE_REMARKS" property="storageRemarks" />
+  </resultMap>
+
+  <insert id="addOrderList" parameterType="com.itcrazy.alanmall.mscard.model.OrderList">
+		INSERT INTO
+			order_list
+			(ID, STATUS, PAY_MODE, CARD_NO, CATEGORY, TELEPHONE, STORE, BILL, REWARD,
+			 CREATE_TIME, CREATE_ID, IS_DELETED,COMPANY_ID)
+		VALUES
+			(#{orderNo}, #{status}, #{consumeMode}, #{cardNo}, #{category},
+			 #{telephone}, #{store}, #{bill}, #{addReward},
+			NOW(),#{createId}, 0, #{companyId})
+  </insert>
+
+  <select id="getOrderListByOrderNo" resultMap="OrderListResult">
+  		SELECT
+  			ID, STATUS, PAY_MODE, TELEPHONE, STORE,
+  			BILL, REWARD, CREATE_TIME, COMPANY_ID
+  		FROM
+  			order_list
+  		WHERE
+  			ID = #{orderNo}
+  		AND	COMPANY_ID = #{companyId}
+  		AND IS_DELETED = 0
+  </select>
+
+  <update id="revoke">
+		UPDATE
+			order_list
+		SET
+			STATUS = 2, UPDATE_ID =#{userId},
+			UPDATE_TIME = NOW()
+		WHERE
+			ID = #{orderNo}
+		AND COMPANY_ID = #{companyId}
+  </update>
+
+  <!-- 查询订单消费详情 -->
+  <select id="getOrderList" resultMap="OrderListResult" parameterType="com.itcrazy.alanmall.mscard.dto.OrderListDto">
+  		SELECT
+  			o.BILL AS BILL,
+  			s.BILL AS STORAGE_BILL, s.REWARD AS STORAGE_REWARD,s.REMARKS AS STORAGE_REMARKS,
+  			c.CREDIT_BILL AS CREDIT_BILL,
+  			os.BILL AS PAY_MODE_BILL, os.PAY_MODE AS OTHER_PAY_MODE
+  		FROM
+  			order_list o
+  		LEFT JOIN
+			storage_sales_history s ON o.ID = s.ID AND o.COMPANY_ID = s.COMPANY_ID
+		LEFT JOIN
+			credit_sales_history c ON o.ID = c.ID AND o.COMPANY_ID = c.COMPANY_ID
+		LEFT JOIN
+			other_sales_history os ON o.ID = os.ID AND o.COMPANY_ID = os.COMPANY_ID
+  		WHERE
+  			o.ID = #{orderNo}
+  		AND	o.COMPANY_ID = #{companyId}
+  		AND o.IS_DELETED = 0
+  </select>
+
+  <!--查询订单号是否已存在-->
+  <select id="getCountByOrderNo" resultType="integer">
+		SELECT
+		  COUNT(ID)
+		FROM
+			order_list
+		WHERE ID = #{orderNo}
+  </select>
+</mapper>

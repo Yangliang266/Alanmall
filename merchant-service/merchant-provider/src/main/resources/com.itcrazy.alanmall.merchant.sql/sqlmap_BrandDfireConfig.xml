@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.BrandDfireConfigDao">
+
+	<resultMap id="BaseResultMap" type="com.meishi.merchant.model.BrandDfireConfig">
+		<result column="ID" property="id" />
+		<result column="COMPANY_ID" property="companyId" />
+		<result column="BRAND_ID" property="brandId" />
+		<result column="APP_KEY" property="appKey" />
+		<result column="SECRET" property="secret" />
+		<result column="CHAIN_ENTITY_ID" property="chainEntityId" />
+		<result column="PLATE_ENTITY_ID" property="plateEntityId" />
+		<result column="CREATE_ID" property="createId" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="UPDATE_ID" property="updateId" />
+		<result column="UPDATE_TIME" property="updateTime" />
+		<result column="IS_DELETED" property="isDeleted" />
+	</resultMap>
+	
+	<sql id="sqlTemplate">
+     SELECT 
+     	ID, COMPANY_ID, BRAND_ID, APP_KEY, SECRET, CHAIN_ENTITY_ID, PLATE_ENTITY_ID, CREATE_ID, 
+     	CREATE_TIME, UPDATE_ID, UPDATE_TIME, IS_DELETED
+  	</sql>
+
+	
+
+	<insert id="save" parameterType="com.meishi.merchant.model.BrandDfireConfig">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		INSERT INTO brand_dfire_config(
+			COMPANY_ID,
+			BRAND_ID,
+			APP_KEY,
+			SECRET,
+			CHAIN_ENTITY_ID,
+			PLATE_ENTITY_ID,
+			CREATE_TIME,
+			UPDATE_TIME,
+			CREATE_ID,
+			UPDATE_ID,
+			IS_DELETED)
+		VALUES 
+			(#{companyId},
+			#{brandId},
+			#{appKey},
+			#{secret},
+			#{chainEntityId},
+			#{plateEntityId},
+			now(),
+			now(),
+			#{createId},
+			#{createId},
+			0)
+	</insert>
+	
+	<select id="getBrandDfireConfigByBrandId" parameterType="long" resultMap="BaseResultMap">
+		<include refid="sqlTemplate" />
+		FROM
+			brand_dfire_config
+		WHERE
+			IS_DELETED = 0
+		AND
+			BRAND_ID = #{brandId}
+	</select>
+	 
+	<select id="getBrandDfireConfigByChainEntityId" parameterType="map" resultMap="BaseResultMap">
+		<include refid="sqlTemplate" />
+			FROM
+				brand_dfire_config
+			WHERE
+				IS_DELETED = 0
+			<if test="chainEntityId!=null">
+				AND CHAIN_ENTITY_ID = #{chainEntityId}
+			</if>
+			<if test="plateEntityId!=null">
+				AND PLATE_ENTITY_ID = #{plateEntityId}
+			</if>
+	
+	</select>
+	<update id="deleteByBrandId" parameterType="map">
+    	UPDATE
+    		brand_dfire_config 
+    	SET
+    		IS_DELETED = 1,
+    		UPDATE_ID = #{updateId},
+    		UPDATE_TIME = now()
+    	WHERE
+			BRAND_ID = #{brandId}
+  	</update>
+
+	<update id="updateByBrandId" parameterType="com.meishi.merchant.model.BrandDfireConfig">
+		UPDATE
+			brand_dfire_config
+		SET
+			UPDATE_TIME=now(),
+			UPDATE_ID=#{updateId},
+			COMPANY_ID=#{companyId},
+			BRAND_ID=#{brandId},
+			APP_KEY=#{appKey},
+			SECRET=#{secret},
+			CHAIN_ENTITY_ID=#{chainEntityId},
+			PLATE_ENTITY_ID=#{plateEntityId}
+		WHERE
+			BRAND_ID = #{brandId}
+	</update>
+	 
+</mapper>

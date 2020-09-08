@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.BrandCuisineDao">
+
+	<resultMap id="BrandCuisineResult" type="com.meishi.merchant.model.BrandCuisine">
+		<result column="id" property="id" />
+		<result column="brand_id" property="brandId" />
+		<result column="cuisine_Id" property="cuisineId" />
+		<result column="cuisine_Class_Id" property="cuisineClassId" />
+		<result column="cuisine_Name" property="cuisineName" />
+		<result column="cuisine_Class_Name" property="cuisineClassName" />
+	</resultMap>
+
+	<resultMap id="BrandCuisineClassResult" type="com.meishi.merchant.model.BrandCuisine">
+		<result column="brand_id" property="brandId" />
+		<result column="cuisine_Class_Id" property="cuisineClassId" />
+		<result column="cuisine_Class_Name" property="cuisineClassName" />
+	</resultMap>
+
+	<resultMap id="checkBrandCuisineResult" type="com.meishi.merchant.model.BrandCuisine">
+		<result column="id" property="id" />
+		<result column="brand_id" property="brandId" />
+	</resultMap>
+
+
+
+
+	<select id="getCuisineListByBrandId" resultMap="BrandCuisineResult"
+		parameterType="long">
+
+		select bc.id,bc.brand_id,c.id as cuisine_id,cc.id as
+		cuisine_class_id,c.cuisine_name,cc.cuisine_class_name
+		from brand_cuisine bc join cuisine c on bc.cuisine_id=c.id
+		join cuisine_class cc on bc.cuisine_class_id=cc.id where
+		bc.brand_id=#{brandId}
+	</select>
+
+	<select id="getCuisineClassListByBrandId" resultMap="BrandCuisineClassResult"
+		parameterType="com.meishi.merchant.model.BrandCuisine">
+
+		select distinct bc.brand_id,cc.id as cuisine_class_id,cc.cuisine_class_name
+		from brand_cuisine bc join cuisine_class cc on
+		bc.cuisine_class_id=cc.id
+		where bc.brand_id=#{brandId} and bc.type=#{type}
+	</select>
+
+	<insert id="save" parameterType="com.meishi.merchant.model.BrandCuisine">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into brand_cuisine( id,brand_id,cuisine_id,cuisine_class_id,type)
+		values (#{id},#{brandId},#{cuisineId},#{cuisineClassId},#{type})
+	</insert>
+
+	<delete id="removeBrandCuisineByBrandId" parameterType="com.meishi.merchant.model.BrandCuisine">
+		delete from brand_cuisine where brand_id=#{brandId} and type=#{type}
+	</delete>
+
+	<select id="checkBrandCuisine" resultMap="checkBrandCuisineResult"
+		parameterType="com.meishi.merchant.model.BrandCuisine">
+		select id ,brand_id from brand_cuisine where cuisine_Id=#{cuisineId} and
+		cuisine_Class_Id =#{cuisineClassId} and brand_id=#{brandId}
+	</select>
+
+</mapper>

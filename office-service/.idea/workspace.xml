@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3473e79f-84ae-4057-8336-4261785ff89d" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\repository" />
+        <option name="mavenHome" value="$PROJECT_DIR$/../../../apache-maven-3.6.3" />
+        <option name="userSettingsFile" value="D:\Projectforming\apache-maven-3.6.3\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1gJoZeOx209Ie3zqcqibEwfEL7T" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="jdk.selected.JAVA_MODULE" value="1.8 (2)" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../mscard-service" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projectforming\workspace\alanmall\office-service\office-provider\src\main\java\com\itcrazy\alanmall\office" />
+      <recent name="D:\Projectforming\workspace\alanmall\office-service\office-api\src\main\java\com\itcrazy\alanmall\office" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="OfficeProviderApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="office-provider" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.itcrazy.alanmall.office.OfficeProviderApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3473e79f-84ae-4057-8336-4261785ff89d" name="Default Changelist" comment="" />
+      <created>1597842112610</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1597842112610</updated>
+      <workItem from="1597842116629" duration="6421000" />
+      <workItem from="1597905652836" duration="664000" />
+      <workItem from="1598282483967" duration="645000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="499" y="201" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1597842528960">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="499" y="201" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.864@0.0.1536.864" timestamp="1597842528960" />
+    <state x="549" y="207" key="FileChooserDialogImpl" timestamp="1598282492475">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="549" y="207" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1598282492475" />
+    <state width="1478" height="220" key="GridCell.Tab.0.bottom" timestamp="1597912088938">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1478" height="220" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1597912088938" />
+    <state width="1478" height="220" key="GridCell.Tab.0.center" timestamp="1597912088938">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1478" height="220" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1597912088938" />
+    <state width="1478" height="220" key="GridCell.Tab.0.left" timestamp="1597912088938">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1478" height="220" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1597912088938" />
+    <state width="1478" height="220" key="GridCell.Tab.0.right" timestamp="1597912088938">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state width="1478" height="220" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1597912088938" />
+    <state x="461" y="275" key="com.intellij.ide.util.TipDialog" timestamp="1598282484570">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="461" y="275" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1598282484570" />
+    <state x="390" y="176" width="755" height="548" key="find.popup" timestamp="1597842728427">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="390" y="176" width="755" height="548" key="find.popup/0.0.1536.864@0.0.1536.864" timestamp="1597842728427" />
+    <state x="178" y="155" key="new project wizard" timestamp="1597842365168">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="178" y="155" key="new project wizard/0.0.1536.864@0.0.1536.864" timestamp="1597842365168" />
+  </component>
+</project>

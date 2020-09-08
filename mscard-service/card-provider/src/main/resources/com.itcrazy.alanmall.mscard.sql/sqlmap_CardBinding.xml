@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.CardBindingDao">
+
+
+  <resultMap id="CardBindingResult" type="com.itcrazy.alanmall.mscard.model.Credit">
+  	  <result column="CARD_NO" property="cardNo" />
+  	  <result column="NAME" property="name" />
+  	  <result column="MOTHER_CARD_NO" property="motherCardNo" />
+  	  <result column="USER_NAME" property="userName" />
+	  <result column="SEX" property="sex" />
+	  <result column="TELEPHONE" property="telephone" />
+	  <result column="ID_NUMBER" property="idNumber" />
+	  <result column="CREDIT_STATUS" property="creditStatus" />
+	  <result column="CREDIT_MAX_QUOTA" property="creditMaxQuota" />
+  </resultMap>
+
+  <!-- 未绑定子卡查询 -->
+  <select id="getCardBindingList" resultMap="CardBindingResult" parameterType="com.itcrazy.alanmall.mscard.dto.CreditDto">
+  		SELECT
+		    ci.CARD_NO,
+		    cc.NAME,
+			rc.USER_NAME,
+			rc.SEX,
+			rc.TELEPHONE,
+			rc.ID_NUMBER,
+			ci.CREDIT_STATUS,
+			ci.CREDIT_MAX_QUOTA,
+			ci.STATUS
+		FROM
+			card_actived_information ci
+		LEFT JOIN registered_card rc on ci.CARD_NO = rc.CARD_NO AND ci.COMPANY_ID = rc.COMPANY_ID
+		LEFT JOIN card_category cc on ci.CATEGORY = cc.ID
+		WHERE 1=1
+		<if test="cardNo!=null and cardNo!=''" >
+  	 	 AND ci.CARD_NO like concat("%",#{cardNo},"%")
+  		</if>
+  		 AND ci.CARD_NO NOT IN
+		 (
+			 SELECT DISTINCT ci.MOTHER_CARD_NO
+			 FROM card_actived_information ci
+			 WHERE ci.IS_DELETED = 0
+			  AND ci.COMPANY_ID = #{companyId}
+			  AND ci.MOTHER_CARD_NO !=''
+		 )
+		 AND ci.CARD_NO NOT IN
+		 (
+			 SELECT DISTINCT cs.CARD_NO
+			 FROM credit_setting cs
+			 WHERE cs.IS_DELETED = 0
+			  AND cs.COMPANY_ID = #{companyId}
+		 )
+		 AND ci.CARD_NO != #{motherCardNo}
+		 AND ci.MOTHER_CARD_NO IS NULL
+		 AND ci.STATUS = 9
+		 AND cc.IS_CREDIT = 0
+
+  </select>
+</mapper>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.RegisteredCardDao">
+
+	<resultMap id="RegisteredCardResult" type="com.itcrazy.alanmall.mscard.model.RegisteredCard">
+        <result column="CARD_NO" property="cardNo" />
+        <result column="STATUS" property="status"/>
+        <result column="USER_NAME" property="userName"/>
+        <result column="SEX" property="sex"/>
+        <result column="TELEPHONE" property="telephone"/>
+        <result column="ID_NUMBER" property="idNumber"/>
+        <result column="PAY_PSW" property="payPsw"/>
+        <result column="MAIL" property="mail"/>
+        <result column="ADDRESS" property="address"/>
+        <result column="BIRTHDAY" property="birthday"/>
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="CREATE_ID" property="createId" />
+        <result column="COMPANY_ID" property="companyId"/>
+        <result column="CATEGORY" property="category"/>
+	</resultMap>
+
+	<!-- 添加记名卡信息 -->
+	<insert id="save" parameterType="com.itcrazy.alanmall.mscard.model.RegisteredCard">
+        INSERT INTO
+        	registered_card
+           	(CARD_NO, USER_NAME, SEX, TELEPHONE, ID_NUMBER, PAY_PSW,
+           	MAIL, ADDRESS, BIRTHDAY, CREATE_TIME, CREATE_ID, IS_DELETED, COMPANY_ID)
+        VALUES
+               (#{cardNo}, #{userName}, #{sex}, #{telephone}, #{idNumber}, #{payPsw},
+               #{mail}, #{address}, #{birthday}, NOW(), #{createId}, 0, #{companyId})
+	</insert>
+
+	<!-- 修改卡状态 -->
+	<update id="updateCardInformation" parameterType="com.itcrazy.alanmall.mscard.model.RegisteredCard">
+	  	UPDATE card_information
+		SET
+			STATUS = 9, UPDATE_ID =#{updateId}, UPDATE_TIME = NOW(),PUBLISH_TIME=NOW(),PUBLISH_ID=#{publishId}
+		WHERE  CARD_NO = #{cardNo}
+		AND COMPANY_ID = #{companyId}
+	</update>
+	<!-- 更新充值余额总和，充值奖励总和 -->
+	<update id="updateCardInformationBill" parameterType="com.itcrazy.alanmall.mscard.model.RegisteredCard">
+		UPDATE card_information
+		SET
+			RECHARGE_BALANCE = 0,REWARD = 0
+		WHERE  CARD_NO = #{cardNo}
+		AND COMPANY_ID = #{companyId}
+	</update>
+
+	<!-- 编辑页面获取数据 -->
+	<select id="getCardNo" resultMap="RegisteredCardResult" parameterType="com.itcrazy.alanmall.mscard.dto.RegisteredCardDto">
+		SELECT
+			r.CARD_NO, r.USER_NAME, r.SEX, r.TELEPHONE, r.ID_NUMBER,
+			r.PAY_PSW, r.MAIL, r.ADDRESS, r.BIRTHDAY,i.CATEGORY
+		FROM
+			registered_card r
+		LEFT JOIN card_information i ON r.CARD_NO = i.CARD_NO AND r.COMPANY_ID = i.COMPANY_ID
+		WHERE
+			r.CARD_NO = #{cardNo}
+		AND
+			r.IS_DELETED = 0
+		AND
+			r.COMPANY_ID = #{companyId}
+	</select>
+
+	<insert id="saveActiveInfo" parameterType="com.itcrazy.alanmall.mscard.model.RegisteredCard">
+		INSERT INTO card_actived_information(
+		CARD_NO,
+		MOTHER_CARD_NO,
+		SERIAL_NO,
+		CATEGORY,
+		`STATUS`,
+		STORE,
+		CREDIT_STATUS,
+		CREDIT_MAX_QUOTA,
+		RECHARGE_BALANCE,
+		REWARD,
+		CREDIT,
+		CREATE_TIME,
+		CREATE_ID,
+		PUBLISH_TIME,
+		PUBLISH_ID,
+		IS_DELETED,
+		COMPANY_ID)
+		(SELECT
+		CARD_NO,
+		MOTHER_CARD_NO,
+		SERIAL_NO,
+		CATEGORY,
+		`STATUS`,
+		STORE,
+		CREDIT_STATUS,
+		CREDIT_MAX_QUOTA,
+		RECHARGE_BALANCE,
+		REWARD,
+		CREDIT,
+		NOW(),
+		#{createId},
+		NOW(),
+		#{createId},
+		IS_DELETED,
+		COMPANY_ID
+		FROM card_information
+		WHERE CARD_NO = #{cardNo}
+		AND COMPANY_ID = #{companyId})
+	</insert>
+
+	<!-- 修改记名卡信息 -->
+	<update id="updateRegisteredCard" parameterType="com.itcrazy.alanmall.mscard.model.RegisteredCard">
+		UPDATE
+			registered_card
+		SET
+			TELEPHONE = #{telephone},
+			<if test="payPsw != null and payPsw.toString !='' ">
+			   PAY_PSW = #{payPsw},
+			</if>
+			MAIL = #{mail},
+			ADDRESS = #{address},
+			BIRTHDAY = #{birthday},
+			UPDATE_TIME = NOW(),
+			UPDATE_ID = #{updateId}
+		WHERE
+			CARD_NO = #{cardNo}
+		AND
+			COMPANY_ID=#{companyId}
+		AND
+			IS_DELETED = 0
+	</update>
+
+   	<!-- 换卡/补卡操作，老卡复制到新卡 -->
+   	<insert id="insertRegisteredCard" parameterType="com.itcrazy.alanmall.mscard.model.SupplementCard">
+		INSERT INTO
+			registered_card
+			(CARD_NO, USER_NAME, SEX, TELEPHONE, ID_NUMBER, PAY_PSW, MAIL,
+			ADDRESS, BIRTHDAY, CREATE_TIME, CREATE_ID, IS_DELETED, COMPANY_ID)
+
+			(SELECT
+				#{newCardNo}, USER_NAME, SEX, TELEPHONE, ID_NUMBER, PAY_PSW, MAIL,
+				ADDRESS, BIRTHDAY, NOW(), #{createId}, 0, #{companyId}
+			FROM
+				registered_card
+			WHERE
+				CARD_NO = #{oldCardNo}
+			AND
+				COMPANY_ID = #{companyId})
+  	</insert>
+
+  	<!-- 换卡/补卡操作，逻辑删除老卡信息 -->
+  	<update id="remove" parameterType="com.itcrazy.alanmall.mscard.model.RegisteredCard">
+	   	UPDATE
+	   		registered_card
+		SET
+			IS_DELETED = 1, UPDATE_ID =#{updateId}, UPDATE_TIME = NOW()
+		WHERE
+			CARD_NO = #{cardNo}
+		AND
+			COMPANY_ID = #{companyId}
+   	</update>
+
+	<!-- 根据卡号和商家id查询支付密码 -->
+	<select  id="getPayPwdByCardNo" resultType="string">
+		SELECT
+			PAY_PSW
+		FROM
+			registered_card
+		WHERE
+			IS_DELETED = 0
+		AND
+			CARD_NO = #{cardNo}
+		AND
+			COMPANY_ID = #{companyId}
+	</select>
+
+</mapper>

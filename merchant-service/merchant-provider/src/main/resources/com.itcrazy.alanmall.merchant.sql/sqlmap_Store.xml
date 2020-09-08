@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.StoreDao">
+
+	<resultMap id="storeResult" type="com.meishi.merchant.model.Store">
+		<result column="id" property="id" />
+		<result column="company_id" property="companyId" />
+		<result column="brand_id" property="brandId" />
+		<result column="province_id" property="provinceId" />
+		<result column="city_id" property="cityId" />
+		<result column="county_id" property="countyId" />
+		<result column="business_circle_id" property="businessCircleId" />
+		<result column="land_mark_id" property="landMarkId" />
+		<result column="name" property="name" />
+		<result column="address" property="address" />
+		<result column="avg_amount" property="avgAmount" />
+		<result column="traffic_routes" property="trafficRoutes" />
+		<result column="zip" property="zip" />
+		<result column="link_man" property="linkMan" />
+		<result column="telephone" property="telephone" />
+		<result column="mobile" property="mobile" />
+		<result column="description" property="description" />
+		<result column="status" property="status" />
+		<result column="IS_SLOTCARD" property="isSlotcard" />
+		<result column="LATITUDE" property="latitude" />
+		<result column="LONGITUDE" property="longitude" />
+		<result column="SUPPORT_CARD" property="supportCard" />
+		<result column="PARK_INFO" property="parkInfo" />
+		<result column="BUSINESS_TIME" property="businessTime" />
+		<result column="BUSINESS_TIME_WEEKEND" property="businessTimeWeekend" />
+		<result column="source" property="source" />
+		<result column="source_code" property="sourceCode" />
+		<result column="business_status" property="businessStatus" />
+		<result column="create_time" property="createTime" />
+		<result column="service_time" property="serviceTime" />
+		<result column="ID_KEY" property="idKey" />
+		<result column="TAKE_OUT_CODE" property="takeOutCode" />
+		<result column="PROM_SUBSIDY" property="promSubsidy" />
+		<result column="PROM_SUBSIDY_KEY" property="promSubsidyKey" />
+		<result column="IS_VIRTUAL" property="isVirtual"/>
+		<result column="MAC_ADDRESS" property="macAddress"/>
+		<result column="POI_ID" property="poiId"/>
+		<result column="WX_AVAILABLE_STATE" property="wxAvailableState"/>
+		<result column="WX_UPDATE_STATUS" property="wxUpdateStatus"/>
+		<result column="WX_MSG" property="wxMsg"/>
+		<result column="IIDINGYUN_SHOP_ID" property="iidingyunShopId"/>
+		<result column="XPUSH_DID" property="xpushDid"/>
+		<result column="STORE_TYPE" property="storeType"/>
+	</resultMap>
+
+	<resultMap id="storeListResult" type="com.meishi.merchant.model.Store">
+		<result column="id" property="id" />
+		<result column="company_id" property="companyId" />
+		<result column="brand_id" property="brandId" />
+		<result column="province_id" property="provinceId" />
+		<result column="city_id" property="cityId" />
+		<result column="county_id" property="countyId" />
+		<result column="business_circle_id" property="businessCircleId" />
+		<result column="land_mark_id" property="landMarkId" />
+		<result column="name" property="name" />
+		<result column="address" property="address" />
+		<result column="avg_amount" property="avgAmount" />
+		<result column="traffic_routes" property="trafficRoutes" />
+		<result column="zip" property="zip" />
+		<result column="telephone" property="telephone" />
+		<result column="latitude" property="latitude" />
+		<result column="longtitude" property="longtitude" />
+		<result column="description" property="description" />
+		<result column="SUPPORT_CARD" property="supportCard" />
+		<result column="PARK_INFO" property="parkInfo" />
+		<result column="BUSINESS_TIME" property="businessTime" />
+		<result column="BUSINESS_TIME_WEEKEND" property="businessTimeWeekend" />
+		<result column="create_time" property="createTime" />
+		<result column="service_time" property="serviceTime" />
+		<result column="IS_VIRTUAL" property="isVirtual"/>
+		<result column="MAC_ADDRESS" property="macAddress"/>
+		<result column="POI_ID" property="poiId"/>
+		<result column="WX_AVAILABLE_STATE" property="wxAvailableState"/>
+		<result column="WX_UPDATE_STATUS" property="wxUpdateStatus"/>
+		<result column="WX_MSG" property="wxMsg"/>
+		<result column="STORE_TYPE" property="storeType"/>
+	</resultMap>
+
+
+	<sql id="sqlTemplate">
+		select
+		id,source,source_code,company_id,brand_id,province_id,city_id,county_id,business_circle_id,land_mark_id,
+		name,address,avg_amount,traffic_routes,
+		zip,link_man,telephone,mobile,description,status,
+		IS_SLOTCARD,BUSINESS_STATUS,LATITUDE,LONGITUDE,create_time,SUPPORT_CARD,PARK_INFO,BUSINESS_TIME,BUSINESS_TIME_WEEKEND,SERVICE_TIME,ID_KEY,
+		MAC_ADDRESS,POI_ID,WX_AVAILABLE_STATE,WX_UPDATE_STATUS,WX_MSG,TAKE_OUT_CODE,PROM_SUBSIDY,PROM_SUBSIDY_KEY,IIDINGYUN_SHOP_ID,XPUSH_DID
+		,STORE_TYPE
+	</sql>
+	<select id="get" resultMap="storeResult">
+		<include refid="sqlTemplate" />
+		from store where id=#{id} and is_deleted=0
+	</select>
+
+	<select id="getStoreByDto" resultMap="storeResult">
+		<include refid="sqlTemplate" />
+		from store where is_deleted=0
+		<if test="source!=null">
+			and source=#{source}
+		</if>
+		<if test="sourceCode!=null">
+			and source_code=#{sourceCode}
+		</if>
+		<if test="name!=null">
+			and name=#{name}
+		</if>
+	</select>
+	
+	<select id="getStoreByIdKey" resultMap="storeResult">
+		<include refid="sqlTemplate" />
+		from store where is_deleted=0 and ID_KEY=#{idKey}
+	</select>
+	
+	<select id="getStoreByIidingyunShopId" resultMap="storeResult" parameterType="long">
+		<include refid="sqlTemplate" />
+		from store where is_deleted=0 and IIDINGYUN_SHOP_ID=#{iidingyunShopId} limit 1
+	</select>
+
+	<update id="remove" parameterType="com.meishi.merchant.model.Store">
+		update store set is_deleted=1,update_id=#{updateId},update_time=now() where
+		id=#{id}
+	</update>
+	<!-- -->
+	<insert id="save" parameterType="com.meishi.merchant.model.Store">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into store(
+		id,source,source_code,company_id,brand_id,province_id,city_id,county_id,name,address,zip,link_man,telephone,mobile,status,create_id,create_time,is_deleted,update_time,IS_SLOTCARD,BUSINESS_STATUS,avg_amount,description,traffic_routes,business_circle_id,land_mark_id,LATITUDE,LONGITUDE,SUPPORT_CARD,PARK_INFO,BUSINESS_TIME,BUSINESS_TIME_WEEKEND,SERVICE_TIME,office_area_id,ID_KEY,MAC_ADDRESS,POI_ID,WX_AVAILABLE_STATE,WX_UPDATE_STATUS,WX_MSG,TAKE_OUT_CODE,PROM_SUBSIDY,PROM_SUBSIDY_KEY,IIDINGYUN_SHOP_ID,XPUSH_DID
+		,STORE_TYPE)
+		values
+		(#{id},#{source},#{sourceCode},#{companyId},#{brandId},#{provinceId},#{cityId},#{countyId},#{name},#{address},#{zip},#{linkMan},#{telephone},#{mobile},#{status},#{createId},now(),0,now(),#{isSlotcard},#{businessStatus},#{avgAmount},#{description},#{trafficRoutes},#{businessCircleId},#{landMarkId},#{latitude},#{longitude},#{supportCard},#{parkInfo},#{businessTime},#{businessTimeWeekend},#{serviceTime},#{officeAreaId},#{idKey},#{macAddress},#{poiId},#{wxAvailableState},#{wxUpdateStatus},#{wxMsg},#{takeOutCode},#{promSubsidy},#{promSubsidyKey},#{iidingyunShopId},#{xpushDid}
+		,#{storeType})
+	</insert>
+
+
+	<update id="update" parameterType="com.meishi.merchant.model.Store">
+		update store set update_id=#{updateId},update_time=now()
+		<if test="name!=null">
+			,name=#{name}
+		</if>
+		<if test="status!=null">
+			,status=#{status}
+		</if>
+		<if test="brandId!=null">
+			, brand_id=#{brandId}
+		</if>
+		<if test="provinceId!=null">
+			,province_id=#{provinceId}
+		</if>
+		<if test="cityId!=null">
+			,city_id=#{cityId}
+		</if>
+		<if test="countyId!=null">
+			,county_id=#{countyId}
+		</if>
+		<if test="address!=null">
+			,address=#{address}
+		</if>
+		<if test="linkMan!=null">
+			,link_man=#{linkMan}
+		</if>
+		<if test="telephone!=null">
+			,telephone=#{telephone}
+		</if>
+		<if test="mobile!=null">
+			, mobile=#{mobile}
+		</if>
+		<if test="isSlotcard!=null">
+			, IS_SLOTCARD=#{isSlotcard}
+		</if>
+		<if test="picture!=null">
+			,PICTURE=#{picture}
+		</if>
+		<if test="businessStatus!=null">
+			,BUSINESS_STATUS=#{businessStatus}
+		</if>
+		<if test="avgAmount!=null">
+			, avg_amount=#{avgAmount}
+		</if>
+		<if test="description!=null">
+			,description=#{description}
+		</if>
+		<if test="trafficRoutes!=null">
+			,traffic_routes=#{trafficRoutes}
+		</if>
+
+		<if test="businessCircleId!=null">
+			,business_circle_id=#{businessCircleId}
+		</if>
+		<if test="landMarkId!=null">
+			,land_mark_id = #{landMarkId}
+		</if>
+		<if test="latitude!=null">
+			,LATITUDE =#{latitude}
+		</if>
+		<if test="longitude!=null">
+			,LONGITUDE =#{longitude}
+		</if>
+		<if test="supportCard!=null">
+			,support_card =#{supportCard}
+		</if>
+		<if test="parkInfo!=null">
+			,park_info =#{parkInfo}
+		</if>
+		<if test="businessTime!=null">
+			,business_time =#{businessTime}
+		</if>
+		<if test="businessTimeWeekend !=null">
+			,BUSINESS_TIME_WEEKEND =#{businessTimeWeekend}
+		</if>
+		<if test="serviceTime!=null">
+			,service_time =#{serviceTime}
+		</if>
+		<if test="idKey!=null">
+			,ID_KEY =#{idKey}
+		</if>
+		<if test="poiId != null">
+			,POI_ID =#{poiId}
+		</if>
+		<if test="wxAvailableState != null">
+			,WX_AVAILABLE_STATE =#{wxAvailableState}
+		</if>
+		<if test="wxUpdateStatus != null">
+			,WX_UPDATE_STATUS =#{wxUpdateStatus}
+		</if>
+		<if test="wxMsg != null">
+			,WX_MSG =#{wxMsg}
+		</if>
+		<if test="source!=null">
+			,source=#{source}
+		</if>
+		<if test="sourceCode!=null">
+			,source_code=#{sourceCode}
+		</if>
+		<if test="takeOutCode != null">
+			,TAKE_OUT_CODE = #{takeOutCode}
+		</if>
+		<if test="promSubsidy != null">
+			,PROM_SUBSIDY = #{promSubsidy}
+		</if>
+		<if test="promSubsidyKey != null">
+			,PROM_SUBSIDY_KEY = #{promSubsidyKey}
+		</if>
+		<if test="xpushDid != null">
+			,XPUSH_DID = #{xpushDid}
+		</if>
+		<if test="storeType != null">
+			,STORE_TYPE = #{storeType}
+		</if>
+		,IIDINGYUN_SHOP_ID = #{iidingyunShopId}
+		
+		where id=#{id}
+	</update>
+	
+	<update id="unbindWxStore" parameterType="com.meishi.merchant.model.Store">
+		update store set update_id=#{updateId},update_time=now(),
+		POI_ID = null,
+		WX_AVAILABLE_STATE = null,
+		WX_UPDATE_STATUS = null,
+		WX_MSG = null
+		where POI_ID = #{poiId}
+	</update>
+
+
+	<select id="getPageList" parameterType="com.meishi.merchant.dto.StoreDto"
+		resultMap="storeResult">
+		<include refid="sqlTemplate" />
+		from store
+		where is_deleted=0 and office_area_id in (${officeAreaIds})
+		<if test="name!=null">
+			and name like CONCAT('%',#{name},'%')
+		</if>
+		<if test="companyId!=null">
+			and company_id= #{companyId}
+		</if>
+		<if test="brandId!=null">
+			and brand_id= #{brandId}
+		</if>
+		<if test="brandIds!=null">
+			and brand_id in (${brandIds})
+		</if>
+		<if test="provinceId!=null">
+			and province_id= #{provinceId}
+		</if>
+		<if test="cityId!=null">
+			and city_id= #{cityId}
+		</if>
+		<if test="countyId!=null">
+			and county_id= #{countyId}
+		</if>
+		<if test="status!=null">
+			and status= #{status}
+		</if>
+		<if test="updateStartTime!=null">
+	 	 <![CDATA[  and update_time >= #{updateStartTime} ]]>
+		</if>
+		<if test="storeIds!=null">
+			and id in( ${storeIds})
+		</if>
+		<if test="isVirtual != null">
+			and IS_VIRTUAL = #{isVirtual}
+		</if>
+		<if test="wxAvailableState != null">
+			and WX_AVAILABLE_STATE =#{wxAvailableState}
+		</if>
+		<if test="wxUpdateStatus != null">
+			and WX_UPDATE_STATUS =#{wxUpdateStatus}
+		</if>
+		<if test="poiId != null">
+			and POI_ID =#{poiId}
+		</if>
+		ORDER BY ID DESC
+		
+		LIMIT #{start},#{limit}
+
+	</select>
+
+	<select id="getPageTotal" parameterType="com.meishi.merchant.dto.StoreDto"
+		resultType="integer">
+		<![CDATA[
+		select count(ID) from store where is_deleted=0 and office_area_id in (${officeAreaIds})
+		]]>
+		<if test="name!=null">
+			and name like CONCAT('%',#{name},'%')
+		</if>
+		<if test="companyId!=null">
+			and company_id= #{companyId}
+		</if>
+		<if test="brandId!=null">
+			and brand_id= #{brandId}
+		</if>
+		<if test="brandIds!=null">
+			and brand_id in (${brandIds})
+		</if>
+		<if test="provinceId!=null">
+			and province_id= #{provinceId}
+		</if>
+		<if test="cityId!=null">
+			and city_id= #{cityId}
+		</if>
+		<if test="countyId!=null">
+			and county_id= #{countyId}
+		</if>
+		<if test="status!=null">
+			and status= #{status}
+		</if>
+		<if test="storeIds!=null">
+			and id in( ${storeIds})
+		</if>
+		<if test="updateStartTime!=null">
+	 	 <![CDATA[  and update_time >= #{updateStartTime} ]]>
+		</if>
+		<if test="isVirtual != null">
+			and IS_VIRTUAL = #{isVirtual}
+		</if>
+		<if test="wxAvailableState != null">
+			and WX_AVAILABLE_STATE =#{wxAvailableState}
+		</if>
+		<if test="wxUpdateStatus != null">
+			and WX_UPDATE_STATUS =#{wxUpdateStatus}
+		</if>
+		<if test="poiId != null">
+			and POI_ID =#{poiId}
+		</if>
+	</select>
+	
+	<!-- 查询已绑定微信门店列表 -->
+	<select id="getWechatStoreList" resultMap="storeResult">
+		<include refid="sqlTemplate" />
+		from store where is_deleted=0 and POI_ID is not null
+
+	</select>
+	
+	<!--获取管理员账号下门店 -->
+	<select id="getAdminStoreList" parameterType="com.meishi.merchant.dto.StoreDto"
+		resultMap="storeListResult">
+		SELECT DISTINCT
+				s.ID, 
+				s.COMPANY_ID, 
+				s.BRAND_ID, 
+				s.PROVINCE_ID,
+				s.CITY_ID, 
+				s.COUNTY_ID,  
+				s.BUSINESS_CIRCLE_ID, 
+				s.LAND_MARK_ID,
+				s.name, 
+				s.address, 
+				s.AVG_AMOUNT, 
+				s.TRAFFIC_ROUTES, 
+				s.ZIP, 
+				s.TELEPHONE,
+				s.DESCRIPTION,
+				s.LATITUDE,
+				s.LONGITUDE
+			FROM
+				store s	join brand b on s.brand_id=b.id
+				join company c on b.company_id=c.id
+				where s.is_deleted=0 
+				and s.office_area_id in (${officeAreaIds})
+				<if test="storeIds!=null">
+				and  s.id in(${storeIds})
+				</if>
+				<if test="name!=null">
+				and (s.name   like CONCAT('%',#{name},'%') or  
+					b.name   like CONCAT('%',#{name},'%') or 
+					c.name   like CONCAT('%',#{name},'%')  
+				)
+				</if>
+				<if test="companyId!=null">
+				and s.company_id=#{companyId}
+				</if>
+				<if test="brandId!=null">
+				and s.brand_id=#{brandId}
+				</if>
+				<if test="status!=null">
+					and s.status= #{status}
+				</if>
+				
+				order by s.company_id desc,s.brand_id desc,s.CITY_ID
+	</select>
+
+	<!-- 通过商户名、地址、菜系、商圈等 检索条件，查询门店列表信息 -->
+	<select id="getStoreListByCondition" parameterType="com.meishi.merchant.dto.StoreDto"
+		resultMap="storeListResult">
+		<![CDATA[
+			SELECT DISTINCT
+				s.ID, 
+				s.COMPANY_ID, 
+				s.BRAND_ID, 
+				s.PROVINCE_ID,
+				s.CITY_ID, 
+				s.COUNTY_ID,  
+				s.BUSINESS_CIRCLE_ID, 
+				s.LAND_MARK_ID,
+				s.name, 
+				s.address, 
+				s.AVG_AMOUNT, 
+				s.TRAFFIC_ROUTES, 
+				s.ZIP, 
+				s.TELEPHONE,
+				s.DESCRIPTION,
+				s.LATITUDE,
+				s.LONGITUDE
+			FROM
+				store s		
+				LEFT JOIN
+					store_tag st
+				ON
+					s.ID = st.STORE_ID
+			WHERE
+				s.is_deleted = 0
+			AND	s.STATUS = 0		
+		]]>
+		<if test="provinceId!=null">
+			and s.province_ID = #{provinceId}
+		</if>
+		<!-- 菜系 -->
+		<if test="cuisineId!=null">
+			and exists (select id from brand_cuisine
+			where brand_id=s.brand_id and cuisine_id=#{cuisineId})
+		</if>
+		<if test="cuisineClassId!=null">
+			and exists (select id from brand_cuisine where brand_id=s.brand_id and
+			cuisine_class_id=#{cuisineClassId})
+		</if>
+		<!-- 商圈 -->
+		<if test="businessCircleId!=null">
+			and s.BUSINESS_CIRCLE_ID = #{businessCircleId}
+		</if>
+		<if test="cityId!=null">
+			and s.city_id = #{cityId}
+		</if>
+		<if test="companyId!=null">
+			and s.company_id=#{companyId}
+		</if>
+		<if test="brandId!=null">
+			and s.brand_id=#{brandId}
+		</if>
+		<if test="brandIds!=null">
+			and s.brand_id in(#{brandIds})
+		</if>
+		<if test="isWechatActivityBrand!=null">
+			and exists (select id from wechat_activity wa where wa.is_deleted=0
+			 and wa.is_deleted=0 and now()>=wa.start_time
+			  and wa.end_time>=now() and wa.type=6 
+			  and wa.brand_id=s.brand_id 			  
+			  )
+		</if>
+		<if test="hotDesc!=null">
+			order by st.hits desc
+		</if>
+		<if test="avgAmountDesc!=null">
+			order by s.avg_amount desc
+		</if>
+		<if test="avgAmountAsc!=null">
+			order by s.avg_amount asc
+		</if>
+		<if test="hotDesc!=null">
+			order by st.hits desc
+		</if>
+		<if test="distinceAsc!=null">
+			order by power(latitude-#{latitude},2)+power(longitude-#{longitude},2) asc
+		</if>
+		LIMIT #{start},#{limit}
+	</select>
+
+	<select id="getStoreProvinceIdList" resultType="Long" parameterType="com.meishi.merchant.dto.StoreDto">
+		SELECT
+			DISTINCT province_id 
+		FROM
+			store 
+		WHERE is_deleted=0 
+		AND status=0 
+		AND brand_id=#{brandId}
+		<if test="distinceAsc != null">
+			order by power(latitude-#{latitude},2)+power(longitude-#{longitude},2) asc
+		</if> 
+		<if test="distinceAsc == null">
+			order by province_id asc
+		</if> 
+	</select>
+
+	<!-- 根据省份ID和微官网配置ID，获取店铺列表 -->
+	<select id="getIsUseStoreList" parameterType="com.meishi.merchant.dto.StoreDto"
+		resultMap="storeListResult">
+			SELECT DISTINCT
+				s.ID, 
+				s.COMPANY_ID, 
+				s.BRAND_ID, 
+				s.PROVINCE_ID,
+				s.CITY_ID, 
+				s.COUNTY_ID,  
+				s.BUSINESS_CIRCLE_ID, 
+				s.LAND_MARK_ID,
+				s.name, 
+				s.address, 
+				s.AVG_AMOUNT, 
+				s.TRAFFIC_ROUTES, 
+				s.ZIP, 
+				s.TELEPHONE,
+				s.DESCRIPTION,
+				s.LATITUDE,
+				s.LONGITUDE
+			FROM
+				company.store s	
+			INNER JOIN
+				company.wechat_config wc
+			ON 
+				s.BRAND_ID = wc.BRAND_ID
+			WHERE
+				s.STATUS = 0
+			AND
+				s.IS_DELETED = 0	
+			AND 
+				s.province_ID = #{provinceId}
+			AND 
+				wc.ID = #{wechatConfigId}
+	</select>
+	
+	<select id="getStoreListByStoreIdList" resultMap="storeResult">
+		<include refid="sqlTemplate" />
+		FROM
+			store
+		WHERE
+			is_deleted=0
+		AND
+			ID IN 
+			<foreach collection="list" index="index" item="item" open="(" separator="," close=")">  
+        		#{item}  
+    		</foreach>
+	</select>
+	
+	<select id="getInUseStoreList" parameterType="com.meishi.merchant.dto.StoreDto" resultMap="storeResult">
+		<include refid="sqlTemplate" />
+		FROM
+			store
+		WHERE
+			is_deleted=0
+		AND
+		    status = 0
+		<if test="companyId!=null">
+			and company_id=#{companyId}
+		</if>
+		<if test="brandId!=null">
+			and brand_id=#{brandId}
+		</if>
+		<if test="orderWay==1">
+		    order by CITY_ID
+		</if>
+		<if test="orderWay==2">
+		    order by province_id, CITY_ID
+		</if>
+	</select>
+	
+	<select id="getStoreByTakeOutCode" resultMap="storeResult">
+		<include refid="sqlTemplate" />
+		FROM
+			store
+		WHERE
+			is_deleted=0
+		AND TAKE_OUT_CODE = #{takeOutCode}
+	</select>
+	
+	<select id="getStoreXpushDid" resultType="string" parameterType="long">
+		select XPUSH_DID from store where is_deleted=0 and ID=#{storeId} limit 1
+	</select>
+
+	<select id="getStore" resultMap="storeResult">
+		<include refid="sqlTemplate" />
+		FROM
+		store
+		WHERE
+		is_deleted=0
+		<if test="name!=null">
+			and name =#{name}
+		</if>
+		<if test="companyId!=null">
+			and company_id= #{companyId}
+		</if>
+		<if test="brandId!=null">
+			and brand_id= #{brandId}
+		</if>
+		<if test="status!=null">
+			and status= #{status}
+		</if>
+	</select>
+</mapper>

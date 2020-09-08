@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.CompanyWechatPayDao">
+
+	<resultMap id="CompanyWechatPayResult" type="com.meishi.merchant.model.CompanyWechatPay">
+		<result column="ID" property="id" />
+		<result column="company_id" property="companyId" />
+		<result column="brand_id" property="brandId" />
+		<result column="wechat_config_id" property="wechatConfigId" />
+		<result column="mch_id" property="mchId" />
+		<result column="key_value" property="keyValue" />
+		<result column="op_user_id" property="opUserId" />
+		<result column="STORE_ID" property="storeId" />
+		<result column="IS_CERT_UPLOAD" property="isCertUpload" />
+		<result column="SERVICE_APPID" property="serviceAppId" />
+		<result column="SERVICE_SECRET" property="serviceSecret" />
+		<result column="SERVICE_MCH_ID" property="serviceMchId" />
+		<result column="POS_MCH_NO" property="posMchNo" />
+	</resultMap>
+	<sql id="sqlTemplate">
+		SELECT 
+			id,company_id,brand_id,wechat_config_id,mch_id,key_value,op_user_id, STORE_ID, IS_CERT_UPLOAD, 
+			SERVICE_APPID,SERVICE_SECRET,SERVICE_MCH_ID,POS_MCH_NO
+	</sql>
+
+	<insert id="save" parameterType="com.meishi.merchant.model.CompanyWechatPay">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into
+		company_wechat_pay(id,company_id,brand_id,wechat_config_id,mch_id,key_value,op_user_id,create_time,create_id,update_time,update_id,is_deleted, STORE_ID, IS_CERT_UPLOAD,
+		SERVICE_APPID,SERVICE_SECRET,SERVICE_MCH_ID,POS_MCH_NO)
+		values
+		(#{id},#{companyId},#{brandId},#{wechatConfigId},#{mchId},#{keyValue},#{opUserId},now(),#{createId},now(),#{updateId},0, #{storeId}, #{isCertUpload},
+		#{serviceAppId}, #{serviceSecret}, #{serviceMchId}, #{posMchNo})
+
+	</insert>
+
+	<update id="remove" parameterType="com.meishi.merchant.model.CompanyWechatPay">
+		update company_wechat_pay set
+		update_time=now(),update_id=#{updateId},is_deleted=1
+		where is_deleted=0
+		<if test="id != null">
+			and id=#{id}
+		</if>
+		<if test="storeId != null">
+			and STORE_ID=#{storeId}
+		</if>
+		<if test="wechatConfigId != null">
+			and WECHAT_CONFIG_ID=#{wechatConfigId}
+		</if>
+		
+	</update>
+
+	
+
+	<!-- 分页查询 -->
+	<select id="getPageList" parameterType="com.meishi.merchant.dto.CompanyWechatPayDto"
+		resultMap="CompanyWechatPayResult">
+		<include refid="sqlTemplate" />
+		from company_wechat_pay
+		where is_deleted=0
+		<if test="wechatConfigId!=null">
+			AND wechat_config_id=#{wechatConfigId}
+		</if>
+		<if test="mchId != null">
+			AND mch_id=#{mchId}
+		</if>
+		<if test="storeId != null">
+			AND STORE_ID=#{storeId}
+		</if>
+		<if test="brandId != null">
+			AND BRAND_ID=#{brandId}
+		</if>
+
+		LIMIT #{start},#{limit}
+
+	</select>
+
+	<select id="getPageTotal" parameterType="com.meishi.merchant.dto.CompanyWechatPayDto"
+		resultType="integer">
+		select count(ID) from company_wechat_pay
+		where is_deleted=0
+		<if test="wechatConfigId!=null">
+			AND wechat_config_id=#{wechatConfigId}
+		</if>
+		<if test="mchId != null">
+			AND mch_id=#{mchId}
+		</if>
+		<if test="storeId != null">
+			AND STORE_ID=#{storeId}
+		</if>
+	</select>
+
+	<update id="deleteCompanyWechatPay" parameterType="com.meishi.merchant.dto.CompanyWechatPayDto">
+		UPDATE 
+			company_wechat_pay 
+		SET
+			UPDATE_TIME = now(),
+			UPDATE_ID = #{updateId},
+			IS_DELETED = 1
+		WHERE 
+			is_deleted = 0
+		<if test="wechatConfigId != null">
+			AND wechat_config_id = #{wechatConfigId}
+		</if>
+		<if test="mchId != null">
+			AND mch_id = #{mchId}
+		</if>
+		<if test="storeId != null">
+			AND STORE_ID = #{storeId}
+		</if>
+		
+	</update>
+	<!-- 分页查询结束 -->
+
+</mapper>

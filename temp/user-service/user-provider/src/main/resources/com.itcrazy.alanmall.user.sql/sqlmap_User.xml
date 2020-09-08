@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.meishi.user.dao.UserDao">
+
+	<resultMap id="UserResult" type="com.meishi.user.model.User">
+		<result column="id" property="id" />
+		<result column="user_name" property="userName" />
+		<result column="real_name" property="realName" />
+		<result column="company_id" property="companyId" />
+		<result column="brand_id" property="brandId" />
+		<result column="store_id" property="storeId" />
+		<result column="password" property="password" />
+		<result column="mobile" property="mobile" />
+		<result column="status" property="status" />
+		<result column="email" property="email" />
+		<result column="role_id" property="roleId" />
+		<result column="role_level_id" property="roleLevelId" />
+		<result column="source" property="source" />
+		<result column="IS_ALL_SCOPE" property="isAllScope" />
+		<result column="source_code" property="sourceCode" />
+		<result column="wechat_user_id" property="wechatUserId" />
+		<result column="reward_wechat_user_id" property="rewardWechatUserId" />
+		<result column="is_member_unlock" property="isMemberUnlock" />
+		<result column="office_area_id" property="officeAreaId" />
+		<result column="IS_RECEIVE_BOOK_TABLE_NOTICE" property="isReceiveBookTableNotice" />
+		<result column="AMOUNT" property="amount" />
+		<result column="GENDER" property="gender" />
+		<result column="BIRTHDAY" property="birthday" />
+	</resultMap>
+
+	<sql id="sqlTemplate">
+		SELECT id,user_name,real_name,password,mobile,status,email,role_id,role_level_id,company_id,
+		brand_id,store_id,source,source_code,is_all_scope,wechat_user_id,reward_wechat_user_id,is_member_unlock,office_area_id,
+		IS_RECEIVE_BOOK_TABLE_NOTICE,AMOUNT,GENDER,BIRTHDAY
+	</sql>
+	<select id="get" resultMap="UserResult"
+		parameterType="long">
+		<include refid="sqlTemplate" />
+     <![CDATA[
+    	from user where id=#{id}
+     ]]>
+	</select>
+
+   
+	<select id="getUserByWechatUserId" resultMap="UserResult"
+		parameterType="long">
+		<include refid="sqlTemplate" />
+     <![CDATA[
+    from user
+    where wechat_user_id=#{wechatUserId} and is_deleted=0
+     ]]>
+	</select>
+	
+	<select id="getUserByRewardWechatUserId" resultMap="UserResult"
+		parameterType="long">
+		<include refid="sqlTemplate" />
+	     <![CDATA[
+	    	from user
+	    	where reward_wechat_user_id=#{rewardWechatUserId} and is_deleted=0
+	     ]]>
+	</select>
+
+	<!-- 分页查询 -->
+	<select id="getPageList" parameterType="com.meishi.user.dto.UserDto"
+		resultMap="UserResult">
+		<include refid="sqlTemplate" />
+		<![CDATA[
+	  from user where is_deleted=0 
+	  and status=0 
+	  and office_area_id in(${officeAreaIds})
+		]]>
+		<if test="companyId!=null" >
+			AND  company_id=#{companyId}
+		</if>
+		<if test="companyIds!=null">
+  			AND company_id in(${companyIds})
+  		</if>
+		<if test="storeId!=null" >
+			AND  store_id=#{storeId}
+		</if>
+		<if test="isMemberUnlock!=null" >
+			AND  is_member_unlock=#{isMemberUnlock}
+		</if>
+		<if test="searchKey!=null">
+			AND (user_name like '%${searchKey}%' or mobile like '%${searchKey}%' 
+			or email like '%${searchKey}%')
+		</if>
+		<if test="userName!=null">
+			AND user_name=${userName}
+		</if>
+		<if test="loginName!=null">
+			AND (mobile=#{loginName} or email=#{loginName})
+		</if>
+		<if test="mobile!=null">
+			AND mobile=#{mobile}
+		</if>
+		<if test="email!=null">
+			AND email=#{email}
+		</if>
+		<if test="loginName!=null">
+			AND (mobile=#{loginName} or email=#{loginName})
+		</if>
+		<if test="source!=null">
+			AND source=#{source}
+		</if>
+		<if test="sourceCode!=null">
+			AND source_code=#{sourceCode}
+		</if>
+		<if test="roleId!=null">
+		   and role_id=#{roleId}
+		</if>
+		<if test="wechatUserId != null">
+		   and WECHAT_USER_ID=#{wechatUserId}
+		</if>
+		<if test="rewardWechatUserId != null">
+		   and REWARD_WECHAT_USER_ID=#{rewardWechatUserId}
+		</if>
+		<if test="isReceiveBookTableNotice != null">
+		   and IS_RECEIVE_BOOK_TABLE_NOTICE=#{isReceiveBookTableNotice}
+		</if>
+		<![CDATA[
+			ORDER BY id desc LIMIT #{start},#{limit}
+		]]>
+	</select> 
+
+	<select id="getPageTotal" parameterType="com.meishi.user.dto.UserDto" 
+		resultType="integer">
+		select count(id)
+		<![CDATA[
+	  from user where is_deleted=0  and status=0 
+	   and office_area_id in(${officeAreaIds})
+		]]>
+		<if test="companyId!=null" >
+			AND company_id=#{companyId}
+		</if>
+		<if test="companyIds!=null">
+  			AND company_id in(${companyIds})
+  		</if>
+		<if test="searchKey!=null">
+			AND (user_name like '%${searchKey}%' or mobile like '%${searchKey}%' 
+			or email like '%${searchKey}%')
+		</if>
+		<if test="userName!=null">
+			AND user_name=${userName}
+		</if>
+		<if test="mobile!=null">
+			AND mobile=#{mobile}
+		</if>
+		<if test="email!=null">
+			AND email=#{email}
+		</if>
+		<if test="loginName!=null">
+			AND (mobile=#{loginName} or email=#{loginName})
+		</if>
+		<if test="source!=null">
+			AND source=#{source}
+		</if>
+		<if test="sourceCode!=null">
+			AND source_code=#{sourceCode}
+		</if>
+		<if test="roleId!=null">
+		   and role_id=#{roleId}
+		</if>
+		<if test="wechatUserId != null">
+		   and WECHAT_USER_ID=#{wechatUserId}
+		</if>
+		<if test="rewardWechatUserId != null">
+		   and REWARD_WECHAT_USER_ID=#{rewardWechatUserId}
+		</if>
+		<if test="isReceiveBookTableNotice != null">
+		   and IS_RECEIVE_BOOK_TABLE_NOTICE=#{isReceiveBookTableNotice}
+		</if>
+	</select>
+	<!-- 分页查询结束 -->
+
+
+	<insert id="save" parameterType="com.meishi.user.model.User">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into user(
+		id,user_name,is_all_scope,source,source_code,real_name,password,mobile,status,email,create_Time,update_time,create_Id,update_id,role_id,role_level_id,company_id,brand_id,store_id,is_deleted,is_member_unlock,office_area_id,WECHAT_USER_ID,REWARD_WECHAT_USER_ID,IS_RECEIVE_BOOK_TABLE_NOTICE,AMOUNT,GENDER,BIRTHDAY)
+		values
+		(#{id},#{userName},#{isAllScope},#{source},#{sourceCode},#{realName},#{password},#{mobile},0,#{email},now(),now(),#{createId},#{updateId},#{roleId},#{roleLevelId},#{companyId},#{brandId},#{storeId},0,#{isMemberUnlock},#{officeAreaId},#{wechatUserId},#{rewardWechatUserId},#{isReceiveBookTableNotice},#{amount},#{gender},#{birthday})
+	</insert>
+
+
+	<update id="update" parameterType="com.meishi.user.model.User">
+		update user set update_time=now(),update_id=#{updateId}
+		<if test="userName!=null">
+			,user_name=#{userName}
+		</if>
+		<if test="realName!=null">
+			,real_name=#{realName}
+		</if>
+		
+		<if test="password!=null">
+			,password=#{password}
+		</if>
+		<if test="mobile!=null">
+			,mobile=#{mobile}
+		</if>
+		<if test="email!=null">
+			,email=#{email}
+		</if>
+		<if test="roleId!=null">
+			,role_id=#{roleId}
+		</if>
+		<if test="roleLevelId!=null">
+			,role_level_id=#{roleLevelId}
+		</if>
+		<if test="companyId!=null">
+			,company_id=#{companyId}
+		</if>
+		<if test="brandId!=null">
+			,brand_id=#{brandId}
+		</if>
+		<if test="storeId!=null">
+			,store_id=#{storeId}
+		</if>
+		<if test="status!=null">
+			,status=#{status}
+		</if>
+		<if test="source!=null">
+			,source=#{source}
+		</if>
+		<if test="sourceCode!=null">
+			,source_code=#{sourceCode}
+		</if>
+		<if test="isAllScope!=null">
+			,is_all_scope=#{isAllScope}
+		</if>
+		<if test="wechatUserId!=null">
+			,wechat_user_id=#{wechatUserId}
+		</if>
+		<if test="rewardWechatUserId!=null">
+			,reward_wechat_user_id=#{rewardWechatUserId}
+		</if>
+		<if test="isMemberUnlock!=null">
+			,is_member_unlock=#{isMemberUnlock}
+		</if>
+		<if test="isReceiveBookTableNotice != null">
+		   , IS_RECEIVE_BOOK_TABLE_NOTICE=#{isReceiveBookTableNotice}
+		</if>
+		<if test="gender != null">
+		   ,GENDER=#{gender}
+		</if>
+		<if test="birthday != null">
+		   ,BIRTHDAY=#{birthday}
+		</if>
+		<if test="amount != null">
+		   ,AMOUNT=#{amount}
+		</if>
+		
+		where ID = #{id}
+	</update>
+
+	<update id="remove" parameterType="com.meishi.user.model.User">
+		update user set is_deleted=1,update_time=now(),update_id=#{updateId} where id=#{id} and is_deleted=0
+	</update>
+</mapper>

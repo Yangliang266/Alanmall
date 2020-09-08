@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.AppPosConfigDao">
+
+	<resultMap id="AppPosConfigResult" type="com.meishi.merchant.model.AppPosConfig">
+		<result column="ID" property="id" />
+		<result column="COMPANY_ID" property="companyId" />
+		<result column="BRAND_ID" property="brandId" />
+		<result column="STORE_ID" property="storeId" />
+		<result column="CONSU_WAY" property="consuWay" />
+		<result column="WECHAT_PAY_WAY" property="wechatPayWay" />
+		<result column="ALI_PAY_WAY" property="aliPayWay" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="CREATE_ID" property="createId" />
+		<result column="UPDATE_TIME" property="updateTime" />
+		<result column="UPDATE_ID" property="updateId" />
+		<result column="IS_DELETED" property="isDeleted" />
+	</resultMap>
+
+	<sql id="sqlTemplate">
+		select ID,COMPANY_ID,BRAND_ID,STORE_ID,CONSU_WAY,WECHAT_PAY_WAY,ALI_PAY_WAY,CREATE_TIME,CREATE_ID,UPDATE_TIME,UPDATE_ID,IS_DELETED
+	</sql>
+
+	<select id="get" resultMap="AppPosConfigResult">
+		<include refid="sqlTemplate" />
+		from app_pos_config where IS_DELETED=0 and ID=#{id}
+	</select>
+	
+	<select id="getAppPosConfigByDto" resultMap="AppPosConfigResult" parameterType="com.meishi.merchant.dto.AppPosConfigDto">
+		<include refid="sqlTemplate" />
+		from app_pos_config where IS_DELETED=0 
+		<if test="companyId!=null">
+			and COMPANY_ID=#{companyId}
+		</if>
+		<if test="brandId!=null">
+			and BRAND_ID=#{brandId}
+		</if>
+		<if test="storeId!=null">
+			and STORE_ID=#{storeId}
+		</if>
+		ORDER BY ID DESC limit 1
+	</select>
+	
+	<select id="getPageList" resultMap="AppPosConfigResult" parameterType="com.meishi.merchant.dto.AppPosConfigDto">
+		<include refid="sqlTemplate" />
+		from app_pos_config where IS_DELETED=0
+		<if test="companyId!=null">
+			and COMPANY_ID=#{companyId}
+		</if>
+		<if test="brandId!=null">
+			and BRAND_ID=#{brandId}
+		</if>
+		<if test="storeId!=null">
+			and STORE_ID=#{storeId}
+		</if>
+		<if test="consuWay!=null">
+			and CONSU_WAY=#{consuWay}
+		</if>
+		<if test="wechatPayWay!=null">
+			and WECHAT_PAY_WAY=#{wechatPayWay}
+		</if>
+		<if test="aliPayWay!=null">
+			and ALI_PAY_WAY=#{aliPayWay}
+		</if>
+		<if test="createTimeStart!=null">
+			and CREATE_TIME>=#{createTimeStart}
+		</if>
+		<if test="createTimeEnd!=null">
+			and #{createTimeEnd}>=CREATE_TIME
+		</if>
+		<if test="id!=null">
+			and ID=#{id}
+		</if>
+		
+		ORDER BY ID DESC
+		
+		LIMIT #{start},#{limit}
+	</select>
+	
+	<select id="getPageTotal" resultType="integer"
+		parameterType="com.meishi.merchant.dto.AppPosConfigDto">
+		select count(*) 
+		from app_pos_config  where IS_DELETED=0
+		<if test="companyId!=null">
+			and COMPANY_ID=#{companyId}
+		</if>
+		<if test="brandId!=null">
+			and BRAND_ID=#{brandId}
+		</if>
+		<if test="storeId!=null">
+			and STORE_ID=#{storeId}
+		</if>
+		<if test="consuWay!=null">
+			and CONSU_WAY=#{consuWay}
+		</if>
+		<if test="wechatPayWay!=null">
+			and WECHAT_PAY_WAY=#{wechatPayWay}
+		</if>
+		<if test="aliPayWay!=null">
+			and ALI_PAY_WAY=#{aliPayWay}
+		</if>
+		<if test="createTimeStart!=null">
+			and CREATE_TIME>=#{createTimeStart}
+		</if>
+		<if test="createTimeEnd!=null">
+			and #{createTimeEnd}>=CREATE_TIME
+		</if>
+		<if test="id!=null">
+			and ID=#{id}
+		</if>
+	</select>
+
+	<insert id="save" parameterType="com.meishi.merchant.model.AppPosConfig">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into app_pos_config(
+		id,COMPANY_ID,BRAND_ID,STORE_ID,CONSU_WAY,WECHAT_PAY_WAY,ALI_PAY_WAY,CREATE_TIME,CREATE_ID,UPDATE_TIME,UPDATE_ID,IS_DELETED)
+		values
+		(#{id},#{companyId},#{brandId},#{storeId},#{consuWay},#{wechatPayWay},#{aliPayWay},now(),#{createId},null,null,0)
+	</insert>
+
+	<update id="update" parameterType="com.meishi.merchant.model.AppPosConfig">
+		update app_pos_config set UPDATE_TIME=now()
+		<if test="consuWay!=null">
+			,CONSU_WAY=#{consuWay}
+		</if>
+		<if test="wechatPayWay!=null">
+			,WECHAT_PAY_WAY=#{wechatPayWay}
+		</if>
+		<if test="aliPayWay!=null">
+			,ALI_PAY_WAY=#{aliPayWay}
+		</if>
+		<if test="updateId!=null">
+			,UPDATE_ID=#{updateId}
+		</if>
+		where IS_DELETED=0
+		<if test="id!=null">
+			and ID=#{id}
+		</if>
+		<if test="companyId!=null">
+			and COMPANY_ID=#{companyId}
+		</if>
+		<if test="brandId!=null">
+			and BRAND_ID=#{brandId}
+		</if>
+		<if test="storeId!=null">
+			and STORE_ID=#{storeId}
+		</if>
+	</update>
+
+	<update id="remove" parameterType="com.meishi.merchant.model.AppPosConfig">
+		update app_pos_config set IS_DELETED=1 where
+		where IS_DELETED=0
+		<if test="id!=null">
+			and ID=#{id}
+		</if>
+		<if test="companyId!=null">
+			and COMPANY_ID=#{companyId}
+		</if>
+		<if test="brandId!=null">
+			and BRAND_ID=#{brandId}
+		</if>
+		<if test="storeId!=null">
+			and STORE_ID=#{storeId}
+		</if>
+	</update>
+	
+</mapper>

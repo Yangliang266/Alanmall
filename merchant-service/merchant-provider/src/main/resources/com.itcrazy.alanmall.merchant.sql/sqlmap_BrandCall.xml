@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.BrandCallDao">
+
+	<resultMap id="BrandCallResult" type="com.meishi.merchant.model.BrandCall">
+		<result column="id" property="id" />
+		<result column="COMPANY_ID" property="companyId" />
+		<result column="BRAND_ID" property="brandId" />		
+		<result column="STATUS" property="status" />
+		<result column="CALL_PHONE" property="callPhone" />
+		<result column="SEAT_CODE" property="seatCode" />
+		<result column="MOBILE" property="mobile" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="RESPONSE_TIME" property="responseTime" />
+	</resultMap>
+
+	<sql id="sqlTemplate">
+		select *
+	</sql>
+
+	<select id="get" resultMap="BrandCallResult">
+		<include refid="sqlTemplate" />
+		from brand_calls where id=#{id}
+	</select>
+
+	<select id="getPageList" resultMap="BrandCallResult" parameterType="com.meishi.merchant.dto.BrandCallDto">
+		<include refid="sqlTemplate" />
+		from brand_calls where 1 = 1
+		<if test="status!=null">
+			and status=#{status}
+		</if>
+		<if test="minCreateTime != null">
+			and CREATE_TIME > #{minCreateTime}
+		</if>
+		<if test="companyId!=null">
+			and company_id=#{companyId}
+		</if>
+		<if test="brandId!=null">
+			and BRAND_ID=#{brandId}
+		</if>
+		<if test="seatCode!=null">
+			and SEAT_CODE=#{seatCode}
+		</if>
+		ORDER BY ID DESC
+		
+		LIMIT #{start},#{limit}
+	</select>
+	
+	<select id="getPageTotal" resultType="integer" parameterType="com.meishi.merchant.dto.BrandCallDto">
+		select count(*) 
+		from brand_calls where 1 = 1
+		<if test="status!=null">
+			and status=#{status}
+		</if>
+		<if test="companyId!=null">
+			and company_id=#{companyId}
+		</if>
+		<if test="brandId!=null">
+			and BRAND_ID=#{brandId}
+		</if>
+		<if test="seatCode!=null">
+			and SEAT_CODE=#{seatCode}
+		</if>
+	</select>
+	
+	<insert id="save" parameterType="com.meishi.merchant.model.BrandCall">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into brand_calls(COMPANY_ID,BRAND_ID,STATUS,CALL_PHONE,SEAT_CODE,MOBILE,CREATE_TIME,RESPONSE_TIME)
+		values(#{companyId},#{brandId},#{status},#{callPhone},#{seatCode},#{mobile},#{createTime},#{responseTime})
+	</insert>
+
+	<update id="update" parameterType="com.meishi.merchant.model.BrandCall">
+		update brand_calls set id=#{id}
+		<if test="status!=null">
+			,STATUS=#{status}
+		</if>
+		<if test="responseTime!=null">
+			,RESPONSE_TIME=#{responseTime}
+		</if>		
+		where id=#{id}
+	</update>
+	
+	<update id="remove" parameterType="com.meishi.merchant.model.BrandCall">
+		update brand set id=#{id} where id=#{id}
+	</update>
+
+</mapper>

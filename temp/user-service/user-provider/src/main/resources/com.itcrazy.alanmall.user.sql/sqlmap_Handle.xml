@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.user.dao.HandleDao">
+
+  <resultMap id="HandleResult" type="com.meishi.user.model.Handle">    
+  	<result column="ID" property="id" />
+  	<result column="MODULE_ID" property="moduleId" />
+  	<result column="NAME" property="name" />
+  	<result column="CODE" property="CODE" />
+  	<result column="system" property="system" />
+  	<result column="url" property="url" />
+  </resultMap>
+  
+   <select id="getPageList" resultMap="HandleResult" parameterType="com.meishi.user.dto.HandleDto">
+  		select id,module_id,name,code,handle.system
+  		from handle where status=0
+  		<if test="system!=null">
+  		and handle.system=#{system}
+  		</if>
+  		<if test="moduleId!=null">
+  		and module_id=#{moduleId}
+  		</if>
+  </select>
+
+</mapper>

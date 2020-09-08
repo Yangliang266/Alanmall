@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.ReturnCardRechargeHistoryDao">
+  	<resultMap id="RechargeResult" type="com.itcrazy.alanmall.mscard.model.ReturnCardRechargeHistory">
+  		<result column="CARD_NO" property="cardNo" />
+  		<result column="CATEGORY_NAME" property="categoryName" />
+  		<result column="STATUS" property="status" />
+  		<result column="STORE" property="rechargeStore" />
+  		<result column="PAY_MODE" property="payMode" />
+  		<result column="RECHARGE" property="rechargeAmount" />
+  		<result column="REWARD" property="reward" />
+  		<result column="CREATE_TIME" property="rechargeTime" />
+  		<result column="CREATE_ID" property="rechargePerson" />
+  	</resultMap>
+
+	<sql id="getPageTemplate">
+    	FROM
+			recharge_history rh
+		LEFT JOIN card_information ci ON rh.CARD_NO = ci.CARD_NO
+		LEFT JOIN card_category cc ON ci.CATEGORY = cc.ID
+		LEFT JOIN pay_mode pm ON rh.PAY_MODE = pm.ID
+		WHERE
+			rh.CARD_NO = #{cardNo}
+		AND	rh.COMPANY_ID = #{companyId}
+		AND rh.IS_DELETED = 0
+  	</sql>
+
+  	<select id="getPageList" resultMap="RechargeResult" parameterType="com.itcrazy.alanmall.mscard.dto.RechargeDto">
+  		SELECT
+			rh.CARD_NO,
+			cc.`NAME` AS CATEGORY_NAME,
+			ci.`STATUS`,
+			rh.STORE,
+			pm.`NAME` AS PAY_MODE,
+			rh.RECHARGE,
+			rh.REWARD,
+			rh.CREATE_TIME,
+			rh.CREATE_ID
+		<include refid="getPageTemplate" />
+		ORDER BY
+			rh.CREATE_TIME DESC
+  		LIMIT #{start}, #{limit}
+   	</select>
+
+	<select id="getPageTotal" resultType="integer" parameterType="com.itcrazy.alanmall.mscard.dto.RechargeDto">
+  		SELECT
+  			COUNT(rh.CARD_NO)
+		<include refid="getPageTemplate" />
+  	</select>
+
+</mapper>

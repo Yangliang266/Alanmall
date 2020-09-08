@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.CuisineDao">
+
+	<resultMap id="cuisineResult" type="com.meishi.merchant.model.Cuisine">
+		<result column="ID" property="id" />
+		<result column="CUISINE_CLASS_ID" property="cuisineClassId" />
+		<result column="CUISINE_NAME" property="cuisineName" />
+	</resultMap>
+
+    <resultMap id="cuisineClassCuisineResult" type="com.meishi.merchant.model.Cuisine">
+		<result column="ID" property="id" />
+		<result column="CUISINE_CLASS_ID" property="cuisineClassId" />
+		<result column="CUISINE_NAME" property="cuisineName" />
+		<result column="CUISINE_class_NAME" property="cuisineName" />
+	</resultMap>
+	
+	<select id="get" resultMap="cuisineResult" parameterType="long">
+		SELECT
+			ID,
+			CUISINE_CLASS_ID,CUISINE_NAME
+		FROM
+			cuisine  where id=#{id}
+	</select>
+	<select id="getCuisineByParentId" resultMap="cuisineResult" parameterType="long">
+		SELECT
+			ID,
+			CUISINE_CLASS_ID,CUISINE_NAME
+		FROM
+			cuisine  where CUISINE_CLASS_ID =#{parentId}
+	</select>
+    <select id="getCuisineByCode" resultMap="cuisineResult" parameterType="string">
+		SELECT
+			ID,
+			CUISINE_CLASS_ID,CUISINE_NAME
+		FROM
+			cuisine  where code=#{code}
+	</select>
+	
+	<select id="getAllCuisineClassCuisine" resultMap="cuisineClassCuisineResult">
+	select c.id,c.cuisine_class_id,cc.cuisine_class_name,c.cuisine_name 
+from cuisine c join cuisine_class cc on c.cuisine_class_id=cc.id order by c.cuisine_class_id asc
+	</select>
+</mapper>

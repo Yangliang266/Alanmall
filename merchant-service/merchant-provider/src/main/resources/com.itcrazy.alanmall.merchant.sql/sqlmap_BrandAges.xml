@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.BrandAgesDao">
+
+	<resultMap id="BrandAgesResult" type="com.meishi.merchant.model.BrandAges">
+		<result column="id" property="id" />
+		<result column="brand_id" property="brandId" />
+		<result column="age_class_Id" property="ageClassId" />
+	</resultMap>
+
+	<select id="getBrandAgesListByBrandId" resultMap="BrandAgesResult" parameterType="long">
+		select id,brand_id,age_class_Id from brand_ages where brand_id=#{brandId} and IS_DELETED=0
+	</select>
+
+	<insert id="save" parameterType="com.meishi.merchant.model.BrandAges">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into brand_ages( id,brand_id,age_class_id,IS_DELETED)
+		values (#{id},#{brandId},#{ageClassId},0)
+	</insert>
+
+	<delete id="removeBrandAgesByBrandId" parameterType="long">
+		update brand_ages set is_deleted=0 where brand_id=#{brandId} and IS_DELETED=0
+	</delete>
+</mapper>

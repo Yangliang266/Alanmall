@@ -1,0 +1,60 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<beans xmlns="http://www.springframework.org/schema/beans"-->
+<!--	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" -->
+<!--	xmlns:context="http://www.springframework.org/schema/context"-->
+<!--	xmlns:tx="http://www.springframework.org/schema/tx" -->
+<!--	xmlns:aop="http://www.springframework.org/schema/aop"-->
+<!--	xmlns:util="http://www.springframework.org/schema/util"  -->
+<!--	xsi:schemaLocation="http://www.springframework.org/schema/beans -->
+<!--           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd-->
+<!--           http://www.springframework.org/schema/context-->
+<!--           http://www.springframework.org/schema/context/spring-context-3.0.xsd-->
+<!--           http://www.springframework.org/schema/util-->
+<!--           http://www.springframework.org/schema/util/spring-util-3.0.xsd-->
+<!--          ">-->
+<!--          &lt;!&ndash; 待优化 common &ndash;&gt;-->
+<!--	<bean id="projectName" class="com.meishi.common.client.project.WebProjectName">-->
+<!--		<property name="name" value="merchant"/>-->
+<!--	</bean>-->
+<!-- -->
+<!--   <util:properties id="configProps"-->
+<!--                location="file:${meishi_config_path}/merchant/*.properties"></util:properties>-->
+<!--	&lt;!&ndash; report 数据库配置开始 &ndash;&gt;-->
+<!--	<bean id="dataSource_merchant" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">-->
+<!--        <property name="driverClassName" value="#{configProps['jdbc_merchant.driverClassName']}" />-->
+<!--        <property name="url" value="#{configProps['jdbc_merchant.url']}" />-->
+<!--        <property name="username" value="#{configProps['jdbc_merchant.username']}" />-->
+<!--        <property name="password" value="#{configProps['jdbc_merchant.password']}" />-->
+<!--        <property name="initialSize" value="#{configProps['jdbc_merchant.initialSize']}"/>-->
+<!--        <property name="minIdle" value="5"/>-->
+<!--        <property name="maxActive" value="#{configProps['jdbc_merchant.maxActive']}"/>-->
+<!--        &lt;!&ndash; 对于长时间不使用的连接强制关闭, 默认超时300秒 &ndash;&gt;-->
+<!--        <property name="removeAbandoned" value="true"/>-->
+<!--        &lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
+<!--        <property name="maxWait" value="60000"/>-->
+<!--        &lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
+<!--      	<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
+<!--      	&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
+<!--        <property name="minEvictableIdleTimeMillis" value="300000" />-->
+<!--        <property name="validationQuery" value="select 1"/>-->
+<!--        <property name="testWhileIdle" value="true" />-->
+<!--    </bean>-->
+<!--	-->
+<!--	<bean id="sqlSessionFactory_merchant" class="org.mybatis.spring.SqlSessionFactoryBean"   lazy-init="true">-->
+<!--		<property name="dataSource">-->
+<!--			<ref bean="dataSource_merchant"></ref>-->
+<!--		</property>-->
+<!--		<property name="mapperLocations">-->
+<!--			<list>-->
+<!--				<value>classpath*:/com/meishi/merchant/sqlmap*.xml</value>-->
+<!--			</list>-->
+<!--		</property>-->
+<!--	</bean>-->
+<!--	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+<!--        <property name="sqlSessionFactory" ref="sqlSessionFactory_merchant" />-->
+<!--        <property name="basePackage" value="com.meishi.merchant.dao" />-->
+<!--    </bean>-->
+<!-- -->
+<!--	 -->
+<!-- -->
+<!--</beans>-->

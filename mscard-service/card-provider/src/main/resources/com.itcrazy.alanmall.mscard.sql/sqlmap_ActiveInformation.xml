@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.ActiveInformationDao">
+
+
+  <resultMap id="ActiveResult" type="com.itcrazy.alanmall.mscard.model.ActiveInformation">
+  	<result column="CARD_NO" property="cardNo" />
+  	<result column="MOTHER_CARD_NO" property="motherCardNo" />
+  	<result column="MOTHER_TYPE" property="motherType" />
+  	<result column="CATEGORY_NAME" property="categoryName" />
+  	<result column="CATEGORY" property="category" />
+  	<result column="STATUS" property="status" />
+  	<result column="CREDIT_STATUS" property="creditStatus" />
+  	<result column="CREDIT_MAX_QUOTA" property="creditMaxQuota" />
+  	<result column="STORE" property="store" />
+  	<result column="USER_NAME" property="userName" />
+  	<result column="SEX" property="sex" />
+  	<result column="TELEPHONE" property="telephone" />
+  	<result column="ID_NUMBER" property="idNumber" />
+  	<result column="RECHARGE_BALANCE" property="rechargeBalance" />
+  	<result column="REWARD" property="reward" />
+  	<result column="CREDIT" property="credit" />
+  	<result column="NEW_CARD_NO" property="newCardNo" />
+  	<result column="FILE_NAME" property="fileName" />
+  	<result column="COMPANY_ID" property="companyId" />
+  </resultMap>
+
+  <select id="getActiveDetail" resultMap="ActiveResult" parameterType="com.itcrazy.alanmall.mscard.dto.ActiveInformationDto">
+
+  		SELECT
+  			i.CARD_NO, i.MOTHER_CARD_NO, i.MOTHER_TYPE, i.CATEGORY, i.STATUS, i.CREDIT_STATUS, i.CREDIT_MAX_QUOTA,
+  			i.RECHARGE_BALANCE, i.REWARD, i.CREDIT, i.STORE, c.NAME AS CATEGORY_NAME,
+  			r.USER_NAME,r.SEX, r.TELEPHONE, r.ID_NUMBER,h.NEW_CARD_NO,h.FILE_NAME,i.COMPANY_ID
+		FROM
+			card_actived_information i
+		LEFT JOIN
+			card_category c ON i.CATEGORY = c.ID
+		LEFT JOIN
+			registered_card r ON i.CARD_NO = r.CARD_NO AND i.COMPANY_ID = r.COMPANY_ID
+		LEFT JOIN
+			card_change_history h ON i.CARD_NO = h.OLD_CARD_NO AND i.COMPANY_ID = h.COMPANY_ID
+		WHERE i.IS_DELETED = 0
+		<if test="cardNo!=null and cardNo!=''" >
+  		 AND i.CARD_NO=#{cardNo}
+  		</if>
+  		<if test="telephone!=null and telephone!=''" >
+  		 AND r.TELEPHONE=#{telephone}
+  		</if>
+  		<if test="idNumber!=null and idNumber!=''" >
+  		 AND r.ID_NUMBER=#{idNumber}
+  		</if>
+		<if test="companyId!=null" >
+  		 AND i.COMPANY_ID=#{companyId}
+  		</if>
+  		<if test="store!=null" >
+  		 AND i.STORE=#{store}
+  		</if>
+  		LIMIT 1
+   </select>
+
+  <update id="save" parameterType="com.itcrazy.alanmall.mscard.model.ActiveInformation">
+  	UPDATE
+  		card_actived_information
+  	SET
+  		UPDATE_TIME=NOW(),UPDATE_ID=#{updateId}
+  	<if test="status!=null" >
+  		  ,STATUS=#{status}
+  	</if>
+	<if test="creditStatus!=null" >
+  		  ,CREDIT_STATUS = #{creditStatus}
+  	</if>
+  	<if test="creditMaxQuota!=null" >
+  		  ,CREDIT_MAX_QUOTA = #{creditMaxQuota}
+  	</if>
+  	<if test="motherCardNo==0" >
+  		  ,MOTHER_CARD_NO = NULL
+  	</if>
+  	<if test="rechargeBalance!=null" >
+  		  ,RECHARGE_BALANCE=#{rechargeBalance}
+  	</if>
+  	<if test="reward!=null" >
+  		  ,REWARD=#{reward}
+  	</if>
+  	<if test="credit!=null" >
+  		  ,CREDIT=#{credit}
+  	</if>
+  	WHERE CARD_NO=#{cardNo}
+  	AND COMPANY_ID=#{companyId}
+  </update>
+
+  <update id="updateActiveCardInformation" parameterType="com.itcrazy.alanmall.mscard.model.ActiveInformation">
+  	UPDATE card_actived_information SET UPDATE_TIME=NOW(),UPDATE_ID=#{updateId}
+  	<if test="motherCardNo!=null and motherCardNo!=''">
+  		, MOTHER_CARD_NO = #{motherCardNo}
+  	</if>
+  	<if test="creditMaxQuota!=null and creditMaxQuota!=''">
+  		, CREDIT_MAX_QUOTA = #{creditMaxQuota}
+  	</if>
+  	<if test="creditStatus!=null">
+  		, CREDIT_STATUS = #{creditStatus}
+  	</if>
+  	<if test="credit!=null">
+  		, CREDIT = CREDIT - #{credit}
+  	</if>
+
+  	WHERE CARD_NO=#{cardNo}
+  	AND COMPANY_ID=#{companyId}
+  </update>
+
+  <insert id="saveActiveInfo" parameterType="com.itcrazy.alanmall.mscard.model.SupplementCard">
+		INSERT INTO card_actived_information(
+		CARD_NO,
+		MOTHER_CARD_NO,
+		MOTHER_TYPE,
+		SERIAL_NO,
+		CATEGORY,
+		`STATUS`,
+		STORE,
+		CREDIT_STATUS,
+		CREDIT_MAX_QUOTA,
+		RECHARGE_BALANCE,
+		REWARD,
+		CREDIT,
+		CREATE_TIME,
+		CREATE_ID,
+		PUBLISH_TIME,
+		PUBLISH_ID,
+		IS_DELETED,
+		COMPANY_ID)
+		(SELECT
+		#{newCardNo},
+		MOTHER_CARD_NO,
+		MOTHER_TYPE,
+		SERIAL_NO,
+		CATEGORY,
+		9,
+		STORE,
+		CREDIT_STATUS,
+		CREDIT_MAX_QUOTA,
+		RECHARGE_BALANCE,
+		REWARD,
+		CREDIT,
+		NOW(),
+		#{createId},
+		NOW(),
+		#{createId},
+		0,
+		COMPANY_ID
+		FROM card_information
+		WHERE CARD_NO = #{oldCardNo}
+		AND COMPANY_ID = #{companyId})
+	</insert>
+
+	<delete id="delete" parameterType="com.itcrazy.alanmall.mscard.model.ActiveInformation">
+  	DELETE FROM card_actived_information
+  	WHERE CARD_NO=#{cardNo}
+  	AND COMPANY_ID=#{companyId}
+   </delete>
+
+
+   <select id="getSubCardByMatherCardNo" resultMap="ActiveResult" >
+  		SELECT
+  			*
+		FROM
+			card_actived_information
+		WHERE
+			IS_DELETED = 0
+  		AND
+  			MOTHER_CARD_NO=#{cardNo}
+  		AND
+  			COMPANY_ID=#{companyId}
+   </select>
+
+    <update id="updateRechargeByCardNo" parameterType="com.itcrazy.alanmall.mscard.model.ActiveInformation">
+        UPDATE
+            card_actived_information
+        SET
+            RECHARGE_BALANCE = RECHARGE_BALANCE + #{rechargeBalance},
+            REWARD = REWARD + #{reward},
+            UPDATE_TIME = NOW(), UPDATE_ID = #{updateId}
+        WHERE
+            CARD_NO = #{cardNo}
+        AND
+            COMPANY_ID = #{companyId}
+    </update>
+
+    <!-- 换卡或挂失时，更新母卡信息 -->
+    <update id="updMotherCard" parameterType="com.itcrazy.alanmall.mscard.model.SupplementCard">
+  	UPDATE
+  		card_actived_information
+  	SET
+  		UPDATE_TIME=NOW(),UPDATE_ID=#{updateId}
+  	<if test="newCardNo!=null" >
+  		  ,MOTHER_CARD_NO=#{newCardNo}
+  	</if>
+  	WHERE MOTHER_CARD_NO=#{oldCardNo}
+  </update>
+
+</mapper>

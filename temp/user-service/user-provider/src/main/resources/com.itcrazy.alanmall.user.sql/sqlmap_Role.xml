@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.user.dao.RoleDao">
+
+    
+  <resultMap id="RoleResult" type="com.meishi.user.model.Role">    
+  	<result column="ID" property="id" />
+  	<result column="NAME" property="name" />
+  	<result column="COMPANY_ID" property="companyId" />
+  	<result column="BRAND_ID" property="brandId" />
+  	<result column="IS_DEFAULT" property="isDefault" />
+  	<result column="ROLE_LEVEL_ID" property="roleLevelId" />
+  	<result column="REMARK" property="remark" />
+  	<result column="STATUS" property="status" />
+  </resultMap>
+  <sql id="sqlTemplate">
+     select id,NAME,COMPANY_ID,BRAND_ID,is_default,remark,role_level_id,status
+  </sql>
+  <insert id="save" parameterType="com.meishi.user.model.Role">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into role(
+		id,name,status,company_id,BRAND_ID,IS_DEFAULT,REMARK,ROLE_LEVEL_ID,CREATE_ID,UPDATE_ID,CREATE_TIME,UPDATE_TIME,IS_DELETED,office_area_id)
+		values
+		(#{id},#{name},#{status},#{companyId},#{brandId},#{isDefault},#{remark},#{roleLevelId},#{createId},#{updateId},now(),now(),0,#{officeAreaId})
+	</insert>
+	
+  <select id="get" resultMap="RoleResult">
+   <include refid="sqlTemplate" />
+     <![CDATA[
+  		from role where id=#{id} and is_deleted=0
+     ]]>
+  </select>
+  <update id="remove" parameterType="com.meishi.user.model.Role">
+  	update role set is_deleted=1 ,update_time=now(),update_id=#{updateId} where company_id=#{companyId} and id=#{id}
+  </update>
+  <update id="update" parameterType="com.meishi.user.model.Role">
+  	update role set update_time=now(),update_id=#{updateId} 
+  	<if test="name!=null" >
+  		  ,name=#{name}
+  	</if>
+  	<if test="roleLevelId!=null" >
+  		  ,role_level_id=#{roleLevelId}
+  	</if>
+  	<if test="remark!=null" >
+  		  ,remark=#{remark}
+  	</if>
+  	<if test="companyId!=null" >
+  		  ,company_id=#{companyId}
+  	</if>
+  	<if test="brandId!=null" >
+  		  ,brand_id=#{brandId}
+  	</if>
+  	<if test="status!=null" >
+  		  ,status=#{status}
+  	</if>
+  	where  id=#{id}
+  </update>
+
+ <select id="getPageList" resultMap="RoleResult" parameterType="com.meishi.user.dto.RoleDto">
+  		<include refid="sqlTemplate" />
+  		from role where is_deleted=0 
+  		 and office_area_id in(${officeAreaIds})
+  		<if test="companyId!=null">
+  		and (company_id=#{companyId} or is_default=1)
+  		</if>
+  		<if test="companyIds!=null">
+  		and company_id in(${companyIds})
+  		</if>
+  		<if test="brandId!=null">
+  		and (brand_id=#{brandId} or is_default=1)
+  		</if>
+  		<if test="brandIds!=null">
+  		and brand_id in(${brandIds})
+  		</if>
+  		<if test="isDefault!=null">
+  		and is_default=#{isDefault}
+  		</if>
+  		<if test="searchName!=null">
+  		and name like concat("%",#{searchName},"%")
+  		</if>
+  		<if test="name!=null">
+  		and name=#{name}
+  		</if>
+  		<if test="roleLevelIds!=null">
+  		and role_level_id in (${roleLevelIds})
+  		</if>
+  		<if test="status!=null">
+  		and status=#{status}
+  		</if>
+  		order by id desc
+  		limit #{start},#{limit}
+  </select>
+  
+   <select id="getPageTotal" resultType="integer" parameterType="com.meishi.user.dto.RoleDto">
+  		select count(id) 
+  		from role where is_deleted=0 
+  		 and office_area_id in(${officeAreaIds})
+		<if test="companyId!=null">
+  		and (company_id=#{companyId} or is_default=1)
+  		</if>
+  		<if test="companyIds!=null">
+  		and company_id in(${companyIds})
+  		</if>
+  		<if test="brandId!=null">
+  		and (brand_id=#{brandId} or is_default=1)
+  		</if>
+  		<if test="brandIds!=null">
+  		and brand_id in(${brandIds})
+  		</if>
+  		<if test="isDefault!=null">
+  		and is_default=#{isDefault}
+  		</if>
+  		<if test="searchName!=null">
+  		and name like concat("%",#{searchName},"%")
+  		</if>
+  		<if test="name!=null">
+  		and name=#{name}
+  		</if>
+  		<if test="status!=null">
+  		and status=#{status}
+  		</if>
+  		<if test="roleLevelIds!=null">
+  		and role_level_id in (${roleLevelIds})
+  		</if>
+  </select>
+</mapper>

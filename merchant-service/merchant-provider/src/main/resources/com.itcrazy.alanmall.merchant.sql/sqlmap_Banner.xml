@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.BannerDao">
+
+	<resultMap id="BaseResultMap" type="com.meishi.merchant.model.Banner">
+		<result column="id" property="id" />
+		<result column="COMPANY_ID" property="companyId" />
+		<result column="BRAND_ID" property="brandId" />
+		<result column="PROVINCE_ID" property="provinceId" />
+		<result column="CITY_ID" property="cityId" />
+		<result column="COUNTY_ID" property="countyId" />
+		<result column="NAME" property="name" />
+		<result column="URL" property="url" />
+		<result column="STATUS" property="status" />
+		<result column="WECHAT_CONFIG_ID" property="wechatConfigId" />
+		<result column="SHOW_ORDER" property="showOrder" />
+		<result column="MALL_TYPE" property="mallType" />
+		<result column="CREATE_ID" property="createId" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="UPDATE_ID" property="updateId" />
+		<result column="UPDATE_TIME" property="updateTime" />
+		<result column="IS_DELETED" property="isDeleted" />
+	</resultMap>
+	
+	<sql id="selectTemplate">
+     select 
+     ID, COMPANY_ID, BRAND_ID, PROVINCE_ID, CITY_ID, COUNTY_ID, NAME, URL, STATUS, CREATE_ID, 
+     CREATE_TIME, UPDATE_ID, UPDATE_TIME, WECHAT_CONFIG_ID, SHOW_ORDER, MALL_TYPE, IS_DELETED
+  	</sql>
+
+	<insert id="save" parameterType="com.meishi.merchant.model.Banner">
+	 	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+	   insert into banner
+	   	(ID, COMPANY_ID, BRAND_ID, PROVINCE_ID, CITY_ID, COUNTY_ID, NAME, URL, STATUS, CREATE_ID, CREATE_TIME, UPDATE_ID, UPDATE_TIME,
+	   	 WECHAT_CONFIG_ID, SHOW_ORDER, MALL_TYPE, IS_DELETED)
+	   values 
+	   	(#{id}, #{companyId}, #{brandId}, #{provinceId}, #{cityId}, #{countyId}, #{name}, #{url}, #{status}, #{createId}, now(), #{updateId}, #{updateTime},
+	   	#{wechatConfigId}, #{showOrder}, #{mallType}, 0)
+	</insert>
+	
+	<select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		<include refid="selectTemplate"/>
+		FROM banner where ID = #{id}
+	</select>
+	
+	<update id="update" parameterType="com.meishi.merchant.model.Banner">
+		update banner
+		<set>
+			UPDATE_TIME = NOW()
+			<if test="companyId != null">
+				,COMPANY_ID = #{companyId}
+			</if>
+			<if test="brandId != null">
+				,BRAND_ID = #{brandId}
+			</if>
+			<if test="provinceId != null">
+				,PROVINCE_ID = #{provinceId}
+			</if>
+			<if test="cityId != null">
+				,CITY_ID = #{cityId}
+			</if>
+			<if test="countyId != null">
+				,COUNTY_ID = #{countyId}
+			</if>
+			<if test="name != null">
+				,NAME = #{name}
+			</if>
+			<if test="url != null">
+				,URL = #{url}
+			</if>
+			<if test="status != null">
+				,STATUS = #{status}
+			</if>
+			<if test="updateId != null">
+				,UPDATE_ID = #{updateId}
+			</if>
+			<if test="wechatConfigId != null">
+				,WECHAT_CONFIG_ID = #{wechatConfigId}
+			</if>
+			<if test="showOrder != null">
+				,SHOW_ORDER = #{showOrder}
+			</if>
+			<if test="mallType != null">
+				,MALL_TYPE = #{mallType}
+			</if>
+		</set>
+		WHERE ID = #{id}
+	</update>
+	
+	<select id="getPageList" resultMap="BaseResultMap" parameterType="com.meishi.merchant.dto.BannerDto">
+		<include refid="selectTemplate"/>
+		FROM banner WHERE IS_DELETED = 0
+		<if test="companyId != null">
+			AND COMPANY_ID = #{companyId}
+		</if>
+		<if test="brandId != null">
+			AND BRAND_ID = #{brandId}
+		</if>
+		<if test="provinceId != null">
+			AND PROVINCE_ID = #{provinceId}
+		</if>
+		<if test="cityId != null">
+			AND CITY_ID = #{cityId}
+		</if>
+		<if test="countyId != null">
+			AND COUNTY_ID = #{countyId}
+		</if>
+		<if test="status != null">
+			AND STATUS = #{status}
+		</if>
+		<if test="name != null">
+			AND NAME LIKE CONCAT("%", #{name}, "%")
+		</if>
+		<if test="wechatConfigId != null">
+			AND WECHAT_CONFIG_ID = #{wechatConfigId}
+		</if>
+		<if test="mallType != null">
+			AND MALL_TYPE = #{mallType}
+		</if>
+		order by SHOW_ORDER ASC
+		limit #{start}, #{limit}
+	</select>
+	
+	<select id="getPageTotal" resultType="java.lang.Integer" parameterType="com.meishi.merchant.dto.BannerDto">
+		select count(*)
+		FROM banner WHERE IS_DELETED = 0
+		<if test="companyId != null">
+			AND COMPANY_ID = #{companyId}
+		</if>
+		<if test="brandId != null">
+			AND BRAND_ID = #{brandId}
+		</if>
+		<if test="provinceId != null">
+			AND PROVINCE_ID = #{provinceId}
+		</if>
+		<if test="cityId != null">
+			AND CITY_ID = #{cityId}
+		</if>
+		<if test="countyId != null">
+			AND COUNTY_ID = #{countyId}
+		</if>
+		<if test="status != null">
+			AND STATUS = #{status}
+		</if>
+		<if test="name != null">
+			AND NAME LIKE CONCAT("%", #{name}, "%")
+		</if>
+		<if test="wechatConfigId != null">
+			AND WECHAT_CONFIG_ID = #{wechatConfigId}
+		</if>
+		<if test="mallType != null">
+			AND MALL_TYPE = #{mallType}
+		</if>
+	</select>
+  
+	<update id="remove" parameterType="com.meishi.merchant.model.Banner">
+	   	UPDATE
+	   		banner
+	   	SET
+	   		UPDATE_ID = #{updateId},
+	   		UPDATE_TIME = now(),
+	   		IS_DELETED = 1
+	   	WHERE
+	   		ID = #{id} 
+	</update>
+	 
+</mapper>

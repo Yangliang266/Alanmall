@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.CardDiscardedDao">
+  <resultMap id="CardDiscardedResult" type="com.itcrazy.alanmall.mscard.model.CardDiscarded">
+  	<result column="RECEIPT_NO" property="receiptNo" />
+  	<result column="CARD_NO" property="cardNo" />
+  	<result column="NAME" property="name" />
+  	<result column="STATUS" property="status" />
+  	<result column="CREATE_ID" property="createId" />
+  </resultMap>
+
+  <resultMap id="CardDiscardedHistoryResult" type="com.itcrazy.alanmall.mscard.model.CardDiscarded">
+  	<result column="RECEIPT_NO" property="receiptNo" />
+  	<result column="CARD_NO" property="cardNo" />
+  	<result column="NAME" property="name" />
+  	<result column="STATUS" property="status" />
+  	<result column="CREATE_ID" property="createId" />
+  	<result column="CREATE_TIME" property="createTime" />
+  </resultMap>
+
+  <sql id="sqlSelectIf">
+     <if test="cardNo != null and cardNo != ''">
+		AND
+		cd.CARD_NO LIKE CONCAT("%",#{cardNo},"%")
+	 </if>
+	 <if test="receiptNo != null and receiptNo != ''">
+	    AND
+		cd.RECEIPT_NO LIKE CONCAT("%",#{receiptNo},"%")
+	 </if>
+  </sql>
+
+  <!-- 历史记录 -->
+  <select id="getPageList" resultMap="CardDiscardedHistoryResult" parameterType="com.itcrazy.alanmall.mscard.dto.CardDiscardedDto">
+  		SELECT
+		cd.RECEIPT_NO,
+		cd.CARD_NO,
+		cc.`NAME`,
+		ci.`STATUS`,
+		cd.CREATE_TIME,
+		cd.CREATE_ID
+		FROM
+			card_discarded cd
+		LEFT JOIN card_information ci ON cd.CARD_NO = ci.CARD_NO
+		LEFT JOIN card_category cc ON ci.CATEGORY = cc.ID
+		WHERE
+			cd.IS_DELETED = 0
+		and cd.COMPANY_ID = #{companyId}
+		<include refid="sqlSelectIf"/>
+		ORDER BY cd.CARD_NO DESC
+  		limit #{start},#{limit}
+   </select>
+
+   <!-- 获取待作废的卡号  -->
+   <select id="getCardDiscardedNo" resultMap="CardDiscardedResult" parameterType="com.itcrazy.alanmall.mscard.dto.CardDiscardedDto">
+		SELECT tt.RECEIPT_NO,tt.CARD_NO,tt.`STATUS`,tt.`NAME`,tt.CREATE_TIME,tt.CREATE_ID FROM
+		((SELECT
+            '' as RECEIPT_NO,
+		    ci.CARD_NO as CARD_NO,
+		    ci.`STATUS`,
+		    cc.`NAME`,
+		    '' as CREATE_TIME,
+		    '' as CREATE_ID
+		FROM
+			card_information as ci
+		LEFT JOIN card_category AS cc ON ci.CATEGORY = cc.ID
+		WHERE
+			(ci.`STATUS` = 2
+		    or ci.`STATUS` = 1
+		    or ci.`STATUS` = 4)
+		    and ci.`STATUS` != 5
+		    and ci.`STATUS` != 9
+		    and ci.`STATUS` != 10
+		    and ci.COMPANY_ID = #{companyId})
+		UNION ALL
+		(select
+            '' as RECEIPT_NO,
+		    a.CARD_NO as CARD_NO,
+	        ci.`STATUS`,
+	        cc.`NAME`,
+		    '' as CREATE_TIME,
+		    '' as CREATE_ID
+		from
+		    head_warehouse_out a
+		left join store_warehouse_in b
+			on  a.CARD_NO = b.CARD_NO
+		    and a.RECEIPT_NO = b.WAREHOUSE_OUT_NO
+		    and a.COMPANY_ID = b.COMPANY_ID
+		left join card_information AS ci
+	    	on a.CARD_NO = ci.CARD_NO
+	    	and a.COMPANY_ID = ci.COMPANY_ID
+		left join card_category AS cc
+	    	on ci.CATEGORY = cc.ID
+		where
+			ci.`STATUS` != 5
+		    and b.CARD_NO is null
+		    and a.IS_DELETED = 0
+		    and a.COMPANY_ID = #{companyId})
+		UNION ALL
+		(SELECT
+			'' as RECEIPT_NO,
+			a.CARD_NO as CARD_NO,
+			ci.`STATUS`,
+			cc.`NAME`,
+			'' as CREATE_TIME,
+			'' as CREATE_ID
+		FROM
+			store_warehouse_out a
+		LEFT JOIN store_warehouse_in b
+		    ON a.CARD_NO = b.CARD_NO
+		    AND a.RECEIPT_NO = b.WAREHOUSE_OUT_NO
+		    and a.COMPANY_ID = b.COMPANY_ID
+		INNER JOIN (
+			SELECT DISTINCT
+				a.WAREHOUSE_OUT_NO
+			FROM
+				store_warehouse_in a
+		    WHERE a.COMPANY_ID = #{companyId}
+		) t
+		    ON t.WAREHOUSE_OUT_NO = a.RECEIPT_NO
+        left join card_information AS ci
+	        on a.CARD_NO = ci.CARD_NO
+	        and a.COMPANY_ID = ci.COMPANY_ID
+		left join card_category AS cc
+	        on ci.CATEGORY = cc.ID
+		WHERE
+			ci.`STATUS` != 5
+            AND b.CARD_NO IS NULL
+            AND a.IS_DELETED = 0
+		    AND a.COMPANY_ID = #{companyId})) AS tt
+		WHERE 1=1
+		<if test="cardNo != null and cardNo != ''">
+		AND
+			tt.CARD_NO LIKE CONCAT("%",#{cardNo},"%")
+		</if>
+		ORDER BY CARD_NO DESC
+  		limit #{start},#{limit}
+   </select>
+
+  <!-- 获取历史记录总条数 -->
+  <select id="getPageTotal" resultType="integer" parameterType="com.itcrazy.alanmall.mscard.dto.CardDiscardedDto">
+	    SELECT
+		count(cd.CARD_NO)
+		FROM
+			card_discarded cd
+		LEFT JOIN card_information ci ON cd.CARD_NO = ci.CARD_NO
+		LEFT JOIN card_category cc ON ci.CATEGORY = cc.ID
+		WHERE
+			cd.IS_DELETED = 0
+		and cd.COMPANY_ID = #{companyId}
+		<include refid="sqlSelectIf"/>
+  </select>
+
+  <!-- 获取待作废的卡号总条数 -->
+  <select id="getCardDiscardedTotal" resultType="integer" parameterType="com.itcrazy.alanmall.mscard.dto.CardDiscardedDto">
+		SELECT COUNT(CARD_NO) FROM
+		(SELECT RECEIPT_NO,CARD_NO,`STATUS`,`NAME`,CREATE_TIME,CREATE_ID FROM
+		((SELECT
+		     '' as RECEIPT_NO,
+		    ci.CARD_NO as CARD_NO,
+		    ci.`STATUS`,
+		    cc.`NAME`,
+		    '' as CREATE_TIME,
+		    '' as CREATE_ID
+		FROM
+			card_information as ci
+		LEFT JOIN card_category AS cc ON ci.CATEGORY = cc.ID
+		WHERE
+			(ci.`STATUS` = 2
+		    or ci.`STATUS` = 1
+		    or ci.`STATUS` = 4)
+		    and ci.`STATUS` != 5
+		    and ci.`STATUS` != 9
+		    and ci.`STATUS` != 10
+		    and ci.COMPANY_ID = #{companyId})
+		UNION ALL
+		(select
+		    '' as RECEIPT_NO,
+			a.CARD_NO as CARD_NO,
+			ci.`STATUS`,
+			cc.`NAME`,
+			'' as CREATE_TIME,
+			'' as CREATE_ID
+		from
+		    head_warehouse_out a
+		left join store_warehouse_in b
+			on a.CARD_NO = b.CARD_NO
+		    and a.RECEIPT_NO = b.WAREHOUSE_OUT_NO
+		    and a.COMPANY_ID = b.COMPANY_ID
+		left join card_information AS ci
+	    	on a.CARD_NO = ci.CARD_NO
+	    	and a.COMPANY_ID = ci.COMPANY_ID
+		left join card_category AS cc
+	    	on ci.CATEGORY = cc.ID
+		where
+			ci.`STATUS` != 5
+		    and b.CARD_NO is null
+		    and a.IS_DELETED = 0
+		    and a.COMPANY_ID = #{companyId})
+		UNION ALL
+		(SELECT
+			'' as RECEIPT_NO,
+			a.CARD_NO as CARD_NO,
+			ci.`STATUS`,
+			cc.`NAME`,
+			'' as CREATE_TIME,
+			'' as CREATE_ID
+		FROM
+			store_warehouse_out a
+		LEFT JOIN store_warehouse_in b
+		    ON a.CARD_NO = b.CARD_NO
+		    and a.RECEIPT_NO = b.WAREHOUSE_OUT_NO
+		    and a.COMPANY_ID = b.COMPANY_ID
+		INNER JOIN (
+			SELECT DISTINCT
+				a.WAREHOUSE_OUT_NO
+			FROM
+				store_warehouse_in a
+		    WHERE a.COMPANY_ID = #{companyId}
+		) t
+		    ON t.WAREHOUSE_OUT_NO = a.RECEIPT_NO
+        left join card_information AS ci
+	        on a.CARD_NO = ci.CARD_NO
+	        and a.COMPANY_ID = ci.COMPANY_ID
+		left join card_category AS cc
+	        on ci.CATEGORY = cc.ID
+		WHERE
+			ci.`STATUS` != 5
+            AND b.CARD_NO IS NULL
+            AND a.IS_DELETED = 0
+		    AND a.COMPANY_ID = #{companyId})) as tt
+		WHERE tt.CARD_NO LIKE CONCAT("%",#{cardNo},"%")) as st
+  </select>
+
+  <!--获取当前最大单号  -->
+  <select id="getMaxReciptNo" resultType="string" parameterType="com.itcrazy.alanmall.mscard.dto.CardDiscardedDto">
+		SELECT
+		  	RECEIPT_NO
+		FROM
+			card_discarded
+		WHERE
+		    IS_DELETED = 0
+			AND COMPANY_ID = #{companyId}
+		ORDER BY
+			CREATE_TIME DESC
+		LIMIT 1
+   </select>
+
+   <!-- informationCard卡状态更新为总部作废 -->
+   <update id="updateCardInformation" parameterType="com.itcrazy.alanmall.mscard.model.CardDiscarded">
+	   	UPDATE card_information
+		SET `STATUS` = 5,UPDATE_ID = #{updateId},UPDATE_TIME = NOW()
+		WHERE CARD_NO = #{cardNo}
+   </update>
+
+	<!-- 添加CardDiscarded数据 -->
+   <insert id="save" parameterType="com.itcrazy.alanmall.mscard.model.CardDiscarded">
+		INSERT INTO card_discarded
+		(CARD_NO,RECEIPT_NO,REASON,CREATE_TIME,CREATE_ID,IS_DELETED,COMPANY_ID)
+		VALUES(#{cardNo},#{receiptNo},#{reason},NOW(),#{createId},0,#{companyId})
+   </insert>
+</mapper>

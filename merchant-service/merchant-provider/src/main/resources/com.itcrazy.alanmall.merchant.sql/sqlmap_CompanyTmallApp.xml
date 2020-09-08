@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.CompanyTmallAppDao">
+
+	<resultMap id="CompanyTmallAppResult" type="com.meishi.merchant.model.CompanyTmallApp">
+		<result column="ID" property="id" />
+        <result column="COMPANY_ID" property="companyId" />
+        <result column="BRAND_ID" property="brandId" />
+        <result column="CREATE_TIME" property="createTime"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
+        <result column="CREATE_ID" property="createId"/>
+        <result column="UPDATE_ID" property="updateId"/>
+        <result column="IS_DELETED" property="isDeleted"/>
+        <result column="APP_KEY" property="appKey"/>
+        <result column="APP_SECRET" property="appSecret"/>
+        <result column="APP_NAME" property="appName"/>
+        <result column="APP_TYPE" property="appType"/>
+	</resultMap>
+
+	<sql id="sqlTemplate">
+		SELECT id,COMPANY_ID,BRAND_ID,CREATE_TIME,UPDATE_TIME,CREATE_ID,UPDATE_ID,APP_KEY,APP_SECRET,APP_NAME,APP_TYPE
+
+	</sql>
+
+	<select id="get" resultMap="CompanyTmallAppResult">
+        <include refid="sqlTemplate" /> from company_tmall_app where id=#{id}  and is_deleted=0
+
+	</select>
+
+    <select id="getByAppkey" resultMap="CompanyTmallAppResult" parameterType="com.meishi.merchant.model.CompanyTmallApp">
+        <include refid="sqlTemplate" /> from company_tmall_app where is_deleted=0  AND APP_KEY=#{appKey}
+
+
+    </select>
+
+	<insert id="save" parameterType="com.meishi.merchant.model.CompanyTmallApp">
+		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+        insert into
+        company_tmall_app(ID,COMPANY_ID,BRAND_ID,CREATE_TIME,UPDATE_TIME,CREATE_ID,UPDATE_ID,APP_KEY,APP_SECRET,APP_NAME,IS_DELETED,APP_TYPE)
+        values (#{id},#{companyId},#{brandId},now(),#{updateTime},#{createId},#{updateId},#{appKey},#{appSecret},#{appName},0,#{appType})
+
+    </insert>
+
+	<update id="update" parameterType="com.meishi.merchant.model.CompanyTmallApp">
+		update company_tmall_app set update_time=now(),update_id=#{updateId}
+		<if test="appName!=null">
+			,APP_NAME=#{appName}
+		</if>
+        <if test="appKey!=null">
+            ,APP_KEY=#{appKey}
+        </if>
+        <if test="appSecret!=null">
+            ,APP_SECRET=#{appSecret}
+        </if>
+        <if test="appType!=null">
+            ,APP_TYPE=#{appType}
+        </if>
+		where id=#{id}
+	</update>
+    <update id="deleteById" parameterType="com.meishi.merchant.model.CompanyTmallApp">
+        update company_tmall_app set update_time=now(),update_id=#{updateId},is_deleted=1
+        where id=#{id}
+
+    </update>
+    
+    <select id="getCompanyTmallApp" parameterType="com.meishi.merchant.model.CompanyTmallApp" resultMap="CompanyTmallAppResult">
+        <include refid="sqlTemplate" />
+        from company_tmall_app where is_deleted=0 AND BRAND_ID=#{brandId}
+        <if test="appType!=null">
+            AND APP_TYPE=#{appType}
+        </if>
+
+    </select>
+
+	<!-- 分页查询 -->
+	<select id="getPageList" parameterType="com.meishi.merchant.dto.CompanyTmallAppDto" resultMap="CompanyTmallAppResult">
+		<include refid="sqlTemplate" />
+		from company_tmall_app where is_deleted=0 AND COMPANY_ID=#{companyId}
+
+        <if test="brandId != null">
+            AND BRAND_ID=#{brandId}
+        </if>
+        <if test="appName!=null">
+            AND APP_NAME=#{appName}
+        </if>
+        <if test="appKey!=null">
+            AND APP_KEY=#{appKey}
+        </if>
+        <if test="appSecret!=null">
+            AND APP_SECRET=#{appSecret}
+        </if>
+		
+		ORDER BY ID DESC
+		LIMIT #{start},#{limit}
+	</select>
+
+	<select id="getPageTotal" parameterType="com.meishi.merchant.dto.CompanyTmallAppDto" resultType="integer">
+      select count(id)  from company_tmall_app where is_deleted=0   AND COMPANY_ID=#{companyId}
+
+        <if test="brandId != null">
+            AND BRAND_ID=#{brandId}
+        </if>
+        <if test="appName!=null">
+            AND APP_NAME=#{appName}
+        </if>
+        <if test="appKey!=null">
+            AND APP_KEY=#{appKey}
+        </if>
+        <if test="appSecret!=null">
+            AND APP_SECRET=#{appSecret}
+        </if>
+	</select>
+
+
+</mapper>

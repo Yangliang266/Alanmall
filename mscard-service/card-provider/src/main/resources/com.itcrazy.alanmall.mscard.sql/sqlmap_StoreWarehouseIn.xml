@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.StoreWarehouseInDao">
+
+
+	<resultMap id="StoreWarehouseInResult" type="com.itcrazy.alanmall.mscard.model.StoreWarehouseIn">
+		<result column="HEAD_OUT_RECEIPT_NO" property="headOutReceiptNo" />
+		<result column="STORE_IN_RECEIPT_NO" property="storeInReceiptNo" />
+		<result column="CARD_NO" property="cardNo" />
+		<result column="CATEGORY" property="category" />
+		<result column="CATEGORY_NAME" property="categoryName" />
+		<result column="STATUS" property="status" />
+		<result column="HEAD_OUT_TIME" property="headOutTime" />
+		<result column="HEAD_OUT_PERSON" property="headOutPerson" />
+		<result column="STORE_IN_TIME" property="storeInTime" />
+		<result column="STORE_IN_PERSON" property="storeInPerson" />
+	</resultMap>
+
+	<sql id="sqlSelectIf">
+			AND	ci.IS_DELETED = 0
+		    AND ci.COMPANY_ID =  #{companyId}
+		    AND hwo.STORE_TO = #{storeTo}
+
+
+		<if test="headOutReceiptNo != null and headOutReceiptNo != ''">
+  			AND
+  				hwo.RECEIPT_NO LIKE CONCAT("%",#{headOutReceiptNo},"%")
+  		</if>
+  		<if test="cardNo != null and cardNo != ''">
+  			AND
+  				ci.CARD_NO <![CDATA[ >= ]]> #{cardNo}
+  		</if>
+  		<if test="cardNoEnd != null and cardNoEnd != ''">
+  			AND
+  				ci.CARD_NO <![CDATA[ <= ]]> #{cardNoEnd}
+  		</if>
+  		<if test="status != null and status != ''">
+  			AND
+  				ci.STATUS = #{status}
+  		</if>
+  		<if test="headOutTimeBegin != null and headOutTimeBegin.toString() !=''">
+  			AND
+				cast(hwo.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{headOutTimeBegin} as date)
+		</if>
+  		<if test="headOutTimeEnd != null and headOutTimeEnd.toString() !=''">
+  			AND
+  				cast(hwo.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{headOutTimeEnd} as date)
+  		</if>
+	</sql>
+
+	<select id="getHistoryPageList" resultMap="StoreWarehouseInResult"
+		parameterType="com.itcrazy.alanmall.mscard.dto.StoreWarehouseInDto">
+
+		SELECT
+				hwo.RECEIPT_NO AS HEAD_OUT_RECEIPT_NO,
+				swi.RECEIPT_NO AS STORE_IN_RECEIPT_NO,
+				ci.CARD_NO AS CARD_NO,
+				ci.CATEGORY AS CATEGORY,
+				cc. NAME AS CATEGORY_NAME,
+				ci. STATUS AS STATUS,
+				hwo.CREATE_TIME AS HEAD_OUT_TIME,
+				hwo.CREATE_ID AS HEAD_OUT_PERSON,
+				swi.CREATE_TIME AS STORE_IN_TIME,
+				swi.CREATE_ID AS STORE_IN_PERSON
+		FROM
+			 store_warehouse_in swi
+			LEFT JOIN card_information ci  ON ci.CARD_NO = swi.CARD_NO
+			LEFT JOIN card_category cc ON ci.CATEGORY = cc.ID
+			LEFT JOIN head_warehouse_out hwo ON ci.CARD_NO = hwo.CARD_NO
+
+		WHERE
+			1 = 1
+
+			<include refid="sqlSelectIf"/>
+            AND swi.STORE_FROM = 0
+			<if test="storeInReceiptNo != null and storeInReceiptNo != ''">
+	 			AND
+	 				swi.RECEIPT_NO LIKE CONCAT("%",#{storeInReceiptNo},"%")
+	 		</if>
+
+		ORDER BY hwo.CREATE_TIME DESC
+
+		LIMIT #{start},#{limit}
+
+	</select>
+
+	<select id="getHistoryPageTotal" resultType="integer"
+		parameterType="com.itcrazy.alanmall.mscard.dto.StoreWarehouseInDto">
+		SELECT
+			COUNT(ci.CARD_NO)
+		FROM
+			 store_warehouse_in swi
+			LEFT JOIN card_information ci  ON ci.CARD_NO = swi.CARD_NO
+			LEFT JOIN card_category cc ON ci.CATEGORY = cc.ID
+			LEFT JOIN head_warehouse_out hwo ON ci.CARD_NO = hwo.CARD_NO
+
+		WHERE
+			1 = 1
+
+		<include refid="sqlSelectIf"/>
+          AND swi.STORE_FROM = 0
+		<if test="storeInReceiptNo != null and storeInReceiptNo != ''">
+ 			AND
+ 				swi.RECEIPT_NO LIKE CONCAT("%",#{storeInReceiptNo},"%")
+ 		</if>
+	</select>
+
+
+   	<select id="getPerparePageList" resultMap="StoreWarehouseInResult"
+		parameterType="com.itcrazy.alanmall.mscard.dto.StoreWarehouseInDto">
+
+		SELECT
+			hwo.RECEIPT_NO AS HEAD_OUT_RECEIPT_NO,
+			ci.CARD_NO AS CARD_NO,
+			ci.CATEGORY AS CATEGORY,
+			cc. NAME AS CATEGORY_NAME,
+			ci. STATUS AS STATUS,
+			hwo.CREATE_TIME AS HEAD_OUT_TIME,
+		 	hwo.CREATE_ID AS HEAD_OUT_PERSON
+      	FROM
+			card_information ci
+		    LEFT JOIN card_category cc ON ci.CATEGORY = cc.ID
+		    LEFT JOIN head_warehouse_out hwo ON ci.CARD_NO = hwo.CARD_NO
+
+     	WHERE
+			1 = 1
+
+		<include refid="sqlSelectIf"/>
+
+  		ORDER BY hwo.CREATE_TIME DESC
+
+  		LIMIT #{start},#{limit}
+
+	</select>
+
+
+
+	<select id="getPerparePageTotal" resultType="integer"
+		parameterType="com.itcrazy.alanmall.mscard.dto.StoreWarehouseInDto">
+		SELECT
+			COUNT(ci.CARD_NO)
+     	FROM
+			card_information ci
+		    LEFT JOIN card_category cc ON ci.CATEGORY = cc.ID
+		    LEFT JOIN head_warehouse_out hwo ON ci.CARD_NO = hwo.CARD_NO
+
+      	WHERE
+			1 = 1
+
+		<include refid="sqlSelectIf"/>
+
+	</select>
+
+	<!-- 添加数据 -->
+   <insert id="insertStoreWarehouseIn" parameterType="com.itcrazy.alanmall.mscard.model.StoreWarehouseIn">
+		INSERT INTO store_warehouse_in (
+		CARD_NO,RECEIPT_NO , WAREHOUSE_OUT_NO, STORE_FROM , STORE_TO , CREATE_TIME , CREATE_ID , IS_DELETED , COMPANY_ID)
+		VALUES(#{cardNo},#{storeInReceiptNo},#{warehouseOutNo},#{storeFrom},#{storeTo},NOW(),#{createId},#{isDeleted},#{companyId})
+   </insert>
+
+
+   <update id="updateCardInformation" parameterType="com.itcrazy.alanmall.mscard.model.StoreWarehouseIn">
+	   	UPDATE card_information
+		SET
+			STATUS = 7, STORE = #{storeTo}, UPDATE_ID =#{updateId}, UPDATE_TIME = NOW()
+		WHERE  CARD_NO = #{cardNo}
+		AND COMPANY_ID = #{companyId}
+   </update>
+
+
+   <select id="getLastStoreInReceiptNo" parameterType="long" resultType="string">
+   		SELECT
+			RECEIPT_NO
+		FROM
+				store_warehouse_in
+			WHERE
+				COMPANY_ID = #{companyId}
+		ORDER BY CREATE_TIME DESC
+		LIMIT 1
+   </select>
+</mapper>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.user.dao.UserAmountChgDao">
+
+	<resultMap id="UserAmountChgResult" type="com.meishi.user.model.UserAmountChg">
+		<result column="id" property="id" />
+		<result column="COMPANY_ID" property="companyId" />
+		<result column="BRAND_ID" property="brandId" />
+		<result column="STORE_ID" property="storeId" />
+		<result column="USER_ID" property="userId" />
+		<result column="PAY_USER_ID" property="payUserId" />
+		<result column="CHANGE_ID" property="changeId" />
+		<result column="AMOUNT" property="amount" />
+		<result column="LEFT_AMOUNT" property="leftAmount" />
+		<result column="MOBILE" property="mobile" />
+		<result column="CREATE_ID" property="createId" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="UPDATE_ID" property="updateId" />
+		<result column="UPDATE_TIME" property="updateTime" />
+		<result column="SOURCE" property="source" />
+		<result column="PAY_CODE" property="payCode" />
+		<result column="STATUS" property="status" />
+	</resultMap>
+	
+	<resultMap id="UserAmountChgResultBySort" type="com.meishi.user.model.UserAmountChg">
+		<result column="USER_ID" property="userId" />
+		<result column="STORE_ID" property="storeId" />
+		<result column="userNum" property="userNum" />
+		<result column="rAmount" property="rAmount" />
+	</resultMap>
+	
+	<sql id="selectTemplate">
+     select ID,COMPANY_ID,BRAND_ID,STORE_ID,USER_ID,PAY_USER_ID,CHANGE_ID,AMOUNT,LEFT_AMOUNT,MOBILE,CREATE_ID,CREATE_TIME,SOURCE,PAY_CODE,STATUS
+  	</sql>
+  	
+  	<select id="getMemberAmountChgByPayCode" parameterType="string" resultMap="UserAmountChgResult">
+		<include refid="selectTemplate" />
+		from user_amount_chg where PAY_CODE=#{payCode}
+	</select>
+  	
+	 <insert id="save" parameterType="com.meishi.user.model.UserAmountChg">
+	  	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+	    insert into user_amount_chg(ID,COMPANY_ID,BRAND_ID,STORE_ID,USER_ID,PAY_USER_ID,CHANGE_ID,AMOUNT,LEFT_AMOUNT,MOBILE,CREATE_ID,CREATE_TIME,UPDATE_ID,UPDATE_TIME,SOURCE,PAY_CODE,STATUS,IS_DELETED)
+	    values (#{id},#{companyId},#{brandId},#{storeId},#{userId},#{payUserId},#{changeId},#{amount},#{leftAmount},#{mobile},#{createId},now(),#{updateId},now(),#{source},#{payCode},#{status},0)
+	 </insert>
+	 
+	 <update id="update" parameterType="com.meishi.user.model.UserAmountChg">
+    	update user_amount_chg set STATUS=0,UPDATE_ID=#{updateId},UPDATE_TIME=now()
+    	
+    	where id=#{id}
+  	 </update>
+	 
+	 <select id="getPageList"  parameterType="com.meishi.user.dto.UserAmountChgDto" resultMap="UserAmountChgResult">
+		<include refid="selectTemplate" />
+		from user_amount_chg where is_deleted=0 and status=0
+		<if test="companyId!=null">
+			and company_id=#{companyId}
+		</if>
+		<if test="brandId!=null">
+			and brand_id=#{brandId}
+		</if>
+		<if test="storeId>0">
+			and store_id=#{storeId}
+		</if>
+		<if test="createTimeStart!=null">
+			and create_time>=#{createTimeStart}
+		</if>
+		<if test="createTimeEnd!=null">
+			and #{createTimeEnd}>=create_time
+		</if>
+		<if test="month!=null">
+			and left(create_time,7)=#{month}
+		</if>
+		<if test="userId!=null">
+			and USER_ID=#{userId}
+		</if>
+		
+		ORDER BY create_time desc LIMIT #{start},#{limit}
+	</select>
+	
+	<select id="getPageTotal"  parameterType="com.meishi.user.dto.UserAmountChgDto" resultType="integer">
+		select count(*) from user_amount_chg where is_deleted=0 and status=0
+		<if test="companyId!=null">
+			and company_id=#{companyId}
+		</if>
+		<if test="brandId!=null">
+			and brand_id=#{brandId}
+		</if>
+		<if test="storeId>0">
+			and store_id=#{storeId}
+		</if>
+		<if test="createTimeStart!=null">
+			and create_time>=#{createTimeStart}
+		</if>
+		<if test="createTimeEnd!=null">
+			and #{createTimeEnd}>=create_time
+		</if>
+		<if test="month!=null">
+			and left(create_time,7)=#{month}
+		</if>
+		<if test="userId!=null">
+			and USER_ID=#{userId}
+		</if>
+	</select>
+	
+	<select id="getMonthList"  parameterType="com.meishi.user.dto.UserAmountChgDto" resultType="string">
+		select left(create_time,7) from user_amount_chg where is_deleted=0 and status=0 and USER_ID=#{userId}
+		group by left(create_time,7)
+		ORDER BY create_time desc LIMIT #{start},#{limit}
+	</select>
+	
+	<select id="getMonthTotal"  parameterType="com.meishi.user.dto.UserAmountChgDto" resultType="integer">
+		select count(*) from(
+			select left(create_time,7) from user_amount_chg where is_deleted=0 and status=0 and USER_ID=#{userId}
+			group by left(create_time,7)
+		) user_amount_chg
+	</select>
+	
+	<select id="getRewardUserNum"  parameterType="com.meishi.user.dto.UserAmountChgDto" resultType="integer">
+		select count(*) from (select id from user_amount_chg where is_deleted=0 and status=0 and USER_ID=#{userId}
+		<if test="createTimeStart!=null">
+			and create_time>=#{createTimeStart}
+		</if>
+		<if test="createTimeEnd!=null">
+			and #{createTimeEnd}>=create_time
+		</if>
+		group by pay_user_id) user
+	</select>
+	
+	<select id="getRewardAmount"  parameterType="com.meishi.user.dto.UserAmountChgDto" resultType="double">
+		select sum(amount) from user_amount_chg where is_deleted=0 and status=0 and USER_ID=#{userId}
+		<if test="createTimeStart!=null">
+			and create_time>=#{createTimeStart}
+		</if>
+		<if test="createTimeEnd!=null">
+			and #{createTimeEnd}>=create_time
+		</if>
+	</select>
+	
+	<select id="getUserRank"  parameterType="com.meishi.user.dto.UserAmountChgDto" resultType="integer">
+		SELECT @rank:=@rank+1 as rank FROM   
+		(  
+		SELECT user_id,sum(AMOUNT) as allAmount FROM user_amount_chg where is_deleted=0 and status=0 and user_id=#{userId} 
+		<!-- 按日排名 -->
+		<if test="timeType==1">
+			and create_time>=#{createTimeStart} and #{createTimeEnd}>=create_time
+		</if>
+		<!-- 按月排名 -->
+		<if test="timeType==2">
+			and left(create_time,7)=#{createTimeStart}
+		</if>
+		GROUP BY user_id  ORDER BY allAmount DESC  
+		) A ,(SELECT @rank:=0) B 
+	</select>
+	
+	<select id="getPageListForSort"  parameterType="com.meishi.user.dto.UserAmountChgDto" resultMap="UserAmountChgResultBySort">
+		select user_id,sum(amount) rAmount,count(PAY_USER_ID) userNum,store_id 
+		from user_amount_chg where is_deleted=0 and status=0
+		<if test="companyId!=null">
+			and company_id=#{companyId}
+		</if>
+		<if test="brandId!=null">
+			and brand_id=#{brandId}
+		</if>
+		<if test="storeId!=null">
+			and store_id=#{storeId}
+		</if>
+		<if test="createTimeStart!=null">
+			and create_time>=#{createTimeStart}
+		</if>
+		<if test="createTimeEnd!=null">
+			and #{createTimeEnd}>=create_time
+		</if>
+		
+		group by user_id
+		
+		<if test="sort == 'rAmount'">
+			order by rAmount desc
+		</if>
+		<if test="sort == 'userNum'">
+			order by userNum desc
+		</if>
+		
+		LIMIT #{start},#{limit}
+	</select>
+	
+	
+	<select id="getPageTotalForSort"  parameterType="com.meishi.user.dto.UserAmountChgDto" resultType="integer">
+		select count(*) from 
+		(select user_id,sum(amount) rAmount,count(PAY_USER_ID) userNum,store_id 
+			from user_amount_chg where is_deleted=0 and status=0
+			<if test="companyId!=null">
+				and company_id=#{companyId}
+			</if>
+			<if test="brandId!=null">
+				and brand_id=#{brandId}
+			</if>
+			<if test="storeId!=null">
+				and store_id=#{storeId}
+			</if>
+			<if test="createTimeStart!=null">
+				and create_time>=#{createTimeStart}
+			</if>
+			<if test="createTimeEnd!=null">
+				and #{createTimeEnd}>=create_time
+			</if>
+		
+			group by user_id
+			
+			<if test="sort == 'rAmount'">
+				order by rAmount desc
+			</if>
+			<if test="sort == 'userNum'">
+				order by userNum desc
+			</if>
+		) a;
+	</select>
+	
+</mapper>

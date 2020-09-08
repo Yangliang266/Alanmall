@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.BrandUnionDao">
+	<resultMap id="BaseResultMap" type="com.meishi.merchant.model.BrandUnion" >
+		<result column="id" property="id"/>
+		<result column="src_brand_id" property="srcBrandId"/>
+		<result column="dst_brand_id" property="dstBrandId"/>
+		<result column="show_order" property="showOrder"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="create_id" property="createId"/>
+		<result column="update_id" property="updateId"/>
+		<result column="is_deleted" property="isDeleted"/>
+	</resultMap>
+	<resultMap type="com.meishi.merchant.model.BrandUnion" id="ListResultMap">
+		<result column="id" property="id"/>
+		<result column="src_brand_id" property="srcBrandId"/>
+		<result column="dst_brand_id" property="dstBrandId"/>
+		<result column="show_order" property="showOrder"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="create_id" property="createId"/>
+		<result column="update_id" property="updateId"/>
+		<result column="is_deleted" property="isDeleted"/>
+		<result column="company_name" property="companyName"/>
+		<result column="brand_name" property="brandName"/>
+		<result column="service_time" property="serviceTime"/>
+		<result column="is_bind" property="isBind"/>
+	</resultMap>
+	<sql id="sqlTemplate" >
+		select
+		id, src_brand_id, dst_brand_id, show_order, create_time, update_time, update_time, update_time, is_deleted
+	</sql>
+	
+	<insert id="save" parameterType="com.meishi.merchant.model.BrandUnion">
+  	<selectKey resultType="java.lang.Long" order="AFTER"
+		keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID
+	</selectKey>
+	insert into brand_union 
+		(id, src_brand_id, dst_brand_id, show_order, create_time, update_time, create_id, update_id, is_deleted)
+    values 
+    	(#{id}, #{srcBrandId}, #{dstBrandId}, 
+    	<!-- 绑定顺序show_order根据绑定先后次序累加 -->
+    	IFNULL(((select b.show_order from brand_union b where b.src_brand_id = #{srcBrandId} order by b.show_order DESC limit 0,1)+1),1), 
+    	now(), now(), #{createId}, #{updateId}, 0)
+  </insert>
+  
+  <select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	<include refid="sqlTemplate" />
+  	from brand_union where id=#{id}
+  </select>
+  
+  <select id="getBySrcDstId" parameterType="com.meishi.merchant.model.BrandUnion" resultMap="BaseResultMap">
+  	<include refid="sqlTemplate" />
+  	from brand_union where src_brand_id=#{srcBrandId} and dst_brand_id=#{dstBrandId}
+  </select>
+  
+  <update id="update" parameterType="com.meishi.merchant.model.BrandUnion">
+  	update brand_union
+    <set >
+      <if test="srcBrandId != null" >
+        src_brand_id = #{srcBrandId},
+      </if>
+      <if test="dstBrandId != null" >
+        dst_brand_id = #{dstBrandId},
+      </if>
+      <if test="showOrder != null" >
+        show_order = #{showOrder},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted},
+      </if>
+      update_time = now()
+    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="remove" parameterType="com.meishi.merchant.model.BrandUnion">
+	update brand_union set is_deleted=1,update_id=#{updateId},update_time=now() where id=#{id}
+  </update>
+  
+  <select id="getUnionTotal" parameterType="com.meishi.merchant.dto.BrandUnionDto" resultType="java.lang.Integer">
+  	select
+  		count(distinct ba.src_brand_id)
+  	from 
+  		brand_union ba
+  	inner join brand b on ba.src_brand_id = b.id
+  	<if test="cuisineIds != null">
+  	inner join brand_cuisine bc on b.id = bc.brand_id
+  	</if>
+  	inner join company c on b.company_id = c.id
+  	where ba.is_deleted = 0
+  	<if test="businessType != null">
+  		and b.business_type = #{businessType}
+  	</if>
+  	<if test="srcBrandName != null">
+  		and b.name like CONCAT('%', #{srcBrandName}, '%')
+  	</if>
+  	<if test="srcCompanyName != null">
+		and c.name like CONCAT('%', #{srcCompanyName} ,'%')
+	</if>
+	<if test="cuisineIds != null">
+		and bc.cuisine_id in (#{cuisineIds})
+	</if>
+  </select>
+  
+  <select id="getPageList" parameterType="com.meishi.merchant.dto.BrandUnionDto" resultMap="ListResultMap">
+  	select
+  		ba.src_brand_id, b.name as brand_name, c.name as company_name, b.service_time, 1 as is_bind
+  	from 
+  		brand_union ba
+  	inner join brand b on ba.src_brand_id = b.id
+  	<if test="cuisineIds != null">
+  	inner join brand_cuisine bc on b.id = bc.brand_id
+  	</if>
+  	inner join company c on b.company_id = c.id
+  	where ba.is_deleted = 0
+  	<if test="businessType != null">
+  		and b.business_type = #{businessType}
+  	</if>
+  	<if test="srcBrandName != null">
+  		and b.name like CONCAT('%', #{srcBrandName}, '%')
+  	</if>
+  	<if test="srcCompanyName != null">
+		and c.name like CONCAT('%', #{srcCompanyName} ,'%')
+	</if>
+	<if test="cuisineIds != null">
+		and bc.cuisine_id in (#{cuisineIds})
+	</if>
+  	union 
+  	select
+		b.id as src_brand_id,
+		b. name as brand_name,
+		c. name as company_name,
+		b.service_time,
+		0 as is_bind
+	from
+		brand b
+	<if test="cuisineIds != null">
+  	inner join brand_cuisine bc on b.id = bc.brand_id
+  	</if>
+	inner join company c on b.company_id = c.id
+	where
+		b.is_deleted = 0
+	<if test="businessType != null">
+		and b.business_type = #{businessType}
+	</if>
+	<if test="srcBrandName != null">
+		and b.name like CONCAT('%', #{srcBrandName}, '%')
+	</if>
+	<if test="srcCompanyName != null">
+		and c.name like CONCAT('%', #{srcCompanyName} ,'%')
+	</if>
+	<if test="cuisineIds != null">
+		and bc.cuisine_id in (#{cuisineIds})
+	</if>
+	and b.id not in (
+		select
+			ba.src_brand_id
+		from
+			brand_union ba
+		inner join brand b on ba.src_brand_id = b.id
+		<if test="cuisineIds != null">
+	  	inner join brand_cuisine bc on b.id = bc.brand_id
+	  	</if>
+		inner join company c on b.company_id = c.id
+		where
+			ba.is_deleted = 0
+		<if test="businessType != null">
+	  		and b.business_type = #{businessType}
+	  	</if>
+	  	<if test="srcBrandName != null">
+	  		and b.name like CONCAT('%', #{srcBrandName}, '%')
+	  	</if>
+	  	<if test="srcCompanyName != null">
+	  		and c.name like CONCAT('%', #{srcCompanyName} ,'%')
+	  	</if>
+	  	<if test="cuisineIds != null">
+			and bc.cuisine_id in (#{cuisineIds})
+		</if>
+	)
+  	LIMIT #{start},#{limit}
+  </select>
+  
+  <select id="getPageTotal" parameterType="com.meishi.merchant.dto.BrandUnionDto" resultType="java.lang.Integer">
+  	select (select
+  		count(distinct ba.src_brand_id)
+  	from 
+  		brand_union ba
+  	inner join brand b on ba.src_brand_id = b.id
+  	<if test="cuisineIds != null">
+  	inner join brand_cuisine bc on b.id = bc.brand_id
+  	</if>
+  	inner join company c on b.company_id = c.id
+  	where ba.is_deleted = 0
+  	<if test="businessType != null">
+  		and b.business_type = #{businessType}
+  	</if>
+  	<if test="srcBrandName != null">
+  		and b.name like CONCAT('%', #{srcBrandName}, '%')
+  	</if>
+  	<if test="srcCompanyName != null">
+		and c.name like CONCAT('%', #{srcCompanyName} ,'%')
+	</if>
+	<if test="cuisineIds != null">
+		and bc.cuisine_id in (#{cuisineIds})
+	</if>)
+  	+ 
+  	(select
+		count(*)
+	from
+		brand b
+	inner join company c on b.company_id = c.id
+	where
+		b.is_deleted = 0
+	<if test="businessType != null">
+		and b.business_type = #{businessType}
+	</if>
+	<if test="srcBrandName != null">
+		and b.name like CONCAT('%', #{srcBrandName}, '%')
+	</if>
+	<if test="srcCompanyName != null">
+		and c.name like CONCAT('%', #{srcCompanyName} ,'%')
+	</if>
+	and b.id not in (
+		select
+			ba.src_brand_id
+		from
+			brand_union ba
+		inner join brand b on ba.src_brand_id = b.id
+		<if test="cuisineIds != null">
+	  	inner join brand_cuisine bc on b.id = bc.brand_id
+	  	</if>
+		inner join company c on b.company_id = c.id
+		where
+			ba.is_deleted = 0
+		<if test="businessType != null">
+	  		and b.business_type = #{businessType}
+	  	</if>
+	  	<if test="srcBrandName != null">
+	  		and b.name like CONCAT('%', #{srcBrandName}, '%')
+	  	</if>
+	  	<if test="srcCompanyName != null">
+			and c.name like CONCAT('%', #{srcCompanyName} ,'%')
+		</if>
+		<if test="cuisineIds != null">
+			and bc.cuisine_id in (#{cuisineIds})
+		</if>
+	))
+  </select>
+  
+  <select id="getBindTotal" parameterType="com.meishi.merchant.dto.BrandUnionDto" resultType="java.lang.Integer">
+  	select count(*)
+  	from 
+  		brand_union ba
+  	inner join brand b on ba.dst_brand_id = b.id
+  	inner join company c on b.company_id = c.id
+  	where ba.is_deleted = 0 and ba.src_brand_id=#{srcBrandId}
+  </select>
+  
+  <select id="getPageListBySrcId" parameterType="com.meishi.merchant.dto.BrandUnionDto" resultMap="ListResultMap">
+  	select
+  		ba.id, ba.src_brand_id, ba.dst_brand_id, ba.show_order,
+  		b.name as brand_name, c.name as company_name, b.service_time, 1 as is_bind
+  	from 
+  		brand_union ba
+  	inner join brand b on ba.dst_brand_id = b.id
+  	inner join company c on b.company_id = c.id
+  	where ba.is_deleted = 0 and ba.src_brand_id=#{srcBrandId}
+ 	union
+ 		select
+			null as id,
+			null as src_brand_id,
+			b.id as dst_brand_id,
+			null as show_order,
+			b. name as brand_name,
+			c. name as company_name,
+			b.service_time,
+			0 as is_bind
+		from
+			brand b
+		inner join company c on b.company_id = c.id
+		where
+			b.is_deleted = 0
+		and b.id not in (
+			select
+		  		ba.dst_brand_id
+		  	from 
+		  		brand_union ba
+		  	inner join brand b on ba.dst_brand_id = b.id
+		  	inner join company c on b.company_id = c.id
+		  	where ba.is_deleted = 0 and ba.src_brand_id=#{srcBrandId}
+		  	union
+		  		select #{srcBrandId}
+		)
+	order by is_bind DESC, show_order ASC
+	LIMIT #{start},#{limit}
+  </select>
+  
+  <select id="getPageTotalBySrcId" parameterType="com.meishi.merchant.dto.BrandUnionDto" resultType="java.lang.Integer">
+  	select
+	(
+		select
+			count(*)
+		from
+			brand_union ba
+		inner join brand b on ba.dst_brand_id = b.id
+		inner join company c on b.company_id = c.id
+		where
+			ba.is_deleted = 0
+		and ba.src_brand_id = #{srcBrandId}
+	) + (
+		select
+			count(*)
+		from
+			brand b
+		inner join company c on b.company_id = c.id
+		where
+			b.is_deleted = 0
+		and b.id not in (
+			select
+				ba.dst_brand_id
+			from
+				brand_union ba
+			inner join brand b on ba.dst_brand_id = b.id
+			inner join company c on b.company_id = c.id
+			where
+				ba.is_deleted = 0
+			and ba.src_brand_id = #{srcBrandId}
+			union
+		  		select #{srcBrandId}
+		)
+	)
+  </select>
+  
+  <select id="getBrandUnionList" parameterType="com.meishi.merchant.model.BrandUnion" resultMap="BaseResultMap">
+  	<include refid="sqlTemplate" />
+  	from brand_union where is_deleted=0 
+  	<if test="srcBrandId != null">
+  		and src_brand_id = #{srcBrandId}
+  	</if>
+  	<if test="dstBrandId != null">
+  		and dst_brand_id = #{dstBrandId}
+  	</if>
+  	<if test="showOrder != null">
+  		and show_order = #{showOrder}
+  	</if>
+  </select>
+  
+  <select id="getBrandUnionBySrcAndDst" parameterType="com.meishi.merchant.model.BrandUnion" resultMap="BaseResultMap">
+  	<include refid="sqlTemplate" />
+  	from brand_union 
+  	where 
+  		src_brand_id = #{srcBrandId} 
+  	and dst_brand_id = #{dstBrandId}
+  </select>
+  
+  <select id="getRecmdBrandUnionList" parameterType="com.meishi.merchant.model.BrandUnion" resultMap="BaseResultMap">
+  	<include refid="sqlTemplate" />
+  	from brand_union 
+  	where is_deleted = 0 
+  	<if test="srcBrandId != null">
+	and src_brand_id = #{srcBrandId}
+  	</if>
+	<if test="showOrder != null">
+	and show_order > #{showOrder}
+	</if>
+	order by show_order ASC
+  </select>
+  
+  <select id="getNextRecmdBrandUnionList" parameterType="com.meishi.merchant.model.BrandUnion" resultMap="BaseResultMap">
+  	<include refid="sqlTemplate" />
+  	from 
+  		brand_union 
+  	where 
+  		is_deleted = 0
+  	and src_brand_id = #{srcBrandId}
+  	and show_order > (
+  		select 
+  			show_order
+  		from 
+  			brand_union
+  		where
+  			src_brand_id = #{srcBrandId}
+  		and dst_brand_id = #{dstBrandId}
+  	)
+  	order by 
+  		show_order ASC
+  </select>
+</mapper>

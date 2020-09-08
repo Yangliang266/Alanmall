@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.TypeCategoryDao">
+
+
+	<resultMap id="TypeCategoryResult" type="com.itcrazy.alanmall.mscard.model.CardInformation">
+		<result column="ID" property="id" />
+		<result column="NAME" property="name" />
+		<result column="JUMP_NUMBER" property="jumpNumber" />
+	</resultMap>
+	<!-- 获取卡状态 -->
+	<select id="getPageList" resultMap="TypeCategoryResult" parameterType="com.itcrazy.alanmall.mscard.dto.CardInformationDto">
+		SELECT c.ID,c.NAME
+		FROM card_category c
+		WHERE c.STATUS = 0
+		AND c.IS_DELETED = 0
+		AND c.COMPANY_ID = #{companyId}
+	</select>
+
+	<!-- 获取跳号数字 -->
+    <select id="getJumpNumberList" resultMap="TypeCategoryResult" parameterType="com.itcrazy.alanmall.mscard.dto.CardInformationDto">
+  		SELECT JUMP_NUMBER
+  		FROM jump_number_rule
+  		WHERE STATUS = 0
+  		AND IS_DELETED = 0
+		AND COMPANY_ID = #{companyId}
+   </select>
+</mapper>

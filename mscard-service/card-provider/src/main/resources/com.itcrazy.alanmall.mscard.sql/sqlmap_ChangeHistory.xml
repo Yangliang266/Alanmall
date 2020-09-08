@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.ChangeHistoryDao">
+
+
+  <resultMap id="ChangeHistoryResult" type="com.itcrazy.alanmall.mscard.model.ChangeHistory">
+  	<result column="ID" property="id" />
+  	<result column="OLD_CARD_NO" property="oldCardNo" />
+  	<result column="CATEGORY_NAME" property="categoryName" />
+  	<result column="STATUS" property="status" />
+  	<result column="NEW_CARD_NO" property="newCardNo" />
+  	<result column="CREATE_TIME" property="createTime" />
+  	<result column="CREATE_ID" property="createId" />
+  	<result column="UPDATE_TIME" property="updateTime" />
+  	<result column="UPDATE_ID" property="updateId" />
+  </resultMap>
+
+  <sql id="sqlTemplate">
+     SELECT
+		ch.ID, ch.OLD_CARD_NO, c.NAME AS CATEGORY_NAME, i.STATUS, ch.NEW_CARD_NO,
+		ch.CREATE_TIME, ch.CREATE_ID, ch.UPDATE_TIME, ch.UPDATE_ID
+  </sql>
+
+  <select id="getPageList" resultMap="ChangeHistoryResult" parameterType="com.itcrazy.alanmall.mscard.dto.ChangeHistoryDto">
+  		<include refid="sqlTemplate" />
+  		FROM
+  			card_change_history ch
+  		LEFT JOIN card_information i ON ch.OLD_CARD_NO = i.CARD_NO AND ch.COMPANY_ID = i.COMPANY_ID
+  		LEFT JOIN card_category c ON i.CATEGORY = c.ID AND i.COMPANY_ID = c.COMPANY_ID
+  		WHERE
+  			ch.IS_DELETED = 0
+  		<if test="oldCardNo != null" >
+  			AND ch.OLD_CARD_NO like concat("%",#{oldCardNo},"%")
+  		</if>
+  		<if test="type != null" >
+  			AND ch.TYPE=#{type}
+  		</if>
+  		<if test="companyId != null" >
+  			AND ch.COMPANY_ID = #{companyId}
+  		</if>
+  		<if test="store != null" >
+  			AND i.STORE = #{store}
+  		</if>
+
+  		ORDER BY ch.ID DESC
+  		LIMIT #{start}, #{limit}
+   </select>
+
+   <select id="getPageTotal" resultType="integer">
+  		SELECT
+  			COUNT(ch.ID)
+  		FROM
+  			card_change_history ch
+  		LEFT JOIN card_information i ON ch.OLD_CARD_NO = i.CARD_NO AND ch.COMPANY_ID = i.COMPANY_ID
+  		LEFT JOIN card_category c ON i.CATEGORY = c.ID AND i.COMPANY_ID = c.COMPANY_ID
+  		WHERE
+  			ch.IS_DELETED = 0
+  		<if test="oldCardNo != null" >
+  			AND ch.OLD_CARD_NO like concat("%",#{oldCardNo},"%")
+  		</if>
+  		<if test="type != null" >
+  			AND ch.TYPE=#{type}
+  		</if>
+  		<if test="companyId != null" >
+  			AND ch.COMPANY_ID = #{companyId}
+  		</if>
+  		<if test="store != null" >
+  			AND i.STORE = #{store}
+  		</if>
+  </select>
+
+  <insert id="save" parameterType="com.itcrazy.alanmall.mscard.model.ChangeHistory">
+		INSERT INTO card_change_history
+			(OLD_CARD_NO,
+			NEW_CARD_NO,
+			TYPE,
+			RECHARGE_BALANCE,
+			REWARD,
+			CREDIT,
+			FILE_NAME,
+			CREATE_TIME,
+			CREATE_ID,
+			IS_DELETED,
+			COMPANY_ID)
+		VALUES
+		(
+			#{oldCardNo},
+			#{newCardNo},
+			#{type},
+			#{rechargeBalance},
+			#{reward},
+			#{credit},
+			#{fileName},
+			NOW(),
+			#{createId},
+			0,
+			#{companyId}
+		)
+  </insert>
+
+  <update id="update" parameterType="com.itcrazy.alanmall.mscard.model.ChangeHistory">
+  	UPDATE card_change_history SET UPDATE_TIME=NOW(),UPDATE_ID=#{updateId}
+  	<if test="newCardNo!=null" >
+  		  ,NEW_CARD_NO=#{newCardNo}
+  	</if>
+  	<if test="fileName!=null" >
+  		  ,FILE_NAME=#{fileName}
+  	</if>
+  	<if test="companyId!=null" >
+  		  WHERE COMPANY_ID=#{companyId}
+  	</if>
+  	<if test="oldCardNo!=null" >
+  		  AND OLD_CARD_NO=#{oldCardNo}
+  	</if>
+  </update>
+
+  <resultMap id="LossResult" type="com.itcrazy.alanmall.mscard.model.ActiveInformation">
+  	<result column="CARD_NO" property="cardNo" />
+  	<result column="CATEGORY_NAME" property="categoryName" />
+  	<result column="CATEGORY" property="category" />
+  	<result column="STATUS" property="status" />
+  	<result column="USER_NAME" property="userName" />
+  	<result column="SEX" property="sex" />
+  	<result column="TELEPHONE" property="telephone" />
+  	<result column="ID_NUMBER" property="idNumber" />
+  	<result column="RECHARGE_BALANCE" property="rechargeBalance" />
+  	<result column="REWARD" property="reward" />
+  	<result column="NEW_CARD_NO" property="newCardNo" />
+  	<result column="FILE_NAME" property="fileName" />
+  </resultMap>
+  <select id="getLossInfo" resultMap="LossResult" parameterType="com.itcrazy.alanmall.mscard.dto.ChangeHistoryDto">
+  		SELECT
+		ch.OLD_CARD_NO AS CARD_NO, i.CATEGORY, c.NAME AS CATEGORY_NAME, i.STATUS, r.USER_NAME, r.SEX,
+		r.TELEPHONE, r.ID_NUMBER, ch.RECHARGE_BALANCE,ch.REWARD,ch.CREDIT,ch.NEW_CARD_NO,ch.FILE_NAME
+  		FROM
+  			card_change_history ch
+  		LEFT JOIN card_information i ON ch.OLD_CARD_NO = i.CARD_NO AND ch.COMPANY_ID = i.COMPANY_ID
+  		LEFT JOIN card_category c ON i.CATEGORY = c.ID AND i.COMPANY_ID = c.COMPANY_ID
+  		LEFT JOIN registered_card r ON r.CARD_NO = ch.OLD_CARD_NO AND r.COMPANY_ID = ch.COMPANY_ID
+  		WHERE
+  			ch.IS_DELETED = 0
+  		<if test="oldCardNo != null and oldCardNo != ''" >
+  			AND ch.OLD_CARD_NO = #{oldCardNo}
+  		</if>
+  		<if test="companyId != null and companyId != ''" >
+  			AND ch.COMPANY_ID = #{companyId}
+  		</if>
+   </select>
+
+</mapper>

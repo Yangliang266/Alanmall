@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.BrandAdvertisementDao" >
+  <resultMap id="BaseResultMap" type="com.meishi.merchant.model.BrandAdvertisement" >
+    <id column="id" property="id" />
+    <result column="company_id" property="companyId" />
+    <result column="brand_id" property="brandId" />
+    <result column="title" property="title" />
+    <result column="artical_url" property="articalUrl" />
+    <result column="remark" property="remark" />
+    <result column="is_active" property="isActive" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="create_id" property="createId" />
+    <result column="update_id" property="updateId" />
+    <result column="is_deleted" property="isDeleted" />
+    <result column="show_order" property="showOrder" />
+  </resultMap>
+  <sql id="sqlTemplate" >
+  	select
+    id, company_id, brand_id, title, artical_url, remark, is_active, create_time, update_time, create_id, 
+    update_id, is_deleted, show_order
+  </sql>
+  
+  <insert id="save" parameterType="com.meishi.merchant.model.BrandAdvertisement">
+  	<selectKey resultType="java.lang.Long" order="AFTER"
+		keyProperty="id">
+		SELECT LAST_INSERT_ID() AS ID
+	</selectKey>
+	insert into brand_advertisement 
+		(id, company_id, brand_id, title, artical_url, remark, is_active, create_time, update_time, create_id, update_id, is_deleted, show_order)
+    values 
+    	(#{id}, #{companyId}, #{brandId}, #{title}, #{articalUrl}, #{remark}, #{isActive}, now(), #{updateTime}, #{createId}, #{updateId}, 0, #{showOrder})
+  </insert>
+  
+  <select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	<include refid="sqlTemplate" />
+  	from brand_advertisement where id=#{id} and is_deleted = 0
+  </select>
+  
+  <select id="getPageList" parameterType="com.meishi.merchant.dto.BrandAdvertisementDto" resultMap="BaseResultMap">
+  	SELECT
+		ba.id,
+		ba.company_id,
+		ba.brand_id,
+		ba.title,
+		ba.artical_url,
+		ba.remark,
+		ba.is_active,
+		ba.create_time,
+		ba.update_time,
+		ba.create_id,
+		ba.update_id,
+		ba.is_deleted,
+		ba.show_order
+	FROM
+		brand_advertisement ba
+	INNER JOIN brand b ON ba.brand_id = b.id
+	WHERE
+		ba.is_deleted = 0
+  	<if test="brandName != null">
+  		AND b.name LIKE CONCAT('%',#{brandName},'%')
+  	</if>
+  	<if test="title != null">
+  		AND ba.title LIKE CONCAT('%', #{title}, '%')
+  	</if>
+  	ORDER BY ba.id DESC
+  	LIMIT #{start},#{limit}
+  </select>
+  
+  <select id="getPageTotal" parameterType="com.meishi.merchant.dto.BrandAdvertisementDto" resultType="java.lang.Integer">
+  	SELECT
+		COUNT(0)
+	FROM
+		brand_advertisement ba
+	INNER JOIN brand b ON ba.brand_id = b.id
+	WHERE
+		ba.is_deleted = 0
+	<if test="brandName != null">
+  		AND b.name LIKE CONCAT('%',#{brandName},'%')
+  	</if>
+  	<if test="title != null">
+  		AND ba.title LIKE CONCAT('%', #{title}, '%')
+  	</if>
+  </select>
+  
+  <select id="getList" parameterType="com.meishi.merchant.model.BrandAdvertisement" resultMap="BaseResultMap">
+	<include refid="sqlTemplate" />
+	FROM
+		brand_advertisement
+	WHERE
+		is_deleted = 0
+	AND is_active = 1
+	AND brand_id = #{brandId}
+	ORDER BY show_order ASC
+  </select>
+  
+  <update id="update" parameterType="com.meishi.merchant.model.BrandAdvertisement">
+  	update brand_advertisement
+    <set >
+    	update_time = now(),
+      <if test="companyId != null">
+      	company_id = #{companyId},
+      </if>
+      <if test="brandId != null" >
+        brand_id = #{brandId},
+      </if>
+      <if test="title != null" >
+        title = #{title},
+      </if>
+      <if test="articalUrl != null" >
+        artical_url = #{articalUrl},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null" >
+        update_time = now(),
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted},
+      </if>
+      <if test="showOrder != null">
+      	show_order = #{showOrder}
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  
+  <update id="remove" parameterType="com.meishi.merchant.model.BrandAdvertisement">
+  	update brand_advertisement set is_deleted=1,update_id=#{updateId},update_time=now() where id=#{id}
+  </update>
+  
+</mapper>

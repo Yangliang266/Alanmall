@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.JumpNumberRuleDao">
+
+
+  <resultMap id="JumpNumberRuleResult" type="com.itcrazy.alanmall.mscard.model.JumpNumberRule">
+  	<result column="ID" property="id" />
+  	<result column="JUMP_NUMBER" property="jumpNumber" />
+  	<result column="STATUS" property="status" />
+  </resultMap>
+
+  <select id="getJumpNumberRuleList" resultMap="JumpNumberRuleResult" parameterType="com.itcrazy.alanmall.mscard.dto.CardBaseDto">
+  		SELECT ID,JUMP_NUMBER,STATUS
+		FROM jump_number_rule
+		WHERE 1=1
+		<if test="isDeleted!=null" >
+  		 AND IS_DELETED=#{isDeleted}
+  		</if>
+		<if test="companyId!=null" >
+  		 AND COMPANY_ID=#{companyId}
+  		</if>
+  		ORDER BY ID
+   </select>
+
+   <update id="update" parameterType="com.itcrazy.alanmall.mscard.model.JumpNumberRule">
+  	UPDATE jump_number_rule SET UPDATE_TIME=NOW(),UPDATE_ID=#{updateId}
+  	<if test="jumpNumber!=null" >
+  		  ,JUMP_NUMBER=#{jumpNumber}
+  	</if>
+  	<if test="status!=null" >
+  		  ,STATUS=#{status}
+  	</if>
+  	<if test="isDeleted!=null" >
+  		  ,IS_DELETED=#{isDeleted}
+  	</if>
+  	<if test="companyId!=null" >
+  		  ,COMPANY_ID=#{companyId}
+  	</if>
+  	<if test="id!=null" >
+  		  WHERE ID=#{id}
+  	</if>
+  </update>
+
+
+  <insert id="save" parameterType="com.itcrazy.alanmall.mscard.model.JumpNumberRule">
+		INSERT INTO jump_number_rule(
+		JUMP_NUMBER,STATUS,CREATE_TIME,CREATE_ID,IS_DELETED,COMPANY_ID)
+		VALUES
+		(#{jumpNumber},#{status},NOW(),#{createId},0,#{companyId})
+  </insert>
+</mapper>

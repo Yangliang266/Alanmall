@@ -1,0 +1,107 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<beans xmlns="http://www.springframework.org/schema/beans"-->
+<!--	xsi:noNamespaceSchemaLocation="dubbo.xsd"-->
+<!--	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"-->
+<!--	xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans.xsd        http://code.alibabatech.com/schema/dubbo        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">-->
+<!--	<dubbo:application name="merchant_service" />-->
+<!--	<dubbo:registry check="false" address="#{configProps['dubbo.registry.address']}" />-->
+<!--	<dubbo:consumer check="false" />-->
+<!--	<dubbo:annotation package="com.meishi" />-->
+<!--	<dubbo:protocol name="dubbo" serialization="kryo" port="-1"  payload="328388608"/>-->
+<!--	-->
+<!--	<bean id="ageClassManager" class="com.meishi.merchant.manager.impl.AgeClassManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.AgeClassManager" ref="ageClassManager"/>-->
+<!--	-->
+<!--	<bean id="appPosConfigManager" class="com.meishi.merchant.manager.impl.AppPosConfigManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.AppPosConfigManager" ref="appPosConfigManager"/>-->
+<!--	-->
+<!--	<bean id="bannerManager" class="com.meishi.merchant.manager.impl.BannerManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.BannerManager" ref="bannerManager"/>-->
+<!--	-->
+<!--	<bean id="brandAdvertisementManager" class="com.meishi.merchant.manager.impl.BrandAdvertisementManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.BrandAdvertisementManager" ref="brandAdvertisementManager"/>-->
+<!--	-->
+<!--	<bean id="brandAgesManager" class="com.meishi.merchant.manager.impl.BrandAgesManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.BrandAgesManager" ref="brandAgesManager"/>-->
+<!--	-->
+<!--	<bean id="brandCallManager" class="com.meishi.merchant.manager.impl.BrandCallManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.BrandCallManager" ref="brandCallManager"/>-->
+<!--	-->
+<!--	<bean id="brandCuisineManager" class="com.meishi.merchant.manager.impl.BrandCuisineManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.BrandCuisineManager" ref="brandCuisineManager"/>-->
+<!--	-->
+<!--	<bean id="brandDfireConfigManager" class="com.meishi.merchant.manager.impl.BrandDfireConfigManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.BrandDfireConfigManager" ref="brandDfireConfigManager"/>-->
+<!--	-->
+<!--	<bean id="brandManager" class="com.meishi.merchant.manager.impl.BrandManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.BrandManager" ref="brandManager"/>-->
+<!--	-->
+<!--	<bean id="brandSmsConfigManager" class="com.meishi.merchant.manager.impl.BrandSmsConfigManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.BrandSmsConfigManager" ref="brandSmsConfigManager"/>-->
+<!--	-->
+<!--	<bean id="brandUnionManager" class="com.meishi.merchant.manager.impl.BrandUnionManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.BrandUnionManager" ref="brandUnionManager"/>-->
+<!--	-->
+<!--	<bean id="businessCircleManager" class="com.meishi.merchant.manager.impl.BusinessCircleManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.BusinessCircleManager" ref="businessCircleManager"/>-->
+<!--	-->
+<!--	<bean id="cityManager" class="com.meishi.merchant.manager.impl.CityManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.CityManager" ref="cityManager"/>-->
+<!--	-->
+<!--	<bean id="companyAlipayManager" class="com.meishi.merchant.manager.impl.CompanyAlipayManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.CompanyAlipayManager" ref="companyAlipayManager"/>-->
+<!--	-->
+<!--	<bean id="companyManager" class="com.meishi.merchant.manager.impl.CompanyManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.CompanyManager" ref="companyManager"/>-->
+<!--	-->
+<!--	<bean id="companyTmallAppManager" class="com.meishi.merchant.manager.impl.CompanyTmallAppManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.CompanyTmallAppManager" ref="companyTmallAppManager"/>-->
+<!--	-->
+<!--	<bean id="companyWechatPayManager" class="com.meishi.merchant.manager.impl.CompanyWechatPayManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.CompanyWechatPayManager" ref="companyWechatPayManager"/>-->
+<!--	-->
+<!--	<bean id="countyManager" class="com.meishi.merchant.manager.impl.CountyManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.CountyManager" ref="countyManager"/>-->
+<!--	-->
+<!--	<bean id="cuisineClassManager" class="com.meishi.merchant.manager.impl.CuisineClassManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.CuisineClassManager" ref="cuisineClassManager"/>-->
+<!--	-->
+<!--	<bean id="cuisineManager" class="com.meishi.merchant.manager.impl.CuisineManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.CuisineManager" ref="cuisineManager"/>-->
+<!--	-->
+<!--	<bean id="facilityInfoChgManager" class="com.meishi.merchant.manager.impl.FacilityInfoChgManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.FacilityInfoChgManager" ref="facilityInfoChgManager"/>-->
+<!--	-->
+<!--	<bean id="facilityInfoManager" class="com.meishi.merchant.manager.impl.FacilityInfoManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.FacilityInfoManager" ref="facilityInfoManager"/>-->
+<!--	-->
+<!--	<bean id="landMarkManager" class="com.meishi.merchant.manager.impl.LandMarkManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.LandMarkManager" ref="landMarkManager"/>-->
+<!--	-->
+<!--	<bean id="merchantMonitorManager" class="com.meishi.merchant.manager.impl.MerchantMonitorManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.MerchantMonitorManager" ref="merchantMonitorManager"/>-->
+<!--	-->
+<!--	<bean id="prepaidCardConfigManager" class="com.meishi.merchant.manager.impl.PrepaidCardConfigManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.PrepaidCardConfigManager" ref="prepaidCardConfigManager"/>-->
+<!--	-->
+<!--	<bean id="provinceManager" class="com.meishi.merchant.manager.impl.ProvinceManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.ProvinceManager" ref="provinceManager"/>-->
+<!--	-->
+<!--	<bean id="storeManager" class="com.meishi.merchant.manager.impl.StoreManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.StoreManager" ref="storeManager"/>-->
+<!--	-->
+<!--	<bean id="storePosConfigManager" class="com.meishi.merchant.manager.impl.StorePosConfigManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.StorePosConfigManager" ref="storePosConfigManager"/>-->
+<!--	-->
+<!--	<bean id="storeTagManager" class="com.meishi.merchant.manager.impl.StoreTagManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.StoreTagManager" ref="storeTagManager"/>-->
+<!--	-->
+<!--	<bean id="unionRecmdRecordManager" class="com.meishi.merchant.manager.impl.UnionRecmdRecordManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.UnionRecmdRecordManager" ref="unionRecmdRecordManager"/>-->
+<!--	-->
+<!--	<bean id="versionChgManager" class="com.meishi.merchant.manager.impl.VersionChgManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.VersionChgManager" ref="versionChgManager"/>-->
+<!--	-->
+<!--	<bean id="thirdServiceConfigManager" class="com.meishi.merchant.manager.impl.ThirdServiceConfigManagerImpl"/>-->
+<!--	<dubbo:service version="1.0.0" timeout="10000"  interface="com.meishi.merchant.manager.ThirdServiceConfigManager" ref="thirdServiceConfigManager"/>-->
+<!--</beans>-->

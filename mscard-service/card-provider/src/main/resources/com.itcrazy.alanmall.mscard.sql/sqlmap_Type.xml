@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.CardTypeDao">
+
+
+  <resultMap id="CardTypeResult" type="com.itcrazy.alanmall.mscard.model.CardType">
+  	<result column="ID" property="id" />
+  	<result column="NAME" property="name" />
+  </resultMap>
+
+  <select id="getPageList" resultMap="CardTypeResult" parameterType="com.itcrazy.alanmall.mscard.dto.CardBaseDto">
+
+  		SELECT ID,NAME
+		FROM card_type
+		WHERE 1=1
+		<if test="isDeleted!=null" >
+  		 AND IS_DELETED=#{isDeleted}
+  		</if>
+		<if test="companyId!=null" >
+  		 AND COMPANY_ID=#{companyId}
+  		</if>
+  		ORDER BY ID
+   </select>
+</mapper>

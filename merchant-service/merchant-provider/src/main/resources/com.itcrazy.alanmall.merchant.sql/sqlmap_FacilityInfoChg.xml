@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.FacilityInfoChgDao">
+
+	<resultMap id="FacilityInfoChgResult" type="com.meishi.merchant.model.FacilityInfoChg">
+		<result column="ID" property="id" />
+		<result column="FACILITYINFO_ID" property="facilityInfoId" />
+		<result column="OLD_deviceNo" property="oldDeviceNo" />
+		<result column="NEW_deviceNo" property="newDeviceNo" />
+		<result column="OLD_POLL_CODS" property="oldPollCods" />
+		<result column="NEW_POLL_CODS" property="newPollCods" />
+		<result column="COMPANY_ID" property="companyId" />
+		<result column="STORE_ID" property="storeId" />
+		<result column="SOURCE" property="source" />
+		<result column="CREATE_ID" property="createId" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="IS_DELETED" property="isDelete" />
+	</resultMap>
+
+
+	<sql id="sqlTemplate">
+		select 
+			ID,FACILITYINFO_ID,OLD_deviceNo,NEW_deviceNo,OLD_POLL_CODS,NEW_POLL_CODS,COMPANY_ID,STORE_ID,SOURCE,CREATE_ID,CREATE_TIME,IS_DELETED
+		
+	</sql>
+
+	<select id="get" resultMap="FacilityInfoChgResult" parameterType="com.meishi.merchant.dto.FacilityInfoChgDto">
+		<include refid="sqlTemplate" />
+		from facilityInfo_chg where IS_DELETED=0
+		<if test="facilityInfoId!=null">
+			and FACILITYINFO_ID=#{facilityInfoId}
+		</if>
+		<if test="oldDeviceNo!=null">
+			and OLD_deviceNo=#{oldDeviceNo}
+		</if>
+		<if test="newDeviceNo!=null">
+			and NEW_deviceNo=#{newDeviceNo}
+		</if>
+		<if test="oldPollCods!=null">
+			and OLD_POLL_CODS=#{oldPollCods}
+		</if>
+		<if test="newPollCods!=null">
+			and NEW_POLL_CODS=#{newPollCods}
+		</if>
+		<if test="companyId!=null">
+			and COMPANY_ID=#{companyId}
+		</if>
+		<if test="storeId!=null">
+			and STORE_ID=#{storeId}
+		</if>
+		<if test="source!=null">
+			and SOURCE=#{source}
+		</if>
+		<if test="createId!=null">
+			and CREATE_ID=#{createId}
+		</if>
+		<if test="createTime!=null">
+			and CREATE_TIME=#{createTime}
+		</if>
+		<if test="id!=null">
+			and ID=#{id}
+		</if>
+	</select>
+	<select id="getPageList" resultMap="FacilityInfoChgResult" parameterType="com.meishi.merchant.dto.FacilityInfoChgDto">
+		<include refid="sqlTemplate" />
+		from facilityInfo_chg where IS_DELETED=0
+		<if test="facilityInfoId!=null">
+			and FACILITYINFO_ID=#{facilityInfoId}
+		</if>
+		<if test="oldDeviceNo!=null">
+			and OLD_deviceNo=#{oldDeviceNo}
+		</if>
+		<if test="newDeviceNo!=null">
+			and NEW_deviceNo=#{newDeviceNo}
+		</if>
+		<if test="oldPollCods!=null">
+			and OLD_POLL_CODS=#{oldPollCods}
+		</if>
+		<if test="newPollCods!=null">
+			and NEW_POLL_CODS=#{newPollCods}
+		</if>
+		<if test="companyId!=null">
+			and COMPANY_ID=#{companyId}
+		</if>
+		<if test="storeId!=null">
+			and STORE_ID=#{storeId}
+		</if>
+		<if test="source!=null">
+			and SOURCE=#{source}
+		</if>
+		<if test="createId!=null">
+			and CREATE_ID=#{createId}
+		</if>
+		<if test="createTime!=null">
+			and CREATE_TIME=#{createTime}
+		</if>
+		<if test="id!=null">
+			and ID=#{id}
+		</if>
+	</select>
+	
+	<select id="getPageTotal" resultType="integer"
+		parameterType="com.meishi.merchant.dto.FacilityInfoChgDto">
+		select count(*) 
+		from facilityInfo_chg where IS_DELETED = 0 
+		<if test="facilityInfoId!=null">
+			and FACILITYINFO_ID=#{facilityInfoId}
+		</if>
+		<if test="oldDeviceNo!=null">
+			and OLD_deviceNo=#{oldDeviceNo}
+		</if>
+		<if test="newDeviceNo!=null">
+			and NEW_deviceNo=#{newDeviceNo}
+		</if>
+		<if test="oldPollCods!=null">
+			and OLD_POLL_CODS=#{oldPollCods}
+		</if>
+		<if test="newPollCods!=null">
+			and NEW_POLL_CODS=#{newPollCods}
+		</if>
+		<if test="companyId!=null">
+			and COMPANY_ID=#{companyId}
+		</if>
+		<if test="storeId!=null">
+			and STORE_ID=#{storeId}
+		</if>
+		<if test="source!=null">
+			and SOURCE=#{source}
+		</if>
+		<if test="createId!=null">
+			and CREATE_ID=#{createId}
+		</if>
+		<if test="createTime!=null">
+			and CREATE_TIME=#{createTime}
+		</if>
+		<if test="id!=null">
+			and ID=#{id}
+		</if>
+	</select>
+
+
+	<insert id="save" parameterType="com.meishi.merchant.model.FacilityInfoChg">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into facilityInfo_chg(
+		ID,FACILITYINFO_ID,OLD_deviceNo,NEW_deviceNo,OLD_POLL_CODS,NEW_POLL_CODS,COMPANY_ID,STORE_ID,SOURCE,CREATE_ID,CREATE_TIME,IS_DELETED)
+		values
+		(#{id},#{facilityInfoId},#{oldDeviceNo},#{newDeviceNo},#{oldPollCods},#{newPollCods},#{companyId},#{storeId},#{source},#{createId},#{createTime},0)
+	</insert>
+
+	<update id="update" parameterType="com.meishi.merchant.model.FacilityInfoChg">
+		update facilityInfo_chg set CREATE_TIME=#{createTime}
+		<if test="facilityInfoId!=null">
+			,FACILITYINFO_ID=#{facilityInfoId}
+		</if>
+		<if test="oldDeviceNo!=null">
+			,OLD_deviceNo=#{oldDeviceNo}
+		</if>
+		<if test="newDeviceNo!=null">
+			,NEW_deviceNo=#{newDeviceNo}
+		</if>
+		<if test="oldPollCods!=null">
+			,OLD_POLL_CODS=#{oldPollCods}
+		</if>
+		<if test="newPollCods!=null">
+			,NEW_POLL_CODS=#{newPollCods}
+		</if>
+		<if test="companyId!=null">
+			,COMPANY_ID=#{companyId}
+		</if>
+		<if test="storeId!=null">
+			,STORE_ID=#{storeId}
+		</if>
+		<if test="source!=null">
+			,SOURCE=#{source}
+		</if>
+		<if test="createId!=null">
+			,CREATE_ID=#{createId}
+		</if>
+		<if test="createTime!=null">
+			,CREATE_TIME=#{createTime}
+		</if>
+		<if test="isDelete!=null">
+			,IS_DELETED=#{isDelete}
+		</if>
+		where ID=#{id}
+	</update>
+
+	<update id="remove" parameterType="com.meishi.merchant.model.FacilityInfoChg">
+		update facilityInfo_chg set IS_DELETED=1 where ID=#{id} and COMPANY_ID=#{companyId} and STORE_ID=#{storeId}
+	</update>
+	
+</mapper>

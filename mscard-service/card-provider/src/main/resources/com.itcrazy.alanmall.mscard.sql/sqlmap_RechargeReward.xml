@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.RechargeRewardDao">
+
+
+  <resultMap id="RechargeRewardResult" type="com.itcrazy.alanmall.mscard.model.RechargeReward">
+  	<result column="ID" property="id" />
+  	<result column="CARD_TYPE" property="cardType" />
+  	<result column="RECHARGE_MODE" property="rechargeMode" />
+  	<result column="RECHARGE" property="recharge" />
+  	<result column="REWARD_MODE" property="rewardMode" />
+  	<result column="REWARD" property="reward" />
+  	<result column="CARD_CATEGORIES" property="cardCategories" />
+  	<result column="CARD_CATEGORIES_NAME" property="cardCategoriesName" />
+  </resultMap>
+
+  <select id="getPageList" resultMap="RechargeRewardResult" parameterType="com.itcrazy.alanmall.mscard.dto.RechargeRewardDto">
+
+  		SELECT r.ID,r.RECHARGE_MODE,r.RECHARGE,r.REWARD_MODE,r.REWARD,r.CARD_CATEGORIES,
+    (SELECT GROUP_CONCAT(c.`NAME`) FROM card_category c WHERE FIND_IN_SET(c.ID,r.CARD_CATEGORIES)) AS CARD_CATEGORIES_NAME
+		FROM recharge_reward r
+		WHERE r.IS_DELETED=0
+		<if test="companyId!=null" >
+  		 AND r.COMPANY_ID=#{companyId}
+  		</if>
+  		<if test="cardCategorie!=null" >
+  		 AND FIND_IN_SET(#{cardCategorie},r.CARD_CATEGORIES)
+  		</if>
+  		<if test="rechargeMode!=null" >
+  		 AND r.RECHARGE_MODE=#{rechargeMode}
+  		</if>
+  		<if test="recharge!=null" >
+  		 AND r.RECHARGE=#{recharge}
+  		</if>
+  		<if test="rewardMode!=null" >
+  		 AND r.REWARD_MODE=#{rewardMode}
+  		</if>
+  		<if test="reward!=null" >
+  		 AND r.REWARD=#{reward}
+  		</if>
+  		<if test="id!=null" >
+  		 AND r.ID!=#{id}
+  		</if>
+  		ORDER BY r.ID
+   </select>
+
+   <update id="update" parameterType="com.itcrazy.alanmall.mscard.model.RechargeReward">
+  	UPDATE recharge_reward SET UPDATE_TIME=NOW(),UPDATE_ID=#{updateId}
+  	<if test="rechargeMode!=null" >
+  		  ,RECHARGE_MODE=#{rechargeMode}
+  	</if>
+  	<if test="recharge!=null" >
+  		  ,RECHARGE=#{recharge}
+  	</if>
+  	<if test="rewardMode!=null" >
+  		  ,REWARD_MODE=#{rewardMode}
+  	</if>
+  	<if test="reward!=null" >
+  		  ,REWARD=#{reward}
+  	</if>
+  	<if test="cardCategories!=null" >
+  		  ,CARD_CATEGORIES=#{cardCategories}
+  	</if>
+  	<if test="isDeleted!=null" >
+  		  ,IS_DELETED=#{isDeleted}
+  	</if>
+  	<if test="companyId!=null" >
+  		  ,COMPANY_ID=#{companyId}
+  	</if>
+  	<if test="id!=null" >
+  		  WHERE ID=#{id}
+  	</if>
+  </update>
+
+  <insert id="save" parameterType="com.itcrazy.alanmall.mscard.model.RechargeReward">
+		INSERT INTO recharge_reward(
+		RECHARGE_MODE,RECHARGE,REWARD_MODE,REWARD,CARD_CATEGORIES,CREATE_TIME,CREATE_ID,IS_DELETED,COMPANY_ID)
+		VALUES
+		(#{rechargeMode},#{recharge},#{rewardMode},#{reward},#{cardCategories},NOW(),#{createId},0,#{companyId})
+  </insert>
+
+  <select id="getRewardRules" resultMap="RechargeRewardResult" parameterType="com.itcrazy.alanmall.mscard.dto.RechargeRewardDto">
+        SELECT * FROM
+            recharge_reward
+        WHERE
+            IS_DELETED=0
+        AND
+            FIND_IN_SET(#{cardCategorie},CARD_CATEGORIES)
+        ORDER BY
+            RECHARGE DESC
+   </select>
+</mapper>

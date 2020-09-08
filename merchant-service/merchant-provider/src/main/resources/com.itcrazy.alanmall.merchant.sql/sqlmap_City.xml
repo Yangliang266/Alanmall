@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.CityDao">
+
+	<resultMap id="cityResult" type="com.meishi.merchant.model.City">
+		<result column="ID" property="id" />
+		<result column="CITY_CNAME" property="cityCname" />
+		<result column="CITY_POSTCODE" property="cityPostcode" />
+		<result column="PROVINCE_ID" property="provinceId" />
+		<result column="CODE" property="code" />
+		<result column="FIRST_PINYIN" property="firstPinyin" />
+		
+	</resultMap>
+	<sql id="sqlTemplate">
+	select ID,CITY_CNAME,CITY_POSTCODE,PROVINCE_ID,CODE,FIRST_PINYIN
+	</sql>
+	<select id="getCityListById" resultMap="cityResult" parameterType="long">
+		<include refid="sqlTemplate" />
+		 from city  
+		where PROVINCE_ID=#{provinceId} and is_deleted=0
+	</select>
+	<select id="getCityList" resultMap="cityResult" parameterType="long">
+		<include refid="sqlTemplate" />
+		 from city  
+		where is_deleted=0
+	</select>
+	
+	<select id="get" resultMap="cityResult" parameterType="long">
+		<include refid="sqlTemplate" />
+		 from city  where id=#{id} and is_deleted=0
+	</select>
+
+	<select id="getCityByCode" resultMap="cityResult" parameterType="string">
+		<include refid="sqlTemplate" />
+		 from city  where code=#{code} and  is_deleted=0
+	</select>
+	
+	<select id="getCityByName" resultMap="cityResult" parameterType="string">
+		<include refid="sqlTemplate" />
+		 from city  where CITY_CNAME=#{name} and  is_deleted=0
+	</select>
+
+    <update id="updateCityByName" parameterType="com.meishi.merchant.model.City">
+        UPDATE city set code=#{code}  where CITY_CNAME=#{cityCname} and  is_deleted=0
+    </update>
+    
+    <select id="getCityListByStore" resultMap="cityResult" parameterType="map">
+		SELECT 
+		 	IF(t.PROVINCE_ID in(1,2,3,7),p.FIRST_PINYIN,c.FIRST_PINYIN) AS 'FIRST_PINYIN', 
+			GROUP_CONCAT(DISTINCT IF(t.PROVINCE_ID in(1,2,3,7),CONCAT(p.PROVINCE_CNAME,CONCAT('-p',p.ID),CONCAT('-',p.CODE)),CONCAT(c.CITY_CNAME,CONCAT('-c',c.ID),CONCAT('-',c.CODE)))) AS 'CITY_CNAME'
+		FROM 
+			(
+				SELECT DISTINCT PROVINCE_ID,CITY_ID 
+				FROM store 
+				WHERE STATUS=0 
+				<if test="companyId != null">
+					AND COMPANY_ID=#{companyId}
+				</if>
+				<if test="brandId != null">
+					AND BRAND_ID=#{brandId}
+				</if>
+				ORDER BY PROVINCE_ID,CITY_ID
+			) t 
+			INNER JOIN city c on c.ID=t.CITY_ID
+			INNER JOIN province p on p.ID=t.PROVINCE_ID    
+		GROUP BY FIRST_PINYIN
+		ORDER BY FIRST_PINYIN asc
+	</select>
+	
+	<select id="getProvinceCityList" resultMap="cityResult" parameterType="map">
+		SELECT 
+			CONCAT(p.PROVINCE_CNAME, CONCAT('-p',p.ID),CONCAT('-',p.CODE)) AS 'FIRST_PINYIN',
+			GROUP_CONCAT(DISTINCT IF(p.ID in(1,2,3,7),'',CONCAT(c.CITY_CNAME, CONCAT('-c',c.ID),CONCAT('-',c.CODE)))) AS 'CITY_CNAME'
+		FROM store  s
+		INNER JOIN city c on c.ID=s.CITY_ID
+		INNER JOIN province p on p.ID=s.PROVINCE_ID    
+		WHERE s.STATUS=0 
+		<if test="companyId != null">
+			AND COMPANY_ID=#{companyId}
+		</if>
+		<if test="brandId != null">
+			AND BRAND_ID=#{brandId}
+		</if>
+		GROUP BY s.PROVINCE_ID
+		ORDER BY s.PROVINCE_ID
+	</select>
+</mapper>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 数据库驱动-->
+    <classPathEntry  location="D:\repository\mysql\mysql-connector-java\5.1.21\mysql-connector-java-5.1.21.jar"/>
+    <context id="DB2Tables"  targetRuntime="MyBatis3" defaultModelType="flat">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!--数据库链接URL，用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://localhost/card?characterEncoding=utf-8&amp;serverTimezone=UTC&amp;nullCatalogMeansCurrent=true" userId="root" password="">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- 生成模型的包名和位置-->
+        <javaModelGenerator targetPackage="com.itcrazy.alanmall.mscard.dal.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 生成映射文件的包名和位置-->
+        <sqlMapGenerator targetPackage="com.itcrazy.alanmall.mscard.dal.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成DAO的包名和位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.itcrazy.alanmall.mscard.dal.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
+        <table tableName="card_actived_information" domainObjectName="ActivedInformation" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="card_category" domainObjectName="CardCategory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="card_change_history" domainObjectName="CardChangeHistory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="card_discarded" domainObjectName="CardDiscarded" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="card_discount" domainObjectName="CardDiscount" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="card_information" domainObjectName="CardInformation" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="card_system_parameter" domainObjectName="CardSystemParameter" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="card_type" domainObjectName="CardType" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="credit_sales_history" domainObjectName="CreditSalesHistory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="credit_setting" domainObjectName="CreditSetting" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="custom_return_history" domainObjectName="CustomReturnHistory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="head_warehouse_in" domainObjectName="HeadWarehouseIn" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="head_warehouse_out" domainObjectName="HeadWarehouseOut" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="jump_number_rule" domainObjectName="JumpNumberRule" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="order_list" domainObjectName="OrderList" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="other_sales_history" domainObjectName="OtherSalesHistory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="pay_mode" domainObjectName="PayMode" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="recharge_history" domainObjectName="RechargHistory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="recharge_reward" domainObjectName="RechargeReward" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="registered_card" domainObjectName="RegisteredCard" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="return_card" domainObjectName="ReturnCard" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="storage_sales_history" domainObjectName="StorageSalesHistory" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="store_warehouse_in" domainObjectName="StoreWarehouseIn" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+        <table tableName="store_warehouse_out" domainObjectName="StoreWarehouseOut" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+
+        </table>
+
+    </context>
+</generatorConfiguration>

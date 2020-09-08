@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.StorageSalesHistoryDao">
+
+  <resultMap id="OrderListResult" type="com.itcrazy.alanmall.mscard.model.StorageSalesHistory">
+  	<result column="ID" property="orderNo" />
+  	<result column="CARD_NO" property="cardNo" />
+  	<result column="MOTHER_CARD_NO" property="motherCardNo" />
+  	<result column="MOTHER_TYPE" property="motherType" />
+  	<result column="CATEGORY" property="category" />
+  	<result column="CONSUME_TIME" property="consumeTime" />
+  	<result column="RELEASE_STORE" property="releaseStore" />
+  	<result column="STORE" property="store" />
+  	<result column="BILL" property="bill" />
+  	<result column="COMPANY_ID" property="companyId" />
+  	<result column="CREATE_TIME" property="createTime" />
+  </resultMap>
+
+
+  <select id="getStorageSalesHistoryByOrderNo" resultMap="OrderListResult">
+  		SELECT
+  			ID, CARD_NO, MOTHER_CARD_NO,MOTHER_TYPE, CATEGORY, CONSUME_TIME, RELEASE_STORE,
+  			STORE, BILL, REWARD, CREATE_TIME, COMPANY_ID
+  		FROM
+  			storage_sales_history
+  		WHERE
+  			ID = #{orderNo}
+  		AND	COMPANY_ID = #{companyId}
+  		AND IS_DELETED = 0
+  </select>
+
+  <select id="getLastStorageSalesHistoryByCardNo" resultMap="OrderListResult">
+  		SELECT
+  			ID, CARD_NO, CATEGORY, CONSUME_TIME, RELEASE_STORE,
+  			STORE, BILL, REWARD, CREATE_TIME, COMPANY_ID
+  		FROM
+  			storage_sales_history
+  		WHERE
+  			CARD_NO = #{cardNo}
+  		AND	COMPANY_ID = #{companyId}
+  		AND IS_DELETED = 0
+  		ORDER BY CREATE_TIME DESC
+  		LIMIT 1
+  </select>
+
+  <insert id="addStorageSalesHistory" parameterType="com.itcrazy.alanmall.mscard.model.StorageSalesHistory">
+		INSERT INTO
+			storage_sales_history
+			(ID, CARD_NO,MOTHER_CARD_NO,MOTHER_TYPE, CATEGORY, CONSUME_TIME, RELEASE_STORE, STORE, BILL,
+			REWARD,REMARKS, CREATE_TIME, CREATE_ID, IS_DELETED,COMPANY_ID)
+		VALUES
+			(#{orderNo},#{cardNo},#{motherCardNo},#{motherType}, #{category}, NOW(), #{releaseStore},#{store}, #{bill},
+			#{reward},#{remarks}, NOW(),#{createId}, 0, #{companyId})
+  </insert>
+
+   <update id="delete" >
+		UPDATE
+			storage_sales_history
+		SET
+			UPDATE_TIME=NOW(),UPDATE_ID=#{userId},
+			IS_DELETED = 1
+		WHERE ID=#{orderNo}
+  </update>
+
+</mapper>

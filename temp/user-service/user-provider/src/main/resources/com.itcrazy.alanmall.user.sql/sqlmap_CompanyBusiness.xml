@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.user.dao.CompanyBusinessDao">
+
+
+	<resultMap id="CompanyBusinessResult"  type="com.meishi.user.model.CompanyBusiness">
+		<result column="ID" property="id" />
+		<result column="company_id" property="companyId" />
+		<result column="business_id" property="businessId" />
+	</resultMap>
+	<sql id="sqlTemplate">
+		select id,company_id,business_id
+	</sql>
+	<select id="getPageList" resultMap="CompanyBusinessResult"  parameterType="com.meishi.user.dto.CompanyBusinessDto">
+		<include refid="sqlTemplate" />
+  		from company_business where is_deleted=0 
+  		<if test="companyId!=null">
+  		and company_id=#{companyId}
+  		</if>
+  		<if test="businessId!=null">
+  		and business_id=#{businessId}
+  		</if>
+	</select>
+
+	<select id="getPageTotal" resultType="integer"  parameterType="com.meishi.user.dto.CompanyBusinessDto">
+		select count(*)
+  		from company_business where is_deleted=0 
+  		<if test="companyId!=null">
+  		and company_id=#{companyId}
+  		</if>
+  		<if test="businessId!=null">
+  		and business_id=#{businessId}
+  		</if>
+	</select>
+	<insert id="save" parameterType="com.meishi.user.model.CompanyBusiness">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into company_business(
+		id,company_id,business_id,create_id,update_id,create_time,update_time,is_deleted)
+		values
+		(#{id},#{companyId},#{businessId},#{createId},#{updateId},now(),now(),0)
+	</insert>
+
+	<update id="remove"
+		parameterType="com.meishi.user.model.CompanyBusiness">
+		update company_business set
+		update_time=now(),update_id=#{updateId},is_deleted=1 where
+		company_id=#{companyId} and is_deleted=0
+	</update>
+</mapper>

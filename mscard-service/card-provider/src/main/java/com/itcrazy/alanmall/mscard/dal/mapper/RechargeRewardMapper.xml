@@ -1,0 +1,2332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itcrazy.alanmall.mscard.dal.mapper.RechargeRewardMapper">
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="RECHARGE_MODE" jdbcType="INTEGER" property="rechargeMode" />
+    <result column="RECHARGE" jdbcType="VARCHAR" property="recharge" />
+    <result column="REWARD_MODE" jdbcType="INTEGER" property="rewardMode" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <result column="CARD_CATEGORIES" jdbcType="LONGVARCHAR" property="cardCategories" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RECHARGE_MODE, RECHARGE, REWARD_MODE, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+    UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    CARD_CATEGORIES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward (ID, RECHARGE_MODE, RECHARGE, 
+      REWARD_MODE, REWARD, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, CARD_CATEGORIES
+      )
+    values (#{id,jdbcType=INTEGER}, #{rechargeMode,jdbcType=INTEGER}, #{recharge,jdbcType=VARCHAR}, 
+      #{rewardMode,jdbcType=INTEGER}, #{reward,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{cardCategories,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE,
+      </if>
+      <if test="recharge != null">
+        RECHARGE,
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeMode != null">
+        #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    <set>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        RECHARGE = #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="RECHARGE_MODE" jdbcType="INTEGER" property="rechargeMode" />
+    <result column="RECHARGE" jdbcType="VARCHAR" property="recharge" />
+    <result column="REWARD_MODE" jdbcType="INTEGER" property="rewardMode" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <result column="CARD_CATEGORIES" jdbcType="LONGVARCHAR" property="cardCategories" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RECHARGE_MODE, RECHARGE, REWARD_MODE, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+    UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    CARD_CATEGORIES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward (ID, RECHARGE_MODE, RECHARGE, 
+      REWARD_MODE, REWARD, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, CARD_CATEGORIES
+      )
+    values (#{id,jdbcType=INTEGER}, #{rechargeMode,jdbcType=INTEGER}, #{recharge,jdbcType=VARCHAR}, 
+      #{rewardMode,jdbcType=INTEGER}, #{reward,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{cardCategories,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE,
+      </if>
+      <if test="recharge != null">
+        RECHARGE,
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeMode != null">
+        #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    <set>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        RECHARGE = #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="RECHARGE_MODE" jdbcType="INTEGER" property="rechargeMode" />
+    <result column="RECHARGE" jdbcType="VARCHAR" property="recharge" />
+    <result column="REWARD_MODE" jdbcType="INTEGER" property="rewardMode" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <result column="CARD_CATEGORIES" jdbcType="LONGVARCHAR" property="cardCategories" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RECHARGE_MODE, RECHARGE, REWARD_MODE, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+    UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    CARD_CATEGORIES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward (ID, RECHARGE_MODE, RECHARGE, 
+      REWARD_MODE, REWARD, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, CARD_CATEGORIES
+      )
+    values (#{id,jdbcType=INTEGER}, #{rechargeMode,jdbcType=INTEGER}, #{recharge,jdbcType=VARCHAR}, 
+      #{rewardMode,jdbcType=INTEGER}, #{reward,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{cardCategories,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE,
+      </if>
+      <if test="recharge != null">
+        RECHARGE,
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeMode != null">
+        #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    <set>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        RECHARGE = #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="RECHARGE_MODE" jdbcType="INTEGER" property="rechargeMode" />
+    <result column="RECHARGE" jdbcType="VARCHAR" property="recharge" />
+    <result column="REWARD_MODE" jdbcType="INTEGER" property="rewardMode" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <result column="CARD_CATEGORIES" jdbcType="LONGVARCHAR" property="cardCategories" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RECHARGE_MODE, RECHARGE, REWARD_MODE, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+    UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    CARD_CATEGORIES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward (ID, RECHARGE_MODE, RECHARGE, 
+      REWARD_MODE, REWARD, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, CARD_CATEGORIES
+      )
+    values (#{id,jdbcType=INTEGER}, #{rechargeMode,jdbcType=INTEGER}, #{recharge,jdbcType=VARCHAR}, 
+      #{rewardMode,jdbcType=INTEGER}, #{reward,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{cardCategories,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE,
+      </if>
+      <if test="recharge != null">
+        RECHARGE,
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeMode != null">
+        #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    <set>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        RECHARGE = #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="RECHARGE_MODE" jdbcType="INTEGER" property="rechargeMode" />
+    <result column="RECHARGE" jdbcType="VARCHAR" property="recharge" />
+    <result column="REWARD_MODE" jdbcType="INTEGER" property="rewardMode" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <result column="CARD_CATEGORIES" jdbcType="LONGVARCHAR" property="cardCategories" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RECHARGE_MODE, RECHARGE, REWARD_MODE, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+    UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    CARD_CATEGORIES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward (ID, RECHARGE_MODE, RECHARGE, 
+      REWARD_MODE, REWARD, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, CARD_CATEGORIES
+      )
+    values (#{id,jdbcType=INTEGER}, #{rechargeMode,jdbcType=INTEGER}, #{recharge,jdbcType=VARCHAR}, 
+      #{rewardMode,jdbcType=INTEGER}, #{reward,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{cardCategories,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE,
+      </if>
+      <if test="recharge != null">
+        RECHARGE,
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeMode != null">
+        #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    <set>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        RECHARGE = #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="RECHARGE_MODE" jdbcType="INTEGER" property="rechargeMode" />
+    <result column="RECHARGE" jdbcType="VARCHAR" property="recharge" />
+    <result column="REWARD_MODE" jdbcType="INTEGER" property="rewardMode" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <result column="CARD_CATEGORIES" jdbcType="LONGVARCHAR" property="cardCategories" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RECHARGE_MODE, RECHARGE, REWARD_MODE, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+    UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    CARD_CATEGORIES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward (ID, RECHARGE_MODE, RECHARGE, 
+      REWARD_MODE, REWARD, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, CARD_CATEGORIES
+      )
+    values (#{id,jdbcType=INTEGER}, #{rechargeMode,jdbcType=INTEGER}, #{recharge,jdbcType=VARCHAR}, 
+      #{rewardMode,jdbcType=INTEGER}, #{reward,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{cardCategories,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE,
+      </if>
+      <if test="recharge != null">
+        RECHARGE,
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeMode != null">
+        #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    <set>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        RECHARGE = #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="RECHARGE_MODE" jdbcType="INTEGER" property="rechargeMode" />
+    <result column="RECHARGE" jdbcType="VARCHAR" property="recharge" />
+    <result column="REWARD_MODE" jdbcType="INTEGER" property="rewardMode" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <result column="CARD_CATEGORIES" jdbcType="LONGVARCHAR" property="cardCategories" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RECHARGE_MODE, RECHARGE, REWARD_MODE, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+    UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    CARD_CATEGORIES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward (ID, RECHARGE_MODE, RECHARGE, 
+      REWARD_MODE, REWARD, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, CARD_CATEGORIES
+      )
+    values (#{id,jdbcType=INTEGER}, #{rechargeMode,jdbcType=INTEGER}, #{recharge,jdbcType=VARCHAR}, 
+      #{rewardMode,jdbcType=INTEGER}, #{reward,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{cardCategories,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE,
+      </if>
+      <if test="recharge != null">
+        RECHARGE,
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeMode != null">
+        #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    <set>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        RECHARGE = #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="RECHARGE_MODE" jdbcType="INTEGER" property="rechargeMode" />
+    <result column="RECHARGE" jdbcType="VARCHAR" property="recharge" />
+    <result column="REWARD_MODE" jdbcType="INTEGER" property="rewardMode" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <result column="CARD_CATEGORIES" jdbcType="LONGVARCHAR" property="cardCategories" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RECHARGE_MODE, RECHARGE, REWARD_MODE, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+    UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    CARD_CATEGORIES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward (ID, RECHARGE_MODE, RECHARGE, 
+      REWARD_MODE, REWARD, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, CARD_CATEGORIES
+      )
+    values (#{id,jdbcType=INTEGER}, #{rechargeMode,jdbcType=INTEGER}, #{recharge,jdbcType=VARCHAR}, 
+      #{rewardMode,jdbcType=INTEGER}, #{reward,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{cardCategories,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE,
+      </if>
+      <if test="recharge != null">
+        RECHARGE,
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeMode != null">
+        #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    <set>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        RECHARGE = #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="RECHARGE_MODE" jdbcType="INTEGER" property="rechargeMode" />
+    <result column="RECHARGE" jdbcType="VARCHAR" property="recharge" />
+    <result column="REWARD_MODE" jdbcType="INTEGER" property="rewardMode" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <result column="CARD_CATEGORIES" jdbcType="LONGVARCHAR" property="cardCategories" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RECHARGE_MODE, RECHARGE, REWARD_MODE, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+    UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    CARD_CATEGORIES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward (ID, RECHARGE_MODE, RECHARGE, 
+      REWARD_MODE, REWARD, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, CARD_CATEGORIES
+      )
+    values (#{id,jdbcType=INTEGER}, #{rechargeMode,jdbcType=INTEGER}, #{recharge,jdbcType=VARCHAR}, 
+      #{rewardMode,jdbcType=INTEGER}, #{reward,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{cardCategories,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE,
+      </if>
+      <if test="recharge != null">
+        RECHARGE,
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeMode != null">
+        #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    <set>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        RECHARGE = #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="RECHARGE_MODE" jdbcType="INTEGER" property="rechargeMode" />
+    <result column="RECHARGE" jdbcType="VARCHAR" property="recharge" />
+    <result column="REWARD_MODE" jdbcType="INTEGER" property="rewardMode" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <result column="CARD_CATEGORIES" jdbcType="LONGVARCHAR" property="cardCategories" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RECHARGE_MODE, RECHARGE, REWARD_MODE, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+    UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    CARD_CATEGORIES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward (ID, RECHARGE_MODE, RECHARGE, 
+      REWARD_MODE, REWARD, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, CARD_CATEGORIES
+      )
+    values (#{id,jdbcType=INTEGER}, #{rechargeMode,jdbcType=INTEGER}, #{recharge,jdbcType=VARCHAR}, 
+      #{rewardMode,jdbcType=INTEGER}, #{reward,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{cardCategories,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE,
+      </if>
+      <if test="recharge != null">
+        RECHARGE,
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeMode != null">
+        #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    <set>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        RECHARGE = #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="RECHARGE_MODE" jdbcType="INTEGER" property="rechargeMode" />
+    <result column="RECHARGE" jdbcType="VARCHAR" property="recharge" />
+    <result column="REWARD_MODE" jdbcType="INTEGER" property="rewardMode" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <result column="CARD_CATEGORIES" jdbcType="LONGVARCHAR" property="cardCategories" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RECHARGE_MODE, RECHARGE, REWARD_MODE, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+    UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    CARD_CATEGORIES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward (ID, RECHARGE_MODE, RECHARGE, 
+      REWARD_MODE, REWARD, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, CARD_CATEGORIES
+      )
+    values (#{id,jdbcType=INTEGER}, #{rechargeMode,jdbcType=INTEGER}, #{recharge,jdbcType=VARCHAR}, 
+      #{rewardMode,jdbcType=INTEGER}, #{reward,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{cardCategories,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE,
+      </if>
+      <if test="recharge != null">
+        RECHARGE,
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeMode != null">
+        #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    <set>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        RECHARGE = #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="RECHARGE_MODE" jdbcType="INTEGER" property="rechargeMode" />
+    <result column="RECHARGE" jdbcType="VARCHAR" property="recharge" />
+    <result column="REWARD_MODE" jdbcType="INTEGER" property="rewardMode" />
+    <result column="REWARD" jdbcType="INTEGER" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    <result column="CARD_CATEGORIES" jdbcType="LONGVARCHAR" property="cardCategories" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, RECHARGE_MODE, RECHARGE, REWARD_MODE, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, 
+    UPDATE_ID, IS_DELETED, COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    CARD_CATEGORIES
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from recharge_reward
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward (ID, RECHARGE_MODE, RECHARGE, 
+      REWARD_MODE, REWARD, CREATE_TIME, 
+      CREATE_ID, UPDATE_TIME, UPDATE_ID, 
+      IS_DELETED, COMPANY_ID, CARD_CATEGORIES
+      )
+    values (#{id,jdbcType=INTEGER}, #{rechargeMode,jdbcType=INTEGER}, #{recharge,jdbcType=VARCHAR}, 
+      #{rewardMode,jdbcType=INTEGER}, #{reward,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createId,jdbcType=BIGINT}, #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, 
+      #{isDeleted,jdbcType=INTEGER}, #{companyId,jdbcType=BIGINT}, #{cardCategories,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    insert into recharge_reward
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE,
+      </if>
+      <if test="recharge != null">
+        RECHARGE,
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeMode != null">
+        #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    <set>
+      <if test="rechargeMode != null">
+        RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      </if>
+      <if test="recharge != null">
+        RECHARGE = #{recharge,jdbcType=VARCHAR},
+      </if>
+      <if test="rewardMode != null">
+        REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="cardCategories != null">
+        CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      CARD_CATEGORIES = #{cardCategories,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.RechargeReward">
+    update recharge_reward
+    set RECHARGE_MODE = #{rechargeMode,jdbcType=INTEGER},
+      RECHARGE = #{recharge,jdbcType=VARCHAR},
+      REWARD_MODE = #{rewardMode,jdbcType=INTEGER},
+      REWARD = #{reward,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

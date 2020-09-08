@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.CardFamilyDao">
+  <resultMap id="CardFamilyResult" type="com.itcrazy.alanmall.mscard.model.CardFamily">
+  	<result column="CARD_NO" property="cardNo" />
+  	<result column="NAME" property="name" />
+  	<result column="CATEGORY" property="categoryId" />
+  	<result column="MOTHER_CARD_NO" property="motherCardNo" />
+  	<result column="USER_NAME" property="userName" />
+	<result column="SEX" property="sex" />
+	<result column="TELEPHONE" property="telephone" />
+	<result column="ID_NUMBER" property="idNumber" />
+	<result column="BILL" property="bill" />
+	<result column="REWARD" property="childReward" />
+	<result column="CATEGORY_ID" property="categoryId" />
+	<result column="MOTHER_TYPE" property="motherType" />
+	<result column="RECHARGE_BALANCE" property="rechargeBalance" />
+	<result column="REWARD" property="reward" />
+	<result column="PAY_PSW" property="payPsw" />
+	<result column="TOTAL" property="allBill" />
+	<result column="CREDIT" property="credit" />
+	<result column="CARD_TYPE" property="cardType" />
+  </resultMap>
+
+  <!-- 母卡记录 -->
+  <select id="getCardFamily" resultMap="CardFamilyResult" parameterType="com.itcrazy.alanmall.mscard.dto.CardFamilyDto">
+ 	SELECT
+ 	  (CASE WHEN (SELECT COUNT(CARD_NO) FROM card_actived_information WHERE MOTHER_CARD_NO=#{cardNo} AND COMPANY_ID=#{companyId}) != 0 THEN '母卡'
+		ELSE (CASE WHEN (SELECT MOTHER_CARD_NO FROM card_actived_information WHERE CARD_NO=#{cardNo} AND COMPANY_ID=#{companyId}) IS NOT NULL THEN '子卡'
+    	ELSE '' END) END) AS CARD_TYPE,
+      ci.CARD_NO,
+      ci.CATEGORY,
+	  cc.NAME,
+	  cc.ID AS CATEGORY_ID,
+	  ci.MOTHER_CARD_NO,
+	  rc.USER_NAME,
+	  rc.SEX,
+	  rc.TELEPHONE,
+	  rc.ID_NUMBER,
+	  ci.RECHARGE_BALANCE,
+	  ci.REWARD,
+	  ci.CREDIT_STATUS,
+	  cc.IS_RECHARGE,
+	  ci.MOTHER_TYPE,
+	  (SELECT
+			SUM(BILL)+SUM(REWARD)
+		FROM
+			storage_sales_history AS ssh
+		WHERE
+				cast(ssh.CREATE_TIME as DATETIME) <![CDATA[ >= ]]> cast((SELECT MIN(UPDATE_TIME) FROM card_actived_information WHERE (CARD_NO=#{cardNo} OR MOTHER_CARD_NO= #{cardNo})) as DATETIME)
+    	AND (ssh.CARD_NO = #{cardNo} OR ssh.MOTHER_CARD_NO = #{cardNo})
+		AND ssh.COMPANY_ID = #{companyId}
+		AND ssh.IS_DELETED = 0) as TOTAL
+	FROM
+	  card_actived_information ci
+	LEFT JOIN
+	  registered_card rc
+	ON
+	  ci.CARD_NO = rc.CARD_NO
+    AND
+	  ci.COMPANY_ID = rc.COMPANY_ID
+	LEFT JOIN
+	  card_category cc
+	ON
+	  ci.CATEGORY = cc.ID
+	WHERE
+	  ci.COMPANY_ID = #{companyId}
+	  AND ci.IS_DELETED = 0
+	<if test="cardNo != null and cardNo != ''">
+		AND
+		ci.CARD_NO = #{cardNo}
+	</if>
+    </select>
+
+   <!-- 子卡记录 -->
+  <select id="getCreditFamilyHistory" resultMap="CardFamilyResult" parameterType="com.itcrazy.alanmall.mscard.dto.CardFamilyDto">
+    SELECT
+      ci.CARD_NO,
+      cc.NAME,
+	  rc.USER_NAME,
+	  rc.SEX,
+	  rc.TELEPHONE,
+	  rc.ID_NUMBER,
+	 (SELECT
+			 SUM(ssh.BILL)+SUM(ssh.REWARD)
+		FROM
+			storage_sales_history  ssh
+		LEFT JOIN card_actived_information cai
+		ON(
+			ssh.CARD_NO = cai.CARD_NO
+			AND ssh.COMPANY_ID = cai.COMPANY_ID)
+		WHERE
+				cast(ssh.CREATE_TIME as DATETIME) >= cast(cai.UPDATE_TIME as DATETIME)
+   		AND ssh.CARD_NO = ci.CARD_NO
+		AND ssh.COMPANY_ID = #{companyId}
+		AND ssh.IS_DELETED = 0) AS TOTAL
+	FROM
+	  card_actived_information ci
+	LEFT JOIN
+	  registered_card rc
+	ON
+	  ci.CARD_NO = rc.CARD_NO
+	AND
+	  ci.COMPANY_ID = rc.COMPANY_ID
+	LEFT JOIN
+	  card_category cc ON ci.CATEGORY = cc.ID
+	LEFT JOIN
+	  storage_sales_history as ssh
+	ON
+		ci.CARD_NO = ssh.CARD_NO AND ci.COMPANY_ID = ssh.COMPANY_ID
+	WHERE
+	  ci.COMPANY_ID = #{companyId}
+	 AND ci.IS_DELETED = 0
+    <if test="motherCardNo != null and motherCardNo != ''">
+		AND	ci.MOTHER_CARD_NO = #{motherCardNo}
+	 </if>
+	GROUP BY ci.CARD_NO
+	LIMIT #{start}, #{limit}
+    </select>
+
+	<!-- 分页 -->
+	<select id="getHistoryPageTotal" resultType="integer" parameterType="com.itcrazy.alanmall.mscard.dto.CardFamilyDto">
+		SELECT
+		  COUNT(ci.CARD_NO)
+		FROM
+	      card_actived_information ci
+	    LEFT JOIN
+	      registered_card rc
+	    ON
+	      ci.CARD_NO = rc.CARD_NO
+	    AND
+	      ci.COMPANY_ID = rc.COMPANY_ID
+	    LEFT JOIN
+	  	  card_category cc ON ci.CATEGORY = cc.ID
+	    WHERE
+	      ci.COMPANY_ID = #{companyId}
+	     AND ci.IS_DELETED = 0
+     <if test="motherCardNo != null and motherCardNo != ''">
+		AND	ci.MOTHER_CARD_NO = #{motherCardNo}
+	 </if>
+	</select>
+	<select id="getCountCreditSet" resultType="integer" parameterType="com.itcrazy.alanmall.mscard.dto.CardFamilyDto">
+		SELECT
+		  COUNT(CARD_NO)
+		FROM
+	      credit_setting
+	    WHERE
+	      COMPANY_ID = #{companyId}
+	      AND IS_DELETED = 0
+     <if test="cardNo != null and cardNo != ''">
+		AND CARD_NO = #{cardNo}
+	 </if>
+	</select>
+
+	 <!-- 未绑定子卡查询 -->
+  <select id="getCardBindFamilyList" resultMap="CardFamilyResult" parameterType="com.itcrazy.alanmall.mscard.dto.CardFamilyDto">
+  		SELECT
+		    ci.CARD_NO,
+		    cc.NAME,
+			rc.USER_NAME,
+			rc.SEX,
+			rc.TELEPHONE,
+			rc.ID_NUMBER,
+			ci.CREDIT_STATUS,
+			ci.CREDIT_MAX_QUOTA,
+			ci.STATUS
+		FROM
+			card_actived_information ci
+		LEFT JOIN registered_card rc on ci.CARD_NO = rc.CARD_NO AND ci.COMPANY_ID = rc.COMPANY_ID
+		LEFT JOIN card_category cc on ci.CATEGORY = cc.ID
+		WHERE 1=1
+		<if test="cardNo!=null and cardNo!=''" >
+  	 	 AND ci.CARD_NO like concat("%",#{cardNo},"%")
+  		</if>
+  		 AND ci.CARD_NO NOT IN
+		 (
+			 SELECT DISTINCT ci.MOTHER_CARD_NO
+			 FROM card_actived_information ci
+			 WHERE ci.IS_DELETED = 0
+			  AND ci.COMPANY_ID = #{companyId}
+			  AND ci.MOTHER_CARD_NO !=''
+		 )
+		 AND ci.CARD_NO NOT IN
+		 (
+			 SELECT DISTINCT cs.CARD_NO
+			 FROM credit_setting cs
+			 WHERE cs.IS_DELETED = 0
+			  AND cs.COMPANY_ID = #{companyId}
+		 )
+		 AND ci.CARD_NO != #{motherCardNo}
+		 AND ci.CATEGORY = #{categoryId}
+		 AND ci.MOTHER_CARD_NO IS NULL
+		 AND ci.STATUS = 9
+		 AND ci.RECHARGE_BALANCE = 0
+		 AND ci.REWARD = 0
+		 AND ci.CREDIT = 0
+  </select>
+
+  <!-- 查询记名卡信息表中的母卡信息 -->
+  <select id="select" resultMap="CardFamilyResult">
+  		SELECT
+  			CARD_NO,
+  			USER_NAME,
+  			SEX,
+  			TELEPHONE,
+  			ID_NUMBER,
+  			PAY_PSW,
+  			MAIL,
+  			ADDRESS,
+  			BIRTHDAY,
+			CREATE_TIME,
+			CREATE_ID,
+			IS_DELETED,
+			COMPANY_ID
+		FROM
+			registered_card
+		WHERE CARD_NO = #{motherCardNo}
+		AND COMPANY_ID = #{companyId}
+  	</select>
+
+  	<!-- 删除记名卡信息表中需绑定母卡的子卡信息 -->
+  	<delete id="deleteRegisteredCard" parameterType="com.itcrazy.alanmall.mscard.model.CardFamily">
+	 	DELETE FROM
+	 		registered_card
+	 	WHERE CARD_NO=#{cardNo}
+	 	AND COMPANY_ID=#{companyId}
+	</delete>
+
+	<!-- 将母卡信息复制给子卡 -->
+	<insert id="copyMotherRegisteredCard" parameterType="com.itcrazy.alanmall.mscard.model.CardFamily">
+		INSERT INTO registered_card (
+		    CARD_NO,
+			USER_NAME,
+			SEX,
+			TELEPHONE,
+			ID_NUMBER,
+			PAY_PSW,
+  			MAIL,
+  			ADDRESS,
+  			BIRTHDAY,
+			CREATE_TIME,
+			CREATE_ID,
+			IS_DELETED,
+			COMPANY_ID)
+		VALUES (
+		    #{cardNo},
+		    #{userName},
+		    #{sex},
+		    #{telephone},
+		    #{idNumber},
+		    #{payPsw},
+		    #{mail},
+		    #{address},
+		    #{birthday},
+			NOW(),
+			#{createId},
+			0,
+			#{companyId})
+	</insert>
+
+	<!-- 更新子卡的MOTHER_TYPE -->
+	<update id="updateActiveCardInformation" parameterType="com.itcrazy.alanmall.mscard.model.ActiveInformation">
+  	UPDATE
+  		card_actived_information
+  	SET
+  		MOTHER_TYPE = 1,
+  		MOTHER_CARD_NO = #{motherCardNo},
+  		UPDATE_TIME = NOW(),
+  		UPDATE_ID = #{updateId}
+  	WHERE CARD_NO = #{cardNo}
+  	AND COMPANY_ID = #{companyId}
+  </update>
+
+  <!-- 更新母卡的mother_TYPE -->
+  <update id="updateActiveMother" parameterType="com.itcrazy.alanmall.mscard.model.ActiveInformation">
+  	UPDATE
+  		card_actived_information
+  	SET
+  		MOTHER_TYPE = 2,
+  		UPDATE_TIME = NOW(),
+  		UPDATE_ID = #{updateId}
+  	WHERE CARD_NO = #{motherCardNo}
+  	AND COMPANY_ID = #{companyId}
+  </update>
+  <!-- 更新子卡的MOTHER_TYPE为空 -->
+  <update id="updateChildCard" parameterType="com.itcrazy.alanmall.mscard.model.CardFamily">
+  	UPDATE
+  		card_actived_information
+  	SET
+  		MOTHER_TYPE = null,
+  		MOTHER_CARD_NO = null,
+  		UPDATE_TIME = NOW(),
+  		UPDATE_ID = #{updateId}
+  	WHERE CARD_NO = #{cardNo}
+  	AND COMPANY_ID = #{companyId}
+  </update>
+ <!-- 查询解绑子卡的母卡的其他子卡记录的条数 -->
+  <select id="countCardFamily" resultType="integer" parameterType="com.itcrazy.alanmall.mscard.model.CardFamily">
+  	SELECT
+		  COUNT(CARD_NO)
+		FROM
+	      card_actived_information
+	    WHERE  COMPANY_ID = #{companyId}
+	     AND IS_DELETED = 0
+		 AND MOTHER_CARD_NO = #{motherCardNo}
+  </select>
+ <!-- 更新母卡的mother_TYPE为空 -->
+  <update id="updateMotherCardNo" parameterType="com.itcrazy.alanmall.mscard.model.CardFamily">
+  	UPDATE
+  		card_actived_information
+  	SET
+  		MOTHER_TYPE = null,
+  		UPDATE_TIME = NOW(),
+  		UPDATE_ID = #{updateId}
+  	WHERE CARD_NO = #{motherCardNo}
+  	AND COMPANY_ID = #{companyId}
+  </update>
+
+  <select id="getDetil" resultMap="CardFamilyResult" parameterType="com.itcrazy.alanmall.mscard.dto.CardFamilyDto">
+	SELECT
+			cai.CARD_NO, r.USER_NAME, r.SEX, r.TELEPHONE, r.ID_NUMBER,cc.NAME
+		FROM
+			card_actived_information cai
+		LEFT JOIN registered_card r ON cai.CARD_NO = r.CARD_NO AND cai.COMPANY_ID = r.COMPANY_ID
+		LEFT JOIN card_category cc ON  cai.CATEGORY = cc.ID
+	WHERE
+			cai.CARD_NO = #{cardNo}
+		AND
+			cai.IS_DELETED = 0
+		AND
+			cai.COMPANY_ID = #{companyId}
+  </select>
+
+  <!-- 编辑子卡的记名卡信息 -->
+  <update id="updateChildRegistered" parameterType="com.itcrazy.alanmall.mscard.model.CardFamily">
+
+	INSERT INTO registered_card (
+		    CARD_NO,
+			USER_NAME,
+			SEX,
+			TELEPHONE,
+			ID_NUMBER,
+			CREATE_TIME,
+			CREATE_ID,
+			IS_DELETED,
+			COMPANY_ID)
+		VALUES (
+		    #{cardNo},
+		    #{userName},
+		    #{sex},
+		    #{telephone},
+		    #{idNumber},
+			NOW(),
+			#{createId},
+			0,
+			#{companyId})
+  </update>
+  <!-- 查询充值余额总和，充值奖励总和，挂账总额 -->
+  <select id="selectCard" resultMap="CardFamilyResult" parameterType="com.itcrazy.alanmall.mscard.model.CardFamily">
+	SELECT
+		RECHARGE_BALANCE,
+		REWARD,
+		CREDIT
+	FROM
+		card_actived_information
+	WHERE CARD_NO = #{cardNo}
+  	AND COMPANY_ID = #{companyId}
+  </select>
+</mapper>

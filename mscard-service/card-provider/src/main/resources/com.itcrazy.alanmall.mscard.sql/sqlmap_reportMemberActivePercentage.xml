@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.cardReport.dao.ReportMemberActivePercentageDao">
+	<resultMap id="ReportMemberActivePercentageResult" type="com.meishi.card.model.ReportMemberActivePercentage">
+		<result column="CATEGORY_NAME" property="categoryName" />
+		<result column="CATEGORY_ID" property="categoryId" />
+		<result column="CARD_NO" property="cardNo" />
+		<result column="MOTHER_CARD_NO" property="motherCardNo" />
+		<result column="NAME" property="name" />
+		<result column="STORE" property="store" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="RECHARGE" property="recharge" />
+		<result column="REWARD" property="reward" />
+		<result column="BILL" property="bill" />
+		<result column="BILL_REWARD" property="billReward" />
+		<result column="RECHARGE_BALANCE" property="rechargeBalance" />
+		<result column="RECHARGE_REWARD" property="rechargeReward" />
+		<result column="RECHARGE_TODAY" property="rechargeToday" />
+		<result column="REWARD_TODAY" property="rewardToday" />
+		<result column="REWARD_BILL_TOTAL" property="rewardBillTotal" />
+		<result column="REWARD_TOTAL" property="rewardTotal" />
+		<result column="RECHARGE_TOTAL" property="rechargeTotal" />
+		<result column="BILL_TOTAL" property="billTotal" />
+	</resultMap>
+
+	<select id="getTotalCategory" resultMap="ReportMemberActivePercentageResult" parameterType="com.meishi.card.dto.ReportMemberActivePercentageDto">
+		SELECT `ID` AS CATEGORY_ID,`NAME` AS CATEGORY_NAME
+		FROM
+			card_category
+		WHERE
+			COMPANY_ID = #{companyId}
+			AND IS_DELETED = 0
+  	</select>
+
+
+  	<select id="getMemberActivePercentageHistory" resultMap="ReportMemberActivePercentageResult" parameterType="com.meishi.card.dto.ReportMemberActivePercentageDto">
+		SELECT
+		cai.CARD_NO,
+		cc.`NAME`,
+		cai.RECHARGE_BALANCE,
+		cai.REWARD AS RECHARGE_REWARD,
+		rh.STORE,
+		cast(rh.CREATE_TIME AS date) AS CREATE_TIME,
+		(
+			SELECT
+				(
+					CASE
+					WHEN SUM(newrh.RECHARGE) IS NULL THEN
+						0
+					ELSE
+						SUM(newrh.RECHARGE)
+					END
+				) AS RECHARGE_TOTAL
+			FROM
+				recharge_history newrh
+			WHERE
+				cast(newrh.CREATE_TIME AS date) > cast(rh.CREATE_TIME AS date)
+			AND newrh.CARD_NO = cai.CARD_NO
+			AND newrh.COMPANY_ID = cai.COMPANY_ID
+		) AS RECHARGE_TOTAL,
+		(
+			SELECT
+				(
+					CASE
+					WHEN SUM(newrh.REWARD) IS NULL THEN
+						0
+					ELSE
+						SUM(newrh.REWARD)
+					END
+				) AS REWARD_TOTAL
+			FROM
+				recharge_history newrh
+			WHERE
+				cast(newrh.CREATE_TIME AS date) > cast(rh.CREATE_TIME AS date)
+			AND newrh.CARD_NO = cai.CARD_NO
+			AND newrh.COMPANY_ID = cai.COMPANY_ID
+		) AS REWARD_TOTAL,
+		(
+			SELECT
+				(
+					CASE
+					WHEN SUM(nssh.BILL) IS NULL THEN
+						0
+					ELSE
+						SUM(nssh.BILL)
+					END
+				) AS BILL_TOTAL
+			FROM
+				storage_sales_history nssh
+			WHERE
+				cast(nssh.CREATE_TIME AS date) > cast(rh.CREATE_TIME AS date)
+			AND nssh.CARD_NO = cai.CARD_NO
+			AND nssh.COMPANY_ID = cai.COMPANY_ID
+		) AS BILL_TOTAL,
+		(
+			SELECT
+				(
+					CASE
+					WHEN SUM(nssh.REWARD) IS NULL THEN
+						0
+					ELSE
+						SUM(nssh.REWARD)
+					END
+				) AS REWARD_BILL_TOTAL
+			FROM
+				storage_sales_history nssh
+			WHERE
+				cast(nssh.CREATE_TIME AS date) > cast(rh.CREATE_TIME AS date)
+			AND nssh.CARD_NO = cai.CARD_NO
+			AND nssh.COMPANY_ID = cai.COMPANY_ID
+		) AS REWARD_BILL_TOTAL,
+		(
+			CASE
+			WHEN cai.MOTHER_TYPE = 1 THEN
+				cai.MOTHER_CARD_NO
+			ELSE
+				''
+			END
+		) AS MOTHER_CARD_NO,
+		(
+			CASE
+			WHEN SUM(rh.RECHARGE) IS NULL THEN
+				0
+			ELSE
+				SUM(rh.RECHARGE)
+			END
+		) AS RECHARGE,
+		(
+			CASE
+			WHEN SUM(rh.REWARD) IS NULL THEN
+				0
+			ELSE
+				SUM(rh.REWARD)
+			END
+		) AS REWARD,
+		(
+			SELECT
+				(
+					CASE
+					WHEN SUM(BILL) IS NULL THEN
+						0
+					ELSE
+						SUM(BILL)
+					END
+				) AS BILL
+			FROM
+				storage_sales_history ssh
+			WHERE
+				ssh.CARD_NO = cai.CARD_NO
+			AND ssh.COMPANY_ID = cai.COMPANY_ID
+			AND cast(ssh.CREATE_TIME AS date) = cast(rh.CREATE_TIME AS date)
+		) AS BILL,
+		(
+			SELECT
+				(
+					CASE
+					WHEN SUM(REWARD) IS NULL THEN
+						0
+					ELSE
+						SUM(REWARD)
+					END
+				) AS BILL_REWARD
+			FROM
+				storage_sales_history ssh
+			WHERE
+				ssh.CARD_NO = cai.CARD_NO
+			AND ssh.COMPANY_ID = cai.COMPANY_ID
+			AND cast(ssh.CREATE_TIME AS date) = cast(rh.CREATE_TIME AS date)
+		) AS BILL_REWARD
+		FROM
+			recharge_history rh
+		INNER JOIN card_actived_information cai ON cai.CARD_NO = rh.CARD_NO
+		AND cai.COMPANY_ID = rh.COMPANY_ID
+		LEFT JOIN card_category cc ON cai.CATEGORY = cc.ID
+		WHERE
+			rh.CREATE_TIME <![CDATA[ >= ]]> cast(#{beginTime} as date)
+		AND rh.CREATE_TIME <![CDATA[ <= ]]> cast(#{endTime} as date)
+		AND cai.IS_DELETED = 0
+		<if test="companyId != null and companyId.toString() != ''" >
+            AND cai.COMPANY_ID = #{companyId}
+        </if>
+		<if test="store != null and store.toString() != ''" >
+            AND cai.STORE in (${store})
+        </if>
+        <if test="category != null and category.toString() != ''" >
+            AND cai.CATEGORY in (${category})
+        </if>
+		GROUP BY cai.CARD_NO,cast(rh.CREATE_TIME AS date)
+		limit #{start},#{limit}
+  	</select>
+
+
+  	<select id="getMemberActivePercentageTotal" resultType="integer" parameterType="com.meishi.card.dto.ReportMemberActivePercentageDto">
+		SELECT
+			COUNT(t.CARD_NO)
+		FROM
+		(
+		SELECT
+		cai.CARD_NO,
+		cc.`NAME`,
+		cai.RECHARGE_BALANCE,
+		cai.REWARD AS RECHARGE_REWARD,
+		rh.STORE,
+		cast(rh.CREATE_TIME AS date) AS CREATE_TIME,
+		(
+			SELECT
+				(
+					CASE
+					WHEN SUM(newrh.RECHARGE) IS NULL THEN
+						0
+					ELSE
+						SUM(newrh.RECHARGE)
+					END
+				) AS RECHARGE_TOTAL
+			FROM
+				recharge_history newrh
+			WHERE
+				cast(newrh.CREATE_TIME AS date) > cast(rh.CREATE_TIME AS date)
+			AND newrh.CARD_NO = cai.CARD_NO
+			AND newrh.COMPANY_ID = cai.COMPANY_ID
+		) AS RECHARGE_TOTAL,
+		(
+			SELECT
+				(
+					CASE
+					WHEN SUM(newrh.REWARD) IS NULL THEN
+						0
+					ELSE
+						SUM(newrh.REWARD)
+					END
+				) AS REWARD_TOTAL
+			FROM
+				recharge_history newrh
+			WHERE
+				cast(newrh.CREATE_TIME AS date) > cast(rh.CREATE_TIME AS date)
+			AND newrh.CARD_NO = cai.CARD_NO
+			AND newrh.COMPANY_ID = cai.COMPANY_ID
+		) AS REWARD_TOTAL,
+		(
+			SELECT
+				(
+					CASE
+					WHEN SUM(nssh.BILL) IS NULL THEN
+						0
+					ELSE
+						SUM(nssh.BILL)
+					END
+				) AS BILL_TOTAL
+			FROM
+				storage_sales_history nssh
+			WHERE
+				cast(nssh.CREATE_TIME AS date) > cast(rh.CREATE_TIME AS date)
+			AND nssh.CARD_NO = cai.CARD_NO
+			AND nssh.COMPANY_ID = cai.COMPANY_ID
+		) AS BILL_TOTAL,
+		(
+			SELECT
+				(
+					CASE
+					WHEN SUM(nssh.REWARD) IS NULL THEN
+						0
+					ELSE
+						SUM(nssh.REWARD)
+					END
+				) AS REWARD_BILL_TOTAL
+			FROM
+				storage_sales_history nssh
+			WHERE
+				cast(nssh.CREATE_TIME AS date) > cast(rh.CREATE_TIME AS date)
+			AND nssh.CARD_NO = cai.CARD_NO
+			AND nssh.COMPANY_ID = cai.COMPANY_ID
+		) AS REWARD_BILL_TOTAL,
+		(
+			CASE
+			WHEN cai.MOTHER_TYPE = 1 THEN
+				cai.MOTHER_CARD_NO
+			ELSE
+				''
+			END
+		) AS MOTHER_CARD_NO,
+		(
+			CASE
+			WHEN SUM(rh.RECHARGE) IS NULL THEN
+				0
+			ELSE
+				SUM(rh.RECHARGE)
+			END
+		) AS RECHARGE,
+		(
+			CASE
+			WHEN SUM(rh.REWARD) IS NULL THEN
+				0
+			ELSE
+				SUM(rh.REWARD)
+			END
+		) AS REWARD,
+		(
+			SELECT
+				(
+					CASE
+					WHEN SUM(BILL) IS NULL THEN
+						0
+					ELSE
+						SUM(BILL)
+					END
+				) AS BILL
+			FROM
+				storage_sales_history ssh
+			WHERE
+				ssh.CARD_NO = cai.CARD_NO
+			AND ssh.COMPANY_ID = cai.COMPANY_ID
+			AND cast(ssh.CREATE_TIME AS date) = cast(rh.CREATE_TIME AS date)
+		) AS BILL,
+		(
+			SELECT
+				(
+					CASE
+					WHEN SUM(REWARD) IS NULL THEN
+						0
+					ELSE
+						SUM(REWARD)
+					END
+				) AS BILL_REWARD
+			FROM
+				storage_sales_history ssh
+			WHERE
+				ssh.CARD_NO = cai.CARD_NO
+			AND ssh.COMPANY_ID = cai.COMPANY_ID
+			AND cast(ssh.CREATE_TIME AS date) = cast(rh.CREATE_TIME AS date)
+		) AS BILL_REWARD
+		FROM
+			recharge_history rh
+		INNER JOIN card_actived_information cai ON cai.CARD_NO = rh.CARD_NO
+		AND cai.COMPANY_ID = rh.COMPANY_ID
+		LEFT JOIN card_category cc ON cai.CATEGORY = cc.ID
+		WHERE
+			rh.CREATE_TIME <![CDATA[ >= ]]> cast(#{beginTime} as date)
+		AND rh.CREATE_TIME <![CDATA[ <= ]]> cast(#{endTime} as date)
+		AND cai.IS_DELETED = 0
+		<if test="companyId != null and companyId.toString() != ''" >
+            AND cai.COMPANY_ID = #{companyId}
+        </if>
+		<if test="store != null and store.toString() != ''" >
+            AND cai.STORE in (${store})
+        </if>
+        <if test="category != null and category.toString() != ''" >
+            AND cai.CATEGORY in (${category})
+        </if>
+		GROUP BY cai.CARD_NO,cast(rh.CREATE_TIME AS date)
+		limit #{start},#{limit}
+		) t
+  	</select>
+
+
+
+
+</mapper>

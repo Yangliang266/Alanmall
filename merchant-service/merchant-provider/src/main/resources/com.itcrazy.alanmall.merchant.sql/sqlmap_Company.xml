@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.CompanyDao">
+
+	<resultMap id="CompanyResult" type="com.meishi.merchant.model.Company">
+		<result column="ID" property="id" />
+		<result column="name" property="name" />
+		<result column="telephone" property="telephone" />
+		<result column="fax" property="fax" />
+		<result column="address" property="address" />
+		<result column="zip" property="zip" />
+		<result column="link_man" property="linkMan" />
+		<result column="status" property="status" />
+		<result column="create_time" property="createTime" />
+		<result column="province_id" property="provinceId" />
+		<result column="city_id" property="cityId" />
+		<result column="county_id" property="countyId" />
+		<result column="source" property="source" />
+		<result column="source_Code" property="sourceCode" />
+		<result column="IS_USE_PWD" property="isUsePwd" />
+		<result column="SERVICE_TIME" property="serviceTime" />
+		<result column="IS_CLOSE_MESSAGE" property="isCloseMessage" />
+		<result column="IS_BIRTHDAY_REQUIRED" property="isBirthdayQequired" />
+		<result column="IS_CREDENTIALS_REQUIRED" property="isCredentialsQequired" />
+	</resultMap>
+	<sql id="sqlTemplate">
+		SELECT 
+		id,source,source_code,name,telephone,fax,address,zip,link_man,status,province_id,city_id,county_id,create_time,IS_USE_PWD,service_time,IS_CLOSE_MESSAGE,IS_BIRTHDAY_REQUIRED,IS_CREDENTIALS_REQUIRED
+
+	</sql>
+	<select id="get" resultMap="CompanyResult">
+		<include refid="sqlTemplate" />
+     <![CDATA[
+     from company 
+    where id=#{id}  and is_deleted=0
+     ]]>
+	</select>
+
+	<select id="getCompanyByDto" resultMap="CompanyResult">
+		<include refid="sqlTemplate" />
+		from company
+		where is_deleted=0
+		<if test="source!=null">
+			and source=#{source}
+		</if>
+		<if test="sourceCode!=null">
+			and source_code=#{sourceCode}
+		</if>
+	</select>
+
+	<insert id="save" parameterType="com.meishi.merchant.model.Company">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into
+		company(id,source,source_code,name,telephone,fax,address,zip,link_man,status,province_id,city_id,county_id,create_time,create_id,update_time,update_id,IS_USE_PWD,SERVICE_TIME,is_deleted,office_area_id,IS_CLOSE_MESSAGE,IS_BIRTHDAY_REQUIRED,IS_CREDENTIALS_REQUIRED)
+		values
+		(#{id},#{source},#{sourceCode},#{name},#{telephone},#{fax},#{address},#{zip},#{linkMan},0,#{provinceId},#{cityId},#{countyId},now(),#{createId},now(),#{updateId},#{isUsePwd},#{serviceTime},0,#{officeAreaId},#{isCloseMessage},#{isBirthdayQequired},#{isCredentialsQequired})
+
+	</insert>
+
+	<update id="update" parameterType="com.meishi.merchant.model.Company">
+		update company set update_time=now(),update_id=#{updateId}
+		<if test="name!=null">
+			,name=#{name}
+		</if>
+		<if test="telephone!=null">
+			,telephone=#{telephone}
+		</if>
+		<if test="fax!=null">
+			,fax=#{fax}
+		</if>
+		<if test="address!=null">
+			,address=#{address}
+		</if>
+		<if test="zip!=null">
+			,zip=#{zip}
+		</if>
+		<if test="linkMan!=null">
+			,link_man=#{linkMan}
+		</if>
+		<if test="status!=null">
+			,status=#{status}
+		</if>
+		<if test="provinceId!=null">
+			,province_id=#{provinceId}
+		</if>
+		<if test="cityId!=null">
+			,city_id=#{cityId}
+		</if>
+		<if test="countyId!=null">
+			,county_id=#{countyId}
+		</if>
+		<if test="isUsePwd!=null">
+			,IS_USE_PWD=#{isUsePwd}
+		</if>
+		<if test="serviceTime!=null">
+			,SERVICE_TIME=#{serviceTime}
+		</if>
+		<if test="isCloseMessage!=null">
+			,IS_CLOSE_MESSAGE=#{isCloseMessage}
+		</if>
+		<if test="isBirthdayQequired!=null">
+            ,IS_BIRTHDAY_REQUIRED=#{isBirthdayQequired}
+		</if>
+		<if test="isCredentialsQequired!=null">
+			,IS_CREDENTIALS_REQUIRED=#{isCredentialsQequired}
+		</if>
+
+		
+		where id=#{id}
+	</update>
+
+
+
+	<!-- 分页查询 -->
+	<select id="getPageList" parameterType="com.meishi.merchant.dto.CompanyDto"
+		resultMap="CompanyResult">
+		<include refid="sqlTemplate" />
+		from company where is_deleted=0 and office_area_id in (${officeAreaIds})
+
+		<if test="companyIds != null">
+			AND id in(${companyIds})
+		</if>
+		<if test="name!=null">
+			AND name like CONCAT('%',#{name},'%')
+		</if>
+		<if test="startTime!=null">
+			AND create_time>= #{startTime}
+		</if>
+		<if test="endTime!=null">
+	 	  <![CDATA[AND create_time<= #{endTime} ]]>
+		</if>
+		<if test="status!=null">
+			AND status= #{status}
+		</if>
+		
+		ORDER BY ID DESC
+		
+		LIMIT #{start},#{limit}
+	</select>
+
+	<select id="getPageTotal" parameterType="com.meishi.merchant.dto.CompanyDto"
+		resultType="integer">
+		<![CDATA[
+			select count(*) from company where is_deleted=0 and office_area_id in (${officeAreaIds})
+		]]>
+		<if test="companyIds != null">
+			AND id in(${companyIds})
+		</if>
+		<if test="name!=null ">
+		and	name like
+			CONCAT('%',#{name},'%')
+		</if>
+		<if test="startTime!=null ">
+	 	<![CDATA[   and   create_time>=  #{startTime} ]]>
+		</if>
+		<if test= "endTime!=null ">
+	 	<![CDATA[ and create_time  <= #{endTime} ]]>
+		</if>
+		<if test="status!=null">
+			and status= #{status}
+		</if>
+	</select>
+	<!-- 分页查询结束 -->
+
+</mapper>

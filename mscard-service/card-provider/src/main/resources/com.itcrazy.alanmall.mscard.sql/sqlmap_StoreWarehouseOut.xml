@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.StoreWarehouseOutDao">
+
+
+	<resultMap id="StoreWarehouseOutResult" type="com.itcrazy.alanmall.mscard.model.StoreWarehouseOut">
+		<result column="RECEIPT_NO" property="receiptNo" />
+		<result column="CARD_NO" property="cardNo" />
+		<result column="CATEGORY" property="category" />
+		<result column="CATEGORY_NAME" property="categoryName" />
+		<result column="STATUS" property="status" />
+		<result column="STORE_FROM" property="storeFrom" />
+		<result column="STORE_TO" property="storeTo" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="CREATE_ID" property="createId" />
+		<result column="REASON" property="reason" />
+		<result column="STORE_IN_TIME" property="storeInTime" />
+		<result column="STORE_IN_PERSON" property="storeInPerson" />
+		<result column="STORE_IN_RECEIPT_NO" property="storeInReceiptNo" />
+		<result column="STORE_OUT_PERSON" property="storeOutPerson" />
+		<result column="STORE_OUT_TIME" property="storeOutTime" />
+		<result column="BUSINESS_TYPE" property="businessType" />
+		<result column="BUSINESS" property="business" />
+	</resultMap>
+
+	<!-- 获取门店准备出库列表 -->
+	<sql id="sqlSelectIf">
+		FROM
+		  store_warehouse_in swi
+		LEFT JOIN
+		  card_information ci
+		ON
+		  ci.CARD_NO = swi.CARD_NO
+		LEFT JOIN
+		  card_category cc
+		ON
+		  ci.CATEGORY = cc.ID
+		WHERE
+		  swi.IS_DELETED = 0
+		  AND swi.COMPANY_ID = #{companyId}
+		  AND swi.STORE_TO = #{storeId}
+		  AND ci.STATUS = 7
+		<if test="cardNo != null and cardNo != ''">
+			AND
+			swi.CARD_NO <![CDATA[ >= ]]> #{cardNo}
+		</if>
+		<if test="cardNoEnd != null and cardNoEnd != ''">
+			AND
+			swi.CARD_NO <![CDATA[ <= ]]> #{cardNoEnd}
+		</if>
+		<if test="storeInReceiptNo != null and storeInReceiptNo != ''">
+			AND
+			swi.RECEIPT_NO LIKE CONCAT("%",#{storeInReceiptNo},"%")
+		</if>
+	</sql>
+	<!-- 获取门店准备出库列表页面 -->
+	<select id="getPageList" resultMap="StoreWarehouseOutResult"
+		parameterType="com.itcrazy.alanmall.mscard.dto.StoreWarehouseOutDto">
+
+		SELECT
+			swi.RECEIPT_NO AS STORE_IN_RECEIPT_NO,
+			swi.CARD_NO AS CARD_NO,
+			cc. NAME AS CATEGORY_NAME,
+			ci. STATUS AS STATUS,
+			swi.CREATE_TIME AS
+			STORE_IN_TIME,
+			swi.CREATE_ID AS STORE_IN_PERSON
+
+		<include refid="sqlSelectIf" />
+
+		ORDER BY swi.CREATE_TIME DESC
+
+		LIMIT #{start},#{limit}
+
+	</select>
+	<!-- 获取门店准备出库列表分页 -->
+	<select id="getPageTotal" resultType="integer"
+		parameterType="com.itcrazy.alanmall.mscard.dto.StoreWarehouseOutDto">
+		SELECT
+		COUNT(swi.CARD_NO)
+		<include refid="sqlSelectIf" />
+
+	</select>
+
+
+	<sql id="sqlOutSelectIf">
+		FROM
+		(
+		    SELECT
+				RECEIPT_NO,
+				STORE_FROM,
+				STORE_TO,
+				MAX(CREATE_TIME) AS CREATE_TIME,
+				CREATE_ID
+			FROM
+			    store_warehouse_out
+			WHERE
+			    STORE_FROM = #{storeId}
+			    OR STORE_TO = #{storeId}
+			GROUP BY
+				RECEIPT_NO,
+				STORE_FROM,
+				STORE_TO,
+				CREATE_ID
+		) swo
+		LEFT JOIN (
+			SELECT
+				RECEIPT_NO,
+				WAREHOUSE_OUT_NO,
+				MAX(CREATE_TIME) AS CREATE_TIME,
+				CREATE_ID
+			FROM
+				store_warehouse_in
+				GROUP BY
+				RECEIPT_NO,
+				CREATE_ID
+		) swi ON swo.RECEIPT_NO = swi.WAREHOUSE_OUT_NO
+
+		WHERE 1=1
+		<if test="storeInReceiptNo != null and storeInReceiptNo != ''">
+			AND
+			(swo.RECEIPT_NO LIKE CONCAT("%",#{storeInReceiptNo},"%")
+			OR swi.RECEIPT_NO LIKE CONCAT("%",#{storeInReceiptNo},"%"))
+		</if>
+
+	</sql>
+	<!-- 获取调拨列表页面 -->
+	<select id="getPageOutList" resultMap="StoreWarehouseOutResult"
+		parameterType="com.itcrazy.alanmall.mscard.dto.StoreWarehouseOutDto">
+
+		SELECT
+			swo.RECEIPT_NO AS RECEIPT_NO,
+			swi.RECEIPT_NO AS STORE_IN_RECEIPT_NO,
+		CASE
+		WHEN swo.STORE_TO = #{storeId} THEN
+		1
+		ELSE
+		2
+		END AS BUSINESS,
+		CASE
+		WHEN swi.RECEIPT_NO IS NULL THEN
+		(
+		CASE
+		WHEN swo.STORE_TO = #{storeId} THEN
+		2
+		ELSE
+		4
+		END
+		)
+		ELSE
+		(
+		CASE
+		WHEN swo.STORE_TO = #{storeId} THEN
+		1
+		ELSE
+		3
+		END
+		)
+		END AS BUSINESS_TYPE,
+			swo.STORE_FROM AS STORE_FROM,
+			swo.STORE_TO AS STORE_TO,
+			swo.CREATE_TIME AS STORE_OUT_TIME,
+			swo.CREATE_ID AS STORE_OUT_PERSON,
+			swi.CREATE_TIME AS STORE_IN_TIME,
+			swi.CREATE_ID AS STORE_IN_PERSON
+		<include refid="sqlOutSelectIf" />
+		ORDER BY swo.CREATE_TIME DESC
+		LIMIT #{start},#{limit}
+	</select>
+	<!-- 获取调拨列表分页 -->
+	<select id="getPageOutTotal" resultType="integer"
+		parameterType="com.itcrazy.alanmall.mscard.dto.StoreWarehouseOutDto">
+		SELECT
+		COUNT(swo.RECEIPT_NO)
+		<include refid="sqlOutSelectIf" />
+	</select>
+
+	<sql id="sqlPrepareInSelectIf">
+		FROM
+			store_warehouse_out swo
+		LEFT JOIN
+		    card_information ci
+		ON
+			ci.CARD_NO = swo.CARD_NO
+		LEFT JOIN
+			card_category cc
+		ON
+			ci.CATEGORY = cc.ID
+		WHERE
+			swo.RECEIPT_NO = #{receiptNo}
+			AND swo.STORE_TO = #{storeId}
+			AND ci.IS_DELETED = 0
+			AND swo.IS_DELETED = 0
+			AND swo.COMPANY_ID = #{companyId}
+			AND ci. STATUS = 8
+
+	</sql>
+	<!-- 获取门店准备入库列表页面 -->
+	<select id="getPagePrepareInList" resultMap="StoreWarehouseOutResult"
+		parameterType="com.itcrazy.alanmall.mscard.dto.StoreWarehouseOutDto">
+
+		SELECT
+			swo.RECEIPT_NO,
+			ci.CARD_NO AS CARD_NO,
+			cc. NAME AS CATEGORY_NAME,
+			ci. STATUS AS STATUS,
+			swo.STORE_FROM,
+			swo.CREATE_TIME AS STORE_OUT_TIME,
+			swo.CREATE_ID AS STORE_OUT_PERSON,
+			swo.STORE_TO
+		<include refid="sqlPrepareInSelectIf" />
+
+		ORDER BY swo.CREATE_TIME DESC
+
+		LIMIT #{start},#{limit}
+
+
+	</select>
+
+	<!-- 获取门店准备入库列表分页 -->
+	<select id="getPagePrepareInTotal" resultType="integer"
+		parameterType="com.itcrazy.alanmall.mscard.dto.StoreWarehouseOutDto">
+		SELECT
+		COUNT(swo.CARD_NO)
+		<include refid="sqlPrepareInSelectIf" />
+
+	</select>
+
+
+	<!-- 门店出库添加数据 -->
+	<insert id="insertStoreWarehouseOut" parameterType="com.itcrazy.alanmall.mscard.model.StoreWarehouseOut">
+		INSERT INTO
+		store_warehouse_out (
+		CARD_NO,RECEIPT_NO , STORE_FROM , STORE_TO ,
+		REASON , CREATE_TIME , CREATE_ID , IS_DELETED , COMPANY_ID)
+		VALUES(#{cardNo},#{receiptNo},#{storeFrom},#{storeTo},#{reason},NOW(),#{createId},#{isDeleted},#{companyId})
+	</insert>
+
+	<!-- 门店出库更新卡状态 -->
+	<update id="updateCardInformation" parameterType="com.itcrazy.alanmall.mscard.model.StoreWarehouseOut">
+		UPDATE
+		card_information
+		SET
+		STATUS = 8, UPDATE_ID =#{updateId}, UPDATE_TIME =
+		NOW()
+		WHERE CARD_NO =
+		#{cardNo}
+		AND COMPANY_ID = #{companyId}
+	</update>
+
+
+
+
+	<select id="getLastReceiptNo" parameterType="long" resultType="string">
+		SELECT
+		RECEIPT_NO
+		FROM
+		store_warehouse_out
+		WHERE
+		COMPANY_ID = #{companyId}
+		ORDER BY CREATE_TIME DESC
+		LIMIT 1
+	</select>
+
+	<sql id="getPagePrepareTemplate">
+		  FROM
+			store_warehouse_out swo
+		  LEFT JOIN
+		    store_warehouse_in swi
+		  ON
+		    (swo.CARD_NO = swi.CARD_NO
+	        AND swo.RECEIPT_NO = swi.WAREHOUSE_OUT_NO
+	        AND swo.COMPANY_ID = swi.COMPANY_ID)
+          LEFT JOIN
+            card_information ci
+          ON
+            ci.CARD_NO = swo.CARD_NO
+          AND
+		    ci.COMPANY_ID = swo.COMPANY_ID
+          LEFT JOIN
+            card_category cc
+          ON
+            ci.CATEGORY = cc.ID
+		  WHERE
+		    swo.RECEIPT_NO = #{receiptNo}
+		    and ci.IS_DELETED = 0
+			and swo.IS_DELETED = 0
+		    and swo.COMPANY_ID = #{companyId}
+		    and swo.STORE_FROM = #{storeId}
+		</sql>
+
+
+	<!-- 调拨出库单（目的门店未入库） -->
+	<select id="getPageHistory" resultMap="StoreWarehouseOutResult"
+		parameterType="com.itcrazy.alanmall.mscard.model.StoreWarehouseOut">
+
+		SELECT
+		  swo.RECEIPT_NO,
+		  swi.RECEIPT_NO AS STORE_IN_RECEIPT_NO,
+		  ci.CARD_NO AS CARD_NO,
+		  cc. NAME AS CATEGORY_NAME,
+		  ci. STATUS AS STATUS,
+		  swo.STORE_FROM,
+		  swo.CREATE_TIME AS STORE_OUT_TIME,
+		  swo.CREATE_ID AS STORE_OUT_PERSON,
+		  swo.STORE_TO
+		<include refid="getPagePrepareTemplate" />
+
+		ORDER BY swo.CREATE_TIME DESC
+
+		LIMIT
+		#{start},#{limit}
+
+	</select>
+
+	<select id="getPageOutHistoryTotal" resultType="integer"
+		parameterType="com.itcrazy.alanmall.mscard.dto.StoreWarehouseOutDto">
+		SELECT
+		COUNT(swo.CARD_NO)
+			<include refid="getPagePrepareTemplate" />
+	</select>
+
+
+    <sql id="getPagePrepareInTemplate">
+		 FROM
+			store_warehouse_in swi
+		  LEFT JOIN
+		    store_warehouse_out swo
+		  ON
+		    swo.CARD_NO = swi.CARD_NO
+		  AND
+		    swo.COMPANY_ID = swi.COMPANY_ID
+		  AND
+		    swo.RECEIPT_NO = swi.WAREHOUSE_OUT_NO
+		  LEFT JOIN
+		    card_information ci
+		  ON
+		    ci.CARD_NO = swi.CARD_NO
+		  AND
+		    ci.COMPANY_ID = swi.COMPANY_ID
+		  LEFT JOIN
+		    card_category cc
+		  ON
+		    ci.CATEGORY = cc.ID
+		  WHERE
+		    swi.RECEIPT_NO = #{receiptNo}
+		    and ci.IS_DELETED = 0
+			and swo.IS_DELETED = 0
+		    and swo.COMPANY_ID = #{companyId}
+		    and swo.STORE_TO = #{storeId}
+
+	  </sql>
+	<!-- 已入库的《门店入库单》 -->
+	<select id="getPageInHistory" resultMap="StoreWarehouseOutResult"
+		parameterType="com.itcrazy.alanmall.mscard.model.StoreWarehouseOut">
+
+		SELECT
+			swo.RECEIPT_NO,
+			swi.RECEIPT_NO AS STORE_IN_RECEIPT_NO,
+			ci.CARD_NO AS CARD_NO,
+			cc. NAME AS CATEGORY_NAME,
+			ci. STATUS AS STATUS,
+			swo.STORE_FROM,
+			swo.CREATE_TIME AS STORE_OUT_TIME,
+			swo.CREATE_ID AS STORE_OUT_PERSON,
+			swo.STORE_TO
+	 <include refid="getPagePrepareInTemplate" />
+		ORDER BY swo.CREATE_TIME DESC
+
+		LIMIT #{start},#{limit}
+
+	</select>
+
+	<select id="getPageInHistoryTotal" resultType="integer"
+		parameterType="com.itcrazy.alanmall.mscard.dto.StoreWarehouseOutDto">
+		SELECT
+		COUNT(swi.CARD_NO)
+		<include refid="getPagePrepareInTemplate" />	</select>
+
+</mapper>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.RechargeDao">
+    <resultMap id="RechargeResult" type="com.itcrazy.alanmall.mscard.model.Recharge">
+        <result column="STORE_IN_RECEIPT_NO" property="storeInReceiptNo" />
+        <result column="CARD_NO" property="cardNo" />
+        <result column="CATEGORY" property="category" />
+        <result column="CATEGORY_NAME" property="categoryName" />
+        <result column="STATUS" property="status" />
+        <result column="STORE_IN_TIME" property="storeInTime" />
+        <result column="STORE_IN_PERSON" property="storeInPerson" />
+        <result column="RECHARGE_BALANCE" property="rechargeBalance" />
+        <result column="IS_Recharge" property="isRecharge" />
+        <result column="MAX_RECHARGE_COUNT" property="maxRechargeCount" />
+        <result column="RECHARGE_COUNT" property="rechargeCount" />
+        <result column="IS_NAMED" property="isNamed" />
+    </resultMap>
+
+    <!-- 获取总部登录现实的充值列表 -->
+    <sql id="getHeadPageTemplate">
+        FROM
+            card_information ci
+        LEFT JOIN card_category cc ON ci.CATEGORY = cc.ID
+        WHERE
+            ci.STATUS = 4
+        AND IFNULL(ci.MOTHER_TYPE, 0 ) != 1 <!-- 亲情卡卡子卡不可充值 -->
+        AND ci.COMPANY_ID = #{companyId}
+        AND ci.IS_DELETED = 0
+        AND cc.IS_RECHARGE = 0
+        <if test="cardNo != null and cardNo.toString() != ''" >
+            AND ci.CARD_NO <![CDATA[ >= ]]> #{cardNo}
+        </if>
+        <if test="cardNoEnd != null and cardNoEnd !='' ">
+			AND ci.CARD_NO <![CDATA[ <= ]]> #{cardNoEnd}
+		</if>
+    </sql>
+
+    <!-- 获取总部登录现实的充值列表内容部分 -->
+    <select id="getHeadPageList" resultMap="RechargeResult" parameterType="com.itcrazy.alanmall.mscard.dto.RechargeDto">
+        SELECT
+            ci.CARD_NO AS CARD_NO,
+            ci.CATEGORY AS CATEGORY,
+            cc.NAME AS CATEGORY_NAME,
+            ci.STATUS,
+            ci.RECHARGE_BALANCE AS RECHARGE_BALANCE,
+            cc.IS_Recharge AS IS_Recharge,
+            cc.RECHARGE_COUNT AS MAX_RECHARGE_COUNT,
+            (
+            SELECT COUNT(ID)
+            FROM recharge_history rh
+            WHERE
+              rh.IS_DELETED = 0
+              AND rh.CARD_NO = ci.CARD_NO
+              AND rh.COMPANY_ID = ci.COMPANY_ID
+            ) AS RECHARGE_COUNT,
+            cc.IS_NAMED AS IS_NAMED
+        <include refid="getHeadPageTemplate" />
+        ORDER BY
+            ci.CREATE_TIME DESC
+        LIMIT #{start}, #{limit}
+    </select>
+
+    <!-- 获取总部登录现实的充值列表分页部分-->
+    <select id="getHeadPageTotal" resultType="integer">
+        SELECT
+            COUNT(ci.CARD_NO)
+        <include refid="getHeadPageTemplate" />
+    </select>
+
+
+    <!-- 获取门店登录现实的充值列表 -->
+    <sql id="getStorePageTemplate">
+        FROM
+            card_actived_information cai
+        LEFT JOIN
+            (
+                SELECT
+                    s.RECEIPT_NO,
+                    s.CARD_NO,
+                    s.CREATE_TIME,
+                    s.CREATE_ID
+                FROM
+                    (
+                        SELECT
+                            MAX(RECEIPT_NO) AS RECEIPT_NO,
+                            CARD_NO
+                        FROM
+                            store_warehouse_in
+                        WHERE
+                            COMPANY_ID = #{companyId}
+                        GROUP BY
+                            CARD_NO
+                    ) t
+                LEFT JOIN store_warehouse_in s ON (
+                    s.CARD_NO = t.CARD_NO
+                    AND s.RECEIPT_NO = t.RECEIPT_NO
+                )
+            ) swi
+        ON swi.CARD_NO = cai.CARD_NO
+        LEFT JOIN card_category cc ON cai.CATEGORY = cc.ID
+        WHERE
+            cai.STATUS = 9
+        AND IFNULL(cai.MOTHER_TYPE, 0 ) != 1 <!-- 亲情卡卡子卡不可充值 -->
+        AND cai.COMPANY_ID = #{companyId}
+        AND cc.IS_RECHARGE = 0
+        AND ( FIND_IN_SET(#{storeId}, cc.STORES)      <!-- 此卡类别可充值门店 -->
+            OR FIND_IN_SET(#{brandId}, cc.ALL_JOIN_BRANDS))<!-- 此卡类别全参与品牌 -->
+        <if test="cardNo != null and cardNo.toString() != ''" >
+            AND cai.CARD_NO <![CDATA[ >= ]]> #{cardNo}
+        </if>
+        <if test="cardNoEnd != null and cardNoEnd.toString() != ''" >
+            AND cai.CARD_NO <![CDATA[ <= ]]> #{cardNoEnd}
+        </if>
+        <if test="storeInReceiptNo != null and storeInReceiptNo.toString() != ''" >
+            AND swi.RECEIPT_NO LIKE CONCAT("%",#{storeInReceiptNo},"%")
+        </if>
+    </sql>
+
+    <!-- 获取门店登录现实的充值列表内容部分 -->
+    <select id="getStorePageList" resultMap="RechargeResult" parameterType="com.itcrazy.alanmall.mscard.dto.RechargeDto">
+        SELECT
+            swi.RECEIPT_NO AS STORE_IN_RECEIPT_NO,
+            cai.CARD_NO AS CARD_NO,
+            cai.CATEGORY AS CATEGORY,
+            cc.NAME AS CATEGORY_NAME,
+            swi.CREATE_TIME AS STORE_IN_TIME,
+            swi.CREATE_ID AS STORE_IN_PERSON,
+            cai.RECHARGE_BALANCE AS RECHARGE_BALANCE,
+            cc.IS_Recharge AS IS_Recharge,
+            cc.IS_NAMED AS IS_NAMED,
+            cc.RECHARGE_COUNT AS MAX_RECHARGE_COUNT,
+            (
+            SELECT COUNT(ID)
+            FROM recharge_history rh
+            WHERE
+              rh.IS_DELETED = 0
+              AND rh.CARD_NO = cai.CARD_NO
+              AND rh.COMPANY_ID = cai.COMPANY_ID
+            ) AS RECHARGE_COUNT,
+
+            cai.STATUS AS STATUS
+        <include refid="getStorePageTemplate" />
+        ORDER BY
+            cai.CREATE_TIME DESC
+        LIMIT #{start}, #{limit}
+    </select>
+
+    <!-- 获取门店登录现实的充值列表分页部分 -->
+    <select id="getStorePageTotal" resultType="integer">
+        SELECT
+            COUNT(cai.CARD_NO)
+        <include refid="getStorePageTemplate" />
+    </select>
+
+</mapper>

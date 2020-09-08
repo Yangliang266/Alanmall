@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+mybatis:
+  mapper-locations: classpath*:com/itcrazy/alanmall/mscard/sql/sqlmap_*.xml"
+  type-aliases-package: com.itcrazy.alanmall.mscard.model
+
+server:
+  port: 8092

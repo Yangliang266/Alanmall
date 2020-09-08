@@ -1,0 +1,6 @@
+com\itcrazy\alanmall\user\dto\UserRegistryResponse.class
+com\itcrazy\alanmall\user\dto\UserLoginRequest.class
+com\itcrazy\alanmall\user\dto\UserRegistryRequest.class
+com\itcrazy\alanmall\user\ITestService.class
+com\itcrazy\alanmall\user\dto\UserLoginResponse.class
+com\itcrazy\alanmall\user\IUserLoginService.class

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.BrandDao">
+
+	<resultMap id="BrandResult" type="com.meishi.merchant.model.Brand">
+		<result column="id" property="id" />
+		<result column="company_id" property="companyId" />
+		<result column="name" property="name" />
+		<result column="status" property="status" />
+		<result column="RECEIVE_MSG_MOBILE" property="receiveMsgMobile" />
+		<result column="source" property="source" />
+		<result column="source_code" property="sourceCode" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="LINK_MAN" property="linkMan" />
+		<result column="TELEPHONE" property="telephone" />
+		<result column="ADDRESS" property="address" />
+		<result column="SERVICE_TIME" property="serviceTime" />
+		<result column="BUSINESS_TYPE" property="businessType" />
+		<result column="APPLY_GENDER" property="applyGender" />
+		<result column="AVG_CONSUMPTION" property="avgConsumption" />
+		<result column="IS_SUB_ACCOUNT" property="subAccount" />
+		<result column="PAY_CHANNEL_TYPE" property="payChannelType" />
+		<result column="CHANNEL_MCH_NO" property="channelMchNo" />
+		<result column="PRIVATE_KEY" property="privateKey" />
+		<result column="ENCRYPT_ID" property="encryptId" />
+		<result column="IS_SEND_IIDINGYUN" property="isSendiidingyun"/>
+		<result column="IS_SEND_DFIRE" property="isSendDFire" />
+		<result column="IS_EXTRACT_TYPE_SEND" property="isExtractTypeSend" />
+		<result column="IS_EXTRACT_TYPE_ZITI" property="isExtractTypeZiti" />
+	</resultMap>
+
+
+	<sql id="sqlTemplate">
+		select
+		id,source,source_code,company_id,name,status,RECEIVE_MSG_MOBILE,CREATE_TIME,LINK_MAN,TELEPHONE,SERVICE_TIME,ADDRESS,
+		BUSINESS_TYPE,APPLY_GENDER,AVG_CONSUMPTION,IS_SUB_ACCOUNT,PAY_CHANNEL_TYPE,CHANNEL_MCH_NO,PRIVATE_KEY,ENCRYPT_ID,IS_SEND_IIDINGYUN,IS_SEND_DFIRE
+		,IS_SEND_DFIRE,IS_EXTRACT_TYPE_SEND,IS_EXTRACT_TYPE_ZITI
+	</sql>
+
+	<select id="get" resultMap="BrandResult">
+		<include refid="sqlTemplate" />
+		from brand where is_deleted=0 and id=#{id}
+	</select>
+
+	<select id="getBrandByDto" resultMap="BrandResult">
+		<include refid="sqlTemplate" />
+		from brand where is_deleted=0 
+		<if test="source!=null">
+			and source=#{source}
+		</if>
+		<if test="sourceCode!=null">
+			and source_code=#{sourceCode}
+		</if>
+	</select>
+		
+	<select id="getPageList" resultMap="BrandResult"
+		parameterType="com.meishi.merchant.dto.BrandDto">
+		<include refid="sqlTemplate" />
+		from brand where IS_DELETED = 0 and office_area_id in (${officeAreaIds})
+		<if test="status!=null">
+			and status=#{status}
+		</if>
+		<if test="companyId!=null">
+			and company_id=#{companyId}
+		</if>
+		<if test="name!=null">
+			and name like CONCAT('%',#{name},'%')
+		</if>
+		<if test="searchBrandName!=null">
+			and name like concat('%','#{searchBrandName}','%');
+		</if>
+		<if test="brandId!=null">
+			and id=#{brandId}
+		</if>
+		<if test="brandIds!=null">
+			and id in (${brandIds})
+		</if>
+		<if test="source!=null">
+			and source=#{source}
+		</if>
+		<if test="sourceCode!=null">
+			and source_code=#{sourceCode}
+		</if>
+		ORDER BY ID DESC
+		
+		LIMIT #{start},#{limit}
+	</select>
+	<select id="getPageTotal" resultType="integer"
+		parameterType="com.meishi.merchant.dto.BrandDto">
+		select count(*) 
+		from brand where IS_DELETED = 0 and office_area_id in (${officeAreaIds})
+		<if test="status!=null">
+			and status=#{status}
+		</if>
+		<if test="companyId!=null">
+			and company_id=#{companyId}
+		</if>
+		<if test="name!=null">
+			and name like CONCAT('%',#{name},'%')
+		</if>
+		<if test="searchBrandName!=null">
+			and name like concat('%','#{searchBrandName}','%');
+		</if>
+		<if test="brandId!=null">
+			and id=#{brandId}
+		</if>
+		<if test="brandIds!=null">
+			and id in (${brandIds})
+		</if>
+		<if test="source!=null">
+			and source=#{source}
+		</if>
+		<if test="sourceCode!=null">
+			and source_code=#{sourceCode}
+		</if>
+	</select>
+
+
+	<insert id="save" parameterType="com.meishi.merchant.model.Brand">
+		<selectKey resultType="java.lang.Long" order="AFTER"
+			keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into brand(
+		id,source,source_code,company_id,name,status,RECEIVE_MSG_MOBILE,LINK_MAN,TELEPHONE,SERVICE_TIME,ADDRESS,create_id,update_id,create_time,update_time,is_deleted,
+		business_type,apply_gender,avg_consumption,office_area_id,IS_SUB_ACCOUNT,PAY_CHANNEL_TYPE,CHANNEL_MCH_NO,PRIVATE_KEY,ENCRYPT_ID,IS_SEND_IIDINGYUN,IS_SEND_DFIRE,
+		IS_EXTRACT_TYPE_SEND,IS_EXTRACT_TYPE_ZITI)
+		values
+		(#{id},#{source},#{sourceCode},#{companyId},#{name},#{status},#{receiveMsgMobile},#{linkMan},#{telephone},#{serviceTime},#{address},#{createId},#{updateId},now(),now(),0,
+		#{businessType},#{applyGender},#{avgConsumption},#{officeAreaId},#{subAccount},#{payChannelType},#{channelMchNo},#{privateKey},#{encryptId},#{isSendiidingyun},#{isSendDFire},
+		#{isExtractTypeSend},#{isExtractTypeZiti})
+	</insert>
+
+	<update id="update" parameterType="com.meishi.merchant.model.Brand">
+		update brand set update_id=#{updateId},update_time=now()
+		<if test="name!=null">
+			,name=#{name}
+		</if>
+		<if test="status!=null">
+			,status=#{status}
+		</if>
+		<if test="receiveMsgMobile!=null">
+			,RECEIVE_MSG_MOBILE=#{receiveMsgMobile}
+		</if>
+		<if test="linkMan!=null">
+			,LINK_MAN=#{linkMan}
+		</if>
+		<if test="telephone!=null">
+			,telephone=#{telephone}
+		</if>
+		<if test="serviceTime!=null">
+			,service_time=#{serviceTime}
+		</if>
+		<if test="address!=null">
+			,ADDRESS=#{address}
+		</if>
+		<if test="businessType!=null">
+			,business_type=#{businessType}
+		</if>
+		<if test="applyGender!=null">
+			,apply_gender=#{applyGender}
+		</if>
+		<if test="avgConsumption!=null">
+			,avg_consumption=#{avgConsumption}
+		</if>
+		<if test="subAccount!=null">
+			,IS_SUB_ACCOUNT=#{subAccount}
+		</if>
+		<if test="payChannelType != null">
+			,PAY_CHANNEL_TYPE = #{payChannelType}
+		</if>
+		<if test="isSendiidingyun !=null">
+			,IS_SEND_IIDINGYUN =#{isSendiidingyun}
+		</if>
+		<if test="isSendDFire != null">
+            ,IS_SEND_DFIRE = #{isSendDFire}
+        </if>
+		<if test="isExtractTypeSend != null">
+            ,IS_EXTRACT_TYPE_SEND = #{isExtractTypeSend}
+        </if>
+		<if test="isExtractTypeZiti != null">
+            ,IS_EXTRACT_TYPE_ZITI = #{isExtractTypeZiti}
+        </if>
+			,CHANNEL_MCH_NO = #{channelMchNo}
+			,PRIVATE_KEY = #{privateKey}
+			,ENCRYPT_ID = #{encryptId}
+		where id=#{id}
+	</update>
+
+	<update id="remove" parameterType="com.meishi.merchant.model.Brand">
+		update brand set is_deleted=1,update_time=now() where id=#{id} and company_id=#{companyId}
+	</update>
+	
+	<!-- 获取管理员账号下品牌 -->
+	<select id="getAdminBrandList" parameterType="com.meishi.merchant.dto.BrandDto"
+		resultMap="BrandResult">
+			SELECT DISTINCT
+				b.ID, 
+				b.COMPANY_ID, 
+				b.NAME
+			FROM
+				brand b	
+			JOIN 
+				company c ON b.company_id=c.id
+			WHERE
+				b.is_deleted=0 
+				
+			<if test="brandIds != null">
+				AND  b.id in(${brandIds})
+			</if>
+			<if test="name != null">
+				AND  (
+					b.name   like CONCAT('%',#{name},'%') OR 
+					c.name   like CONCAT('%',#{name},'%')  
+				)
+			</if>
+			<if test="companyId != null">
+				and b.company_id=#{companyId}
+			</if>
+			<if test="brandId!=null">
+				and b.brand_id=#{brandId}
+			</if>
+			
+			ORDER BY
+				b.company_id DESC
+	</select>
+
+</mapper>

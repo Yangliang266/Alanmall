@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.merchant.dao.PrepaidCardConfigDao">
+
+	<resultMap id="BaseResultMap" type="com.meishi.merchant.model.PrepaidCardConfig">
+		<result column="ID" property="id" />
+		<result column="COMPANY_ID" property="companyId" />
+		<result column="PROVINCE_ID" property="provinceId" />
+		<result column="CITY_ID" property="cityId" />
+		<result column="INTERFACE_URL" property="interfaceUrl" />
+		<result column="UNIQUE_NO" property="uniqueNo" />
+		<result column="SYMMETRIC_KEY_ENCRPT" property="symmetricKeyEncrpt" />
+		<result column="ACCESS_KEY" property="accessKey" />
+		<result column="ACCESS_KEY_SECRET" property="accessKeySecret" />
+		<result column="CREATE_TIME" property="createTime" />
+		<result column="CREATE_ID" property="createId" />
+		<result column="UPDATE_TIME" property="updateTime" />
+		<result column="UPDATE_ID" property="updateId" />
+	</resultMap>
+	
+	<sql id="selectTemplate">
+     SELECT 
+     	ID, COMPANY_ID, PROVINCE_ID, CITY_ID, INTERFACE_URL, UNIQUE_NO, SYMMETRIC_KEY_ENCRPT, 
+     	ACCESS_KEY, ACCESS_KEY_SECRET, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID
+  	</sql>
+
+	<insert id="save" parameterType="com.meishi.merchant.model.PrepaidCardConfig">
+	 	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+	   INSERT INTO prepaid_card_config
+		   	(
+			   	COMPANY_ID, 
+			   	PROVINCE_ID, 
+			   	CITY_ID, 
+			   	INTERFACE_URL, 
+			   	UNIQUE_NO, 
+			   	SYMMETRIC_KEY_ENCRPT, 
+			   	ACCESS_KEY, 
+			   	ACCESS_KEY_SECRET, 
+			   	CREATE_TIME, 
+			   	CREATE_ID, 
+			   	UPDATE_TIME,
+			   	UPDATE_ID, 
+			   	IS_DELETED
+		   	)
+	   VALUES 
+		   	(
+			   	#{companyId}, 
+			   	#{provinceId}, 
+			   	#{cityId}, 
+			   	#{interfaceUrl}, 
+			   	#{uniqueNo}, 
+			   	#{symmetricKeyEncrpt}, 
+			   	#{accessKey}, 
+			   	#{accessKeySecret}, 
+			   	now(), 
+			   	#{createId}, 
+			   	now(), 
+			   	#{updateId}, 
+			   	0
+		   	)
+	</insert>
+	
+	<select id="get" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		<include refid="selectTemplate"/>
+		FROM
+			prepaid_card_config 
+		WHERE
+			ID = #{id}
+		AND
+			IS_DELETED = 0
+	</select>
+	
+	<update id="update" parameterType="com.meishi.merchant.model.PrepaidCardConfig">
+		UPDATE
+			prepaid_card_config
+		<set>
+			UPDATE_TIME = NOW()
+			<if test="companyId != null">
+				,COMPANY_ID = #{companyId}
+			</if>
+			<if test="provinceId != null">
+				,PROVINCE_ID = #{provinceId}
+			</if>
+			<if test="cityId != null">
+				,CITY_ID = #{cityId}
+			</if>
+			<if test="interfaceUrl != null">
+				,INTERFACE_URL = #{interfaceUrl}
+			</if>
+			<if test="uniqueNo != null">
+				,UNIQUE_NO = #{uniqueNo}
+			</if>
+			<if test="symmetricKeyEncrpt != null">
+				,SYMMETRIC_KEY_ENCRPT = #{symmetricKeyEncrpt}
+			</if>
+			<if test="accessKey != null">
+				,ACCESS_KEY = #{accessKey}
+			</if>
+			<if test="accessKeySecret != null">
+				,ACCESS_KEY_SECRET = #{accessKeySecret}
+			</if>
+			<if test="updateId != null">
+				,UPDATE_ID = #{updateId}
+			</if>
+		</set>
+		WHERE ID = #{id}
+	</update>
+	
+	<select id="getPageList" resultMap="BaseResultMap" parameterType="com.meishi.merchant.dto.PrepaidCardConfigDto">
+		<include refid="selectTemplate"/>
+		FROM 
+			prepaid_card_config 
+		WHERE
+			IS_DELETED = 0
+		<if test="companyId != null">
+			AND COMPANY_ID = #{companyId}
+		</if>
+		<if test="provinceId != null">
+			AND PROVINCE_ID = #{provinceId}
+		</if>
+		<if test="cityId != null">
+			AND CITY_ID = #{cityId}
+		</if>
+		ORDER BY ID DESC
+		LIMIT #{start}, #{limit}
+	</select>
+	
+	<select id="getPageTotal" resultType="java.lang.Integer" parameterType="com.meishi.merchant.dto.PrepaidCardConfigDto">
+		SELECT
+			count(*)
+		FROM
+			prepaid_card_config
+		WHERE
+			IS_DELETED = 0
+		<if test="companyId != null">
+			AND COMPANY_ID = #{companyId}
+		</if>
+		<if test="provinceId != null">
+			AND PROVINCE_ID = #{provinceId}
+		</if>
+		<if test="cityId != null">
+			AND CITY_ID = #{cityId}
+		</if>
+	</select>
+  
+	<update id="remove" parameterType="com.meishi.merchant.model.PrepaidCardConfig">
+	   	UPDATE
+	   		prepaid_card_config
+	   	SET
+	   		UPDATE_ID = #{updateId},
+	   		UPDATE_TIME = now(),
+	   		IS_DELETED = 1
+	   	WHERE
+	   		ID = #{id} 
+	</update>
+	 
+</mapper>

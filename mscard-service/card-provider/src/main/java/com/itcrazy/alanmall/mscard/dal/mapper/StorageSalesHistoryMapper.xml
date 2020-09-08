@@ -1,0 +1,3088 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itcrazy.alanmall.mscard.dal.mapper.StorageSalesHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="MOTHER_CARD_NO" jdbcType="VARCHAR" property="motherCardNo" />
+    <result column="MOTHER_TYPE" jdbcType="INTEGER" property="motherType" />
+    <result column="CATEGORY" jdbcType="INTEGER" property="category" />
+    <result column="CONSUME_TIME" jdbcType="TIMESTAMP" property="consumeTime" />
+    <result column="RELEASE_STORE" jdbcType="BIGINT" property="releaseStore" />
+    <result column="STORE" jdbcType="BIGINT" property="store" />
+    <result column="BILL" jdbcType="DECIMAL" property="bill" />
+    <result column="REWARD" jdbcType="DECIMAL" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <result column="REMARKS" jdbcType="LONGVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, MOTHER_CARD_NO, MOTHER_TYPE, CATEGORY, CONSUME_TIME, RELEASE_STORE, 
+    STORE, BILL, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history (ID, CARD_NO, MOTHER_CARD_NO, 
+      MOTHER_TYPE, CATEGORY, CONSUME_TIME, 
+      RELEASE_STORE, STORE, BILL, 
+      REWARD, CREATE_TIME, CREATE_ID, 
+      UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+      COMPANY_ID, REMARKS)
+    values (#{id,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, #{motherCardNo,jdbcType=VARCHAR}, 
+      #{motherType,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
+      #{releaseStore,jdbcType=BIGINT}, #{store,jdbcType=BIGINT}, #{bill,jdbcType=DECIMAL}, 
+      #{reward,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=BIGINT}, #{remarks,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO,
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME,
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE,
+      </if>
+      <if test="store != null">
+        STORE,
+      </if>
+      <if test="bill != null">
+        BILL,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        CATEGORY = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        STORE = #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        BILL = #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REMARKS = #{remarks,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="MOTHER_CARD_NO" jdbcType="VARCHAR" property="motherCardNo" />
+    <result column="MOTHER_TYPE" jdbcType="INTEGER" property="motherType" />
+    <result column="CATEGORY" jdbcType="INTEGER" property="category" />
+    <result column="CONSUME_TIME" jdbcType="TIMESTAMP" property="consumeTime" />
+    <result column="RELEASE_STORE" jdbcType="BIGINT" property="releaseStore" />
+    <result column="STORE" jdbcType="BIGINT" property="store" />
+    <result column="BILL" jdbcType="DECIMAL" property="bill" />
+    <result column="REWARD" jdbcType="DECIMAL" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <result column="REMARKS" jdbcType="LONGVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, MOTHER_CARD_NO, MOTHER_TYPE, CATEGORY, CONSUME_TIME, RELEASE_STORE, 
+    STORE, BILL, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history (ID, CARD_NO, MOTHER_CARD_NO, 
+      MOTHER_TYPE, CATEGORY, CONSUME_TIME, 
+      RELEASE_STORE, STORE, BILL, 
+      REWARD, CREATE_TIME, CREATE_ID, 
+      UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+      COMPANY_ID, REMARKS)
+    values (#{id,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, #{motherCardNo,jdbcType=VARCHAR}, 
+      #{motherType,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
+      #{releaseStore,jdbcType=BIGINT}, #{store,jdbcType=BIGINT}, #{bill,jdbcType=DECIMAL}, 
+      #{reward,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=BIGINT}, #{remarks,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO,
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME,
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE,
+      </if>
+      <if test="store != null">
+        STORE,
+      </if>
+      <if test="bill != null">
+        BILL,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        CATEGORY = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        STORE = #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        BILL = #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REMARKS = #{remarks,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="MOTHER_CARD_NO" jdbcType="VARCHAR" property="motherCardNo" />
+    <result column="MOTHER_TYPE" jdbcType="INTEGER" property="motherType" />
+    <result column="CATEGORY" jdbcType="INTEGER" property="category" />
+    <result column="CONSUME_TIME" jdbcType="TIMESTAMP" property="consumeTime" />
+    <result column="RELEASE_STORE" jdbcType="BIGINT" property="releaseStore" />
+    <result column="STORE" jdbcType="BIGINT" property="store" />
+    <result column="BILL" jdbcType="DECIMAL" property="bill" />
+    <result column="REWARD" jdbcType="DECIMAL" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <result column="REMARKS" jdbcType="LONGVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, MOTHER_CARD_NO, MOTHER_TYPE, CATEGORY, CONSUME_TIME, RELEASE_STORE, 
+    STORE, BILL, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history (ID, CARD_NO, MOTHER_CARD_NO, 
+      MOTHER_TYPE, CATEGORY, CONSUME_TIME, 
+      RELEASE_STORE, STORE, BILL, 
+      REWARD, CREATE_TIME, CREATE_ID, 
+      UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+      COMPANY_ID, REMARKS)
+    values (#{id,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, #{motherCardNo,jdbcType=VARCHAR}, 
+      #{motherType,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
+      #{releaseStore,jdbcType=BIGINT}, #{store,jdbcType=BIGINT}, #{bill,jdbcType=DECIMAL}, 
+      #{reward,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=BIGINT}, #{remarks,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO,
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME,
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE,
+      </if>
+      <if test="store != null">
+        STORE,
+      </if>
+      <if test="bill != null">
+        BILL,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        CATEGORY = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        STORE = #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        BILL = #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REMARKS = #{remarks,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="MOTHER_CARD_NO" jdbcType="VARCHAR" property="motherCardNo" />
+    <result column="MOTHER_TYPE" jdbcType="INTEGER" property="motherType" />
+    <result column="CATEGORY" jdbcType="INTEGER" property="category" />
+    <result column="CONSUME_TIME" jdbcType="TIMESTAMP" property="consumeTime" />
+    <result column="RELEASE_STORE" jdbcType="BIGINT" property="releaseStore" />
+    <result column="STORE" jdbcType="BIGINT" property="store" />
+    <result column="BILL" jdbcType="DECIMAL" property="bill" />
+    <result column="REWARD" jdbcType="DECIMAL" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <result column="REMARKS" jdbcType="LONGVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, MOTHER_CARD_NO, MOTHER_TYPE, CATEGORY, CONSUME_TIME, RELEASE_STORE, 
+    STORE, BILL, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history (ID, CARD_NO, MOTHER_CARD_NO, 
+      MOTHER_TYPE, CATEGORY, CONSUME_TIME, 
+      RELEASE_STORE, STORE, BILL, 
+      REWARD, CREATE_TIME, CREATE_ID, 
+      UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+      COMPANY_ID, REMARKS)
+    values (#{id,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, #{motherCardNo,jdbcType=VARCHAR}, 
+      #{motherType,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
+      #{releaseStore,jdbcType=BIGINT}, #{store,jdbcType=BIGINT}, #{bill,jdbcType=DECIMAL}, 
+      #{reward,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=BIGINT}, #{remarks,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO,
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME,
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE,
+      </if>
+      <if test="store != null">
+        STORE,
+      </if>
+      <if test="bill != null">
+        BILL,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        CATEGORY = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        STORE = #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        BILL = #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REMARKS = #{remarks,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="MOTHER_CARD_NO" jdbcType="VARCHAR" property="motherCardNo" />
+    <result column="MOTHER_TYPE" jdbcType="INTEGER" property="motherType" />
+    <result column="CATEGORY" jdbcType="INTEGER" property="category" />
+    <result column="CONSUME_TIME" jdbcType="TIMESTAMP" property="consumeTime" />
+    <result column="RELEASE_STORE" jdbcType="BIGINT" property="releaseStore" />
+    <result column="STORE" jdbcType="BIGINT" property="store" />
+    <result column="BILL" jdbcType="DECIMAL" property="bill" />
+    <result column="REWARD" jdbcType="DECIMAL" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <result column="REMARKS" jdbcType="LONGVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, MOTHER_CARD_NO, MOTHER_TYPE, CATEGORY, CONSUME_TIME, RELEASE_STORE, 
+    STORE, BILL, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history (ID, CARD_NO, MOTHER_CARD_NO, 
+      MOTHER_TYPE, CATEGORY, CONSUME_TIME, 
+      RELEASE_STORE, STORE, BILL, 
+      REWARD, CREATE_TIME, CREATE_ID, 
+      UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+      COMPANY_ID, REMARKS)
+    values (#{id,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, #{motherCardNo,jdbcType=VARCHAR}, 
+      #{motherType,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
+      #{releaseStore,jdbcType=BIGINT}, #{store,jdbcType=BIGINT}, #{bill,jdbcType=DECIMAL}, 
+      #{reward,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=BIGINT}, #{remarks,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO,
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME,
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE,
+      </if>
+      <if test="store != null">
+        STORE,
+      </if>
+      <if test="bill != null">
+        BILL,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        CATEGORY = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        STORE = #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        BILL = #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REMARKS = #{remarks,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="MOTHER_CARD_NO" jdbcType="VARCHAR" property="motherCardNo" />
+    <result column="MOTHER_TYPE" jdbcType="INTEGER" property="motherType" />
+    <result column="CATEGORY" jdbcType="INTEGER" property="category" />
+    <result column="CONSUME_TIME" jdbcType="TIMESTAMP" property="consumeTime" />
+    <result column="RELEASE_STORE" jdbcType="BIGINT" property="releaseStore" />
+    <result column="STORE" jdbcType="BIGINT" property="store" />
+    <result column="BILL" jdbcType="DECIMAL" property="bill" />
+    <result column="REWARD" jdbcType="DECIMAL" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <result column="REMARKS" jdbcType="LONGVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, MOTHER_CARD_NO, MOTHER_TYPE, CATEGORY, CONSUME_TIME, RELEASE_STORE, 
+    STORE, BILL, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history (ID, CARD_NO, MOTHER_CARD_NO, 
+      MOTHER_TYPE, CATEGORY, CONSUME_TIME, 
+      RELEASE_STORE, STORE, BILL, 
+      REWARD, CREATE_TIME, CREATE_ID, 
+      UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+      COMPANY_ID, REMARKS)
+    values (#{id,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, #{motherCardNo,jdbcType=VARCHAR}, 
+      #{motherType,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
+      #{releaseStore,jdbcType=BIGINT}, #{store,jdbcType=BIGINT}, #{bill,jdbcType=DECIMAL}, 
+      #{reward,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=BIGINT}, #{remarks,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO,
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME,
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE,
+      </if>
+      <if test="store != null">
+        STORE,
+      </if>
+      <if test="bill != null">
+        BILL,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        CATEGORY = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        STORE = #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        BILL = #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REMARKS = #{remarks,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="MOTHER_CARD_NO" jdbcType="VARCHAR" property="motherCardNo" />
+    <result column="MOTHER_TYPE" jdbcType="INTEGER" property="motherType" />
+    <result column="CATEGORY" jdbcType="INTEGER" property="category" />
+    <result column="CONSUME_TIME" jdbcType="TIMESTAMP" property="consumeTime" />
+    <result column="RELEASE_STORE" jdbcType="BIGINT" property="releaseStore" />
+    <result column="STORE" jdbcType="BIGINT" property="store" />
+    <result column="BILL" jdbcType="DECIMAL" property="bill" />
+    <result column="REWARD" jdbcType="DECIMAL" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <result column="REMARKS" jdbcType="LONGVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, MOTHER_CARD_NO, MOTHER_TYPE, CATEGORY, CONSUME_TIME, RELEASE_STORE, 
+    STORE, BILL, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history (ID, CARD_NO, MOTHER_CARD_NO, 
+      MOTHER_TYPE, CATEGORY, CONSUME_TIME, 
+      RELEASE_STORE, STORE, BILL, 
+      REWARD, CREATE_TIME, CREATE_ID, 
+      UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+      COMPANY_ID, REMARKS)
+    values (#{id,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, #{motherCardNo,jdbcType=VARCHAR}, 
+      #{motherType,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
+      #{releaseStore,jdbcType=BIGINT}, #{store,jdbcType=BIGINT}, #{bill,jdbcType=DECIMAL}, 
+      #{reward,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=BIGINT}, #{remarks,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO,
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME,
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE,
+      </if>
+      <if test="store != null">
+        STORE,
+      </if>
+      <if test="bill != null">
+        BILL,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        CATEGORY = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        STORE = #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        BILL = #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REMARKS = #{remarks,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="MOTHER_CARD_NO" jdbcType="VARCHAR" property="motherCardNo" />
+    <result column="MOTHER_TYPE" jdbcType="INTEGER" property="motherType" />
+    <result column="CATEGORY" jdbcType="INTEGER" property="category" />
+    <result column="CONSUME_TIME" jdbcType="TIMESTAMP" property="consumeTime" />
+    <result column="RELEASE_STORE" jdbcType="BIGINT" property="releaseStore" />
+    <result column="STORE" jdbcType="BIGINT" property="store" />
+    <result column="BILL" jdbcType="DECIMAL" property="bill" />
+    <result column="REWARD" jdbcType="DECIMAL" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <result column="REMARKS" jdbcType="LONGVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, MOTHER_CARD_NO, MOTHER_TYPE, CATEGORY, CONSUME_TIME, RELEASE_STORE, 
+    STORE, BILL, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history (ID, CARD_NO, MOTHER_CARD_NO, 
+      MOTHER_TYPE, CATEGORY, CONSUME_TIME, 
+      RELEASE_STORE, STORE, BILL, 
+      REWARD, CREATE_TIME, CREATE_ID, 
+      UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+      COMPANY_ID, REMARKS)
+    values (#{id,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, #{motherCardNo,jdbcType=VARCHAR}, 
+      #{motherType,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
+      #{releaseStore,jdbcType=BIGINT}, #{store,jdbcType=BIGINT}, #{bill,jdbcType=DECIMAL}, 
+      #{reward,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=BIGINT}, #{remarks,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO,
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME,
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE,
+      </if>
+      <if test="store != null">
+        STORE,
+      </if>
+      <if test="bill != null">
+        BILL,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        CATEGORY = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        STORE = #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        BILL = #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REMARKS = #{remarks,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="MOTHER_CARD_NO" jdbcType="VARCHAR" property="motherCardNo" />
+    <result column="MOTHER_TYPE" jdbcType="INTEGER" property="motherType" />
+    <result column="CATEGORY" jdbcType="INTEGER" property="category" />
+    <result column="CONSUME_TIME" jdbcType="TIMESTAMP" property="consumeTime" />
+    <result column="RELEASE_STORE" jdbcType="BIGINT" property="releaseStore" />
+    <result column="STORE" jdbcType="BIGINT" property="store" />
+    <result column="BILL" jdbcType="DECIMAL" property="bill" />
+    <result column="REWARD" jdbcType="DECIMAL" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <result column="REMARKS" jdbcType="LONGVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, MOTHER_CARD_NO, MOTHER_TYPE, CATEGORY, CONSUME_TIME, RELEASE_STORE, 
+    STORE, BILL, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history (ID, CARD_NO, MOTHER_CARD_NO, 
+      MOTHER_TYPE, CATEGORY, CONSUME_TIME, 
+      RELEASE_STORE, STORE, BILL, 
+      REWARD, CREATE_TIME, CREATE_ID, 
+      UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+      COMPANY_ID, REMARKS)
+    values (#{id,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, #{motherCardNo,jdbcType=VARCHAR}, 
+      #{motherType,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
+      #{releaseStore,jdbcType=BIGINT}, #{store,jdbcType=BIGINT}, #{bill,jdbcType=DECIMAL}, 
+      #{reward,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=BIGINT}, #{remarks,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO,
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME,
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE,
+      </if>
+      <if test="store != null">
+        STORE,
+      </if>
+      <if test="bill != null">
+        BILL,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        CATEGORY = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        STORE = #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        BILL = #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REMARKS = #{remarks,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="MOTHER_CARD_NO" jdbcType="VARCHAR" property="motherCardNo" />
+    <result column="MOTHER_TYPE" jdbcType="INTEGER" property="motherType" />
+    <result column="CATEGORY" jdbcType="INTEGER" property="category" />
+    <result column="CONSUME_TIME" jdbcType="TIMESTAMP" property="consumeTime" />
+    <result column="RELEASE_STORE" jdbcType="BIGINT" property="releaseStore" />
+    <result column="STORE" jdbcType="BIGINT" property="store" />
+    <result column="BILL" jdbcType="DECIMAL" property="bill" />
+    <result column="REWARD" jdbcType="DECIMAL" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <result column="REMARKS" jdbcType="LONGVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, MOTHER_CARD_NO, MOTHER_TYPE, CATEGORY, CONSUME_TIME, RELEASE_STORE, 
+    STORE, BILL, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history (ID, CARD_NO, MOTHER_CARD_NO, 
+      MOTHER_TYPE, CATEGORY, CONSUME_TIME, 
+      RELEASE_STORE, STORE, BILL, 
+      REWARD, CREATE_TIME, CREATE_ID, 
+      UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+      COMPANY_ID, REMARKS)
+    values (#{id,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, #{motherCardNo,jdbcType=VARCHAR}, 
+      #{motherType,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
+      #{releaseStore,jdbcType=BIGINT}, #{store,jdbcType=BIGINT}, #{bill,jdbcType=DECIMAL}, 
+      #{reward,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=BIGINT}, #{remarks,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO,
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME,
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE,
+      </if>
+      <if test="store != null">
+        STORE,
+      </if>
+      <if test="bill != null">
+        BILL,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        CATEGORY = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        STORE = #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        BILL = #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REMARKS = #{remarks,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="MOTHER_CARD_NO" jdbcType="VARCHAR" property="motherCardNo" />
+    <result column="MOTHER_TYPE" jdbcType="INTEGER" property="motherType" />
+    <result column="CATEGORY" jdbcType="INTEGER" property="category" />
+    <result column="CONSUME_TIME" jdbcType="TIMESTAMP" property="consumeTime" />
+    <result column="RELEASE_STORE" jdbcType="BIGINT" property="releaseStore" />
+    <result column="STORE" jdbcType="BIGINT" property="store" />
+    <result column="BILL" jdbcType="DECIMAL" property="bill" />
+    <result column="REWARD" jdbcType="DECIMAL" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <result column="REMARKS" jdbcType="LONGVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, MOTHER_CARD_NO, MOTHER_TYPE, CATEGORY, CONSUME_TIME, RELEASE_STORE, 
+    STORE, BILL, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history (ID, CARD_NO, MOTHER_CARD_NO, 
+      MOTHER_TYPE, CATEGORY, CONSUME_TIME, 
+      RELEASE_STORE, STORE, BILL, 
+      REWARD, CREATE_TIME, CREATE_ID, 
+      UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+      COMPANY_ID, REMARKS)
+    values (#{id,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, #{motherCardNo,jdbcType=VARCHAR}, 
+      #{motherType,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
+      #{releaseStore,jdbcType=BIGINT}, #{store,jdbcType=BIGINT}, #{bill,jdbcType=DECIMAL}, 
+      #{reward,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=BIGINT}, #{remarks,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO,
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME,
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE,
+      </if>
+      <if test="store != null">
+        STORE,
+      </if>
+      <if test="bill != null">
+        BILL,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        CATEGORY = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        STORE = #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        BILL = #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REMARKS = #{remarks,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+    <result column="MOTHER_CARD_NO" jdbcType="VARCHAR" property="motherCardNo" />
+    <result column="MOTHER_TYPE" jdbcType="INTEGER" property="motherType" />
+    <result column="CATEGORY" jdbcType="INTEGER" property="category" />
+    <result column="CONSUME_TIME" jdbcType="TIMESTAMP" property="consumeTime" />
+    <result column="RELEASE_STORE" jdbcType="BIGINT" property="releaseStore" />
+    <result column="STORE" jdbcType="BIGINT" property="store" />
+    <result column="BILL" jdbcType="DECIMAL" property="bill" />
+    <result column="REWARD" jdbcType="DECIMAL" property="reward" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="CREATE_ID" jdbcType="BIGINT" property="createId" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="UPDATE_ID" jdbcType="BIGINT" property="updateId" />
+    <result column="IS_DELETED" jdbcType="INTEGER" property="isDeleted" />
+    <result column="COMPANY_ID" jdbcType="BIGINT" property="companyId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    <result column="REMARKS" jdbcType="LONGVARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CARD_NO, MOTHER_CARD_NO, MOTHER_TYPE, CATEGORY, CONSUME_TIME, RELEASE_STORE, 
+    STORE, BILL, REWARD, CREATE_TIME, CREATE_ID, UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+    COMPANY_ID
+  </sql>
+  <sql id="Blob_Column_List">
+    REMARKS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from storage_sales_history
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history (ID, CARD_NO, MOTHER_CARD_NO, 
+      MOTHER_TYPE, CATEGORY, CONSUME_TIME, 
+      RELEASE_STORE, STORE, BILL, 
+      REWARD, CREATE_TIME, CREATE_ID, 
+      UPDATE_TIME, UPDATE_ID, IS_DELETED, 
+      COMPANY_ID, REMARKS)
+    values (#{id,jdbcType=VARCHAR}, #{cardNo,jdbcType=VARCHAR}, #{motherCardNo,jdbcType=VARCHAR}, 
+      #{motherType,jdbcType=INTEGER}, #{category,jdbcType=INTEGER}, #{consumeTime,jdbcType=TIMESTAMP}, 
+      #{releaseStore,jdbcType=BIGINT}, #{store,jdbcType=BIGINT}, #{bill,jdbcType=DECIMAL}, 
+      #{reward,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{isDeleted,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=BIGINT}, #{remarks,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    insert into storage_sales_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="cardNo != null">
+        CARD_NO,
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO,
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE,
+      </if>
+      <if test="category != null">
+        CATEGORY,
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME,
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE,
+      </if>
+      <if test="store != null">
+        STORE,
+      </if>
+      <if test="bill != null">
+        BILL,
+      </if>
+      <if test="reward != null">
+        REWARD,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="createId != null">
+        CREATE_ID,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID,
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED,
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID,
+      </if>
+      <if test="remarks != null">
+        REMARKS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    <set>
+      <if test="cardNo != null">
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherCardNo != null">
+        MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="motherType != null">
+        MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      </if>
+      <if test="category != null">
+        CATEGORY = #{category,jdbcType=INTEGER},
+      </if>
+      <if test="consumeTime != null">
+        CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releaseStore != null">
+        RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      </if>
+      <if test="store != null">
+        STORE = #{store,jdbcType=BIGINT},
+      </if>
+      <if test="bill != null">
+        BILL = #{bill,jdbcType=DECIMAL},
+      </if>
+      <if test="reward != null">
+        REWARD = #{reward,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null">
+        CREATE_ID = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      </if>
+      <if test="remarks != null">
+        REMARKS = #{remarks,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT},
+      REMARKS = #{remarks,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.itcrazy.alanmall.mscard.dal.entity.StorageSalesHistory">
+    update storage_sales_history
+    set CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      MOTHER_CARD_NO = #{motherCardNo,jdbcType=VARCHAR},
+      MOTHER_TYPE = #{motherType,jdbcType=INTEGER},
+      CATEGORY = #{category,jdbcType=INTEGER},
+      CONSUME_TIME = #{consumeTime,jdbcType=TIMESTAMP},
+      RELEASE_STORE = #{releaseStore,jdbcType=BIGINT},
+      STORE = #{store,jdbcType=BIGINT},
+      BILL = #{bill,jdbcType=DECIMAL},
+      REWARD = #{reward,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_ID = #{createId,jdbcType=BIGINT},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      UPDATE_ID = #{updateId,jdbcType=BIGINT},
+      IS_DELETED = #{isDeleted,jdbcType=INTEGER},
+      COMPANY_ID = #{companyId,jdbcType=BIGINT}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

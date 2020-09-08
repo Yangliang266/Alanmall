@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.user.dao.UserScopeDao">
+
+      <resultMap id="UserScopeResult" type="com.meishi.user.model.UserScope">
+		<result column="id" property="id" />
+		<result column="company_id" property="companyId" />
+		<result column="brand_id" property="brandId" />
+		<result column="STORE_ID" property="storeId" />
+		<result column="USER_ID" property="userId" />
+	</resultMap>
+    
+ 
+	<insert id="saveBatch" parameterType="java.util.List">  
+        insert into user_scope (id,user_id,company_id,brand_id,store_id,CREATE_ID,UPDATE_ID,CREATE_TIME,UPDATE_TIME,IS_DELETED) values  
+        <foreach collection="list" item="item" index="index"  
+            separator=", ">  
+            (#{item.id},#{item.userId},#{item.companyId},#{item.brandId},#{item.storeId},#{item.createId},#{item.updateId},now(),now(),0)  
+        </foreach>  
+    </insert> 
+     <select id="getPageList" resultMap="UserScopeResult" parameterType="com.meishi.user.dto.UserScopeDto">
+		select id,company_id,brand_id,user_id,store_id
+	  from user_scope  where is_deleted=0 
+	  <if test="userId!=null">
+	  and  user_id=#{userId}
+	  </if>
+	   
+	</select>
+	
+	<update id="remove" parameterType="com.meishi.user.model.UserScope">
+		update user_scope set is_deleted=2,update_time=now(),update_id=#{updateId}
+		 where user_id=#{userId} and is_deleted=0
+	</update>
+
+</mapper>

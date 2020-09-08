@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.OtherSalesHistoryDao">
+
+  <resultMap id="OtherSalesResult" type="com.itcrazy.alanmall.mscard.model.OtherSalesHistory">
+    <result column="ID" property="orderNo" />
+    <result column="CARD_NO" property="cardNo" />
+    <result column="CATEGORY" property="category" />
+    <result column="CONSUME_TIME" property="consumeTime" />
+    <result column="STORE" property="store" />
+    <result column="BILL" property="bill" />
+     <result column="PAY_MODE" property="payMode" />
+    <result column="COMPANY_ID" property="companyId" />
+    <result column="CREATE_TIME" property="createTime" />
+  </resultMap>
+
+  <select id="getOtherSalesHistoryByOrderNo" resultMap="OtherSalesResult">
+        SELECT
+            ID, CARD_NO, CATEGORY, CONSUME_TIME, STORE,
+            BILL, PAY_MODE, CREATE_TIME, COMPANY_ID
+        FROM
+            other_sales_history
+        WHERE
+            ID = #{orderNo}
+        AND COMPANY_ID = #{companyId}
+        AND IS_DELETED = 0
+  </select>
+
+  <insert id="addOtherSalesHistory" parameterType="com.itcrazy.alanmall.mscard.model.OtherSalesHistory">
+		INSERT INTO
+			other_sales_history
+			(ID, CARD_NO, CATEGORY, CONSUME_TIME, STORE,PAY_MODE,
+			BILL, CREATE_TIME, CREATE_ID, IS_DELETED,COMPANY_ID)
+		VALUES
+			(#{orderNo}, #{cardNo},#{category}, NOW(), #{store}, #{payMode},
+			 #{bill}, NOW(),#{createId}, 0, #{companyId})
+  </insert>
+
+  <update id="delete" >
+		UPDATE
+			other_sales_history
+		SET
+			UPDATE_TIME=NOW(),UPDATE_ID=#{userId},
+			IS_DELETED = 1
+		WHERE ID=#{orderNo}
+  </update>
+
+
+</mapper>

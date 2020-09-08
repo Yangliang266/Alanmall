@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.CreditSalesHistoryDao">
+
+  <resultMap id="CreditSalesResult" type="com.itcrazy.alanmall.mscard.model.CreditSalesHistory">
+  	  <result column="ID" property="orderNo" />
+  	  <result column="CARD_NO" property="cardNo" />
+  	  <result column="CONSUME_TIME" property="consumeTime" />
+  	  <result column="STORE" property="store" />
+	  <result column="CREDIT_BILL" property="creditBill" />
+	  <result column="CLEAR_BILL" property="clearBill" />
+	  <result column="CREDIT" property="credit" />
+	  <result column="STATUS" property="status" />
+  </resultMap>
+
+  <!-- 挂账卡信息查询 -->
+  <select id="getCreditSalesList" resultMap="CreditSalesResult" parameterType="com.itcrazy.alanmall.mscard.dto.CreditSalesDto">
+  		SELECT
+		    ID,
+		    CARD_NO,
+			CONSUME_TIME,
+			STORE,
+			CREDIT_BILL,
+			CLEAR_BILL,
+			CREDIT,
+			STATUS
+		FROM
+			credit_sales_history
+		WHERE CARD_NO = #{cardNo}
+		<if test="status != null" >
+  	 		AND STATUS = #{status}
+  	 	</if>
+  	 	<if test="status == null or status == ''" >
+  	 		<if test="statusFlag == 1" >
+  	 			AND STATUS != 0
+  	 		</if>
+  	 	</if>
+	    <if test="beginTime != null and beginTime.toString() !=''">
+  		 AND
+			cast(CONSUME_TIME as date) <![CDATA[ >= ]]> cast(#{beginTime} as date)
+		</if>
+  		<if test="endTime != null and endTime.toString() !=''">
+  		 AND
+  			cast(CONSUME_TIME as date) <![CDATA[ <= ]]> cast(#{endTime} as date)
+  		</if>
+  		AND IS_DELETED = 0
+  		ORDER BY CONSUME_TIME
+  		LIMIT #{start},#{limit}
+  </select>
+
+  <!-- 挂账卡合计信息查询 -->
+  <select id="getTotalInfo" resultMap="CreditSalesResult" parameterType="com.itcrazy.alanmall.mscard.dto.CreditSalesDto">
+  		SELECT
+			SUM(CREDIT_BILL) AS CREDIT_BILL,
+			SUM(CLEAR_BILL) AS CLEAR_BILL,
+			SUM(CREDIT) AS CREDIT
+		FROM
+			credit_sales_history
+		WHERE CARD_NO = #{cardNo}
+		<if test="status != null" >
+  	 	 AND STATUS = #{status}
+  	 	</if>
+	    <if test="beginTime != null and beginTime.toString() !=''">
+  		 AND
+			cast(CONSUME_TIME as date) <![CDATA[ >= ]]> cast(#{beginTime} as date)
+		</if>
+  		<if test="endTime != null and endTime.toString() !=''">
+  		 AND
+  			cast(CONSUME_TIME as date) <![CDATA[ <= ]]> cast(#{endTime} as date)
+  		</if>
+  		AND IS_DELETED = 0
+  </select>
+
+  <!-- 制卡状态的分页 -->
+  <select id="getPageTotal" resultType="integer">
+		SELECT
+		  COUNT(ID)
+		FROM
+			credit_sales_history
+		WHERE CARD_NO = #{cardNo}
+		<if test="status != null" >
+  	 	 AND STATUS = #{status}
+  	 	</if>
+  	 	<if test="status == null or status == ''" >
+  	 		<if test="statusFlag == 1" >
+  	 			AND STATUS != 0
+  	 		</if>
+  	 	</if>
+	    <if test="beginTime != null and beginTime.toString() !=''">
+  		 AND
+			cast(CONSUME_TIME as date) <![CDATA[ >= ]]> cast(#{beginTime} as date)
+		</if>
+  		<if test="endTime != null and endTime.toString() !=''">
+  		 AND
+  			cast(CONSUME_TIME as date) <![CDATA[ <= ]]> cast(#{endTime} as date)
+  		</if>
+  		AND IS_DELETED = 0
+  </select>
+
+  <!-- 当前清账信息查询 -->
+  <select id="select" resultMap="CreditSalesResult" parameterType="com.itcrazy.alanmall.mscard.dto.CreditSalesDto">
+  		SELECT
+  			ID,
+		    CARD_NO,
+			CONSUME_TIME,
+			STORE,
+			CREDIT_BILL,
+			CLEAR_BILL,
+			CREDIT,
+			STATUS
+		FROM
+			credit_sales_history
+		WHERE ID = #{id}
+		AND IS_DELETED = 0
+  </select>
+
+  <insert id="addCreditSalesHistory" parameterType="com.itcrazy.alanmall.mscard.model.CreditSalesHistory">
+		INSERT INTO
+			credit_sales_history
+			(ID, CARD_NO, MOTHER_CARD_NO, MOTHER_TYPE, RELEASE_STORE, CONSUME_TIME, STORE, BILL,
+			 CREDIT_BILL, CLEAR_BILL, CREDIT, STATUS, CREATE_TIME, CREATE_ID, IS_DELETED,COMPANY_ID)
+		VALUES
+			(#{orderNo}, #{cardNo}, #{motherCardNo}, #{motherType}, #{releaseStore}, NOW(), #{store}, #{bill},
+			 #{creditBill}, #{clearBill}, #{credit}, #{status}, NOW(),#{createId}, 0, #{companyId})
+  </insert>
+
+  <!-- 更新挂账一览表 -->
+  <update id="update" parameterType="com.itcrazy.alanmall.mscard.model.CreditSalesHistory">
+		UPDATE credit_sales_history SET UPDATE_TIME=NOW(),UPDATE_ID=#{updateId}
+		<if test="status != null" >
+  	 	 ,STATUS = #{status}
+  	 	</if>
+  	 	<if test="clearBill != null" >
+  	 	 ,CLEAR_BILL = #{clearBill}
+  	 	</if>
+  	 	<if test="credit != null" >
+  	 	 ,CREDIT = #{credit}
+  	 	</if>
+		WHERE ID=#{orderNo}
+  </update>
+
+  <update id="delete" >
+		UPDATE
+			credit_sales_history
+		SET
+			UPDATE_TIME=NOW(),UPDATE_ID=#{userId},
+			IS_DELETED = 1
+		WHERE ID=#{orderNo}
+  </update>
+
+  <select id="getCreditSalesByCardNoAndStoreId" resultType="decimal">
+    SELECT
+        ROUND(SUM(CREDIT), 2)
+    FROM
+        credit_sales_history
+    WHERE
+        CREDIT IS NOT NULL
+    AND CARD_NO = #{cardNo}
+    AND STORE = #{storeId}
+    AND IS_DELETED = 0
+    AND COMPANY_ID = #{companyId}
+  </select>
+</mapper>

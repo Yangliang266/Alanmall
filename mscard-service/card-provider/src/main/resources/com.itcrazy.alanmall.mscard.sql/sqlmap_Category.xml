@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.CategoryDao">
+
+
+  <resultMap id="CategoryResult" type="com.itcrazy.alanmall.mscard.model.Category">
+  	<result column="ID" property="id" />
+  	<result column="NAME" property="name" />
+  	<result column="BIN" property="bin" />
+  	<result column="IS_NAMED" property="isNamed" />
+  	<result column="RECHARGE_QUOTA" property="rechargeQuota" />
+  	<result column="IS_PSW_MUST" property="isPwdMust" />
+  	<result column="IS_RECHARGE" property="isRecharge" />
+  	<result column="RECHARGE_COUNT" property="rechargeCount" />
+  	<result column="IS_CREDIT" property="isCredit" />
+  	<result column="DISCOUNT" property="discount" />
+  	<result column="CITIES" property="cities" />
+  	<result column="BRANDS" property="brands" />
+  	<result column="STORES" property="stores" />
+  	<result column="ALL_JOIN_BRANDS" property="allJoinBrands" />
+  	<result column="STATUS" property="status" />
+  	<result column="REMARKS" property="remarks" />
+  	<result column="COMPANY_ID" property="companyId" />
+  </resultMap>
+
+  <sql id="sqlTemplate">
+    	FROM
+  			card_category
+  		WHERE
+  			IS_DELETED = 0
+  		<if test="isRecharge!=null" >
+  		 AND IS_RECHARGE=#{isRecharge}
+  		</if>
+		AND COMPANY_ID = #{companyId}
+
+  </sql>
+
+  <select id="getPageList" resultMap="CategoryResult" parameterType="com.itcrazy.alanmall.mscard.dto.CategoryDto">
+ 		SELECT
+			ID, NAME,BIN, IS_NAMED,RECHARGE_QUOTA, IS_PSW_MUST, IS_RECHARGE,RECHARGE_COUNT, IS_CREDIT,
+			DISCOUNT, CITIES, BRANDS, STORES, STATUS, REMARKS,COMPANY_ID
+		<include refid="sqlTemplate" />
+  		ORDER BY ID DESC
+  		LIMIT #{start}, #{limit}
+   </select>
+
+   <select id="getPageTotal" resultType="integer">
+  		SELECT
+  			COUNT(ID)
+  		<include refid="sqlTemplate" />
+  </select>
+
+   <select id="getCategoryById" resultMap="CategoryResult" parameterType="long">
+  		SELECT
+			ID, NAME,BIN, IS_NAMED,RECHARGE_QUOTA, IS_PSW_MUST, IS_RECHARGE,RECHARGE_COUNT, IS_CREDIT,
+			DISCOUNT, CITIES, BRANDS, STORES, ALL_JOIN_BRANDS, COMPANY_ID, STATUS, REMARKS
+  		FROM
+  			card_category
+  		WHERE
+  			ID = #{id}
+		AND IS_DELETED = 0
+		AND COMPANY_ID = #{companyId}
+  </select>
+
+  <insert id="addCategory" parameterType="com.itcrazy.alanmall.mscard.model.Category">
+      <!-- 主键返回，主键自增时才可使用，keyProperty返回到对象的哪个属性，order返回时机（插入前/后） -->
+	  	<selectKey keyProperty="id" order="AFTER" resultType="long" >
+	  		SELECT LAST_INSERT_ID() as id
+	  	</selectKey>
+		INSERT INTO
+			card_category
+			(NAME, BIN, IS_NAMED,RECHARGE_QUOTA, IS_PSW_MUST, IS_RECHARGE,
+			 RECHARGE_COUNT, IS_CREDIT, DISCOUNT, CITIES, BRANDS, STORES,ALL_JOIN_BRANDS,
+			 STATUS, REMARKS, CREATE_TIME, CREATE_ID, IS_DELETED,COMPANY_ID)
+		VALUES
+			(#{name}, #{bin}, #{isNamed},#{rechargeQuota}, #{isPwdMust}, #{isRecharge},
+			#{rechargeCount}, #{isCredit}, #{discount}, #{cities}, #{brands}, #{stores},
+			#{allJoinBrands}, #{status}, #{remarks}, NOW(),#{createId}, 0, #{companyId})
+  </insert>
+
+  <update id="updateCategory" parameterType="com.itcrazy.alanmall.mscard.model.Category">
+		UPDATE
+			card_category
+		SET
+			NAME = #{name}, BIN=#{bin}, IS_NAMED = #{isNamed}, RECHARGE_QUOTA = #{rechargeQuota},
+			IS_PSW_MUST = #{isPwdMust}, IS_RECHARGE = #{isRecharge}, RECHARGE_COUNT = #{rechargeCount},
+			IS_CREDIT = #{isCredit}, DISCOUNT = #{discount}, CITIES = #{cities}, BRANDS = #{brands},
+			STORES = #{stores}, ALL_JOIN_BRANDS = #{allJoinBrands},STATUS = #{status}, REMARKS = #{remarks},
+			UPDATE_TIME = NOW(), UPDATE_ID = #{updateId}
+		WHERE
+			ID = #{id}
+		AND COMPANY_ID = #{companyId}
+  </update>
+
+  <update id="updateCategoryStatus" parameterType="com.itcrazy.alanmall.mscard.model.Category">
+		UPDATE
+			card_category
+		SET
+			STATUS =  (CASE WHEN STATUS = 1 THEN 0 ELSE 1 end),
+			UPDATE_TIME = NOW(),
+			UPDATE_ID = #{updateId}
+		WHERE
+			ID = #{id}
+  </update>
+
+  <update id="deleteCategory"  parameterType="com.itcrazy.alanmall.mscard.model.Category">
+		UPDATE
+			card_category
+		SET
+			IS_DELETED = 1,
+			UPDATE_TIME = NOW(),
+			UPDATE_ID = #{updateId}
+		WHERE
+			ID = #{id}
+  </update>
+</mapper>

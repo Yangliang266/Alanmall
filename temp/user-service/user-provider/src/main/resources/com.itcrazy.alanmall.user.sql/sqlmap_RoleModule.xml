@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.user.dao.RoleModuleDao">
+
+    
+  <resultMap id="RoleModuleResult" type="com.meishi.user.model.RoleModule">    
+  	<result column="ID" property="id" />
+  	<result column="role_id" property="roleId" />
+  	<result column="module_id" property="moduleId" />
+  	<result column="company_id" property="companyId" />
+  </resultMap>
+  <sql id="sqlTemplate">
+     select id,role_id,module_id,company_id
+  </sql>
+ 
+	<insert id="saveBatch" parameterType="java.util.List">  
+        insert into role_module (id,role_id,module_id,company_id,CREATE_ID,UPDATE_ID,CREATE_TIME,UPDATE_TIME,IS_DELETED) values  
+        <foreach collection="list" item="item" index="index"  
+            separator=", ">  
+            (#{item.id},#{item.roleId},#{item.moduleId},#{item.companyId},#{item.createId},#{item.updateId},now(),now(),0)  
+        </foreach>  
+    </insert> 
+  <select id="getPageList" resultMap="RoleModuleResult" parameterType="com.meishi.user.dto.RoleModuleDto">
+   <include refid="sqlTemplate" />
+     <![CDATA[
+  		from role_module where is_deleted=0 and role_id=#{roleId}
+     ]]>
+  </select>
+  
+  <update id="remove" parameterType="com.meishi.user.model.RoleModule">
+  	update role_module set is_deleted=1,update_time=now(),update_id=#{updateId} 
+  	where  role_id=#{roleId} and is_deleted=0
+  </update>
+
+</mapper>

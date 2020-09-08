@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.CardInformationDao">
+
+
+	<resultMap id="CardInforResult" type="com.itcrazy.alanmall.mscard.model.CardInformation">
+		<result column="CARD_NO" property="cardNo" />
+		<result column="MOTHER_CARD_NO" property="motherCardNo" />
+		<result column="SERIAL_NO" property="serialNo" />
+		<result column="CATEGORY" property="category" />
+		<result column="STATUS" property="status" />
+		<result column="STORE" property="store" />
+		<result column="CREDIT_STATUS" property="creditStatus" />
+		<result column="CREDIT_MAX_QUOTA" property="creditMaxQuota" />
+		<result column="RECHARGE_BALANCE" property="rechargeBalance" />
+		<result column="REWARD" property="reward" />
+		<result column="CREDIT" property="credit" />
+		<result column="CREATE_ID" property="createId" />
+		<result column="CREATE_TIME" property="createTime"/>
+	  	<result column="NAME" property="name"/>
+	</resultMap>
+
+	<resultMap id="SerialNo" type="com.itcrazy.alanmall.mscard.model.CardInformation">
+		<result column="CARD_NO" property="cardNo" />
+		<result column="SERIAL_NO" property="serialNo" />
+	</resultMap>
+
+	<sql id="sqlTemplate">
+			SELECT c.SERIAL_NO, MIN(c.CREATE_TIME) as CREATE_TIME, cc.NAME, c.CREATE_ID
+	</sql>
+
+	<!-- 制卡管理 -->
+	<select id="getPageList" resultMap="CardInforResult" parameterType="com.itcrazy.alanmall.mscard.dto.CardInformationDto">
+	 		<include refid="sqlTemplate" />
+	 		FROM card_information c
+	 		LEFT JOIN card_category cc ON c.CATEGORY = cc.ID
+	 		WHERE 1=1
+	 		AND c.IS_DELETED = 0
+			AND cc.IS_DELETED = 0
+			AND c.COMPANY_ID = #{companyId}
+	 		<if test="serialNo != null and serialNo != '' ">
+	 		AND c.SERIAL_NO like concat("%",#{serialNo},"%")
+	 		</if>
+	 		<if test="cardNo != null and cardNo !='' ">
+	 		AND c.CARD_NO like concat("%",#{cardNo},"%")
+	 		</if>
+	 		<if test="beginTime != null and beginTime.toString() !='' ">
+			AND  cast(c.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{beginTime} as date)
+			</if>
+			<if test="endTime != null and endTime.toString() !='' ">
+			AND  cast(c.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{endTime} as date)
+			</if>
+	       GROUP BY
+	       c.SERIAL_NO,c.COMPANY_ID,cc.NAME,c.CREATE_ID
+	       LIMIT #{start},#{limit}
+	</select>
+	<!-- 分页 -->
+	<select id="getPageTotal" resultType="integer"
+			parameterType="com.itcrazy.alanmall.mscard.dto.CardInformationDto">
+			SELECT count(t.SERIAL_NO)
+			FROM (
+		  		SELECT c.SERIAL_NO
+		  		FROM card_information c
+		  		LEFT JOIN card_category cc ON c.CATEGORY = cc.ID
+		  		WHERE 1=1
+		  		AND c.IS_DELETED = 0
+				AND cc.IS_DELETED = 0
+				AND c.COMPANY_ID = #{companyId}
+		  		<if test="serialNo != null and serialNo != '' ">
+		 		AND c.SERIAL_NO like concat("%",#{serialNo},"%")
+		 		</if>
+		 		<if test="cardNo != null and cardNo !='' ">
+		 		AND c.CARD_NO like concat("%",#{cardNo},"%")
+		 		</if>
+		  		<if test="beginTime != null and beginTime.toString() !='' ">
+				AND  cast(c.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{beginTime} as date)
+				</if>
+				<if test="endTime != null and endTime.toString() !='' ">
+				AND  cast(c.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{endTime} as date)
+			</if>
+		  		GROUP BY
+	            c.SERIAL_NO,c.COMPANY_ID,cc.NAME,c.CREATE_ID
+		  	) t
+	</select>
+	<!-- 获取最大批次号 -->
+	 <select id="getMaxSerilNo" resultMap="SerialNo" parameterType="com.itcrazy.alanmall.mscard.dto.CardBaseDto">
+	     SELECT
+		  SERIAL_NO,CARD_NO
+		FROM
+			card_information
+		WHERE
+		    IS_DELETED = 0
+		AND	COMPANY_ID = #{companyId}
+		ORDER BY
+			SERIAL_NO DESC
+		LIMIT 1
+	 </select>
+	<!-- 获取通过前缀获取最大卡号 -->
+	 <select id="getMaxCardNoByPrefix" resultType="string" >
+	    SELECT
+		  CARD_NO
+		FROM
+			card_information
+		WHERE
+		   SUBSTRING(CARD_NO, 1, CHAR_LENGTH(#{prefix})) = #{prefix}
+		   <!-- 不能加IS_DELETED条件 -->
+		AND   COMPANY_ID = #{companyId}
+		ORDER BY
+		   CARD_NO DESC
+		LIMIT 1
+	 </select>
+	<!-- 新建卡号 -->
+	<insert id="save" parameterType="com.itcrazy.alanmall.mscard.model.CardInformation">
+
+	         INSERT INTO card_information
+	                   (CARD_NO,SERIAL_NO,CATEGORY,STATUS,CREDIT_STATUS,CREDIT_MAX_QUOTA,RECHARGE_BALANCE,REWARD,CREDIT,CREATE_TIME,CREATE_ID,IS_DELETED,COMPANY_ID)
+	         VALUES
+					   (#{cardNo},#{serialNo},#{category},#{status},#{creditStatus},#{creditMaxQuota},#{rechargeBalance},#{reward},#{credit},NOW(),#{createId},0,#{companyId})
+	</insert>
+
+	<update id="update" parameterType="com.itcrazy.alanmall.mscard.model.CardInformation">
+		UPDATE card_information SET UPDATE_TIME=NOW(),UPDATE_ID=#{updateId}
+		<if test="status!=null" >
+			  ,STATUS=#{status}
+		</if>
+		<if test="creditStatus!=null" >
+  		  ,CREDIT_STATUS = #{creditStatus}
+  		</if>
+		<if test="creditMaxQuota!=null" >
+			  ,CREDIT_MAX_QUOTA=#{creditMaxQuota}
+		</if>
+		<if test="rechargeBalance!=null" >
+			  ,RECHARGE_BALANCE=#{rechargeBalance}
+		</if>
+		<if test="reward!=null" >
+			  ,REWARD=#{reward}
+		</if>
+		<if test="credit!=null" >
+			  ,CREDIT=#{credit}
+		</if>
+		<if test="motherType!=null" >
+			  ,MOTHER_TYPE=#{motherType}
+		</if>
+		<if test="motherCardNo!=null" >
+			<if test="motherCardNo == 'null'" >
+			  ,MOTHER_CARD_NO = NULL
+			</if>
+			<if test="motherCardNo != 'null'" >
+			  ,MOTHER_CARD_NO = #{motherCardNo}
+			</if>
+		</if>
+
+		WHERE CARD_NO=#{cardNo}
+		AND COMPANY_ID=#{companyId}
+	</update>
+
+	 <update id="updateRechargeByCardNo" parameterType="com.itcrazy.alanmall.mscard.model.CardInformation">
+		UPDATE
+			card_information
+		SET
+			RECHARGE_BALANCE = RECHARGE_BALANCE + #{rechargeBalance},
+			REWARD = REWARD + #{reward},
+			UPDATE_TIME = NOW(), UPDATE_ID = #{updateId}
+		WHERE
+			CARD_NO = #{cardNo}
+		AND
+			COMPANY_ID = #{companyId}
+	</update>
+
+    <select id="getCardDetail" resultMap="CardInforResult" parameterType="com.itcrazy.alanmall.mscard.dto.CardInformationDto">
+  		SELECT i.CARD_NO, i.CATEGORY, i.STATUS, i.STORE, c.NAME, i.CREDIT_STATUS,i.RECHARGE_BALANCE, i.REWARD
+  		FROM card_information i
+  		LEFT JOIN card_category c ON i.CATEGORY = c.ID
+  		WHERE i.IS_DELETED = 0
+		AND c.IS_DELETED = 0
+  		<if test="cardNo != null">
+  		AND i.CARD_NO = #{cardNo}
+  		</if>
+  		<if test="companyId!=null">
+  		AND i.COMPANY_ID = #{companyId}
+  		</if>
+  		<if test="store!=null">
+  		AND i.STORE = #{store}
+  		</if>
+   </select>
+
+   <!--cardinformation新卡信息更新为老卡信息  -->
+  <update id="updateCardInformation" parameterType="com.itcrazy.alanmall.mscard.model.SupplementCard">
+		UPDATE card_information i1,card_information i2 SET
+			i1.MOTHER_CARD_NO = i2.MOTHER_CARD_NO,
+			i1.CREDIT_STATUS = i2.CREDIT_STATUS,
+			i1.CREDIT_MAX_QUOTA = i2.CREDIT_MAX_QUOTA,
+			i1.RECHARGE_BALANCE = i2.RECHARGE_BALANCE,
+			i1.REWARD = i2.REWARD,
+			i1.CREDIT = i2.CREDIT,
+			i1.STATUS = 9,
+			i1.UPDATE_ID = #{updateId},
+			i1.UPDATE_TIME = NOW()
+		WHERE i2.CARD_NO = #{oldCardNo} AND i1.COMPANY_ID = i2.COMPANY_ID
+			AND i1.CARD_NO = #{newCardNo}
+			AND	i1.COMPANY_ID = #{companyId}
+  </update>
+
+	<select id="selectCardCountByCategoryId" resultType="long" >
+  		SELECT
+  			COUNT(CARD_NO)
+  		FROM
+  			card_information
+  		WHERE
+			CATEGORY = #{categoryId}
+  		AND
+  			COMPANY_ID = #{companyId}
+
+   </select>
+
+    <!-- 批量插入生成的兑换码 -->
+    <insert id ="batchInsert" parameterType="java.util.List" >
+        INSERT INTO card_information
+            (CARD_NO,SERIAL_NO,CATEGORY,STATUS,CREDIT_STATUS,CREDIT_MAX_QUOTA,
+            RECHARGE_BALANCE,REWARD,CREDIT,CREATE_TIME,CREATE_ID,IS_DELETED,COMPANY_ID)
+        VALUES
+	      <foreach collection ="list" item="cardInfo" index= "index" separator =",">
+	          (
+	          #{cardInfo.cardNo},  #{cardInfo.serialNo},  #{cardInfo.category},
+	          #{cardInfo.status},  #{cardInfo.creditStatus},  #{cardInfo.creditMaxQuota},
+	          #{cardInfo.rechargeBalance},  #{cardInfo.reward},  #{cardInfo.credit},
+	          NOW(),  #{cardInfo.createId}, 0, #{cardInfo.companyId}
+	          )
+	      </foreach >
+     </insert>
+</mapper>

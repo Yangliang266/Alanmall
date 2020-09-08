@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.cardReport.dao.ReportCreditAccountDao">
+  <resultMap id="ReportAccountPeriodResult" type="com.meishi.card.model.ReportCreditAccount">
+	<result column="CARD_NO" property="cardNo" />
+	<result column="USER_NAME" property="userName" />
+  	<result column="STATUS" property="status" />
+  	<result column="NAME" property="name" />
+  	<result column="CREDIT_NUM" property="creditNum" />
+  	<result column="CREDIT_BILL" property="creditBill" />
+  	<result column="ALL_CLEAR_NUM" property="allClearNum" />
+  	<result column="ALL_CLEAR_BILL" property="allClearBill" />
+  	<result column="PART_CLEAR_NUM" property="partClearNum" />
+  	<result column="PART_CLEAR_BILL" property="partClearBill" />
+  	<result column="NOT_CLEAR_NUM" property="notClearNum" />
+  	<result column="NOT_CLEAR_BILL" property="notClearBill" />
+  	<result column="CONSUME_TIME" property="consumeTime" />
+  	<result column="ID" property="idCard" />
+  	<result column="CREDIT_BILL" property="creditCardBill" />
+  	<result column="CLEAR_BILL" property="clearBill" />
+  </resultMap>
+
+	<sql id="getPagePrepareTemplate">
+			<if test="cardNo != null and cardNo !='' ">
+				AND rcsh.CARD_NO = #{cardNo}
+			</if>
+			<if test="stores != null and stores !='' ">
+				AND rcsh.STORE in(${stores})
+			</if>
+
+			<if test="creditTimeBegin != null and creditTimeBegin.toString() !='' ">
+				AND  cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			</if>
+			<if test="creditTimeEnd != null and creditTimeEnd.toString() !='' ">
+				AND  cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			</if>
+		</sql>
+	<sql id="getCardTemplate">
+				<if test="stores != null and stores !='' ">
+					AND rcsh.STORE in(${stores})
+				</if>
+			</sql>
+
+	<!-- 挂账／清账报表（汇总） -->
+  <select id="getReportCreditAccountList" resultMap="ReportAccountPeriodResult" parameterType="com.meishi.card.dto.ReportCreditAccountDto">
+		SELECT rcsh.CARD_NO,rrc.USER_NAME,rci.`STATUS`,rcc.`NAME`,
+			<!--  总挂账笔数 -->
+			(SELECT CASE WHEN COUNT(CREDIT_BILL) IS NULL THEN 0 ELSE COUNT(CREDIT_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rcsh.CARD_NO = rci.CARD_NO
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />) AS CREDIT_NUM,
+
+			<!--  总挂账金额 -->
+			(SELECT CASE WHEN SUM(CREDIT_BILL) IS NULL THEN 0 ELSE SUM(CREDIT_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />) AS CREDIT_BILL,
+
+			<!--  全清账笔数 -->
+			(SELECT CASE WHEN COUNT(CREDIT) IS NULL THEN 0 ELSE COUNT(CREDIT) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.CREDIT = '0'
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />) AS ALL_CLEAR_NUM,
+
+			 <!-- 全清账金额 -->
+			(SELECT CASE WHEN SUM(CLEAR_BILL) IS NULL THEN 0 ELSE SUM(CLEAR_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.CREDIT = '0'
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />) AS ALL_CLEAR_BILL,
+
+			<!--  部分清账笔数 -->
+			(SELECT CASE WHEN COUNT(CREDIT_BILL) IS NULL THEN 0 ELSE COUNT(CREDIT_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.CREDIT &lt;&gt; '0'
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />) AS PART_CLEAR_NUM,
+
+			 <!-- 部分清账金额 -->
+			(SELECT CASE WHEN SUM(CLEAR_BILL) IS NULL THEN 0 ELSE SUM(CLEAR_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.CREDIT &lt;&gt; '0'
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />) AS PART_CLEAR_BILL,
+
+			 <!-- 未清账笔数（包括全清、部分清账） -->
+			((SELECT CASE WHEN COUNT(CREDIT_BILL) IS NULL THEN 0 ELSE COUNT(CREDIT_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />)
+			-
+			(SELECT CASE WHEN COUNT(CREDIT) IS NULL THEN 0 ELSE COUNT(CREDIT) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.CREDIT = '0'
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />))AS NOT_CLEAR_NUM,
+
+			 <!-- 未清账金额（包括全清、部分清账） -->
+			((SELECT CASE WHEN SUM(CREDIT_BILL) IS NULL THEN 0 ELSE SUM(CREDIT_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />)
+			-
+			(SELECT CASE WHEN SUM(CLEAR_BILL) IS NULL THEN 0 ELSE SUM(CLEAR_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.CREDIT = '0'
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />)
+			-
+			(SELECT CASE WHEN SUM(CLEAR_BILL) IS NULL THEN 0 ELSE SUM(CLEAR_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.CREDIT &lt;&gt; '0'
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />)) AS NOT_CLEAR_BILL
+
+			FROM report_credit_sales_history rcsh
+			LEFT JOIN report_card_information rci ON rci.CARD_NO = rcsh.CARD_NO AND rci.COMPANY_ID = rcsh.COMPANY_ID
+			LEFT JOIN report_card_category rcc ON rci.CATEGORY = rcc.ID
+			LEFT JOIN report_registered_card rrc ON  rrc.CARD_NO = rcsh.CARD_NO AND rrc.COMPANY_ID = rcsh.COMPANY_ID
+
+
+			WHERE rcsh.IS_DELETED = 0
+			AND rcsh.COMPANY_ID = #{companyId}
+		    <!-- AND rrh.STORE in(#{stores}) -->
+			<include refid="getPagePrepareTemplate" />
+			GROUP BY rci.CARD_NO
+		    limit #{start},#{limit}
+  </select>
+
+
+  <!-- 总记录数(汇总)  -->
+  <select id="getReportCreditAccountTotal" resultType="integer" parameterType="com.meishi.card.dto.ReportCreditAccountDto">
+		SELECT
+	     count(t.CARD_NO)
+        FROM
+        (SELECT
+			rcsh.CARD_NO
+		FROM
+			report_credit_sales_history rcsh
+		LEFT JOIN report_card_information rci ON rci.CARD_NO = rcsh.CARD_NO AND rci.COMPANY_ID = rcsh.COMPANY_ID
+		LEFT JOIN report_card_category rcc ON rci.CATEGORY = rcc.ID
+		LEFT JOIN report_registered_card rrc ON  rrc.CARD_NO = rcsh.CARD_NO AND rrc.COMPANY_ID = rcsh.COMPANY_ID
+
+		WHERE
+			rcsh.IS_DELETED = 0
+		AND rcsh.COMPANY_ID = #{companyId}
+		<include refid="getPagePrepareTemplate" />
+		GROUP BY
+			rcsh.CARD_NO
+	    ) t
+  </select>
+
+		<sql id="getPageCardPrepareTemplate">
+			<if test="oneCardNo != null and oneCardNo !='' ">
+				AND rcsh.CARD_NO = #{oneCardNo}
+			</if>
+			<if test="cardStores != null and cardStores !='' ">
+				AND rcsh.STORE in(${cardStores})
+			</if>
+			<if test="creditCardTimeBegin != null and creditCardTimeBegin.toString() !='' ">
+				AND  cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditCardTimeBegin} as date)
+			</if>
+			<if test="creditCardTimeEnd != null and creditCardTimeEnd.toString() !='' ">
+				AND  cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditCardTimeEnd} as date)
+			</if>
+		</sql>
+     <!--   挂账／清账报表（明细） -->
+     <select id="getReportCardCreditAccountList" resultMap="ReportAccountPeriodResult" parameterType="com.meishi.card.dto.ReportCreditAccountDto">
+		SELECT
+			rcsh.CARD_NO,
+			rrc.USER_NAME,
+			rci.`STATUS`,
+			rcc.`NAME`,
+			rcsh.ID,
+			rcsh.CONSUME_TIME,
+			rcsh.BILL,
+			rcsh.CREDIT_BILL,
+			rcsh.CLEAR_BILL,
+			rcsh.CREDIT
+		FROM
+			report_credit_sales_history rcsh
+		LEFT JOIN report_card_information rci ON rci.CARD_NO = rcsh.CARD_NO AND rci.COMPANY_ID = rcsh.COMPANY_ID
+		LEFT JOIN report_card_category rcc ON rci.CATEGORY = rcc.ID
+		LEFT JOIN report_registered_card rrc ON  rrc.CARD_NO = rcsh.CARD_NO AND rrc.COMPANY_ID = rcsh.COMPANY_ID
+
+		WHERE
+			rcsh.IS_DELETED = 0
+		AND rcsh.COMPANY_ID = #{companyId}
+		    <include refid="getPageCardPrepareTemplate" />
+		    GROUP BY rcsh.ID
+		    limit #{start},#{limit}
+  </select>
+
+   <!-- 总记录数明细  -->
+  <select id="getReportCardCreditAccountTotal" resultType="integer" parameterType="com.meishi.card.dto.ReportCreditAccountDto">
+		SELECT
+	     count(t.CARD_NO)
+        FROM
+        (SELECT
+			rcsh.CARD_NO
+		FROM
+			report_credit_sales_history rcsh
+		LEFT JOIN report_card_information rci ON rci.CARD_NO = rcsh.CARD_NO AND rci.COMPANY_ID = rcsh.COMPANY_ID
+		LEFT JOIN report_card_category rcc ON rci.CATEGORY = rcc.ID
+		LEFT JOIN report_registered_card rrc ON  rrc.CARD_NO = rcsh.CARD_NO AND rrc.COMPANY_ID = rcsh.COMPANY_ID
+
+		WHERE
+			rcsh.IS_DELETED = 0
+		AND rcsh.COMPANY_ID = #{companyId}
+       <include refid="getPageCardPrepareTemplate" />
+       GROUP BY rcsh.ID
+	    ) t
+  </select>
+
+  <!-- 挂账／清账报表 (汇总)合计信息查询 -->
+  <select id="getTotalInfo" resultMap="ReportAccountPeriodResult" parameterType="com.meishi.card.dto.ReportCreditAccountDto">
+      SELECT
+        (CASE WHEN SUM(CREDIT_NUM) IS NULL THEN 0 ELSE SUM(CREDIT_NUM) END) AS CREDIT_NUM,
+        (CASE WHEN SUM(CREDIT_BILL) IS NULL THEN 0 ELSE SUM(CREDIT_BILL) END) AS CREDIT_BILL,
+        (CASE WHEN SUM(ALL_CLEAR_NUM) IS NULL THEN 0 ELSE SUM(ALL_CLEAR_NUM) END) AS ALL_CLEAR_NUM,
+        (CASE WHEN SUM(ALL_CLEAR_BILL) IS NULL THEN 0 ELSE SUM(ALL_CLEAR_BILL) END) AS ALL_CLEAR_BILL,
+        (CASE WHEN SUM(PART_CLEAR_NUM) IS NULL THEN 0 ELSE SUM(PART_CLEAR_NUM) END) AS PART_CLEAR_NUM,
+        (CASE WHEN SUM(PART_CLEAR_BILL) IS NULL THEN 0 ELSE SUM(PART_CLEAR_BILL) END) AS PART_CLEAR_BILL,
+        (CASE WHEN SUM(NOT_CLEAR_NUM) IS NULL THEN 0 ELSE SUM(NOT_CLEAR_NUM) END) AS NOT_CLEAR_NUM,
+        (CASE WHEN SUM(NOT_CLEAR_BILL) IS NULL THEN 0 ELSE SUM(NOT_CLEAR_BILL) END) AS NOT_CLEAR_BILL FROM
+		(
+  		SELECT rcsh.CARD_NO,rrc.USER_NAME,rci.`STATUS`,rcc.`NAME`,
+			<!--  总挂账笔数 -->
+			(SELECT CASE WHEN COUNT(CREDIT_BILL) IS NULL THEN 0 ELSE COUNT(CREDIT_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rcsh.CARD_NO = rci.CARD_NO
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />) AS CREDIT_NUM,
+
+			<!--  总挂账金额 -->
+			(SELECT CASE WHEN SUM(CREDIT_BILL) IS NULL THEN 0 ELSE SUM(CREDIT_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />) AS CREDIT_BILL,
+
+			<!--  全清账笔数 -->
+			(SELECT CASE WHEN COUNT(CREDIT) IS NULL THEN 0 ELSE COUNT(CREDIT) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.CREDIT = '0'
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />) AS ALL_CLEAR_NUM,
+
+			 <!-- 全清账金额 -->
+			(SELECT CASE WHEN SUM(CLEAR_BILL) IS NULL THEN 0 ELSE SUM(CLEAR_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.CREDIT = '0'
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />) AS ALL_CLEAR_BILL,
+
+			<!--  部分清账笔数 -->
+			(SELECT CASE WHEN COUNT(CREDIT_BILL) IS NULL THEN 0 ELSE COUNT(CREDIT_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.CREDIT &lt;&gt; '0'
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />) AS PART_CLEAR_NUM,
+
+			 <!-- 部分清账金额 -->
+			(SELECT CASE WHEN SUM(CLEAR_BILL) IS NULL THEN 0 ELSE SUM(CLEAR_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.CREDIT &lt;&gt; '0'
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />) AS PART_CLEAR_BILL,
+
+			 <!-- 未清账笔数（包括全清、部分清账） -->
+			((SELECT CASE WHEN COUNT(CREDIT_BILL) IS NULL THEN 0 ELSE COUNT(CREDIT_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />)
+			-
+			(SELECT CASE WHEN COUNT(CREDIT) IS NULL THEN 0 ELSE COUNT(CREDIT) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.CREDIT = '0'
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />))AS NOT_CLEAR_NUM,
+
+			 <!-- 未清账金额（包括全清、部分清账） -->
+			((SELECT CASE WHEN SUM(CREDIT_BILL) IS NULL THEN 0 ELSE SUM(CREDIT_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />)
+			-
+			(SELECT CASE WHEN SUM(CLEAR_BILL) IS NULL THEN 0 ELSE SUM(CLEAR_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.CREDIT = '0'
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />)
+			-
+			(SELECT CASE WHEN SUM(CLEAR_BILL) IS NULL THEN 0 ELSE SUM(CLEAR_BILL) END FROM report_credit_sales_history AS rcsh
+			WHERE cast(rcsh.CREATE_TIME as date) <![CDATA[ >= ]]> cast(#{creditTimeBegin} as date)
+			AND cast(rcsh.CREATE_TIME as date) <![CDATA[ <= ]]> cast(#{creditTimeEnd} as date)
+			AND rci.CARD_NO = rcsh.CARD_NO
+			AND rcsh.CREDIT &lt;&gt; '0'
+			AND rcsh.COMPANY_ID = #{companyId}
+			AND rcsh.IS_DELETED = 0
+			<include refid="getCardTemplate" />)) AS NOT_CLEAR_BILL
+
+			FROM report_credit_sales_history rcsh
+			LEFT JOIN report_card_information rci ON rci.CARD_NO = rcsh.CARD_NO AND rci.COMPANY_ID = rcsh.COMPANY_ID
+			LEFT JOIN report_card_category rcc ON rci.CATEGORY = rcc.ID
+			LEFT JOIN report_registered_card rrc ON  rrc.CARD_NO = rcsh.CARD_NO AND rrc.COMPANY_ID = rcsh.COMPANY_ID
+
+			WHERE rcsh.IS_DELETED = 0
+			AND rcsh.COMPANY_ID = #{companyId}
+		   <!--  AND rrh.STORE in(#{stores}) -->
+			<include refid="getPagePrepareTemplate" />
+			GROUP BY rcsh.CARD_NO) t
+  </select>
+
+   <!-- 挂账／清账报表 (明细)合计信息查询 -->
+  <select id="getTotalCardInfo" resultMap="ReportAccountPeriodResult" parameterType="com.meishi.card.dto.ReportCreditAccountDto">
+   SELECT
+   		(CASE WHEN SUM(BILL) IS NULL THEN 0 ELSE SUM(BILL) END) AS BILL,
+   		(CASE WHEN SUM(CREDIT_BILL) IS NULL THEN 0 ELSE SUM(CREDIT_BILL) END) AS CREDIT_BILL,
+   		(CASE WHEN SUM(CLEAR_BILL) IS NULL THEN 0 ELSE SUM(CLEAR_BILL) END) AS CLEAR_BILL,
+   		(CASE WHEN SUM(CREDIT) IS NULL THEN 0 ELSE SUM(CREDIT) END) AS CREDIT FROM
+		(SELECT
+			rcsh.BILL AS BILL,
+			rcsh.CREDIT_BILL AS CREDIT_BILL,
+			rcsh.CLEAR_BILL AS CLEAR_BILL,
+			rcsh.CREDIT AS CREDIT
+		FROM
+			report_credit_sales_history rcsh
+		LEFT JOIN report_card_information rci ON rci.CARD_NO = rcsh.CARD_NO AND rci.COMPANY_ID = rcsh.COMPANY_ID
+		LEFT JOIN report_card_category rcc ON rci.CATEGORY = rcc.ID
+		LEFT JOIN report_registered_card rrc ON  rrc.CARD_NO = rcsh.CARD_NO AND rrc.COMPANY_ID = rcsh.COMPANY_ID
+
+		WHERE
+			rcsh.IS_DELETED = 0
+		AND rcsh.COMPANY_ID = #{companyId}
+		    <include refid="getPageCardPrepareTemplate" />
+		    GROUP BY rcsh.ID) t
+  </select>
+
+
+</mapper>

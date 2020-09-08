@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itcrazy.alanmall.mscard.dao.RechargeHistoryDao">
+  	<resultMap id="RechargeResult" type="com.itcrazy.alanmall.mscard.model.RechargeHistory">
+  		<result column="CARD_NO" property="cardNo" />
+  		<result column="CATEGORY_NAME" property="categoryName" />
+  		<result column="STATUS" property="status" />
+  		<result column="STORE" property="rechargeStore" />
+  		<result column="PAY_MODE" property="payModeStr" />
+  		<result column="RECHARGE" property="rechargeAmount" />
+  		<result column="REWARD" property="reward" />
+  		<result column="CREATE_TIME" property="rechargeTime" />
+  		<result column="CREATE_ID" property="rechargePerson" />
+  		<result column="ACTION_TYPE" property="actionType" />
+  		<result column="REMARKS" property="remarks" />
+  	</resultMap>
+
+	<sql id="getPageTemplate">
+    	FROM
+			recharge_history rh
+		LEFT JOIN card_information ci ON rh.CARD_NO = ci.CARD_NO
+		LEFT JOIN card_category cc ON ci.CATEGORY = cc.ID
+		LEFT JOIN pay_mode pm ON rh.PAY_MODE = pm.ID
+		WHERE
+			rh.CARD_NO = #{cardNo}
+		AND	rh.COMPANY_ID = #{companyId}
+		AND rh.IS_DELETED = 0
+  	</sql>
+
+  	<select id="getPageList" resultMap="RechargeResult" parameterType="com.itcrazy.alanmall.mscard.dto.RechargeDto">
+  		SELECT
+			rh.CARD_NO,
+			cc.`NAME` AS CATEGORY_NAME,
+			ci.`STATUS`,
+			rh.STORE,
+			pm.`NAME` AS PAY_MODE,
+			rh.RECHARGE,
+			rh.REWARD,
+			rh.CREATE_TIME AS CREATE_TIME,
+			rh.CREATE_ID,
+            null as ACTION_TYPE,
+            null as REMARKS
+		<include refid="getPageTemplate" />
+
+		union all
+		  (SELECT
+            rh.CARD_NO,
+            cc.`NAME` AS CATEGORY_NAME,
+            ci.`STATUS`,
+            rh.STORE,
+            pm.`NAME` AS PAY_MODE,
+            -rh.RECHARGE,
+            -rh.REWARD,
+            rh.UPDATE_TIME AS CREATE_TIME,
+            rh.CREATE_ID,
+            1 as ACTION_TYPE,
+            rh.REMARKS
+        <include refid="getPageTemplate" />
+        AND ACTION_TYPE = 1)
+
+		ORDER BY
+			CREATE_TIME DESC
+  		LIMIT #{start}, #{limit}
+   	</select>
+
+	<select id="getPageTotal" resultType="integer">
+  		SELECT
+  			COUNT(CARD_NO)
+  		FROM
+  		    (SELECT
+            rh.CARD_NO,
+            cc.`NAME` AS CATEGORY_NAME,
+            ci.`STATUS`,
+            rh.STORE,
+            pm.`NAME` AS PAY_MODE,
+            rh.RECHARGE,
+            rh.REWARD,
+            rh.CREATE_TIME,
+            rh.CREATE_ID,
+            rh.ACTION_TYPE,
+            rh.REMARKS
+        <include refid="getPageTemplate" />
+        union all
+          (SELECT
+            rh.CARD_NO,
+            cc.`NAME` AS CATEGORY_NAME,
+            ci.`STATUS`,
+            rh.STORE,
+            pm.`NAME` AS PAY_MODE,
+            -rh.RECHARGE,
+            -rh.REWARD,
+            rh.CREATE_TIME,
+            rh.CREATE_ID,
+            rh.ACTION_TYPE,
+            rh.REMARKS
+        <include refid="getPageTemplate" />
+        AND ACTION_TYPE = 1)) t
+  	</select>
+
+	<select id="getRechargeHistoryById" resultMap="RechargeResult">
+  		SELECT
+            rh.CARD_NO,
+            cc.`NAME` AS CATEGORY_NAME,
+            ci.`STATUS`,
+            rh.STORE,
+            pm.`NAME` AS PAY_MODE,
+            rh.RECHARGE,
+            rh.REWARD,
+            rh.CREATE_TIME,
+            rh.CREATE_ID
+		FROM
+            recharge_history rh
+        LEFT JOIN card_information ci ON rh.CARD_NO = ci.CARD_NO
+        LEFT JOIN card_category cc ON ci.CATEGORY = cc.ID
+        LEFT JOIN pay_mode pm ON rh.PAY_MODE = pm.ID
+        WHERE
+            rh.ID = #{id}
+        AND rh.COMPANY_ID = #{companyId}
+        AND rh.IS_DELETED = 0
+  	</select>
+
+  	<select id="insertRechargeHistory"  parameterType="com.itcrazy.alanmall.mscard.model.RechargeHistory">
+		INSERT INTO
+			recharge_history
+			(CARD_NO, STORE, PAY_MODE, RECHARGE, REWARD,
+			CREATE_TIME, CREATE_ID, IS_DELETED,COMPANY_ID)
+		VALUES
+			(#{cardNo}, #{rechargeStore}, #{payMode}, #{rechargeAmount}, #{reward},
+			NOW(),#{createId}, 0, #{companyId})
+  	</select>
+</mapper>

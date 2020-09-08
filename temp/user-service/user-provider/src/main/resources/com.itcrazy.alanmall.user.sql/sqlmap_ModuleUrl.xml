@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.meishi.user.dao.ModuleUrlDao">
+
+  <resultMap id="ModuleUrlResult" type="com.meishi.user.model.ModuleUrl">    
+  	<result column="ID" property="id" />
+  	<result column="MODULE_ID" property="moduleId" />
+  	<result column="URL" property="url" />
+  	<result column="system" property="system" />
+  </resultMap>
+  
+   <select id="getPageList" resultMap="ModuleUrlResult" parameterType="com.meishi.user.dto.ModuleUrlDto">
+  		select id,module_id,URL,module_url.system
+  		from module_url  where 1=1
+  		<if test="system!=null">
+  		and module_url.system=#{system}
+  		</if>
+  		<if test="moduleId!=null">
+  		and module_id=#{moduleId}
+  		</if>
+  </select>
+
+</mapper>
