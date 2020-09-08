@@ -37,12 +37,14 @@ Distributed ecological technology
 
 2. **技术选型**
 
-   1. dubbo 远程通信
+   1. dubbo 远程通信RPC框架
    2. zookeeper 注册中心
-   3. redis 缓存
+   3. redis 数据缓存
    4. rabbitmq 消息队列
-   5. mysql 数据库
+   5. mysql 关系型数据库
+   6. mongoDB 非关系型数据库
    6. vuejs 前端控制
+   7. Nginx 网关限制
 
 
 
@@ -805,5 +807,8 @@ vi /etc/rc.d/rc.local
 /OAS/z346/zookeeper-3.4.6/bin/zkServer.sh start
 ```
 
+具体代码 点击上方view一览。
+
+整体环境部署完毕，部分功能未开发，持续更新，指正bug
 
 Write by yliang 2020/9/8
