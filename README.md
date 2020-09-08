@@ -47,30 +47,6 @@ Distributed ecological technology
 
 
 
-- - - 部署前准备
-      - [部署文件清单](https://gitbook.cn/books/5dde32b581c08a49d99657b3/index.html#-1)
-      - [部署架构图](https://gitbook.cn/books/5dde32b581c08a49d99657b3/index.html#-2)
-      - [服务器资源准备、检查及预装](https://gitbook.cn/books/5dde32b581c08a49d99657b3/index.html#-3)
-    - 网关部署及策略
-      - [Nginx 部署](https://gitbook.cn/books/5dde32b581c08a49d99657b3/index.html#nginx)
-      - [Keepalived 双机热备部署](https://gitbook.cn/books/5dde32b581c08a49d99657b3/index.html#keepalived)
-    - [MongoDB 部署](https://gitbook.cn/books/5dde32b581c08a49d99657b3/index.html#mongodb)
-    - Redis 部署及策略
-      - [Redis 单点部署步骤](https://gitbook.cn/books/5dde32b581c08a49d99657b3/index.html#redis-1)
-      - Redis 集群闭环部署（Redis-Cluster 三主三从）
-        - [前提](https://gitbook.cn/books/5dde32b581c08a49d99657b3/index.html#-5)
-        - [安装步骤](https://gitbook.cn/books/5dde32b581c08a49d99657b3/index.html#-6)
-    - ZooKeeper 部署及策略
-      - [ZooKeeper 服务的安装](https://gitbook.cn/books/5dde32b581c08a49d99657b3/index.html#zookeeper-1)
-      - [验证](https://gitbook.cn/books/5dde32b581c08a49d99657b3/index.html#-7)
-      - [开机自启动](https://gitbook.cn/books/5dde32b581c08a49d99657b3/index.html#-8)
-
-
-
-分布式系统技术栈用到了很多开源免费的中间件，例如 Keepalived、Lvs、Nginx、MongoDB、Redis、ZooKeeper、ActiveMQ、MyCat、Jenkins、Gradle、Sonar、Apollo、InfluxDB、Telegraf 等，那么如何部署这些中间件？我们应该采用怎样的部署策略？
-
-分布式系统搭建就是搭建分布式系统的基础设施，也是开发、测试、运维人员的必修课，这是分系统系统搭建实战：上篇。
-
 ### 部署前准备
 
 #### 部署文件清单
