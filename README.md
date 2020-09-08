@@ -1,5 +1,5 @@
 # Alanmall
-Distributed ecological technology
+Distributed ecological technology - Write by yliang 2020/9/8
 
 具体代码 点击上方**View code**一览。
 
@@ -811,6 +811,3 @@ vi /etc/rc.d/rc.local
 /OAS/z346/zookeeper-3.4.6/bin/zkServer.sh start
 ```
 
-
-
-Write by yliang 2020/9/8
