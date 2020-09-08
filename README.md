@@ -1,6 +1,10 @@
 # Alanmall
 Distributed ecological technology
 
+具体代码 点击上方**View code**一览。
+
+整体环境部署完毕，部分功能未开发，持续更新，指正bug
+
 ## card系统重构
 
 1. **分布式搭建**
@@ -807,8 +811,6 @@ vi /etc/rc.d/rc.local
 /OAS/z346/zookeeper-3.4.6/bin/zkServer.sh start
 ```
 
-具体代码 点击上方**View code**一览。
 
-整体环境部署完毕，部分功能未开发，持续更新，指正bug
 
 Write by yliang 2020/9/8
