@@ -11,6 +11,7 @@ com\itcrazy\alanmall\common\email\AbstractEmailSender.class
 com\itcrazy\alanmall\common\email\DefaultEmailSender$4.class
 com\itcrazy\alanmall\common\redis\redisson\RedissonAutoConfigration.class
 com\itcrazy\alanmall\common\email\emailConfig\EmailConfig.class
+com\itcrazy\alanmall\common\mybatis\TKMapper.class
 com\itcrazy\alanmall\common\email\freeMarker\FreeMarkerUtil.class
 com\itcrazy\alanmall\common\exception\BaseBusinessException.class
 com\itcrazy\alanmall\common\util\CookieUtil.class

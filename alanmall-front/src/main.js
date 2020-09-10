@@ -48,28 +48,30 @@ Vue.use(VueLazyload, {
 
 Vue.config.productionTip = false
 
-router.beforeEach(function (to, from, next) {
-  // let params = {
-  //   params: {
-  //     token: getStore('token')
-  //   }
-  // }
-  userInfo().then(res => {
-    if (!res.success) { // 没登录
-      if (whiteList.indexOf(to.path) !== -1) { // 白名单
-        next()
-      } else {
-        next('/login')
-      }
-    } else {
-      store.commit('RECORD_USERINFO', {info: res.result})
-      if (to.path === '/login') { //  跳转到
-        next({path: '/'})
-      }
-      next()
-    }
-  })
-})
+// const whiteList = ['/home', '/goods', '/login', '/register', '/product', '/thanks', '/search', '/refreshsearch', '/refreshgoods']
+
+// router.beforeEach(function (to, from, next) {
+//   // let params = {
+//   //   params: {
+//   //     token: getStore('token')
+//   //   }
+//   // }
+//   userInfo().then(res => {
+//     if (!res.success) { // 没登录
+//       if (whiteList.indexOf(to.path) !== -1) { // 白名单
+//         next()
+//       } else {
+//         next('/login')
+//       }
+//     } else {
+//       store.commit('RECORD_USERINFO', {info: res.result})
+//       if (to.path === '/login') { //  跳转到
+//         next({path: '/'})
+//       }
+//       next()
+//     }
+//   })
+// })
 
 /* eslint-disable no-new */
 new Vue({

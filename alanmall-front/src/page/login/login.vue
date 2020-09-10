@@ -89,6 +89,12 @@ export default {
     }
   },
   methods: {
+    login_back () {
+
+    },
+    toRegister () {
+
+    },
     login () {
       this.logintxt = '登录中...'
       this.rememberPass()
@@ -136,8 +142,8 @@ export default {
     }
   },
   mounted () {
-    this.getRemembered()
-    this.login_addCart()
+    // this.getRemembered()
+    // this.login_addCart()
     // this.init_geetest()
     // this.open('登录提示', '测试体验账号密码：test | test')
   }

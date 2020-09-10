@@ -7,8 +7,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="common-core" />
         <module name="common-tools" />
+        <module name="common-core" />
       </profile>
     </annotationProcessing>
   </component>

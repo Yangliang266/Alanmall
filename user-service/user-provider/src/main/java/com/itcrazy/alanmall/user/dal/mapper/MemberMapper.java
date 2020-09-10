@@ -1,8 +1,9 @@
 package com.itcrazy.alanmall.user.dal.mapper;
 
+import com.itcrazy.alanmall.common.mybatis.TKMapper;
 import com.itcrazy.alanmall.user.dal.entity.Member;
 
-public interface MemberMapper {
+public interface MemberMapper extends TKMapper<Member> {
     int deleteByPrimaryKey(Long id);
 
     int insert(Member record);

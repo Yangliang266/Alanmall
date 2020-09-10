@@ -2,14 +2,22 @@ package com.itcrazy.alanmall.user.service;
 
 import com.alibaba.fastjson.JSON;
 import com.itcrazy.alanmall.common.redis.config.RedissonConfig;
+import com.itcrazy.alanmall.user.constants.SysRetCodeConstants;
 import com.itcrazy.alanmall.user.converter.*;
+import com.itcrazy.alanmall.user.dal.entity.Member;
 import com.itcrazy.alanmall.user.dal.mapper.MemberMapper;
 import com.itcrazy.alanmall.user.dto.UserLoginRequest;
 import com.itcrazy.alanmall.user.dto.UserLoginResponse;
 import com.itcrazy.alanmall.user.IUserLoginService;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import tk.mybatis.mapper.entity.Example;
+
+import java.util.List;
 
 /**
  * @author mathyoung
@@ -18,6 +26,7 @@ import org.springframework.stereotype.Component;
  * @date 2020/7/8 15:47
  */
 @Service
+@Slf4j
 public class UserLoginImp implements IUserLoginService {
     @Autowired
     MemberMapper memberMapper;
@@ -38,22 +47,41 @@ public class UserLoginImp implements IUserLoginService {
      **/
     @Override
     public UserLoginResponse login(UserLoginRequest userLoginRequest) {
-        // 检查参数
-        userLoginRequest.requestCheck();
+        // 输出日志
+        log.info("Begin UserLoginServiceImpl.login: request:" + userLoginRequest);
 
-        // redis查询
-        String json = redissonConfig.checkCache("hello");
+        UserLoginResponse userLoginResponse = new UserLoginResponse();
 
-        // mysql查询
+        try {
+            // 检查参数
+            userLoginRequest.requestCheck();
+            // 设置查询条件
+            Example example = new Example(Member.class);
+            example.createCriteria().andEqualTo("status", 1).andEqualTo("username", userLoginRequest.getUsername());
+
+            List<Member> members = memberMapper.selectByExample(example);
+
+            // 检测member
+            if (null == members || members.size() == 0) {
+                // 返回錯誤
+                userLoginResponse.setCode(SysRetCodeConstants.USERORPASSWORD_ERROR.getCode());
+                userLoginResponse.setMsg(SysRetCodeConstants.USERORPASSWORD_ERROR.getMessage());
+
+                return userLoginResponse;
+            }
 
 
-        // redis set
+            // dto转换
+            //        UserLoginResponse userLoginResponse = userConverer.login(member);
 
+            //        return userLoginResponse;
 
-        // dto转换
-        UserLoginResponse userLoginResponse = userConverer.login(member);
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        return userLoginResponse;
+        return null;
     }
 
     @Override
