@@ -1,9 +1,46 @@
 # Alanmall
-Distributed ecological technology - Write by yliang 2020/9/8
 
-具体代码 点击上方**View code**一览。
+> Distributed ecological technology - Written by yliang 2020/9/8 | 禁止商业用途，转载请注明
 
-整体环境部署完毕，部分功能未开发，持续更新，指正bug
+> 具体代码 点击上方**View code**一览。
+
+> 整体环境部署完毕，部分功能未开发，持续更新，以下为更新，bug修正日志
+
+
+
+**Version 0.9.8  |  2020/9/24**
+
+1. **功能流程图思路**
+
+ <img src="https://raw.githubusercontent.com/YangLiang-SoftWise/images/master/img/login verify.png" alt="login verify" style="zoom: 33%;" />
+
+
+
+2. **实现功能: 登录验证**
+
+3. **Code组成**
+   1. 前端
+      1. main.js - 过滤 ['/home', '/goods', '/login', '/register', '/product', '/thanks', '/search', '/refreshsearch', '/refreshgoods']
+      2. login.vue - username，password，kapatcha 登录信息
+   2. 后端
+      1. user-service
+         1. KaptchaServiceImp
+            1. getKaptchaCode - 获取 imgcode
+            2. validateKaptcha - 验证 imgcode
+         2. UserLoginServiceImp
+            1. login - 验证username，password，kapatcha，生成token
+            2. validToken - 解析token
+      2. user-sdk
+         1. TokenIntercepter - 过滤拦截token，通过validToken 解析，判断
+         2. @Anoymous注解 - 未被标记的handerMethod 都需token验证
+      3. alanmall-user
+         1. KaptchaController
+            1. getKaptchaCode - 根据获取的imgcode，放入cookie
+            2. validatakaptchaCode - redis库与request code compare
+         2. LoginController
+            1. login - 根据生成的token，放入cookie
+
+
 
 ## card系统重构
 
@@ -47,8 +84,8 @@ Distributed ecological technology - Write by yliang 2020/9/8
    4. rabbitmq 消息队列
    5. mysql 关系型数据库
    6. mongoDB 非关系型数据库
-   6. vuejs 前端控制
-   7. Nginx 网关限制
+   7. vuejs 前端控制
+   8. Nginx 网关限制
 
 
 
