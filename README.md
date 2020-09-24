@@ -12,7 +12,7 @@
 
 1. **功能流程图思路**
 
- <img src="https://raw.githubusercontent.com/YangLiang-SoftWise/images/master/img/login verify.png" alt="login verify" style="zoom: 33%;" />
+ <img src="https://raw.githubusercontent.com/YangLiang-SoftWise/images/master/img/login verify.png" alt="login verify" style="zoom: 20%;" />
 
 
 
