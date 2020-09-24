@@ -12,7 +12,7 @@
 
 1. **功能流程图思路**
 
- <img src="https://raw.githubusercontent.com/YangLiang-SoftWise/images/master/img/login verify.png" alt="login verify" style="zoom: 33%;" />
+ <img src="https://raw.githubusercontent.com/YangLiang-SoftWise/images/master/img/login verify.png" alt="login verify" style="zoom: 20%;" />
 
 
 
@@ -22,8 +22,13 @@
 
    1. 前端
 
-      1. main.js - 过滤 ['/home', '/goods', '/login', '/register', '/product', '/thanks', '/search', '/refreshsearch', '/refreshgoods']
-      2. login.vue - username，password，kapatcha 登录信息
+      1. main.js
+
+         > 过滤 ['/home', '/goods', '/login', '/register', '/product', '/thanks', '/search', '/refreshsearch', '/refreshgoods'] 
+
+      2. login.vue
+
+         > username，password，kapatcha 登录信息
 
    2. 后端
 
