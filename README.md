@@ -1,4 +1,4 @@
-# Alanmall
+## Alanmall
 
 > Distributed ecological technology - Written by yliang 2020/9/8 | 禁止商业用途，转载请注明
 
@@ -8,7 +8,7 @@
 
 
 
-**Version 0.9.8  |  2020/9/24**
+## **Version 0.9.8  |  2020/9/24**
 
 1. **功能流程图思路**
 
