@@ -10,7 +10,7 @@
 
 **Version 0.9.8  |  2020/9/24**
 
-1. **功能流程图思路**
+1. **流程图思路**
 
  <img src="https://raw.githubusercontent.com/YangLiang-SoftWise/images/master/img/login verify.png" alt="login verify" style="zoom: 20%;" />
 
