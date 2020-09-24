@@ -1,5 +1,11 @@
+D:\Projectforming\workspace\alanmall\user-service\user-api\src\main\java\com\itcrazy\alanmall\user\dto\CheckAuthResponse.java
+D:\Projectforming\workspace\alanmall\user-service\user-api\src\main\java\com\itcrazy\alanmall\user\dto\CheckAuthRequest.java
+D:\Projectforming\workspace\alanmall\user-service\user-api\src\main\java\com\itcrazy\alanmall\user\dto\KaptchaCodeResponse.java
+D:\Projectforming\workspace\alanmall\user-service\user-api\src\main\java\com\itcrazy\alanmall\user\IKaptchaService.java
 D:\Projectforming\workspace\alanmall\user-service\user-api\src\main\java\com\itcrazy\alanmall\user\dto\UserRegistryResponse.java
+D:\Projectforming\workspace\alanmall\user-service\user-api\src\main\java\com\itcrazy\alanmall\user\dto\KaptchaCodeRequest.java
 D:\Projectforming\workspace\alanmall\user-service\user-api\src\main\java\com\itcrazy\alanmall\user\ITestService.java
+D:\Projectforming\workspace\alanmall\user-service\user-api\src\main\java\com\itcrazy\alanmall\user\constants\SysRetCodeConstants.java
 D:\Projectforming\workspace\alanmall\user-service\user-api\src\main\java\com\itcrazy\alanmall\user\dto\UserRegistryRequest.java
 D:\Projectforming\workspace\alanmall\user-service\user-api\src\main\java\com\itcrazy\alanmall\user\IUserLoginService.java
 D:\Projectforming\workspace\alanmall\user-service\user-api\src\main\java\com\itcrazy\alanmall\user\dto\UserLoginRequest.java

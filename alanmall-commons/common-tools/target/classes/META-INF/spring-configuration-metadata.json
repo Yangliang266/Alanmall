@@ -7,8 +7,8 @@
     },
     {
       "name": "spring.redisson",
-      "type": "com.itcrazy.alanmall.common.redis.redisson.ReddissonProperties",
-      "sourceType": "com.itcrazy.alanmall.common.redis.redisson.ReddissonProperties"
+      "type": "com.itcrazy.alanmall.common.redis.redissonConfig.ReddissonProperties",
+      "sourceType": "com.itcrazy.alanmall.common.redis.redissonConfig.ReddissonProperties"
     }
   ],
   "properties": [
@@ -100,28 +100,28 @@
     {
       "name": "spring.redisson.address",
       "type": "java.lang.String",
-      "sourceType": "com.itcrazy.alanmall.common.redis.redisson.ReddissonProperties"
+      "sourceType": "com.itcrazy.alanmall.common.redis.redissonConfig.ReddissonProperties"
     },
     {
       "name": "spring.redisson.data-base",
       "type": "java.lang.Integer",
-      "sourceType": "com.itcrazy.alanmall.common.redis.redisson.ReddissonProperties",
+      "sourceType": "com.itcrazy.alanmall.common.redis.redissonConfig.ReddissonProperties",
       "defaultValue": 0
     },
     {
       "name": "spring.redisson.password",
       "type": "java.lang.String",
-      "sourceType": "com.itcrazy.alanmall.common.redis.redisson.ReddissonProperties"
+      "sourceType": "com.itcrazy.alanmall.common.redis.redissonConfig.ReddissonProperties"
     },
     {
       "name": "spring.redisson.pool",
-      "type": "com.itcrazy.alanmall.common.redis.redisson.RedissonPoolProperties",
-      "sourceType": "com.itcrazy.alanmall.common.redis.redisson.ReddissonProperties"
+      "type": "com.itcrazy.alanmall.common.redis.redissonConfig.RedissonPoolProperties",
+      "sourceType": "com.itcrazy.alanmall.common.redis.redissonConfig.ReddissonProperties"
     },
     {
       "name": "spring.redisson.timeout",
       "type": "java.lang.Integer",
-      "sourceType": "com.itcrazy.alanmall.common.redis.redisson.ReddissonProperties",
+      "sourceType": "com.itcrazy.alanmall.common.redis.redissonConfig.ReddissonProperties",
       "defaultValue": 0
     }
   ],

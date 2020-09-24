@@ -18,15 +18,18 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <artifactId>user-api</artifactId>
-            <groupId>com.itcrazy.alanmall.user</groupId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.gpmall.commons</groupId>-->
+<!--            <artifactId>commons-tool</artifactId>-->
+<!--            <version>1.0-SNAPSHOT</version>-->
+<!--        </dependency>-->
         <dependency>
             <artifactId>common-core</artifactId>
             <groupId>com.itcrazy.alanmall.common</groupId>
-            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <artifactId>common-tools</artifactId>
+            <groupId>com.itcrazy.alanmall.common</groupId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -43,31 +46,25 @@
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
-            <version>2.7.3</version>
         </dependency>
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo</artifactId>
-            <version>2.7.3</version>
         </dependency>
 
         <!--zookeeper-->
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
-            <version>3.4.6</version>
             <type>pom</type>
         </dependency>
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-recipes</artifactId>
-            <!-- <version>2.10.0</version>-->
-            <version>4.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-framework</artifactId>
-            <version>4.2.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

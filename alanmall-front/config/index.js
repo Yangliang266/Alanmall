@@ -11,19 +11,23 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/test/**': {
-        target: 'http://localhost:8091',
+      // '/test/**': {
+      //   target: 'http://localhost:8091',
+      //   changeOrigin: true
+      //   // pathRewrite: {
+      //   //   '^/test': '/'
+      //   // }
+      // },
+      // '/api/**': {
+      //   target: 'http://localhost:8091',
+      //   changeOrigin: true
+      //   // pathRewrite: {
+      //   //   '^/api': ''
+      //   // }
+      // },
+      '/user/**': {
+        target: 'http://localhost:8095',
         changeOrigin: true
-        // pathRewrite: {
-        //   '^/test': '/'
-        // }
-      },
-      '/api/**': {
-        target: 'http://localhost:8091',
-        changeOrigin: true
-        // pathRewrite: {
-        //   '^/api': ''
-        // }
       }
     },
 

@@ -2,7 +2,6 @@ package com.itcrazy.alanmall.user.utils;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -10,12 +9,6 @@ import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-/**
- * 腾讯课堂搜索【咕泡学院】
- * 官网：www.gupaoedu.com
- * 风骚的Mic 老师
- * create-date: 2019/7/22-17:41
- */
 @Slf4j
 public class AESUtil {
     //加密或解密内容

@@ -1,7 +1,6 @@
 package com.itcrazy.alanmall.user.controller;
 
 import com.itcrazy.alanmall.user.ITestService;
-import com.itcrazy.alanmall.user.IUserLoginService;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

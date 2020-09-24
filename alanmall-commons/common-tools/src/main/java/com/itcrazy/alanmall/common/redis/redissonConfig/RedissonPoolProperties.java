@@ -1,7 +1,6 @@
-package com.itcrazy.alanmall.common.redis.redisson;
+package com.itcrazy.alanmall.common.redis.redissonConfig;
 
 import lombok.Data;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * @author mathyoung

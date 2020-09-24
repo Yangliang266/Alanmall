@@ -11,11 +11,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
-/**
- * 腾讯课堂搜索 咕泡学院
- * 加群获取视频：608583947
- * 风骚的Michael 老师
- */
 @Slf4j
 @Builder
 public class JwtTokenUtils {

@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Component
-@Data
 public class RedissonConfig {
 
     //private static RedissonClient redissonClient = null;
@@ -50,7 +49,7 @@ public class RedissonConfig {
 
         rBucket.set(val);
 
-        rBucket.expire(expire, TimeUnit.DAYS);
+        rBucket.expire(expire, TimeUnit.SECONDS);
     }
 
 
@@ -68,7 +67,7 @@ public class RedissonConfig {
      **/
     public void expire(String key, int expire) {
         RBucket rBucket = redissonClient.getBucket(key);
-        rBucket.expire(expire, TimeUnit.DAYS);
+        rBucket.expire(expire, TimeUnit.SECONDS);
     }
 
     /**
@@ -81,7 +80,7 @@ public class RedissonConfig {
     public void setMapCache(String key, String field, String value, int expire) {
         RMap<String, String> map = redissonClient.getMap(key);
         map.put(field, value);
-        map.expire(expire, TimeUnit.DAYS);
+        map.expire(expire, TimeUnit.SECONDS);
     }
 
     /**

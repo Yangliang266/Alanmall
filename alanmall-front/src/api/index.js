@@ -8,9 +8,13 @@ export const getAllTest = () => {
 
 export const userInfo = (params) => {
     return http.fetchGet(apis.userInfo, params)
-  }
+}
 
-export const userLogin = () => {
-    return http.fetchGet(apis.login)
+export const userLogin = (params) => {
+    return http.fetchPost(apis.userInfo, params)
+}
+
+export const initKaptcha = (params) => {
+    return http.fetchGet('/user/kaptcha?t=' + (new Date()).getTime(), params)
 }
 

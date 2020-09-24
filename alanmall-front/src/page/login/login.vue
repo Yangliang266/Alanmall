@@ -17,13 +17,13 @@
                 <input type="password" v-model="ruleForm.userPwd" @keyup.enter="login" placeholder="密码">
               </div>
             </li>
-            <!-- <li>
+            <li>
               <div class="input">
                 <input type="text" v-model="ruleForm.captcha" placeholder="验证码"/>
                 &nbsp;&nbsp;&nbsp;
                 <img id="imageCode" :src="imageCode" @click="init_geetest()"/>
               </div>
-            </li> -->
+            </li>
             <li style="text-align: right" class="pr">
               <!-- <el-checkbox class="auto-login" v-model="autoLogin">记住密码</el-checkbox> -->
               <!-- <span class="pa" style="top: 0;left: 0;color: #d44d44">{{ruleForm.errMsg}}</span> -->
@@ -37,6 +37,7 @@
                       :classStyle="ruleForm.userPwd&& ruleForm.userName&& logintxt === '登录'?'main-btn':'disabled-btn'"
                       @btnClick="login"
                       style="margin: 0;width: 100%;height: 48px;font-size: 18px;line-height: 48px"></y-button>
+            <!-- <button @click="login()">登录</button> -->
           </div>
           <!--返回-->
           <div>
@@ -57,7 +58,7 @@
 
 <script src="../../../static/geetest/gt.js"></script>
 <script>
-import { userLogin } from '../../api/index.js'
+import { userLogin, initKaptcha } from '../../api/index.js'
 import YButton from '../../components/YButton'
 import { setStore, getStore, removeStore } from '../../utils/storage.js'
 require('../../../static/geetest/gt.js')
@@ -97,54 +98,41 @@ export default {
     },
     login () {
       this.logintxt = '登录中...'
-      this.rememberPass()
+      // this.rememberPass()
       if (!this.ruleForm.userName || !this.ruleForm.userPwd) {
         this.message('账号或者密码不能为空!')
         return false
       }
-      // if (!this.ruleForm.captcha) {
-      //   this.message('请输入验证码!')
-      //   return false
-      // }
+      if (!this.ruleForm.captcha) {
+        this.message('请输入验证码!')
+        return false
+      }
       var params = {
         userName: this.ruleForm.userName,
-        userPwd: this.ruleForm.userPwd
-        // captcha: this.ruleForm.captcha
+        userPwd: this.ruleForm.userPwd,
+        captcha: this.ruleForm.captcha
       }
       userLogin(params).then(res => {
         if (res.success) {
-          setStore('access_token', res.result.token)
-          setStore('userId', res.result.id)
-          // 登录后添加当前缓存中的购物车
-          if (this.cart.length) {
-            for (var i = 0; i < this.cart.length; i++) {
-              addCart(this.cart[i]).then(res => {
-                if (res.success === true) {
-                }
-              })
-            }
-            removeStore('buyCart')
-            this.$router.push({
+          setStore("token",res.result.token);
+          setStore("user_id",res.result.id);
+          this.$router.push({
               path: '/'
-            })
-          } else {
-            this.$router.push({
-              path: '/'
-            })
-          }
-        } else {
-          this.logintxt = '登录'
-          this.message(res.message)
-          // this.init_geetest()
-          return false
+          })
         }
+      })
+    },
+    init_geetest() {
+      initKaptcha().then(res => {
+        this.imageCode = 'data:image/jpeg;base64,' + res.result
+        console.log(this.imageCode);
       })
     }
   },
   mounted () {
     // this.getRemembered()
     // this.login_addCart()
-    // this.init_geetest()
+    this.init_geetest()
     // this.open('登录提示', '测试体验账号密码：test | test')
   }
   ,

@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration = \
-com.itcrazy.alanmall.common.redis.redisson.RedissonAutoConfigration
+com.itcrazy.alanmall.common.redis.redissonConfig.RedissonAutoConfigration

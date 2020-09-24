@@ -1,8 +1,13 @@
 package com.itcrazy.alanmall.user.dal.entity;
 
+import lombok.Data;
+
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Table(name = "tb_member")
+@Data
 public class Member {
     private Long id;
 

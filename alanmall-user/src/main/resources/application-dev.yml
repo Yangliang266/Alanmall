@@ -15,5 +15,12 @@ dubbo:
   scan:
     basePackages: com.itcrazy.alanmall.user
 
+#spring:
+#  redisson:
+#    address:
+#      nexus.maven.com:6379
+#    timeout: 3000
+#    data-base: 0
 
+captchaFlag : false
 

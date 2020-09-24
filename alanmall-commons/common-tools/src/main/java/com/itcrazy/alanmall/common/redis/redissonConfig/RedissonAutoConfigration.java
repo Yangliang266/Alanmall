@@ -1,4 +1,4 @@
-package com.itcrazy.alanmall.common.redis.redisson;
+package com.itcrazy.alanmall.common.redis.redissonConfig;
 
 import org.apache.commons.lang3.StringUtils;
 import org.redisson.Redisson;
@@ -21,13 +21,14 @@ import org.springframework.context.annotation.Primary;
  */
 @Configuration
 @EnableConfigurationProperties({ReddissonProperties.class})
+@ConditionalOnClass({Redisson.class})
 public class RedissonAutoConfigration {
     @Autowired
     ReddissonProperties reddissonProperties;
 
     @Bean
-    @Primary
-    @ConditionalOnClass({Redisson.class})
+//    @Primary
+//    @ConditionalOnClass({Redisson.class})
     public RedissonClient redissonClient() {
         Config config = new Config();
         String node = reddissonProperties.getAddress();
@@ -55,6 +56,24 @@ public class RedissonAutoConfigration {
         }
         return Redisson.create(config);
     }
+
+//    @Autowired
+//    ReddissonProperties redissonProperties;
+//
+//    @Bean
+//    RedissonClient redissonClient() {
+//        Config config = new Config();
+//        String node = redissonProperties.getAddress();
+//        node = node.startsWith("redis://") ? node : "redis://" + node;
+//        SingleServerConfig serverConfig = config.useSingleServer()
+//                .setAddress(node)
+//                .setTimeout(redissonProperties.getTimeout());
+////                .setConnectionMinimumIdleSize(redissonProperties.getPool().getMinIdle());
+//        if (StringUtils.isNotBlank(redissonProperties.getPassword())) {
+//            serverConfig.setPassword(redissonProperties.getPassword());
+//        }
+//        return Redisson.create(config);
+//    }
 
 
 }

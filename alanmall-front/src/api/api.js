@@ -3,7 +3,7 @@ export const apis = {
     test: "/user/test",
 
     // alanmall login
-    login: "/user/login",
+    // login: "/user/login",
     userInfo: '/user/login'
 
 }
