@@ -1,9 +1,9 @@
 
 * [alanmall生态构建](#card%E7%B3%BB%E7%BB%9F%E9%87%8D%E6%9E%84)
-   * [部署前准备](#%E9%83%A8%E7%BD%B2%E5%89%8D%E5%87%86%E5%A4%87)
-     * [部署文件清单](#%E9%83%A8%E7%BD%B2%E6%96%87%E4%BB%B6%E6%B8%85%E5%8D%95)
-     * [部署架构图](#%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E5%9B%BE)
-     * [服务器资源准备、检查及预装](#%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%B5%84%E6%BA%90%E5%87%86%E5%A4%87%E6%A3%80%E6%9F%A5%E5%8F%8A%E9%A2%84%E8%A3%85)
+   * [部署前准备](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E9%83%A8%E7%BD%B2%E5%87%86%E5%A4%87.md)
+     * [部署文件清单](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E9%83%A8%E7%BD%B2%E5%87%86%E5%A4%87.md)
+     * [部署架构图](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E9%83%A8%E7%BD%B2%E5%87%86%E5%A4%87.md)
+     * [服务器资源准备、检查及预装](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E9%83%A8%E7%BD%B2%E5%87%86%E5%A4%87.md)
    * [网关部署及策略](#%E7%BD%91%E5%85%B3%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5)
      * [Nginx 部署](#nginx-%E9%83%A8%E7%BD%B2)
      * [Keepalived 双机热备部署](#keepalived-%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87%E9%83%A8%E7%BD%B2)
