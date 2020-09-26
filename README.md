@@ -1,12 +1,12 @@
 
 * [alanmall生态构建](#card%E7%B3%BB%E7%BB%9F%E9%87%8D%E6%9E%84)
-   * [部署前准备](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E9%83%A8%E7%BD%B2%E5%87%86%E5%A4%87.md)
+   * [部署前准备]
      * [部署文件清单](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E9%83%A8%E7%BD%B2%E5%87%86%E5%A4%87.md)
      * [部署架构图](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E9%83%A8%E7%BD%B2%E5%87%86%E5%A4%87.md)
      * [服务器资源准备、检查及预装](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E9%83%A8%E7%BD%B2%E5%87%86%E5%A4%87.md)
-   * [网关部署及策略](#%E7%BD%91%E5%85%B3%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5)
-     * [Nginx 部署](#nginx-%E9%83%A8%E7%BD%B2)
-     * [Keepalived 双机热备部署](#keepalived-%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87%E9%83%A8%E7%BD%B2)
+   * [网关部署及策略]
+     * [Nginx 部署](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E7%BD%91%E5%85%B3%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5.md)
+     * [Keepalived 双机热备部署](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E7%BD%91%E5%85%B3%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5.md)
    * [MongoDB 部署](#mongodb-%E9%83%A8%E7%BD%B2)
    * [Redis 部署及策略](#redis-%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5)
      * [Redis 单点部署步骤](#redis-%E5%8D%95%E7%82%B9%E9%83%A8%E7%BD%B2%E6%AD%A5%E9%AA%A4)
