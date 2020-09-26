@@ -1,5 +1,5 @@
 * [Alanmall](#alanmall)
-  * [card系统重构](#card%E7%B3%BB%E7%BB%9F%E9%87%8D%E6%9E%84)
+  * [alanmall生态构建](#card%E7%B3%BB%E7%BB%9F%E9%87%8D%E6%9E%84)
     * [部署前准备](#%E9%83%A8%E7%BD%B2%E5%89%8D%E5%87%86%E5%A4%87)
       * [部署文件清单](#%E9%83%A8%E7%BD%B2%E6%96%87%E4%BB%B6%E6%B8%85%E5%8D%95)
       * [部署架构图](#%E9%83%A8%E7%BD%B2%E6%9E%B6%E6%9E%84%E5%9B%BE)
