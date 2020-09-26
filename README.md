@@ -13,7 +13,7 @@
      * [Redis 集群闭环部署（Redis\-Cluster 三主三从）](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/Redis%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5)
        * [<strong>前提</strong>](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/Redis%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5)
        * [<strong>安装步骤</strong>](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/Redis%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5)
-   * [ZooKeeper 部署及策略](#zookeeper-%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5)
-     * [ZooKeeper 服务的安装](#zookeeper-%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%89%E8%A3%85)
-     * [验证](#%E9%AA%8C%E8%AF%81)
-     * [开机自启动](#%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF%E5%8A%A8)
+   * [ZooKeeper 部署及策略]
+     * [ZooKeeper 服务的安装](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/Zookeeper%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5.md)
+     * [验证](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/Zookeeper%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5.md)
+     * [开机自启动](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/Zookeeper%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5.md)
