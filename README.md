@@ -4,8 +4,8 @@
 
 > 整体环境部署完毕，部分功能未开发，持续更新，以下为更新，bug修正日志
 * [Alanmall日志log]
-   * [Version 0.9.8.1  |  2020/9/24](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E9%83%A8%E7%BD%B2%E5%87%86%E5%A4%87.md)
-   * [Version 0.9.8.5  |  2020/9/26](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E9%83%A8%E7%BD%B2%E5%87%86%E5%A4%87.md)
+   * [Version 0.9.8.1  |  2020/9/24](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/version%200.9.8.1.md)
+   * [Version 0.9.8.5  |  2020/9/26](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/version%200.9.8.1.md)
 
 * [Alanmall生态构建]
    * [部署前准备]
