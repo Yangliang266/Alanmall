@@ -7,7 +7,7 @@
    * [网关部署及策略]
      * [Nginx 部署](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E7%BD%91%E5%85%B3%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5.md)
      * [Keepalived 双机热备部署](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E7%BD%91%E5%85%B3%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5.md)
-   * [MongoDB 部署](#mongodb-%E9%83%A8%E7%BD%B2)
+   * [MongoDB 部署](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/%E9%83%A8%E7%BD%B2%E5%87%86%E5%A4%87.md)
    * [Redis 部署及策略](#redis-%E9%83%A8%E7%BD%B2%E5%8F%8A%E7%AD%96%E7%95%A5)
      * [Redis 单点部署步骤](#redis-%E5%8D%95%E7%82%B9%E9%83%A8%E7%BD%B2%E6%AD%A5%E9%AA%A4)
      * [Redis 集群闭环部署（Redis\-Cluster 三主三从）](#redis-%E9%9B%86%E7%BE%A4%E9%97%AD%E7%8E%AF%E9%83%A8%E7%BD%B2redis-cluster-%E4%B8%89%E4%B8%BB%E4%B8%89%E4%BB%8E)
