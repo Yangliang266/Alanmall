@@ -1,9 +1,87 @@
 # Alanmall
-Distributed ecological technology - Write by yliang 2020/9/8
+> Distributed ecological technology - Written by yliang 2020/9/8 | 禁止商业用途，转载请注明
 
-具体代码 点击上方**View code**一览。
+> 具体代码 点击上方**View code**一览。
 
-整体环境部署完毕，部分功能未开发，持续更新，指正bug
+> 整体环境部署完毕，部分功能未开发，持续更新，以下为更新，bug修正日志
+
+
+
+**Version 0.9.8  |  2020/9/24**
+
+1. **功能流程图思路**
+
+ <img src="https://raw.githubusercontent.com/YangLiang-SoftWise/images/master/img/login verify.png" alt="login verify" style="zoom: 33%;" />
+
+
+
+2. **实现功能: 登录验证**
+
+3. **Code组成**
+
+   1. 前端
+
+      1. main.js
+
+         > 过滤 ['/home', '/goods', '/login', '/register', '/product', '/thanks', '/search', '/refreshsearch', '/refreshgoods'] 
+
+      2. login.vue
+
+         > username，password，kapatcha 登录信息
+
+   2. 后端
+
+      1. user-service
+
+         1. KaptchaServiceImp
+
+            1. getKaptchaCode
+
+               > 获取 imgcode
+
+            2. validateKaptcha 
+
+               > 验证 imgcode
+
+         2. UserLoginServiceImp
+
+            1. login
+
+               > 验证unm,upaw,ukatc生成token
+
+            2. validToken
+
+               > 解析token
+
+      2. user-sdk
+
+         1. TokenIntercepter
+
+            > 拦截token，通过validToken 解析判断
+
+         2. @Anoymous注解
+
+            > 未被标记的handerMethod 需token验证
+
+      3. alanmall-user
+
+         1. KaptchaController
+
+            1. getKaptchaCode
+
+               > 根据获取的imgcode，放入cookie
+
+            2. validatakaptchaCode
+
+               > redis库与request code compare
+
+         2. LoginController
+
+            1. login
+
+               > 根据生成的token，放入cookie
+
+
 
 ## card系统重构
 
@@ -390,19 +468,19 @@ ping 10.192.11.103   // 测试虚拟IP是否启动
 
 ### MongoDB 部署
 
-\1. 官网下载 mongodb-linux-x86_64-rhel70-3.4.2.tgz。
+1. 官网下载 mongodb-linux-x86_64-rhel70-3.4.2.tgz。
 
 > https://www.mongodb.com/download-center?jmp=nav#community
 
-\2. 解压 mongodb-linux-x86_64-rhel70-3.4.2.tgz。
+2. 解压 mongodb-linux-x86_64-rhel70-3.4.2.tgz。
 
 ```
 tar -zxvf mongodb-linux-x86_64-rhel70-3.4.2.tgz
 ```
 
-\3. 将 mongodb-linux-x86_64-rhel70-3.4.2 重命名 mongodb3.4.2。
+3. 将 mongodb-linux-x86_64-rhel70-3.4.2 重命名 mongodb3.4.2。
 
-\4. 创建数据和日志目录：
+4. 创建数据和日志目录：
 
 ```
 cd /mongodb3.4.2
@@ -410,13 +488,13 @@ mkdir data
 mkdir log
 ```
 
-\5. 在 log 文件夹下创建 mongodb.log 文件：
+5. 在 log 文件夹下创建 mongodb.log 文件：
 
 ```
 vi mongodb.log
 ```
 
-\6. 创建启动配置文件 mongodb.config：
+6. 创建启动配置文件 mongodb.config：
 
 ```
 cd bin
@@ -429,25 +507,25 @@ bind_ip=10.1.1.65
 port=27017
 ```
 
-\7. 启动 MongoDB：
+7. 启动 MongoDB：
 
 ```
 ./mongod --config mongodb.config
 ```
 
-\8. 查看 MongoDB 进程：
+8. 查看 MongoDB 进程：
 
 ```
 ps -ef | grep mongod
 ```
 
-\9. 检查端口是否已被启动：
+9. 检查端口是否已被启动：
 
 ```
 netstat -lanp | grep 27017
 ```
 
-\10. 将 MongoDB 服务加入到自启动文件中：
+10. 将 MongoDB 服务加入到自启动文件中：
 
 ```
 vi /etc/rc.local 

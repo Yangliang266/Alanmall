@@ -24,7 +24,7 @@ public class KaptchaController {
     IKaptchaService iKaptchaService;
 
     @Anoymous
-    @GetMapping("kaptcha")
+    @GetMapping("/kaptcha")
     public ResponseData getKaptchaCode(HttpServletResponse response) {
         KaptchaCodeRequest kaptchaCodeRequest = new KaptchaCodeRequest();
 

@@ -49,7 +49,7 @@
                         <router-link to="/user/coupon">我的优惠</router-link>
                       </li>
                       <li>
-                        <a href="javascript:;" @click="_loginOut">退出</a>
+                        <a href="javascript:;" @click="_loginOut()">退出</a>
                       </li>
                     </ul>
                   </div>
@@ -66,7 +66,7 @@
   import YButton from '../components/YButton'
   import { mapMutations, mapState } from 'vuex'
 //   import { getQuickSearch, getCartList, cartDel, getAllGoodsCategories } from '/api/goods'
-//   import { loginOut, navList, recommend } from '/api/index'
+  import { loginOut } from '../api/index'
   import { setStore, getStore, removeStore } from '../utils/storage'
 
   // import store from '../store/'
@@ -104,12 +104,28 @@
       }
     },
     computed: {
+      // 初始化状态值
       ...mapState([
         'cartList', 'login', 'receiveInCart', 'showCart', 'userInfo'
       ]),
     },
     methods: {
-      
+      // 初始化状态值的方法
+      ...mapMutations(['RECORD_USERINFO']),
+      // 退出登陆
+      _loginOut () {
+        let params = {
+          params: {
+            token: this.token
+          }
+        }
+        loginOut(params).then(res => {
+          // removeStore('buyCart')
+          // window.location.href = '/';
+          console.log(res.result.token);
+          
+        })
+      }
     },
     mounted () {
      

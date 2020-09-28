@@ -116,8 +116,9 @@ export default {
         if (res.success) {
           setStore("token",res.result.token);
           setStore("user_id",res.result.id);
+          console.log(res.result.token);
           this.$router.push({
-              path: '/'
+              path: '/index'
           })
         }
       })

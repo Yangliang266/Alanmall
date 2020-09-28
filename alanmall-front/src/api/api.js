@@ -4,6 +4,7 @@ export const apis = {
 
     // alanmall login
     // login: "/user/login",
-    userInfo: '/user/login'
+    userInfo: '/user/login',
+    loginOut: '/user/loginOut',
 
 }

@@ -14,6 +14,11 @@ export const userLogin = (params) => {
     return http.fetchPost(apis.userInfo, params)
 }
 
+// 退出登陆
+export const loginOut = (params) => {
+    return http.fetchGet(apis.loginOut, params)
+}
+
 export const initKaptcha = (params) => {
     return http.fetchGet('/user/kaptcha?t=' + (new Date()).getTime(), params)
 }

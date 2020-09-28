@@ -130,10 +130,14 @@ public class UserLoginServiceImp implements IUserLoginService {
         try {
             // 解析token
             String decoderMsg = JwtTokenUtils.builder().token(checkAuthRequest.getToken()).build().freeJwt();
+            log.info(decoderMsg);
+
 
             if (StringUtils.isNoneBlank(decoderMsg)) {
                 log.info("validToken success");
                 checkAuthResponse.setUserinfo(decoderMsg);
+                checkAuthResponse.setCode(SysRetCodeConstants.SUCCESS.getCode());
+                checkAuthResponse.setMsg(SysRetCodeConstants.SUCCESS.getMessage());
                 return checkAuthResponse;
             }
         } catch (Exception e) {

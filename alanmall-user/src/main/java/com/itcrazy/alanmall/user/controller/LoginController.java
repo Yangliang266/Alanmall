@@ -1,5 +1,6 @@
 package com.itcrazy.alanmall.user.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.itcrazy.alanmall.common.result.ResponseData;
 import com.itcrazy.alanmall.common.result.ResponseUtil;
 import com.itcrazy.alanmall.common.util.CookieUtil;
@@ -14,10 +15,7 @@ import com.itcrazy.alanmall.user.dto.UserLoginResponse;
 import com.itcrazy.alanmall.user.intercepter.TokenIntercepter;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -58,7 +56,7 @@ public class LoginController {
             KaptchaCodeResponse kaptchaCodeResponse = iKaptchaService.validateKaptcha(kaptchaCodeRequest);
 
             if (!kaptchaCodeResponse.getCode().equals(SysRetCodeConstants.SUCCESS.getCode())) {
-                return new ResponseUtil<>().setErrorMsg(kaptchaCodeResponse.getMsg());
+                return new ResponseUtil().setErrorMsg(kaptchaCodeResponse.getMsg());
             }
         }
 
@@ -71,6 +69,29 @@ public class LoginController {
             return new ResponseUtil().setData(userLoginResponse);
         }
         return new ResponseUtil().setErrorMsg(userLoginResponse.getMsg());
+    }
+
+    @GetMapping("/login")
+    public ResponseData checkLogin(HttpServletRequest request){
+        String userInfo=(String)request.getAttribute(TokenIntercepter.USER_INFO_KEY);
+        Object object= JSON.parse(userInfo);
+        return new ResponseUtil().setData(object);
+    }
+
+    @GetMapping("/loginOut")
+    public ResponseData loginOut(HttpServletRequest request,HttpServletResponse response){
+        Cookie[] cookies = request.getCookies();
+        if (null!=cookies) {
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals(TokenIntercepter.ACCESS_TOKEN)){
+                    cookie.setValue(null);
+                    cookie.setMaxAge(0);// 立即销毁cookie
+                    cookie.setPath("/");
+                    response.addCookie(cookie); //覆盖原来的token
+                }
+            }
+        }
+        return new ResponseUtil().setData(null);
     }
 
 }

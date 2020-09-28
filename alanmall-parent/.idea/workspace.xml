@@ -5,54 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5889d0bd-33c4-40ea-b518-4e40bdb27f97" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../alanmall-commons/.idea/alanmall-commons.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-user/src/main/java/com/itcrazy/alanmall/user/controller/KaptchaController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-user/src/main/java/com/itcrazy/alanmall/user/controller/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../user-service/user-api/src/main/java/com/itcrazy/alanmall/user/IKaptchaService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../user-service/user-api/src/main/java/com/itcrazy/alanmall/user/dto/KaptchaCodeRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../user-service/user-api/src/main/java/com/itcrazy/alanmall/user/dto/KaptchaCodeResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/service/KaptchaServiceImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-tools/src/main/java/com/itcrazy/alanmall/common/redis/redisson/ReddissonProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-tools/src/main/java/com/itcrazy/alanmall/common/redis/redissonConfig/ReddissonProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-tools/src/main/java/com/itcrazy/alanmall/common/redis/redisson/RedissonAutoConfigration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-tools/src/main/java/com/itcrazy/alanmall/common/redis/redissonConfig/RedissonAutoConfigration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-tools/src/main/java/com/itcrazy/alanmall/common/redis/redisson/RedissonPoolProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-tools/src/main/java/com/itcrazy/alanmall/common/redis/redissonConfig/RedissonPoolProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-tools/src/main/resources/META-INF/spring.factories" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-tools/src/main/resources/META-INF/spring.factories" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-tools/target/classes/META-INF/spring-configuration-metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-tools/target/classes/META-INF/spring-configuration-metadata.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-tools/target/classes/META-INF/spring.factories" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-tools/target/classes/META-INF/spring.factories" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-tools/target/classes/com/itcrazy/alanmall/common/redis/redisson/ReddissonProperties.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-tools/target/classes/com/itcrazy/alanmall/common/redis/redisson/RedissonAutoConfigration.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-tools/target/classes/com/itcrazy/alanmall/common/redis/redisson/RedissonPoolProperties.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-tools/target/common-tools-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-tools/target/common-tools-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-tools/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-tools/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-front/config/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-front/config/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-user/src/main/java/com/itcrazy/alanmall/user/config/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../alanmall-front/src/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-front/src/api/api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../alanmall-front/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-front/src/api/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-front/src/common/header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-front/src/common/header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-front/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-front/src/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../alanmall-front/src/page/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-front/src/page/login/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-front/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-front/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../alanmall-user/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-user/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-user/src/main/java/com/itcrazy/alanmall/user/controller/Example.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-user/src/main/java/com/itcrazy/alanmall/user/controller/KaptchaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-user/src/main/java/com/itcrazy/alanmall/user/controller/KaptchaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-user/src/main/java/com/itcrazy/alanmall/user/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-user/src/main/java/com/itcrazy/alanmall/user/controller/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../alanmall-user/src/main/java/com/itcrazy/alanmall/user/controller/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-user/src/main/java/com/itcrazy/alanmall/user/controller/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-user/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-user/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-user/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-user/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-users/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-users/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-users/src/main/java/com/itcrazy/alanmall/users/AlanmallUsersApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-users/src/main/java/com/itcrazy/alanmall/users/AlanmallUsersApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-users/src/main/java/com/itcrazy/alanmall/users/controller/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-users/src/main/java/com/itcrazy/alanmall/users/controller/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-api/target/classes/META-INF/user-api.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-api/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-api/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-api/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-api/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-api/target/user-api-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-api/target/user-api-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/dal/entity/ImageResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/dal/entity/ImageResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/dal/entity/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/dal/entity/Member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/dal/mapper/MemberMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/dal/mapper/MemberMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/dal/mapper/MemberMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/dal/mapper/MemberMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/service/UserLoginImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/service/UserLoginServiceImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/utils/AESUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/utils/AESUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/utils/ExceptionProcessorUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/utils/ExceptionProcessorUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/utils/JwtTokenUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/utils/JwtTokenUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/utils/VerifyCodeUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/utils/VerifyCodeUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/service/UserLoginServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/service/UserLoginServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-service/user-sdk/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-sdk/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-service/user-sdk/src/main/java/com/itcrazy/alanmall/user/intercepter/TokenIntercepter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-sdk/src/main/java/com/itcrazy/alanmall/user/intercepter/TokenIntercepter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,6 +96,7 @@
       <workItem from="1598657546805" duration="2754000" />
       <workItem from="1599716833533" duration="855000" />
       <workItem from="1600741922553" duration="1991000" />
+      <workItem from="1601255426450" duration="772000" />
     </task>
     <servers />
   </component>
@@ -141,22 +112,22 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="549" y="209" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1598658099585" />
-    <state width="1478" height="194" key="GridCell.Tab.0.bottom" timestamp="1598848301071">
+    <state width="1442" height="212" key="GridCell.Tab.0.bottom" timestamp="1601255598707">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1478" height="194" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1598848301071" />
-    <state width="1478" height="194" key="GridCell.Tab.0.center" timestamp="1598848301070">
+    <state width="1442" height="212" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1601255598707" />
+    <state width="1442" height="212" key="GridCell.Tab.0.center" timestamp="1601255598707">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1478" height="194" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1598848301070" />
-    <state width="1478" height="194" key="GridCell.Tab.0.left" timestamp="1598848301070">
+    <state width="1442" height="212" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1601255598707" />
+    <state width="1442" height="212" key="GridCell.Tab.0.left" timestamp="1601255598707">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1478" height="194" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1598848301070" />
-    <state width="1478" height="194" key="GridCell.Tab.0.right" timestamp="1598848301070">
+    <state width="1442" height="212" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1601255598707" />
+    <state width="1442" height="212" key="GridCell.Tab.0.right" timestamp="1601255598707">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1478" height="194" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1598848301070" />
+    <state width="1442" height="212" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1601255598707" />
     <state x="272" y="96" key="SettingsEditor" timestamp="1599716853621">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -169,9 +140,9 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="178" y="140" key="new project wizard/0.0.1536.864@0.0.1536.864" timestamp="1598657830628" />
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1599716856050">
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1601255583040">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1599716856050" />
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1601255583040" />
   </component>
 </project>

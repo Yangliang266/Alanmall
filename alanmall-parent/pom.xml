@@ -26,6 +26,7 @@
     <alanmall.mscard>1.0-SNAPSHOT</alanmall.mscard>
     <alanmall.merchant>1.0-SNAPSHOT</alanmall.merchant>
     <alanmall.office>1.0-SNAPSHOT</alanmall.office>
+    <alanmall.user.sdk>1.0-SNAPSHOT</alanmall.user.sdk>
     <!--dubbo-->
     <dubbo.version>2.7.3</dubbo.version>
     <dubbo-spring-boot.version>2.7.3</dubbo-spring-boot.version>
@@ -108,6 +109,11 @@
   <dependencyManagement>
     <!--++++++++++++++++++  base application start  ++++++++++++++++++-->
     <dependencies>
+      <dependency>
+        <artifactId>user-sdk</artifactId>
+        <groupId>com.itcrazy.alanmall.user</groupId>
+        <version>${alanmall.user.sdk}</version>
+      </dependency>
       <dependency>
         <artifactId>user-api</artifactId>
         <groupId>com.itcrazy.alanmall.user</groupId>
