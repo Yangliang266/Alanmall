@@ -68,7 +68,7 @@ public class KaptchaServiceImp implements IKaptchaService {
                 return kaptchaCodeResponse;
             }
             kaptchaCodeResponse.setCode(SysRetCodeConstants.KAPTCHA_CODE_ERROR.getCode());
-            kaptchaCodeResponse.setCode(SysRetCodeConstants.KAPTCHA_CODE_ERROR.getMessage());
+            kaptchaCodeResponse.setMsg(SysRetCodeConstants.KAPTCHA_CODE_ERROR.getMessage());
         } catch (Exception e) {
             log.error("KaptchaServiceImpl.validateKaptchaCode occur Exception :"+e);
             ExceptionProcessorUtils.wrapperHandlerException(kaptchaCodeResponse,e);

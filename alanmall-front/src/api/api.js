@@ -6,5 +6,6 @@ export const apis = {
     // login: "/user/login",
     userInfo: '/user/login',
     loginOut: '/user/loginOut',
+    register: '/user/register'
 
 }

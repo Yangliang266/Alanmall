@@ -60,14 +60,14 @@ public class TokenIntercepter extends HandlerInterceptorAdapter {
         if (SysRetCodeConstants.SUCCESS.getCode().equals(checkAuthResponse.getCode())) {
             // 3.3 token验证成功 setAttribute 后续使用
             request.setAttribute(USER_INFO_KEY, checkAuthResponse.getUserinfo());
-            log.info("suucess: " + checkAuthResponse.getUserinfo());
+//            log.info("suucess: " + checkAuthResponse.getUserinfo());
             return super.preHandle(request, response, handler);
         }
 
         ResponseData responseData=new ResponseUtil().setErrorMsg(checkAuthResponse.getMsg());
         response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write(JSON.toJSON(responseData).toString());
-        log.info("fali: " + checkAuthResponse.getUserinfo());
+//        log.info("fali: " + checkAuthResponse.getUserinfo());
         return false;
     }
 

@@ -5,15 +5,15 @@ import com.itcrazy.alanmall.user.dal.entity.Member;
 import tk.mybatis.mapper.common.Mapper;
 
 public interface MemberMapper extends TKMapper<Member> {
-    int deleteByPrimaryKey(Long id);
-
-    int insert(Member record);
-
-    int insertSelective(Member record);
-
-    Member selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Member record);
-
-    int updateByPrimaryKey(Member record);
+//    int deleteByPrimaryKey(Long id);
+//
+//    int insert(Member record);
+//
+//    int insertSelective(Member record);
+//
+//    Member selectByPrimaryKey(Long id);
+//
+//    int updateByPrimaryKeySelective(Member record);
+//
+//    int updateByPrimaryKey(Member record);
 }

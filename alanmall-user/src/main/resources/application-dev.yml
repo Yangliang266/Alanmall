@@ -21,6 +21,6 @@ dubbo:
 #      nexus.maven.com:6379
 #    timeout: 3000
 #    data-base: 0
-
-captchaFlag : false
+user:
+ captchaFlag : true
 

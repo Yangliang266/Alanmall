@@ -35,7 +35,7 @@ public class LoginController {
     /**
      * 验证码开关
      */
-    @Value("${captchaFlag:true}")
+    @Value(value ="${user.captchaFlag}")
     private boolean captchaFlag;
 
     @Anoymous
