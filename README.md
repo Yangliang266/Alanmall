@@ -8,6 +8,7 @@
   * [Version 0.9.1  |  2020/09/24](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/version%200.9.8.1.md)
   * [Version 0.9.3  |  2020/09/26](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/version%200.9.8.1.md)
   * [Version 0.9.5  |  2020/10/10](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/version%200.9.8.1.md)
+  * [Version 0.9.7  |  2020/10/16](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/version%200.9.8.1.md)
   
 * [Alanmall日志Bug]
   * [Bug 0.9.5.1  |  2020/9/28](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/version%200.9.8.1.md)
