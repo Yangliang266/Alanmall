@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: dev
+mybatis:
+  mapper-locations: classpath*:com/itcrazy/alanmall/shopping/dal/persistence/*Mapper.xml"
+  type-aliases-package: com.itcrazy.alanmall.shopping.entitys
+
+#server:
+#  port: 8090

@@ -23,6 +23,7 @@
     <!--base application-->
     <alanmall.commons>1.0-SNAPSHOT</alanmall.commons>
     <alanmall.user>1.0-SNAPSHOT</alanmall.user>
+    <alanmall.shopping>1.0-SNAPSHOT</alanmall.shopping>
     <alanmall.mscard>1.0-SNAPSHOT</alanmall.mscard>
     <alanmall.merchant>1.0-SNAPSHOT</alanmall.merchant>
     <alanmall.office>1.0-SNAPSHOT</alanmall.office>
@@ -118,6 +119,12 @@
         <artifactId>user-api</artifactId>
         <groupId>com.itcrazy.alanmall.user</groupId>
         <version>${alanmall.user}</version>
+      </dependency>
+
+      <dependency>
+        <artifactId>shopping-apis</artifactId>
+        <groupId>com.itcrazy.alanmall.shopping</groupId>
+        <version>${alanmall.shopping}</version>
       </dependency>
 
       <dependency>
