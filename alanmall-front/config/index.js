@@ -28,6 +28,10 @@ module.exports = {
       '/user/**': {
         target: 'http://localhost:8095',
         changeOrigin: true
+      },
+      '/shopping/**': {
+        target: 'http://localhost:8096',
+        changeOrigin: true
       }
     },
 

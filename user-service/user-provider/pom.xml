@@ -6,7 +6,6 @@
         <artifactId>alanmall-parent</artifactId>
         <groupId>com.itcrazy.alanmall.parent</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/>
     </parent>
 
     <groupId>com.itcrazy.alanmall.user</groupId>

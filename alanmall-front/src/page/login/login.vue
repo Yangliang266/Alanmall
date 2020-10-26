@@ -125,7 +125,7 @@ export default {
           setStore("user_id",res.result.id);
           console.log(res.result.token);
           this.$router.push({
-              path: '/index'
+              path: '/'
           })
         }else {
           this.logintxt = '登录'

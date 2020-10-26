@@ -6,6 +6,7 @@ import Login from '@/page/login/login'
 import User from '@/page/user/user'
 import Test from '@/page/test/test'
 import Register from '@/page/login/register'
+import Home from '@/page/home/home'
 
 
 Vue.use(Router)
@@ -13,9 +14,13 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/index',
+      path: '/',
       name: 'index',
-      component: Index
+      component: Index,
+      redirect: "/home",
+      children: [
+        {path: "home", component: Home}
+      ]
     },
     {path: '/login',name: 'login',component: Login},
     {path: '/register',name: 'register',component: Register},

@@ -12,10 +12,12 @@ import com.itcrazy.alanmall.shopping.dal.persistence.PanelMapper;
 import com.itcrazy.alanmall.shopping.dto.HomePageResponse;
 import com.itcrazy.alanmall.shopping.dto.PanelDto;
 import com.itcrazy.alanmall.shopping.manager.IHomeService;
+import com.itcrazy.alanmall.shopping.service.cache.CacheManager;
 import com.itcrazy.alanmall.shopping.utils.ExceptionProcessorUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Service;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 import java.util.HashSet;
@@ -30,8 +32,12 @@ public class HomeServiceImpl implements IHomeService {
     PanelContentMapper panelContentMapper;
     @Autowired
     ContentConverter contentConverter;
+//    @Autowired
+//    RedissonConfig redissonConfig;
+
     @Autowired
-    RedissonConfig redissonConfig;
+    CacheManager cacheManager;
+
     @Autowired
     PanelMapper panelMapper;
 
@@ -41,8 +47,9 @@ public class HomeServiceImpl implements IHomeService {
         HomePageResponse response=new HomePageResponse();
         response.setCode(ShoppingRetCode.SUCCESS.getCode());
         response.setMsg(ShoppingRetCode.SUCCESS.getMessage());
+
         try {
-            String json= redissonConfig.checkCache(GlobalShopConstants.HOMEPAGE_CACHE_KEY);
+            String json= cacheManager.checkCache(GlobalShopConstants.HOMEPAGE_CACHE_KEY);
             if(StringUtils.isNoneEmpty(json)){
                 List<PanelDto> panelDtoList=JSON.parseArray(json,PanelDto.class);
                 Set set=new HashSet(panelDtoList);
@@ -50,10 +57,11 @@ public class HomeServiceImpl implements IHomeService {
                 return response;
             }
             Example panelExample = new Example(Panel.class);
-            Example.Criteria criteria = panelExample.createCriteria();
-            criteria.andEqualTo("position", 0);
-            criteria.andEqualTo("status", 1);
+            panelExample.createCriteria().
+                andEqualTo("position", 0).
+                andEqualTo("status", 1);
             panelExample.setOrderByClause("sort_order");
+
             List<Panel> panels = panelMapper.selectByExample(panelExample);
             Set<PanelDto> panelContentItemDtos = new HashSet<PanelDto>();
             panels.parallelStream().forEach(panel -> {
@@ -62,7 +70,7 @@ public class HomeServiceImpl implements IHomeService {
                 panelDto.setPanelContentItems(contentConverter.panelContentItem2Dto(panelContentItems));
                 panelContentItemDtos.add(panelDto);
             });
-            redissonConfig.setCache(GlobalShopConstants.HOMEPAGE_CACHE_KEY,JSON.toJSONString(panelContentItemDtos),GlobalShopConstants.HOMEPAGE_EXPIRE_TIME);
+            cacheManager.setCache(GlobalShopConstants.HOMEPAGE_CACHE_KEY,JSON.toJSONString(panelContentItemDtos),GlobalShopConstants.HOMEPAGE_EXPIRE_TIME);
             response.setPanelContentItemDtos(panelContentItemDtos);
         }catch (Exception e){
             log.error("HomeServiceImpl.homepage Occur Exception :"+e);

@@ -24,6 +24,19 @@ export const loginOut = (params) => {
     return http.fetchGet(apis.loginOut, params)
 }
 
+// 首页接口
+export const productHome = (params) => {
+    return http.fetchGet(apis.productHome, params)
+}
+  // 首页接口
+export const navList = (params) => {
+return http.fetchGet(apis.navList, params)
+}
+// 推荐板块
+export const recommend = (params) => {
+return http.fetchGet(apis.recommend, params)
+}
+
 export const initKaptcha = (params) => {
     return http.fetchGet('/user/kaptcha?t=' + (new Date()).getTime(), params)
 }

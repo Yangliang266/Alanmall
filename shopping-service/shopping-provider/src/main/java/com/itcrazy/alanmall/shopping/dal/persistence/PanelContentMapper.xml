@@ -36,9 +36,7 @@
   </sql>
 
   <select id="selectPanelContentAndProductWithPanelId" parameterType="java.lang.Integer" resultMap="BaseResultMapWithItem">
-        select
-        <include refid="Base_Column_List"/>
-        from tb_panel_content t
+        select t.*,f.title,f.price,f.sell_point from tb_panel_content t
         left join tb_item f on t.product_id=f.id where t.panel_id=#{panelId}
         order by t.sort_order
   </select>

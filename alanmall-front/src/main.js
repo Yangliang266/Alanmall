@@ -48,7 +48,7 @@ Vue.use(VueLazyload, {
 
 Vue.config.productionTip = false
 
-const whiteList = ['/index', '/home', '/goods', '/login', '/register', '/product', '/thanks', '/search', '/refreshsearch', '/refreshgoods','/test']
+const whiteList = ['/home', '/goods', '/login', '/register', '/product', '/thanks', '/search', '/refreshsearch', '/refreshgoods','/test']
 
 router.beforeEach(function (to, from, next) {
   // let params = {

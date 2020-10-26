@@ -1,7 +1,7 @@
 <template>
     <div>
         <y-header></y-header>
-        <p>this is body</p>
+        <router-view class="main"></router-view>
         <!-- <a href="" @click="click"></a> -->
         <y-footer></y-footer>
     </div>

@@ -3,7 +3,9 @@ spring:
     active: dev
 mybatis:
   mapper-locations: classpath*:com/itcrazy/alanmall/shopping/dal/persistence/*Mapper.xml"
-  type-aliases-package: com.itcrazy.alanmall.shopping.entitys
-
-#server:
-#  port: 8090
+  type-aliases-package: com.itcrazy.alanmall.shopping.dal.entitys
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
