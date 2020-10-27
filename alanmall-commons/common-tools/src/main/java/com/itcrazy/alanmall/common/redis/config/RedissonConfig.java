@@ -89,13 +89,13 @@ public class RedissonConfig {
         map.expire(expire, TimeUnit.DAYS);
     }
 
-    public boolean checkMapCache(String key, Long field) {
-        RMap<String, String> map = redissonClient.getMap(key);
+    public boolean checkMapCache(String key, String field) {
+        Map<String, String> map = redissonClient.getMap(key);
         return map.containsKey(field);
     }
 
-    public RMap getMap(String key) {
-        RMap<String, String> map = redissonClient.getMap(key);
+    public Map getMap(String key) {
+        Map<String, String> map = redissonClient.getMap(key);
         return map;
     }
 

@@ -3,7 +3,9 @@ package com.itcrazy.alanmall.shopping.converter;
 
 import com.itcrazy.alanmall.shopping.dal.entitys.Item;
 import com.itcrazy.alanmall.shopping.dto.CartProductDto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CartItemConverter {
 
     public static CartProductDto item2Dto(Item item){

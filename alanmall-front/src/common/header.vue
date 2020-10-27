@@ -127,7 +127,7 @@
   import { setStore, getStore, removeStore } from '../utils/storage'
 
   // import store from '../store/'
-  import 'element-ui/lib/theme-default/index.css'
+  import '../../node_modules/element-ui/lib/theme-default/index.css'
 
   export default{
     data () {
@@ -189,6 +189,18 @@
       cartShowState (state) {
         this.SHOW_CART({showCart: state})
       },
+      toCart () {
+        this.$router.push({path: '/cart'})
+      },
+      // 登陆时获取一次购物车商品
+      _getCartList () {
+        getCartList({userId: getStore('user_id')}).then(res => {
+          if (res.success === true) {
+            setStore('buyCart', res.result)
+          }
+          // 重新初始化一次本地数据
+        }).then(this.INIT_BUYCART)
+      },
       openProduct (productId) {
         window.open('//' + window.location.host + '/#/product/' + productId)
       },
@@ -217,7 +229,12 @@
       }
     },
     mounted () {
-     
+      this.token = getStore('token')
+      if (this.login) {
+        this._getCartList()
+      } else {
+        this.INIT_BUYCART()
+      }
     },
     components: {
       YButton

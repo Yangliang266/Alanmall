@@ -42,11 +42,11 @@ public class CartServiceImp implements ICartService {
         List<CartProductDto> list = new ArrayList();
         try {
             // 查询redis
-            Map<String,String> map = redissonConfig.getMap(generatorCartItemKey(cartListByIdRequest.getUserId()));
+            Map<Object,Object> items = redissonConfig.getMap(generatorCartItemKey(cartListByIdRequest.getUserId()));
             // 可能会有多个产品被添加到购物车
-            map.values().forEach(obj -> {
+            items.values().forEach(obj -> {
                 // obj转换
-                CartProductDto cartProductDto = JSON.parseObject(obj, CartProductDto.class);
+                CartProductDto cartProductDto = JSON.parseObject(obj.toString(), CartProductDto.class);
                 list.add(cartProductDto);
             });
             cartListByIdResponse.setCartProductDto(list);
@@ -66,8 +66,8 @@ public class CartServiceImp implements ICartService {
         addCartResponse.setMsg(ShoppingRetCode.SUCCESS.getMessage());
         try {
             // check redis 是否存在此类商品信息
-            if (redissonConfig.checkMapCache(addCartRequest.getUserId().toString(),
-                    addCartRequest.getItemId())) {
+            if (redissonConfig.checkMapCache(generatorCartItemKey(addCartRequest.getUserId()),
+                    addCartRequest.getItemId().toString())) {
                 // 解析json
                 String json = redissonConfig.getMap(generatorCartItemKey(addCartRequest.getUserId())).get(addCartRequest.getItemId()).toString();
 
@@ -75,7 +75,7 @@ public class CartServiceImp implements ICartService {
                 // 更新redis 产品数量
                 cartProductDto.setProductNum(cartProductDto.getProductNum() + addCartRequest.getNum());
                 // 设置新的数据到redis
-                redissonConfig.setMapCacheDays(addCartRequest.getUserId().toString(),
+                redissonConfig.setMapCacheDays(generatorCartItemKey(addCartRequest.getUserId()),
                         addCartRequest.getItemId().toString(),
                         JSON.toJSON(cartProductDto).toString(), 1);
 
