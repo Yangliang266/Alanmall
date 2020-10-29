@@ -7,6 +7,7 @@ import User from '@/page/user/user'
 import Test from '@/page/test/test'
 import Register from '@/page/login/register'
 import Home from '@/page/home/home'
+import Product from '@/page/goods/goodsDetails'
 
 
 Vue.use(Router)
@@ -19,7 +20,8 @@ export default new Router({
       component: Index,
       redirect: "/home",
       children: [
-        {path: "home", component: Home}
+        {path: "home", component: Home},
+        {path: "/product/:productId", name: 'product', component: Product}
       ]
     },
     {path: '/login',name: 'login',component: Login},

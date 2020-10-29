@@ -59,6 +59,28 @@ public class CartServiceImp implements ICartService {
     }
 
     @Override
+    public DeleteCartItemResponse deleteCartItem(DeleteCartItemRequest request) {
+        log.info("Begin: CartServiceImp.deleteCartItem");
+        DeleteCartItemResponse response = new DeleteCartItemResponse();
+        try {
+            // 检查redis key field是否存在
+            if (redissonConfig.checkMapCache(
+                    generatorCartItemKey(request.getUserId()),
+                    request.getItemId().toString())) {
+                // 通过redis 操作删除商品缓存
+                redissonConfig.removeMapCache(generatorCartItemKey(request.getUserId()), request.getItemId().toString());
+                response.setCode(ShoppingRetCode.SUCCESS.getCode());
+                response.setMsg(ShoppingRetCode.SUCCESS.getMessage());
+            }
+        } catch (Exception e) {
+            log.error("Error: CartServiceImp.deleteCartItem Occur Exception :"+e);
+            ExceptionProcessorUtils.wrapperHandlerException(response, e);
+        }
+        return response;
+    }
+
+
+    @Override
     public AddCartResponse addToCart(AddCartRequest addCartRequest) {
         log.info("Begin: CartServiceImp addToCart");
         AddCartResponse addCartResponse = new AddCartResponse();

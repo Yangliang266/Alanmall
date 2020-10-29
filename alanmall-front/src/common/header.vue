@@ -14,7 +14,7 @@
               <li _ngcontent-c1=""><a _ngcontent-c1="" class="active" title="在线商城" href="/" target="">在线商城 </a></li>
               <li _ngcontent-c1=""><a _ngcontent-c1="" title="亮仔官网" href="//www.gupaoedu.com" target="_blank"> 亮仔官网 </a></li>
               <li _ngcontent-c1=""><a _ngcontent-c1="" title="Alan社区"  href="//gper.club" target="_blank">Alan社区</a></li>
-              <li _ngcontent-c1=""><a _ngcontent-c1="" title="开源共享"  href="//gper.club" target="_blank">开源共享</a></li>
+              <li _ngcontent-c1=""><a _ngcontent-c1="" title="开源共享"  href="https://github.com/YangLiang-SoftWise/Alanmall" target="_blank">开源共享</a></li>
             </ul>
           </div>
           <div class="right-box">
@@ -49,19 +49,17 @@
                         <router-link to="/user/coupon">我的优惠</router-link>
                       </li>
                       <li>
-                        <a href="javascript:;" @click="_loginOut()">退出</a>
+                        <a href="javascript:;" @click="_loginOut">退出</a>
                       </li>
                     </ul>
                   </div>
                 </div>
               </div>
-
               <div class="shop pr" @mouseover="cartShowState(true)" @mouseout="cartShowState(false)"
                    ref="positionMsg">
                 <router-link to="/cart"></router-link>
                 <span class="cart-num">
-                  <i class="num" :class="{no:totalNum <= 0,move_in_cart:receiveInCart}">{{totalNum}}</i>
-                </span>
+                  <i class="num" :class="{no:totalNum <= 0,move_in_cart:receiveInCart}">{{totalNum}}</i></span>
                 <!--购物车显示块-->
                 <div class="nav-user-wrapper pa active" v-show="showCart">
                   <div class="nav-user-list">
@@ -76,16 +74,20 @@
                                   <div class="item-thumb">
                                     <img :src="item.productImg">
                                   </div>
+
                                   <div class="item-desc">
-                                    <div class="cart-cell"><h4>
-                                      <a href="" v-text="item.productName"></a>
-                                    </h4>
+                                    <div class="cart-cell">
+                                      <h4>
+                                        <a href="" v-text="item.productName"></a>
+                                      </h4>
                                       <!-- <p class="attrs"><span>白色</span></p> -->
-                                      <h6><span class="price-icon">¥</span><span
-                                        class="price-num">{{item.salePrice}}</span><span
-                                        class="item-num">x {{item.productNum}}</span>
-                                      </h6></div>
+                                      <h6>
+                                        <span class="price-icon">¥</span><span class="price-num">{{item.salePrice}}</span>
+                                        <span class="item-num">x {{item.productNum}}</span>
+                                      </h6>
+                                    </div>
                                   </div>
+                                  
                                 </a>
                                 <div class="del-btn del" @click="delGoods(item.productId)">删除</div>
                               </div>
@@ -110,8 +112,6 @@
                   </div>
                 </div>
               </div>
-
-
             </div>
           </div>
         </div>
@@ -226,7 +226,35 @@
           console.log(res.result.token);
           
         })
+      },
+      // 导航栏文字样式改变
+      changePage (v) {
+        this.choosePage = v
+      },
+      changGoods (v, item) {
+        this.changePage(v)
+        if (v === -1) {
+          this.$router.push({
+            path: '/'
+          })
+        } else if (v === -2) {
+          this.$router.push({
+            path: '/refreshgoods'
+          })
+        }
       }
+      // // 通过路由改变导航文字样式
+      // getPage () {
+      //   let path = this.$route.path
+      //   // let fullPath = this.$route.fullPath
+      //   if (path === '/' || path === '/home') {
+      //     this.changePage(-1)
+      //   } else if (path === '/goods') {
+      //     this.changePage(-2)
+      //   } else {
+      //     this.changePage(0)
+      //   }
+      // },
     },
     mounted () {
       this.token = getStore('token')
@@ -235,6 +263,7 @@
       } else {
         this.INIT_BUYCART()
       }
+      //  this.getPage()
     },
     components: {
       YButton
@@ -244,6 +273,7 @@
 <style lang="scss" rel="stylesheet/scss" scoped>
   @import "../assets/style/theme";
   @import "../assets/style/mixin";
+  @import "../assets/style/index";
 
   .move_in_cart {
     animation: mymove .5s ease-in-out;

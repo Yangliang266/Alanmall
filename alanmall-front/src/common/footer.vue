@@ -81,6 +81,7 @@
   }
 </script>
 <style lang="scss" rel="stylesheet/scss" scoped>
+  @import "../assets/style/index";
   .footer {
     padding: 50px 0 20px;
     border-top: 1px solid #e6e6e6;

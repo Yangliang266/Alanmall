@@ -27,12 +27,9 @@ public class RedissonConfig {
     public String checkCache(String key) {
         try {
             RBucket rBucket = redissonClient.getBucket(key);
-
-            String str = rBucket.get().toString();
-
-            return str;
-        } catch (Exception e) {
-            e.printStackTrace();
+            String string = rBucket.get().toString();
+            return rBucket.get().toString();
+        }catch (Exception e){
             return null;
         }
     }
@@ -65,9 +62,14 @@ public class RedissonConfig {
      * @Author Mathyoung
      * @Date 2020.07.09 20:19
      **/
-    public void expire(String key, int expire) {
+    public void expireSeconds(String key, int expire) {
         RBucket rBucket = redissonClient.getBucket(key);
         rBucket.expire(expire, TimeUnit.SECONDS);
+    }
+
+    public void expireDay(String key, int expire) {
+        RBucket rBucket = redissonClient.getBucket(key);
+        rBucket.expire(expire, TimeUnit.DAYS);
     }
 
     /**
@@ -92,6 +94,11 @@ public class RedissonConfig {
     public boolean checkMapCache(String key, String field) {
         Map<String, String> map = redissonClient.getMap(key);
         return map.containsKey(field);
+    }
+
+    public void removeMapCache(String key, String field) {
+        Map<String, String> map = redissonClient.getMap(key);
+        map.remove(field);
     }
 
     public Map getMap(String key) {

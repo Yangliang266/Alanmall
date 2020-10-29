@@ -4,10 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.itcrazy.alanmall.common.result.ResponseData;
 import com.itcrazy.alanmall.common.result.ResponseUtil;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
-import com.itcrazy.alanmall.shopping.dto.AddCartRequest;
-import com.itcrazy.alanmall.shopping.dto.AddCartResponse;
-import com.itcrazy.alanmall.shopping.dto.CartListByIdRequest;
-import com.itcrazy.alanmall.shopping.dto.CartListByIdResponse;
+import com.itcrazy.alanmall.shopping.dto.*;
 import com.itcrazy.alanmall.shopping.form.CartForm;
 import com.itcrazy.alanmall.shopping.manager.ICartService;
 import com.itcrazy.alanmall.user.intercepter.TokenIntercepter;
@@ -56,6 +53,22 @@ public class CartController {
         if (response.getCode() == ShoppingRetCode.SUCCESS.getCode()) {
             return new ResponseUtil().setData(response.getCartProductDto());
         }
+        return new ResponseUtil().setErrorMsg(response.getMsg());
+    }
+
+    // 删除购物车
+    @DeleteMapping("/carts/{uid}/{pid}")
+    public ResponseData deleteCarts(@PathVariable long uid, @PathVariable long pid) {
+        DeleteCartItemRequest request = new DeleteCartItemRequest();
+        request.setUserId(uid);
+        request.setItemId(pid);
+
+        DeleteCartItemResponse response = iCartService.deleteCartItem(request);
+
+        if (ShoppingRetCode.SUCCESS.getCode() == response.getCode()) {
+            return new ResponseUtil().setData(response.getMsg());
+        }
+
         return new ResponseUtil().setErrorMsg(response.getMsg());
     }
 
