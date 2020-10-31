@@ -8,6 +8,7 @@ import Test from '@/page/test/test'
 import Register from '@/page/login/register'
 import Home from '@/page/home/home'
 import Product from '@/page/goods/goodsDetails'
+import Cart from '@/page/cart/cart'
 
 
 Vue.use(Router)
@@ -26,7 +27,8 @@ export default new Router({
     },
     {path: '/login',name: 'login',component: Login},
     {path: '/register',name: 'register',component: Register},
-    {path: '/test',name: 'test',component: Test}
+    {path: '/test',name: 'test',component: Test},
+    {path: '/cart', name: 'cart', component: Cart}
     
   ]
 })

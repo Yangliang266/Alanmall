@@ -14,6 +14,7 @@ import com.itcrazy.alanmall.shopping.dto.ProductDetailRequest;
 import com.itcrazy.alanmall.shopping.dto.ProductDetailResponse;
 import com.itcrazy.alanmall.shopping.manager.IProductService;
 import com.itcrazy.alanmall.shopping.utils.ExceptionProcessorUtils;
+import com.itcrazy.alanmall.shopping.utils.ShopGeneratorUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -46,10 +47,12 @@ public class ProductServiceImp implements IProductService {
 
         try {
             // check redis 商品key 是否存在
-            String json = redissonConfig.checkCache(generatorProduceCacheKey(request));
+            String json = redissonConfig.checkCache(ShopGeneratorUtils.getInstance().generatorCartItemKey(request.getId()));
             if(StringUtils.isNotBlank(json)){
                 ProductDetailDto productDetailDto=JSON.parseObject(json, ProductDetailDto.class);
-                redissonConfig.expireDay(generatorProduceCacheKey(request),GlobalShopConstants.PRODUCT_ITEM_EXPIRE_TIME);
+                redissonConfig.expireDay(
+                        ShopGeneratorUtils.getInstance().generatorCartItemKey(request.getId()),
+                        GlobalShopConstants.PRODUCT_ITEM_EXPIRE_TIME);
                 response.setProductDetailDto(productDetailDto);
                 return response;
             }
@@ -76,7 +79,8 @@ public class ProductServiceImp implements IProductService {
             response.setProductDetailDto(productDetailDto);
 
             // 存储到redis
-            redissonConfig.setCache(generatorProduceCacheKey(request),
+            redissonConfig.setCache(
+                    ShopGeneratorUtils.getInstance().generatorCartItemKey(request.getId()),
                     JSON.toJSON(productDetailDto).toString(),
                     GlobalShopConstants.PRODUCT_ITEM_EXPIRE_TIME);
 
@@ -87,10 +91,4 @@ public class ProductServiceImp implements IProductService {
         return response;
     }
 
-
-    private String generatorProduceCacheKey(ProductDetailRequest request){
-        StringBuilder stringBuilder=new StringBuilder(GlobalShopConstants.PRODUCT_ITEM_CACHE_KEY);
-        stringBuilder.append(":").append(request.getId());
-        return stringBuilder.toString();
-    }
 }

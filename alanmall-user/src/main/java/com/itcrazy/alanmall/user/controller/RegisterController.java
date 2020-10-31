@@ -11,9 +11,7 @@ import com.itcrazy.alanmall.user.dto.KaptchaCodeRequest;
 import com.itcrazy.alanmall.user.dto.KaptchaCodeResponse;
 import com.itcrazy.alanmall.user.dto.UserRegisterRequest;
 import com.itcrazy.alanmall.user.dto.UserRegisterResponse;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import org.apache.dubbo.config.annotation.Reference;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,7 +48,7 @@ public class RegisterController {
         KaptchaCodeResponse kaptchaCodeResponse = kaptchaService.validateKaptcha(kaptchaCodeRequest);
 
         // register user
-        if (SysRetCodeConstants.SUCCESS.getCode().equals(kaptchaCodeResponse.getCode())) {
+        if (kaptchaCodeResponse.getCode().equals(SysRetCodeConstants.SUCCESS.getCode())) {
             // imgCode验证通过
             userRegisterResponse = iUserRegisterService.register(userRegisterRequest);
 

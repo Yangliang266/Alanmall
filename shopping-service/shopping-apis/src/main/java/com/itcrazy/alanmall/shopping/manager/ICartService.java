@@ -8,4 +8,6 @@ public interface ICartService {
     CartListByIdResponse getCartListById(CartListByIdRequest cartListByIdRequest);
 
     DeleteCartItemResponse deleteCartItem(DeleteCartItemRequest deleteCartItemRequest);
+
+    UpdateCartNumResponse updateCartNum(UpdateCartNumRequest request);
 }

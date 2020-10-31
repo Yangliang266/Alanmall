@@ -22,10 +22,6 @@ public class ProductController {
         request.setId(id);
         request.requestCheck();
         ProductDetailResponse response = iProductService.getProductDetail(request);
-//        if(ShoppingRetCode.SUCCESS.getCode() == response.getCode()) {
-//            return new ResponseUtil().setData(response.getProductDetailDto());
-//        }
-
         if(response.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
             return new ResponseUtil().setData(response.getProductDetailDto());
         }

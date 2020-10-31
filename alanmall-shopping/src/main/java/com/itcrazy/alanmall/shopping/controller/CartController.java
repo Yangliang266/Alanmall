@@ -5,7 +5,7 @@ import com.itcrazy.alanmall.common.result.ResponseData;
 import com.itcrazy.alanmall.common.result.ResponseUtil;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
 import com.itcrazy.alanmall.shopping.dto.*;
-import com.itcrazy.alanmall.shopping.form.CartForm;
+import com.itcrazy.alanmall.shopping.forms.CartForm;
 import com.itcrazy.alanmall.shopping.manager.ICartService;
 import com.itcrazy.alanmall.user.intercepter.TokenIntercepter;
 import org.apache.dubbo.config.annotation.Reference;
@@ -50,7 +50,7 @@ public class CartController {
         cartListByIdRequest.setUserId(uid);
         CartListByIdResponse response = iCartService.getCartListById(cartListByIdRequest);
 
-        if (response.getCode() == ShoppingRetCode.SUCCESS.getCode()) {
+        if (response.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
             return new ResponseUtil().setData(response.getCartProductDto());
         }
         return new ResponseUtil().setErrorMsg(response.getMsg());
@@ -65,10 +65,27 @@ public class CartController {
 
         DeleteCartItemResponse response = iCartService.deleteCartItem(request);
 
-        if (ShoppingRetCode.SUCCESS.getCode() == response.getCode()) {
+        if (response.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
             return new ResponseUtil().setData(response.getMsg());
         }
 
+        return new ResponseUtil().setErrorMsg(response.getMsg());
+    }
+
+    // 更新购物车数量
+    @PutMapping("/carts")
+    public ResponseData updateCarts(@RequestBody CartForm cartForm) {
+        UpdateCartNumRequest request = new UpdateCartNumRequest();
+        request.setUserId(cartForm.getUserId());
+        request.setChecked(cartForm.getChecked());
+        request.setItemId(cartForm.getProductId());
+        request.setNum(cartForm.getProductNum());
+
+        UpdateCartNumResponse response = iCartService.updateCartNum(request);
+
+        if (response.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
+            return new ResponseUtil().setData(response.getMsg());
+        }
         return new ResponseUtil().setErrorMsg(response.getMsg());
     }
 

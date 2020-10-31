@@ -1,6 +1,4 @@
-package com.itcrazy.alanmall.shopping.form;/**
- * Created by mic on 2019/7/26.
- */
+package com.itcrazy.alanmall.shopping.forms;
 
 import lombok.Data;
 

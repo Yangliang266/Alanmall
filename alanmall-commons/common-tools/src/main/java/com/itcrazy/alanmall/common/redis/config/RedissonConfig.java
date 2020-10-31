@@ -92,18 +92,23 @@ public class RedissonConfig {
     }
 
     public boolean checkMapCache(String key, String field) {
-        Map<String, String> map = redissonClient.getMap(key);
+        RMap<String, String> map = redissonClient.getMap(key);
         return map.containsKey(field);
     }
 
     public void removeMapCache(String key, String field) {
-        Map<String, String> map = redissonClient.getMap(key);
+        RMap<String, String> map = redissonClient.getMap(key);
         map.remove(field);
     }
 
-    public Map getMap(String key) {
-        Map<String, String> map = redissonClient.getMap(key);
+    public RMap getMap(String key) {
+        RMap<String, String> map = redissonClient.getMap(key);
         return map;
+    }
+
+    public String getMapField(String key, String filed) {
+        RMap<String, String> map = redissonClient.getMap(key);
+        return map.get(filed);
     }
 
     /**
