@@ -59,6 +59,7 @@
 <script src="../../../static/geetest/gt.js"></script>
 <script>
 import { userLogin, initKaptcha } from '../../api/index.js'
+import { addCart } from '../../api/goods.js'
 import YButton from '../../components/YButton'
 import { setStore, getStore, removeStore } from '../../utils/storage.js'
 require('../../../static/geetest/gt.js')
@@ -103,6 +104,21 @@ export default {
         message: m
       })
     },
+    // 登陆时将本地的添加到用户购物车
+    login_addCart () {
+      let cartArr = []
+      let locaCart = JSON.parse(getStore('buyCart'))
+      if (locaCart && locaCart.length) {
+        locaCart.forEach(item => {
+          cartArr.push({
+            userId: getStore('user_id'),
+            productId: item.productId,
+            productNum: item.productNum
+          })
+        })
+      }
+      this.cart = cartArr
+    },
     login () {
       this.logintxt = '登录中...'
       // this.rememberPass()
@@ -124,9 +140,24 @@ export default {
           setStore("token",res.result.token);
           setStore("user_id",res.result.id);
           console.log(res.result.token);
-          this.$router.push({
+           // 登录后添加当前缓存中的购物车
+          this.login_addCart();
+          if (this.cart.length) {
+            for (var i = 0; i < this.cart.length; i++) {
+              addCart(this.cart[i]).then(res => {
+                if (res.success === true) {
+                }
+              })
+            }
+            removeStore('buyCart')
+            this.$router.push({
               path: '/'
-          })
+            })
+          } else {
+            this.$router.push({
+              path: '/'
+            })
+          }
         }else {
           this.logintxt = '登录'
           this.message(res.message)

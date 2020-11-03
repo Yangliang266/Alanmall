@@ -123,6 +123,31 @@ public class CartServiceImp implements ICartService {
         return response;
     }
 
+    @Override
+    public SelectAllItemResponse selectAllItem(SelectAllItemRequest request) {
+        log.info("Begin: CartServiceImp selectAllItem");
+        SelectAllItemResponse response = new SelectAllItemResponse();
+        try {
+            Map<Object, Object> items = redissonConfig.getMap(ShopGeneratorUtils.getInstance().generatorCartItemKey(request.getUserId()));
+            items.values().forEach(obj ->{
+                // 解析成对象
+                CartProductDto cartProductDto= JSON.parseObject(obj.toString(), CartProductDto.class);
+                // redis设置成全选
+                cartProductDto.setChecked(request.getCheck());//true / false
+                // 转换成string
+                String json = JSON.toJSON(cartProductDto).toString();
+                items.put(cartProductDto.getProductId().toString(),json);
+            });
+            response.setCode(ShoppingRetCode.SUCCESS.getCode());
+            response.setMsg(ShoppingRetCode.SUCCESS.getMessage());
+        } catch (Exception e) {
+            log.error("CartServiceImp.selectAllItem Occur Exception :" + e);
+            ExceptionProcessorUtils.wrapperHandlerException(response, e);
+        }
+
+        return response;
+    }
+
 
     @Override
     public AddCartResponse addToCart(AddCartRequest addCartRequest) {

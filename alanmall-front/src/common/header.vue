@@ -221,9 +221,10 @@
           }
         }
         loginOut(params).then(res => {
-          // removeStore('buyCart')
-          // window.location.href = '/';
-          console.log(res.result.token);
+          removeStore('buyCart')
+          removeStore('user_id')
+          window.location.href = '/';
+          // console.log(res.result.token);
           
         })
       },

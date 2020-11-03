@@ -89,4 +89,20 @@ public class CartController {
         return new ResponseUtil().setErrorMsg(response.getMsg());
     }
 
+    // 全选商品
+    @PutMapping("/items")
+    public ResponseData selectAllItem(@RequestBody CartForm cartForm) {
+        SelectAllItemRequest request = new SelectAllItemRequest();
+        request.setCheck(cartForm.getChecked());
+        request.setUserId(cartForm.getUserId());
+
+        SelectAllItemResponse response = iCartService.selectAllItem(request);
+
+        if (response.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
+            return new ResponseUtil().setData(response.getMsg());
+        }
+
+        return new ResponseUtil().setErrorMsg(response.getMsg());
+    }
+
 }
