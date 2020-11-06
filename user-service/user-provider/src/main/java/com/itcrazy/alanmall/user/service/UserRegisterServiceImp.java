@@ -32,6 +32,7 @@ public class UserRegisterServiceImp implements IUserRegisterService {
     @Override
     public UserRegisterResponse register(UserRegisterRequest userRegisterRequest) {
         UserRegisterResponse userRegisterResponse = new UserRegisterResponse();
+        userRegisterRequest.requestCheck();
 
         existUser(userRegisterRequest);
         Member member = new Member();

@@ -38,6 +38,7 @@ public class CartServiceImp implements ICartService {
     @Override
     public CartListByIdResponse getCartListById(CartListByIdRequest cartListByIdRequest) {
         log.info("Begin: CartServiceImp.getCartListById");
+        cartListByIdRequest.requestCheck();
         String cartCacheKey =  CachePrefixFactory.generatorCartKey(cartListByIdRequest.getUserId());
         CartListByIdResponse cartListByIdResponse = new CartListByIdResponse();
         cartListByIdResponse.setCode(ShoppingRetCode.SUCCESS.getCode());
@@ -64,6 +65,7 @@ public class CartServiceImp implements ICartService {
     @Override
     public DeleteCartItemResponse deleteCartItem(DeleteCartItemRequest request) {
         log.info("Begin: CartServiceImp.deleteCartItem");
+        request.requestCheck();
         String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
         DeleteCartItemResponse response = new DeleteCartItemResponse();
         try {
@@ -89,6 +91,7 @@ public class CartServiceImp implements ICartService {
     @Override
     public DeleteCheckedItemResposne deleteCheckedItems(DeleteCheckedItemRequest request) {
         log.info("Begin: CartServiceImp deleteCheckedItems");
+        request.requestCheck();
         String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
         DeleteCheckedItemResposne resposne = new DeleteCheckedItemResposne();
         try {
@@ -111,6 +114,7 @@ public class CartServiceImp implements ICartService {
     @Override
     public UpdateCartNumResponse updateCartNum(UpdateCartNumRequest request) {
         log.info("Begin: CartServiceImp updateCartNum");
+        request.requestCheck();
         String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
         UpdateCartNumResponse response = new UpdateCartNumResponse();
         response.setCode(ShoppingRetCode.SUCCESS.getCode());
@@ -148,6 +152,7 @@ public class CartServiceImp implements ICartService {
     @Override
     public SelectAllItemResponse selectAllItem(SelectAllItemRequest request) {
         log.info("Begin: CartServiceImp selectAllItem");
+        request.requestCheck();
         String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
         SelectAllItemResponse response = new SelectAllItemResponse();
         try {
@@ -173,6 +178,7 @@ public class CartServiceImp implements ICartService {
     @Override
     public AddCartResponse addToCart(AddCartRequest addCartRequest) {
         log.info("Begin: CartServiceImp addToCart");
+        addCartRequest.requestCheck();
         String cartCacheKey =  CachePrefixFactory.generatorCartKey(addCartRequest.getUserId());
         AddCartResponse addCartResponse = new AddCartResponse();
         addCartResponse.setCode(ShoppingRetCode.SUCCESS.getCode());

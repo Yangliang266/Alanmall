@@ -32,6 +32,7 @@ public class KaptchaServiceImp implements IKaptchaService {
 
     @Override
     public KaptchaCodeResponse getKaptchaCode(KaptchaCodeRequest kaptchaCodeRequest) {
+        kaptchaCodeRequest.requestCheck();
         KaptchaCodeResponse kaptchaCodeResponse = new KaptchaCodeResponse();
         try {
             // 1 获取图片验证码
@@ -55,6 +56,7 @@ public class KaptchaServiceImp implements IKaptchaService {
 
     @Override
     public KaptchaCodeResponse validateKaptcha(KaptchaCodeRequest kaptchaCodeRequest) {
+        kaptchaCodeRequest.requestCheck();
         KaptchaCodeResponse kaptchaCodeResponse = new KaptchaCodeResponse();
         try {
             // 1 从redis 中查找

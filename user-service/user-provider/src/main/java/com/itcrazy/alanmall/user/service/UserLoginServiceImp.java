@@ -56,6 +56,7 @@ public class UserLoginServiceImp implements IUserLoginService {
     public UserLoginResponse login(UserLoginRequest userLoginRequest) {
         // 输出日志
         log.info("Begin UserLoginServiceImpl.login: request:" + userLoginRequest);
+        userLoginRequest.requestCheck();
         UserLoginResponse userLoginResponse = new UserLoginResponse();
 
         try {
@@ -122,11 +123,8 @@ public class UserLoginServiceImp implements IUserLoginService {
     @Override
     public CheckAuthResponse validToken(CheckAuthRequest checkAuthRequest) {
         log.info("Begin UserLoginServiceImpl.validToken: request:" + checkAuthRequest);
-
-        CheckAuthResponse checkAuthResponse = new CheckAuthResponse();
-        // 判断token 是否赋值
         checkAuthRequest.requestCheck();
-
+        CheckAuthResponse checkAuthResponse = new CheckAuthResponse();
         try {
             // 解析token
             String decoderMsg = JwtTokenUtils.builder().token(checkAuthRequest.getToken()).build().freeJwt();

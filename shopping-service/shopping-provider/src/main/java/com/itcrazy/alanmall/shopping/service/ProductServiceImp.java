@@ -41,6 +41,7 @@ public class ProductServiceImp implements IProductService {
     @Override
     public ProductDetailResponse getProductDetail(ProductDetailRequest request) {
         log.info("Begin: ProductServiceImp.getProductDetail");
+        request.requestCheck();
         ProductDetailResponse response = new ProductDetailResponse();
         response.setCode(ShoppingRetCode.SUCCESS.getCode());
         response.setMsg(ShoppingRetCode.SUCCESS.getMessage());
