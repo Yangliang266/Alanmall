@@ -33,6 +33,7 @@ public class AddressServiceImp implements IAddressService {
     @Override
     public GetAddressResponse getAddressDetails(GetAddressRequest request) {
         log.info("Begin:IaddressService.getAddressDetails");
+        request.requestCheck();
         String key = CachePrefixFactory.generatorCartKey(request.getUserId());
         String field = CachePrefixFactory.generatorAddressKey(request.getUserId());
         GetAddressResponse response = new GetAddressResponse();
@@ -65,6 +66,7 @@ public class AddressServiceImp implements IAddressService {
     @Override
     public DeleteAddressResponse deleteAddress(DeleteAddressRequest request) {
         log.info("Begin:IaddressService.deleteAddress");
+        request.requestCheck();
         String key = CachePrefixFactory.generatorCartKey(request.getUserId());
         String field = CachePrefixFactory.generatorAddressKey(request.getUserId());
         DeleteAddressResponse response = new DeleteAddressResponse();
@@ -77,11 +79,67 @@ public class AddressServiceImp implements IAddressService {
             Example example = new Example(Address.class);
             example.createCriteria().andEqualTo("addressId",request.getAddressId());
             addressMapper.deleteByExample(example);
-            Thread.sleep(500);
+            Thread.sleep(1000);
             redissonConfig.removeMapCache(key, field);
 
         } catch (Exception e) {
             log.error("Error:IaddressService.deleteAddress:" + e );
+            ExceptionProcessorUtils.wrapperHandlerException(response, e);
+        }
+        return response;
+    }
+
+    @Override
+    public AddressAddResponse addAddress(AddressAddRequest request) {
+        log.info("Begin:IaddressService.addAddress");
+        request.requestCheck();
+        AddressAddResponse response = new AddressAddResponse();
+        String key = CachePrefixFactory.generatorCartKey(request.getUserId());
+        String field = CachePrefixFactory.generatorAddressKey(request.getUserId());
+
+        try {
+            // 延时双删
+            redissonConfig.removeMapCache(key, field);
+            Address address = addressConverter.addReq2Address(request);
+            int row = addressMapper.insert(address);
+            if (row > 0) {
+                response.setCode(SysRetCodeConstants.SUCCESS.getCode());
+                response.setMsg(SysRetCodeConstants.SUCCESS.getMessage());
+            }
+            // 延时双删
+            Thread.sleep(1000);
+            redissonConfig.removeMapCache(key, field);
+
+        } catch (Exception e) {
+            log.error("Error:IaddressService.addAddress:" + e );
+            ExceptionProcessorUtils.wrapperHandlerException(response, e);
+        }
+        return response;
+    }
+
+    @Override
+    public AddressUpdateResponse updateAddress(AddressUpdateRequest request) {
+        log.info("Begin:IaddressService.updateAddress");
+        request.requestCheck();
+        AddressUpdateResponse response = new AddressUpdateResponse();
+        String key = CachePrefixFactory.generatorCartKey(request.getUserId());
+        String field = CachePrefixFactory.generatorAddressKey(request.getUserId());
+        try {
+            // 延时双删
+            redissonConfig.removeMapCache(key, field);
+
+            Address address = addressConverter.upRes2Address(request);
+            int row = addressMapper.updateByPrimaryKey(address);
+            if (row > 0) {
+                response.setCode(SysRetCodeConstants.SUCCESS.getCode());
+                response.setMsg(SysRetCodeConstants.SUCCESS.getMessage());
+            }
+            // 延时双删
+            Thread.sleep(1000);
+            redissonConfig.removeMapCache(key, field);
+
+        } catch (Exception e) {
+            log.error("Error:IaddressService.updateAddress:" + e );
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
         return response;

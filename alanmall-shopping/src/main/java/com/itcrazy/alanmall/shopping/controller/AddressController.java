@@ -5,11 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.itcrazy.alanmall.common.result.ResponseData;
 import com.itcrazy.alanmall.common.result.ResponseUtil;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
+import com.itcrazy.alanmall.shopping.forms.AddressForm;
 import com.itcrazy.alanmall.user.IAddressService;
-import com.itcrazy.alanmall.user.dto.DeleteAddressRequest;
-import com.itcrazy.alanmall.user.dto.DeleteAddressResponse;
-import com.itcrazy.alanmall.user.dto.GetAddressRequest;
-import com.itcrazy.alanmall.user.dto.GetAddressResponse;
+import com.itcrazy.alanmall.user.dto.*;
 import com.itcrazy.alanmall.user.intercepter.TokenIntercepter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.Reference;
@@ -40,6 +38,52 @@ public class AddressController {
             return new ResponseUtil().setData(addressResponse.getAddressDtos(),addressResponse.getMsg());
         }
         return  new ResponseUtil().setErrorMsg(addressResponse.getMsg());
+    }
+
+    // 添加地址信息
+    @PostMapping("/addresses")
+    public ResponseData addAddress(@RequestBody AddressForm addressForm, HttpServletRequest servletRequest) {
+        String userInfo = (String) servletRequest.getAttribute(TokenIntercepter.USER_INFO_KEY);
+        JSONObject object = JSON.parseObject(userInfo);
+        Long uid = Long.parseLong(object.get("uid").toString());
+
+        AddressAddRequest request = new AddressAddRequest();
+        request.setUserId(addressForm.getAddressId());
+        request.setStreetName(addressForm.getStreetName());
+        request.setTel(addressForm.getTel());
+        request.setUserName(addressForm.getUserName());
+        request.setUserId(uid);
+        request.setIsDefault(addressForm.is_Default() ? 1 : null);
+
+        AddressAddResponse response = iAddressService.addAddress(request);
+
+        if (response.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
+            return new ResponseUtil().setData(response.getMsg());
+        }
+        return new ResponseUtil().setErrorMsg(response.getMsg());
+    }
+
+    // 更新地址信息
+    @PutMapping("/addresses")
+    public ResponseData updateAddress(@RequestBody AddressForm addressForm, HttpServletRequest servletRequest) {
+        String userInfo = (String) servletRequest.getAttribute(TokenIntercepter.USER_INFO_KEY);
+        JSONObject object = JSON.parseObject(userInfo);
+        Long uid = Long.parseLong(object.get("uid").toString());
+
+        AddressUpdateRequest request = new AddressUpdateRequest();
+        request.setStreetName(addressForm.getStreetName());
+        request.setTel(addressForm.getTel());
+        request.setUserName(addressForm.getUserName());
+        request.setUserId(uid);
+        request.setAddressId(addressForm.getAddressId());
+        request.setIsDefault(addressForm.is_Default() ? 1 : null);
+
+        AddressUpdateResponse response = iAddressService.updateAddress(request);
+
+        if (response.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
+            return new ResponseUtil().setData(response.getMsg());
+        }
+        return new ResponseUtil().setErrorMsg(response.getMsg());
     }
 
     @DeleteMapping("/addresses/{userId}/{addressId}")
