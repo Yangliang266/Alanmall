@@ -66,7 +66,7 @@ export const addressAdd = (params) => {
 // 删除收货地址
 export const addressDel = (params) => {
   // return    http.fetchDelete(apis.cartDel + '/' + params.userId + '/' + params.productId, params)
-  return http.fetchDelete(apis.addressDel + '/' + params.addressId, params)
+  return http.fetchDelete(apis.addressDel + '/' +  params.userId + '/' + params.addressId)
   // return http.fetchDelete(apis.addressDel, params)
 }
 // 生成订单

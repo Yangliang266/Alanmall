@@ -97,6 +97,7 @@ com\itcrazy\alanmall\common\client\sms\smsbaos\SmsbaoCode.class
 com\itcrazy\alanmall\common\client\util\ChineseLetter.class
 com\itcrazy\alanmall\common\client\mail\MailSendUtil.class
 com\itcrazy\alanmall\common\client\util\XpushUtil.class
+com\itcrazy\alanmall\common\cache\CachePrefixFactory.class
 com\itcrazy\alanmall\common\vo\SysException.class
 com\itcrazy\alanmall\common\client\session\RepeatUpdateSession.class
 com\itcrazy\alanmall\common\client\sms\smsbaos\Client.class

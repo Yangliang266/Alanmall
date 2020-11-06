@@ -2,6 +2,7 @@ package com.itcrazy.alanmall.shopping.service;
 
 import com.alibaba.fastjson.JSON;
 import com.itcrazy.alanmall.common.redis.config.RedissonConfig;
+import com.itcrazy.alanmall.common.cache.CachePrefixFactory;
 import com.itcrazy.alanmall.shopping.constant.GlobalShopConstants;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
 import com.itcrazy.alanmall.shopping.converter.CartItemConverter;
@@ -11,7 +12,6 @@ import com.itcrazy.alanmall.shopping.dto.*;
 import com.itcrazy.alanmall.shopping.manager.ICartService;
 import com.itcrazy.alanmall.shopping.utils.ExceptionProcessorUtils;
 import com.itcrazy.alanmall.shopping.utils.ShopGeneratorUtils;
-import jdk.nashorn.internal.runtime.GlobalConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Service;
@@ -38,15 +38,14 @@ public class CartServiceImp implements ICartService {
     @Override
     public CartListByIdResponse getCartListById(CartListByIdRequest cartListByIdRequest) {
         log.info("Begin: CartServiceImp.getCartListById");
-
+        String cartCacheKey =  CachePrefixFactory.generatorCartKey(cartListByIdRequest.getUserId());
         CartListByIdResponse cartListByIdResponse = new CartListByIdResponse();
         cartListByIdResponse.setCode(ShoppingRetCode.SUCCESS.getCode());
         cartListByIdResponse.setMsg(ShoppingRetCode.SUCCESS.getMessage());
         List<CartProductDto> list = new ArrayList();
         try {
             // 查询redis
-            Map<Object, Object> items = redissonConfig.getMap(
-                    ShopGeneratorUtils.getInstance().generatorCartItemKey(cartListByIdRequest.getUserId()));
+            Map<Object, Object> items = redissonConfig.getMap(cartCacheKey);
             // 可能会有多个产品被添加到购物车
             items.values().forEach(obj -> {
                 // obj转换
@@ -65,16 +64,16 @@ public class CartServiceImp implements ICartService {
     @Override
     public DeleteCartItemResponse deleteCartItem(DeleteCartItemRequest request) {
         log.info("Begin: CartServiceImp.deleteCartItem");
+        String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
         DeleteCartItemResponse response = new DeleteCartItemResponse();
         try {
             // 检查redis key field是否存在
             if (redissonConfig.checkMapCache(
-                    ShopGeneratorUtils.getInstance().generatorCartItemKey(request.getUserId()),
+                    cartCacheKey,
                     request.getItemId().toString())) {
-
                 // 通过redis 操作删除商品缓存
                 redissonConfig.removeMapCache(
-                        ShopGeneratorUtils.getInstance().generatorCartItemKey(request.getUserId()),
+                        cartCacheKey,
                         request.getItemId().toString());
 
                 response.setCode(ShoppingRetCode.SUCCESS.getCode());
@@ -88,19 +87,42 @@ public class CartServiceImp implements ICartService {
     }
 
     @Override
+    public DeleteCheckedItemResposne deleteCheckedItems(DeleteCheckedItemRequest request) {
+        log.info("Begin: CartServiceImp deleteCheckedItems");
+        String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
+        DeleteCheckedItemResposne resposne = new DeleteCheckedItemResposne();
+        try {
+            RMap items = redissonConfig.getMap(cartCacheKey);
+            items.values().forEach(obj  -> {
+                CartProductDto cartProductDto = JSON.parseObject(obj.toString(), CartProductDto.class);
+                if ("true".equals(cartProductDto.getChecked())) {
+                    items.remove(cartProductDto.getProductId().toString());
+                }
+            });
+            resposne.setCode(ShoppingRetCode.SUCCESS.getCode());
+            resposne.setMsg(ShoppingRetCode.SUCCESS.getMessage());
+        } catch (Exception e) {
+            log.error("Error: CartServiceImp.deleteCheckedItems Occur Exception :"+e);
+            ExceptionProcessorUtils.wrapperHandlerException(resposne, e);
+        }
+        return resposne;
+    }
+
+    @Override
     public UpdateCartNumResponse updateCartNum(UpdateCartNumRequest request) {
         log.info("Begin: CartServiceImp updateCartNum");
+        String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
         UpdateCartNumResponse response = new UpdateCartNumResponse();
         response.setCode(ShoppingRetCode.SUCCESS.getCode());
         response.setMsg(ShoppingRetCode.SUCCESS.getMessage());
 
         try {
             if (redissonConfig.checkMapCache(
-                    ShopGeneratorUtils.getInstance().generatorCartItemKey(request.getUserId()),
+                    cartCacheKey,
                     request.getItemId().toString())) {
                 // 解析json
                 String json = redissonConfig.getMapField(
-                        ShopGeneratorUtils.getInstance().generatorCartItemKey(request.getUserId()),
+                        cartCacheKey,
                         request.getItemId().toString());
 
                 if(StringUtils.isNotBlank(json)) {
@@ -110,10 +132,10 @@ public class CartServiceImp implements ICartService {
                     // 设置可选
                     cartProductDto.setChecked(request.getChecked());
                     // 设置新的数据到redis
-                    redissonConfig.setMapCacheDays(
-                            ShopGeneratorUtils.getInstance().generatorCartItemKey(request.getUserId()),
+                    redissonConfig.setMapCache(
+                            cartCacheKey,
                             request.getItemId().toString(),
-                            JSON.toJSON(cartProductDto).toString(), 1);
+                            JSON.toJSON(cartProductDto).toString());
                 }
             }
         } catch (Exception e) {
@@ -126,9 +148,10 @@ public class CartServiceImp implements ICartService {
     @Override
     public SelectAllItemResponse selectAllItem(SelectAllItemRequest request) {
         log.info("Begin: CartServiceImp selectAllItem");
+        String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
         SelectAllItemResponse response = new SelectAllItemResponse();
         try {
-            Map<Object, Object> items = redissonConfig.getMap(ShopGeneratorUtils.getInstance().generatorCartItemKey(request.getUserId()));
+            Map<Object, Object> items = redissonConfig.getMap(cartCacheKey);
             items.values().forEach(obj ->{
                 // 解析成对象
                 CartProductDto cartProductDto= JSON.parseObject(obj.toString(), CartProductDto.class);
@@ -144,14 +167,13 @@ public class CartServiceImp implements ICartService {
             log.error("CartServiceImp.selectAllItem Occur Exception :" + e);
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
-
         return response;
     }
-
 
     @Override
     public AddCartResponse addToCart(AddCartRequest addCartRequest) {
         log.info("Begin: CartServiceImp addToCart");
+        String cartCacheKey =  CachePrefixFactory.generatorCartKey(addCartRequest.getUserId());
         AddCartResponse addCartResponse = new AddCartResponse();
         addCartResponse.setCode(ShoppingRetCode.SUCCESS.getCode());
         addCartResponse.setMsg(ShoppingRetCode.SUCCESS.getMessage());
@@ -159,21 +181,21 @@ public class CartServiceImp implements ICartService {
         try {
             // check redis 是否存在此类商品信息
             if (redissonConfig.checkMapCache(
-                    ShopGeneratorUtils.getInstance().generatorCartItemKey(addCartRequest.getUserId()),
+                    cartCacheKey,
                     addCartRequest.getItemId().toString())) {
                 // 解析json
                 String json = redissonConfig.getMapField(
-                        ShopGeneratorUtils.getInstance().generatorCartItemKey(addCartRequest.getUserId()),
+                        cartCacheKey,
                         addCartRequest.getItemId().toString());
 
                 CartProductDto cartProductDto = JSON.parseObject(json, CartProductDto.class);
                 // 更新redis 产品数量
                 cartProductDto.setProductNum(cartProductDto.getProductNum() + addCartRequest.getNum());
                 // 设置新的数据到redis
-                redissonConfig.setMapCacheDays(
-                        ShopGeneratorUtils.getInstance().generatorCartItemKey(addCartRequest.getUserId()),
+                redissonConfig.setMapCache(
+                        cartCacheKey,
                         addCartRequest.getItemId().toString(),
-                        JSON.toJSON(cartProductDto).toString(), 1);
+                        JSON.toJSON(cartProductDto).toString());
 
                 return addCartResponse;
             }
@@ -187,11 +209,10 @@ public class CartServiceImp implements ICartService {
 
             // 存入缓存redis
             if (null != item) {
-                redissonConfig.setMapCacheDays(
-                        ShopGeneratorUtils.getInstance().generatorCartItemKey(addCartRequest.getUserId()),
+                redissonConfig.setMapCache(
+                        cartCacheKey,
                         addCartRequest.getItemId().toString(),
-                        JSON.toJSON(cartProductDto).toString(),
-                        1
+                        JSON.toJSON(cartProductDto).toString()
                 );
                 return addCartResponse;
             }

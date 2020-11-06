@@ -2,121 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itcrazy.alanmall.user.dal.mapper.AddressMapper">
   <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.user.dal.entity.Address">
-    <result column="address_id" jdbcType="BIGINT" property="addressId" />
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="address_id" jdbcType="BIGINT" property="addressId" />
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="tel" jdbcType="VARCHAR" property="tel" />
     <result column="street_name" jdbcType="VARCHAR" property="streetName" />
     <result column="is_default" jdbcType="BIT" property="isDefault" />
   </resultMap>
-  <insert id="insert" parameterType="com.itcrazy.alanmall.user.dal.entity.Address">
-    insert into tb_address (address_id, user_id, user_name, 
-      tel, street_name, is_default
-      )
-    values (#{addressId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
-      #{tel,jdbcType=VARCHAR}, #{streetName,jdbcType=VARCHAR}, #{isDefault,jdbcType=BIT}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.user.dal.entity.Address">
-    insert into tb_address
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="addressId != null">
-        address_id,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="userName != null">
-        user_name,
-      </if>
-      <if test="tel != null">
-        tel,
-      </if>
-      <if test="streetName != null">
-        street_name,
-      </if>
-      <if test="isDefault != null">
-        is_default,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="addressId != null">
-        #{addressId,jdbcType=BIGINT},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="tel != null">
-        #{tel,jdbcType=VARCHAR},
-      </if>
-      <if test="streetName != null">
-        #{streetName,jdbcType=VARCHAR},
-      </if>
-      <if test="isDefault != null">
-        #{isDefault,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
-  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.user.dal.entity.Address">
-    <result column="address_id" jdbcType="BIGINT" property="addressId" />
-    <result column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="tel" jdbcType="VARCHAR" property="tel" />
-    <result column="street_name" jdbcType="VARCHAR" property="streetName" />
-    <result column="is_default" jdbcType="BIT" property="isDefault" />
-  </resultMap>
-  <insert id="insert" parameterType="com.itcrazy.alanmall.user.dal.entity.Address">
-    insert into tb_address (address_id, user_id, user_name, 
-      tel, street_name, is_default
-      )
-    values (#{addressId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, 
-      #{tel,jdbcType=VARCHAR}, #{streetName,jdbcType=VARCHAR}, #{isDefault,jdbcType=BIT}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="com.itcrazy.alanmall.user.dal.entity.Address">
-    insert into tb_address
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="addressId != null">
-        address_id,
-      </if>
-      <if test="userId != null">
-        user_id,
-      </if>
-      <if test="userName != null">
-        user_name,
-      </if>
-      <if test="tel != null">
-        tel,
-      </if>
-      <if test="streetName != null">
-        street_name,
-      </if>
-      <if test="isDefault != null">
-        is_default,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="addressId != null">
-        #{addressId,jdbcType=BIGINT},
-      </if>
-      <if test="userId != null">
-        #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="tel != null">
-        #{tel,jdbcType=VARCHAR},
-      </if>
-      <if test="streetName != null">
-        #{streetName,jdbcType=VARCHAR},
-      </if>
-      <if test="isDefault != null">
-        #{isDefault,jdbcType=BIT},
-      </if>
-    </trim>
-  </insert>
 </mapper>

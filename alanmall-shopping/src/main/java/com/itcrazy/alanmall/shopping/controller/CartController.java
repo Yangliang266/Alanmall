@@ -26,13 +26,10 @@ public class CartController {
         addCartRequest.setItemId(cartForm.getProductId());
         addCartRequest.setUserId(cartForm.getUserId());
         addCartRequest.setNum(cartForm.getProductNum());
-
         // 验证
         addCartRequest.requestCheck();
-
         // 加入redis缓存
         AddCartResponse addCartResponse = iCartService.addToCart(addCartRequest);
-
 
         return new ResponseUtil().setData(addCartResponse.getMsg());
     }
@@ -42,14 +39,12 @@ public class CartController {
     public ResponseData carts(HttpServletRequest request) {
         // 获取之前存储的token信息 包含uid
         String userInfo = (String) request.getAttribute(TokenIntercepter.USER_INFO_KEY);
-
         // 获取userId 解析
         long uid = Long.parseLong(JSON.parseObject(userInfo).getString("uid"));
 
         CartListByIdRequest cartListByIdRequest = new CartListByIdRequest();
         cartListByIdRequest.setUserId(uid);
         CartListByIdResponse response = iCartService.getCartListById(cartListByIdRequest);
-
         if (response.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
             return new ResponseUtil().setData(response.getCartProductDto());
         }
@@ -62,13 +57,10 @@ public class CartController {
         DeleteCartItemRequest request = new DeleteCartItemRequest();
         request.setUserId(uid);
         request.setItemId(pid);
-
         DeleteCartItemResponse response = iCartService.deleteCartItem(request);
-
         if (response.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
             return new ResponseUtil().setData(response.getMsg());
         }
-
         return new ResponseUtil().setErrorMsg(response.getMsg());
     }
 
@@ -95,14 +87,22 @@ public class CartController {
         SelectAllItemRequest request = new SelectAllItemRequest();
         request.setCheck(cartForm.getChecked());
         request.setUserId(cartForm.getUserId());
-
         SelectAllItemResponse response = iCartService.selectAllItem(request);
-
         if (response.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
             return new ResponseUtil().setData(response.getMsg());
         }
-
         return new ResponseUtil().setErrorMsg(response.getMsg());
+    }
+
+    @DeleteMapping("/items/{id}")
+    public ResponseData deleteCheckedItems(@PathVariable long id) {
+        DeleteCheckedItemRequest request = new DeleteCheckedItemRequest();
+        request.setUserId(id);
+        DeleteCheckedItemResposne resposne = iCartService.deleteCheckedItems(request);
+        if (resposne.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
+            return new ResponseUtil().setData(resposne.getMsg());
+        }
+        return new ResponseUtil().setData(resposne.getMsg());
     }
 
 }

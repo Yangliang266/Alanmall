@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: com.itcrazy.alanmall.user:user-api:1.0-SNAPSHOT">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/itcrazy/alanmall/user/user-api/1.0-SNAPSHOT/user-api-1.0-20201010.035638-20.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/itcrazy/alanmall/user/user-api/1.0-SNAPSHOT/user-api-1.0-SNAPSHOT.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/com/itcrazy/alanmall/user/user-api/1.0-SNAPSHOT/user-api-1.0-20201010.035638-20-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/itcrazy/alanmall/user/user-api/1.0-SNAPSHOT/user-api-1.0-SNAPSHOT-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/com/itcrazy/alanmall/user/user-api/1.0-SNAPSHOT/user-api-1.0-20201010.035638-20-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/itcrazy/alanmall/user/user-api/1.0-SNAPSHOT/user-api-1.0-SNAPSHOT-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

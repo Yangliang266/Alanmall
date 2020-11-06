@@ -3,12 +3,12 @@ import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 import Index from '@/page/index'
 import Login from '@/page/login/login'
-import User from '@/page/user/user'
 import Test from '@/page/test/test'
 import Register from '@/page/login/register'
 import Home from '@/page/home/home'
 import Product from '@/page/goods/goodsDetails'
 import Cart from '@/page/cart/cart'
+import checkout from '@/page/checkout/checkout'
 
 
 Vue.use(Router)
@@ -28,7 +28,8 @@ export default new Router({
     {path: '/login',name: 'login',component: Login},
     {path: '/register',name: 'register',component: Register},
     {path: '/test',name: 'test',component: Test},
-    {path: '/cart', name: 'cart', component: Cart}
+    {path: '/cart', name: 'cart', component: Cart},
+    {path: '/checkout/:productId?/:num?', name: 'checkout', component: checkout}
     
   ]
 })

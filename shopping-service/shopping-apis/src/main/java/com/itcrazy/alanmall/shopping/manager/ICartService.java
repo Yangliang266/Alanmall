@@ -9,6 +9,8 @@ public interface ICartService {
 
     DeleteCartItemResponse deleteCartItem(DeleteCartItemRequest request);
 
+    DeleteCheckedItemResposne deleteCheckedItems(DeleteCheckedItemRequest request);
+
     UpdateCartNumResponse updateCartNum(UpdateCartNumRequest request);
 
     SelectAllItemResponse selectAllItem(SelectAllItemRequest request);

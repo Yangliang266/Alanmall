@@ -49,6 +49,11 @@ public class RedissonConfig {
         rBucket.expire(expire, TimeUnit.SECONDS);
     }
 
+    public void setStringCache(String key, String val) {
+        RBucket rBucket = redissonClient.getBucket(key);
+        rBucket.set(val);
+    }
+
 
     public String getCache(String key) {
         RBucket rBucket = redissonClient.getBucket(key);
@@ -79,16 +84,9 @@ public class RedissonConfig {
      * @Author Mathyoung
      * @Date 2020.07.14 10:07
      **/
-    public void setMapCacheSeconds(String key, String field, String value, int expire) {
+    public void setMapCache(String key, String field, String value) {
         RMap<String, String> map = redissonClient.getMap(key);
         map.put(field, value);
-        map.expire(expire, TimeUnit.SECONDS);
-    }
-
-    public void setMapCacheDays(String key, String field, String value, int expire) {
-        RMap<String, String> map = redissonClient.getMap(key);
-        map.put(field, value);
-        map.expire(expire, TimeUnit.DAYS);
     }
 
     public boolean checkMapCache(String key, String field) {
