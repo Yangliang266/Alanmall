@@ -116,6 +116,78 @@
           </div>
         </div>
       </header>
+<slot name="nav">
+        <div class="nav-sub"
+             @mouseleave="handleNavSubMouseLeave"
+             :class="{fixed:st}">
+          <div class="nav-sub-bg"></div>
+          <div class="nav-sub-wrapper" :class="{fixed:st}">
+            <div class="w">
+              <ul class="nav-list2">
+                <li>
+                  <router-link to="/"><a @click="changGoods(-1)" :class="{active:choosePage===-1}">首页</a></router-link>
+                </li>
+                <li>
+                  <a @click="changGoods(-2)" :class="{active:choosePage===-2}">全部商品</a>
+                </li>
+                <li
+                  @mouseenter="handleNavItemMouseEnter(item, i)"
+                  v-for="(item,i) in navList"
+                  :key="i">
+                  <a @click="changGoods(i, item)" :class="{active:i===choosePage}">{{item.picUrl}}</a>
+                </li>
+              </ul>
+              <el-autocomplete
+                  placeholder="请输入商品信息"
+                  icon="search"
+                  v-model="input"
+                  minlength=1
+                  maxlength=100
+                  :fetch-suggestions="querySearchAsync"
+                  @select="handleSelect"
+                  :on-icon-click="handleIconClick"
+                  @keydown.enter.native="handleIconClick">
+                </el-autocomplete>
+            </div>
+          </div>
+          <div v-if="showCateDiv" class="dropdown-div">
+            <div class="cate-con">
+              <div
+                class="cate"
+                v-for="(item, index) in curCateList"
+                :key="index">
+                <div class="cate-name-label">{{item.name}}</div>
+                <div
+                  class="cate-item"
+                  v-for="(childItem, idx) in item.children"
+                  @click="goGoodsCatePage(childItem)"
+                  :key="idx">
+                  <img :src="childItem.iconUrl" class="item-icon">
+                  <div>{{childItem.name}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dropdown-div" v-if="showRecommend" >
+            <div class="recommend-con">
+              <div v-for="(item, index) in recommendPanel.panelContentItems"
+                   class="recommend-item"
+                   @click="goRecommendGoodsDetail(item)"
+                   :key="index">
+                <div class="item">
+                  <img :src="item.picUrl" alt="手机图片">
+                  <div class="product-name">{{item.productName}}</div>
+                  <div><span class="product-price">&yen;{{item.salePrice}}</span>&nbsp;起</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </slot>
+
+      
     </div>
   </div>
 </template>
@@ -123,7 +195,7 @@
   import YButton from '../components/YButton'
   import { mapMutations, mapState } from 'vuex'
   import { getQuickSearch, getCartList, cartDel, getAllGoodsCategories } from '../api/goods'
-  import { loginOut } from '../api/index'
+  import { loginOut, navList, recommend } from '../api/index'
   import { setStore, getStore, removeStore } from '../utils/storage'
 
   // import store from '../store/'
@@ -185,6 +257,131 @@
     methods: {
       // 初始化状态值的方法
       ...mapMutations(['ADD_CART', 'INIT_BUYCART', 'ADD_ANIMATION', 'SHOW_CART', 'REDUCE_CART', 'RECORD_USERINFO', 'EDIT_CART']),
+      handleNavItemMouseEnter (item, index) {
+        let cateName = item.picUrl
+        this.showRecommend = false
+        if (cateName === '手机') {
+          this.showCateDiv = false
+          this.showRecommend = true
+          return
+        }
+        let cate = this.goodsCateTree[cateName]
+        if (cate) {
+          this.curCateList = cate.children
+          this.showCateDiv = true
+        } else {
+          this.showCateDiv = false
+        }
+      },
+       handleNavSubMouseLeave () {
+        this.showCateDiv = false
+        this.showRecommend = false
+      },
+      handleIconClick (ev) {
+        if (this.$route.path === '/search') {
+          this.$router.push({
+            path: '/refreshsearch',
+            query: {
+              key: this.input
+            }
+          })
+        } else {
+          this.$router.push({
+            path: '/search',
+            query: {
+              key: this.input
+            }
+          })
+        }
+      },
+      // 搜索框提示
+      loadAll () {
+        let params = {
+          params: {
+            key: this.input
+          }
+        }
+        getQuickSearch(params).then(response => {
+          if (response === null || response === '') {
+            return
+          }
+          if (response.error) {
+            this.showError(response.error.reason)
+            return
+          }
+          var array = []
+          var maxSize = 5
+          if (response.result.length <= 5) {
+            maxSize = response.result.length
+          }
+          for (var i = 0; i < maxSize; i++) {
+            var obj = {}
+            obj.value = response.result[i].productName
+            array.push(obj)
+          }
+          if (array.length !== 0) {
+            this.searchResults = array
+          } else {
+            this.searchResults = []
+          }
+        })
+      },
+       querySearchAsync (queryString, cb) {
+        if (this.input === undefined) {
+          cb([])
+          return
+        }
+        this.input = this.input.trim()
+        if (this.input === '') {
+          cb([])
+          return
+        } else {
+          this.loadAll()
+          setTimeout(() => {
+            cb(this.searchResults)
+          }, 300)
+        }
+      },
+      handleSelect (item) {
+        this.input = item.value
+      },
+      goGoodsCatePage (childCateItem) {
+        let {id} = childCateItem
+        this.$router.push('/goods/cate/' + id)
+        this.showCateDiv = false
+      },
+      goRecommendGoodsDetail (item) {
+        let {productId} = item
+        this.$router.push('/product/' + productId)
+        this.showRecommend = false
+      },
+      showError (m) {
+        this.$message.error({
+          message: m
+        })
+      },
+      _getNavList () {
+        navList().then(res => {
+          this.navList = res.result
+        })
+      },
+
+      // 导航栏文字样式改变
+      changePage (v) {
+        this.choosePage = v
+      },
+      changGoods (v, item) {
+        this.changePage(v)
+        if (v === -1) {
+          this.$router.push({
+            path: '/'
+          })
+        } else if (v === -2) {
+          this.$router.push({
+            path: '/refreshgoods'
+          })
+        }
+      },
       // 购物车显示
       cartShowState (state) {
         this.SHOW_CART({showCart: state})
@@ -228,21 +425,11 @@
           
         })
       },
-      // 导航栏文字样式改变
-      changePage (v) {
-        this.choosePage = v
-      },
-      changGoods (v, item) {
-        this.changePage(v)
-        if (v === -1) {
-          this.$router.push({
-            path: '/'
-          })
-        } else if (v === -2) {
-          this.$router.push({
-            path: '/refreshgoods'
-          })
-        }
+      _getRecommendGoodsAsPhone () {
+        recommend().then(res => {
+          let data = res.result
+          this.recommendPanel = data[0]
+        })
       }
       // // 通过路由改变导航文字样式
       // getPage () {
@@ -258,6 +445,8 @@
       // },
     },
     mounted () {
+      this._getRecommendGoodsAsPhone()
+      this._getNavList()
       this.token = getStore('token')
       if (this.login) {
         this._getCartList()

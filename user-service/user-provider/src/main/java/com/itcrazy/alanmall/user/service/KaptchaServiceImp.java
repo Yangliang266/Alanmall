@@ -8,6 +8,7 @@ import com.itcrazy.alanmall.user.dto.KaptchaCodeRequest;
 import com.itcrazy.alanmall.user.dto.KaptchaCodeResponse;
 import com.itcrazy.alanmall.user.utils.ExceptionProcessorUtils;
 import com.itcrazy.alanmall.user.utils.VerifyCodeUtils;
+import jdk.nashorn.internal.runtime.GlobalConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Service;
@@ -32,7 +33,6 @@ public class KaptchaServiceImp implements IKaptchaService {
 
     @Override
     public KaptchaCodeResponse getKaptchaCode(KaptchaCodeRequest kaptchaCodeRequest) {
-        kaptchaCodeRequest.requestCheck();
         KaptchaCodeResponse kaptchaCodeResponse = new KaptchaCodeResponse();
         try {
             // 1 获取图片验证码
@@ -40,7 +40,7 @@ public class KaptchaServiceImp implements IKaptchaService {
 
             String uuid = UUID.randomUUID().toString();
             // 2.1 图片验证码 key 放入redis
-            redissonConfig.setCache(KAPTCHA_UUID + uuid, capText.getCode(), 60);
+            redissonConfig.setCache(KAPTCHA_UUID + uuid, capText.getCode()).expire(60, TimeUnit.SECONDS);
 
             // 3 返回reposnse包含的uuid imgresult msg code
             kaptchaCodeResponse.setUuid(uuid);

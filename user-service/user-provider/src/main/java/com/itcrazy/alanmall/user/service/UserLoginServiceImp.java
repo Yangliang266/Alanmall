@@ -149,10 +149,10 @@ public class UserLoginServiceImp implements IUserLoginService {
 
     @Override
     public String jedisTest() {
-        redissonConfig.setCache("redis","redis1235678",1000);
+//        redissonConfig.setCache("redis","redis1235678",1000);
 //
-        return redissonConfig.getCache("redis");
-//        return "hello";
+//        return redissonConfig.getCache("redis");
+        return "hello";
     }
 
     @Override

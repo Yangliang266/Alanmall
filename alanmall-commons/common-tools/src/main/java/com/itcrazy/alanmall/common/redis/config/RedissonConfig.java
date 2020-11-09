@@ -41,12 +41,13 @@ public class RedissonConfig {
      * @Author Mathyoung
      * @Date 2020.07.09 20:17
      **/
-    public void setCache(String key, String val, int expire) {
+    public RBucket setCache(String key, String val) {
         RBucket rBucket = redissonClient.getBucket(key);
 
         rBucket.set(val);
 
-        rBucket.expire(expire, TimeUnit.SECONDS);
+        return rBucket;
+
     }
 
     public void setStringCache(String key, String val) {

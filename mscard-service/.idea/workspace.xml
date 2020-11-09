@@ -1,7 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="00465f10-ad66-45ef-959e-75e52a99c510" name="Default Changelist" comment="" />
+    <list default="true" id="00465f10-ad66-45ef-959e-75e52a99c510" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/forms/PageInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/forms/PageResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopping-service/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopping-service/shopping-apis/src/main/java/com/itcrazy/alanmall/shopping/dto/AllProductRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopping-service/shopping-apis/src/main/java/com/itcrazy/alanmall/shopping/dto/AllProductResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopping-service/shopping-apis/src/main/java/com/itcrazy/alanmall/shopping/dto/ProductDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../shopping-service/shopping-apis/src/main/java/com/itcrazy/alanmall/shopping/dto/sqldto/PageInfoDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-front/src/common/header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-front/src/common/header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-front/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-front/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shopping-service/shopping-apis/src/main/java/com/itcrazy/alanmall/shopping/manager/IProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../shopping-service/shopping-apis/src/main/java/com/itcrazy/alanmall/shopping/manager/IProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shopping-service/shopping-provider/src/main/java/com/itcrazy/alanmall/shopping/converter/ProductConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../shopping-service/shopping-provider/src/main/java/com/itcrazy/alanmall/shopping/converter/ProductConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shopping-service/shopping-provider/src/main/java/com/itcrazy/alanmall/shopping/dal/persistence/ItemMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../shopping-service/shopping-provider/src/main/java/com/itcrazy/alanmall/shopping/dal/persistence/ItemMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shopping-service/shopping-provider/src/main/java/com/itcrazy/alanmall/shopping/dal/persistence/ItemMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../shopping-service/shopping-provider/src/main/java/com/itcrazy/alanmall/shopping/dal/persistence/ItemMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../shopping-service/shopping-provider/src/main/java/com/itcrazy/alanmall/shopping/service/ProductServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../shopping-service/shopping-provider/src/main/java/com/itcrazy/alanmall/shopping/service/ProductServiceImp.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,19 +43,22 @@
     <expand />
     <select />
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
         <option name="localRepository" value="D:\repository" />
-        <option name="mavenHome" value="$PROJECT_DIR$/../../../apache-maven-3.6.3" />
+        <option name="mavenHome" value="D:\Projectforming\apache-maven-3.6.3" />
         <option name="userSettingsFile" value="D:\Projectforming\apache-maven-3.6.3\conf\settings.xml" />
       </MavenGeneralSettings>
     </option>
   </component>
   <component name="ProjectId" id="1gAQFpswYjVzidztN5tDlcMyUzE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -41,10 +66,13 @@
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
     <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8 (2)" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../alanmall-mscard" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -83,18 +111,7 @@
       </method>
     </configuration>
   </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
-  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -120,11 +137,12 @@
       <workItem from="1598603068247" duration="624000" />
       <workItem from="1598624388610" duration="1478000" />
       <workItem from="1598636602405" duration="40000" />
+      <workItem from="1604829964993" duration="1786000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
     <state x="574" y="155" key="#com.intellij.ide.util.MemberChooser" timestamp="1597728239006">
