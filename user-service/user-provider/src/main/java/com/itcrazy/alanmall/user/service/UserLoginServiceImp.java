@@ -54,8 +54,7 @@ public class UserLoginServiceImp implements IUserLoginService {
      **/
     @Override
     public UserLoginResponse login(UserLoginRequest userLoginRequest) {
-        // 输出日志
-        log.info("Begin UserLoginServiceImpl.login: request:" + userLoginRequest);
+        log.info("Begin:UserLoginServiceImpl.login.request:" + userLoginRequest);
         userLoginRequest.requestCheck();
         UserLoginResponse userLoginResponse = new UserLoginResponse();
 
@@ -106,10 +105,11 @@ public class UserLoginServiceImp implements IUserLoginService {
 
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("UserLoginServiceImpl.login Occur Exception :"+e);
+            log.error("UserLoginServiceImpl.login.Exception :"+e);
             ExceptionProcessorUtils.wrapperHandlerException(userLoginResponse,e);
         }
 
+        log.info("End:UserLoginServiceImpl.login.request:" + userLoginResponse);
         return userLoginResponse;
     }
 
@@ -122,7 +122,7 @@ public class UserLoginServiceImp implements IUserLoginService {
      **/
     @Override
     public CheckAuthResponse validToken(CheckAuthRequest checkAuthRequest) {
-        log.info("Begin UserLoginServiceImpl.validToken: request:" + checkAuthRequest);
+        log.info("Begin: UserLoginServiceImpl.validToken.request:" + checkAuthRequest);
         checkAuthRequest.requestCheck();
         CheckAuthResponse checkAuthResponse = new CheckAuthResponse();
         try {
@@ -139,11 +139,12 @@ public class UserLoginServiceImp implements IUserLoginService {
                 return checkAuthResponse;
             }
         } catch (Exception e) {
-            log.error("UserLoginServiceImpl.validToken Occur Exception :"+e);
+            log.error("Error: UserLoginServiceImpl.validToken.Exception :"+e);
             ExceptionProcessorUtils.wrapperHandlerException(checkAuthResponse,e);
         }
         checkAuthResponse.setCode(SysRetCodeConstants.TOKEN_VALID_FAILED.getCode());
         checkAuthResponse.setMsg(SysRetCodeConstants.TOKEN_VALID_FAILED.getMessage());
+        log.info("End:UserLoginServiceImpl.validToken.response:" + checkAuthResponse);
         return checkAuthResponse;
     }
 

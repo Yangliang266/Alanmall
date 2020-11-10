@@ -43,7 +43,7 @@ public class HomeServiceImpl implements IHomeService {
 
     @Override
     public HomePageResponse home() {
-        log.info("Begin HomeServiceImpl.homepage");
+        log.info("Begin: HomeServiceImpl.homepage");
         HomePageResponse response=new HomePageResponse();
         response.setCode(ShoppingRetCode.SUCCESS.getCode());
         response.setMsg(ShoppingRetCode.SUCCESS.getMessage());
@@ -54,6 +54,7 @@ public class HomeServiceImpl implements IHomeService {
                 List<PanelDto> panelDtoList=JSON.parseArray(json,PanelDto.class);
                 Set set=new HashSet(panelDtoList);
                 response.setPanelContentItemDtos(set);
+                log.info("End: HomeServiceImpl.homepage.response: " + response);
                 return response;
             }
             Example panelExample = new Example(Panel.class);
@@ -73,9 +74,11 @@ public class HomeServiceImpl implements IHomeService {
             cacheManager.setCache(GlobalShopConstants.HOMEPAGE_CACHE_KEY,JSON.toJSONString(panelContentItemDtos),GlobalShopConstants.HOMEPAGE_EXPIRE_TIME);
             response.setPanelContentItemDtos(panelContentItemDtos);
         }catch (Exception e){
-            log.error("HomeServiceImpl.homepage Occur Exception :"+e);
+            log.error("Error: HomeServiceImpl.homepage.Exception :" + e);
             ExceptionProcessorUtils.wrapperHandlerException(response,e);
         }
+
+        log.info("End: HomeServiceImpl.homepage.response: " + response);
         return response;
     }
 }

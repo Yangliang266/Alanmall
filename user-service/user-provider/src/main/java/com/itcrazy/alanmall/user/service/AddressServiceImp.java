@@ -32,7 +32,7 @@ public class AddressServiceImp implements IAddressService {
 
     @Override
     public GetAddressResponse getAddressDetails(GetAddressRequest request) {
-        log.info("Begin:IaddressService.getAddressDetails");
+        log.info("Begin: IaddressService.getAddressDetails.request: " + request);
         request.requestCheck();
         String key = CachePrefixFactory.generatorCartKey(request.getUserId());
         String field = CachePrefixFactory.generatorAddressKey(request.getUserId());
@@ -45,6 +45,8 @@ public class AddressServiceImp implements IAddressService {
             if(StringUtils.isNotBlank(json)) {
                 List<AddressDto> addressDtoList = JSON.parseArray(json, AddressDto.class);
                 response.setAddressDtos(addressDtoList);
+                log.info("End: IaddressService.getAddressDetails.response: " + response);
+                return response;
             }
 
             // sql 查询
@@ -57,22 +59,20 @@ public class AddressServiceImp implements IAddressService {
             redissonConfig.setMapCache(key, field, JSON.toJSON(addressDtoList).toString());
             response.setAddressDtos(addressDtoList);
         } catch (Exception e) {
-            log.error("Error:IaddressService.getAddressDetails:" + e );
+            log.error("Error: IaddressService.getAddressDetails.Exception: " + e );
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
+        log.info("End: IaddressService.getAddressDetails.response: " + response);
         return response;
     }
 
     @Override
     public DeleteAddressResponse deleteAddress(DeleteAddressRequest request) {
-        log.info("Begin:IaddressService.deleteAddress");
+        log.info("Begin: IaddressService.deleteAddress.request: " + request);
         request.requestCheck();
         String key = CachePrefixFactory.generatorCartKey(request.getUserId());
         String field = CachePrefixFactory.generatorAddressKey(request.getUserId());
         DeleteAddressResponse response = new DeleteAddressResponse();
-        response.setCode(SysRetCodeConstants.SUCCESS.getCode());
-        response.setMsg(SysRetCodeConstants.SUCCESS.getMessage());
-
         try {
             redissonConfig.removeMapCache(key, field);
             //采用延时双删
@@ -82,16 +82,21 @@ public class AddressServiceImp implements IAddressService {
             Thread.sleep(1000);
             redissonConfig.removeMapCache(key, field);
 
+            response.setCode(SysRetCodeConstants.SUCCESS.getCode());
+            response.setMsg(SysRetCodeConstants.SUCCESS.getMessage());
+
         } catch (Exception e) {
-            log.error("Error:IaddressService.deleteAddress:" + e );
+            log.error("Error: IaddressService.deleteAddress.Exception: " + e );
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
+
+        log.info("End: IaddressService.deleteAddress.response: " + response);
         return response;
     }
 
     @Override
     public AddressAddResponse addAddress(AddressAddRequest request) {
-        log.info("Begin:IaddressService.addAddress");
+        log.info("Begin: IaddressService.addAddress.request: " + request);
         request.requestCheck();
         AddressAddResponse response = new AddressAddResponse();
         String key = CachePrefixFactory.generatorCartKey(request.getUserId());
@@ -111,15 +116,17 @@ public class AddressServiceImp implements IAddressService {
             redissonConfig.removeMapCache(key, field);
 
         } catch (Exception e) {
-            log.error("Error:IaddressService.addAddress:" + e );
+            log.error("Error: IaddressService.addAddress.Exception: " + e );
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
+
+        log.info("End: IaddressService.addAddress.response: " + response);
         return response;
     }
 
     @Override
     public AddressUpdateResponse updateAddress(AddressUpdateRequest request) {
-        log.info("Begin:IaddressService.updateAddress");
+        log.info("Begin :IaddressService.updateAddress.request: " + request);
         request.requestCheck();
         AddressUpdateResponse response = new AddressUpdateResponse();
         String key = CachePrefixFactory.generatorCartKey(request.getUserId());
@@ -139,9 +146,11 @@ public class AddressServiceImp implements IAddressService {
             redissonConfig.removeMapCache(key, field);
 
         } catch (Exception e) {
-            log.error("Error:IaddressService.updateAddress:" + e );
+            log.error("Error: IaddressService.updateAddress.Exception: " + e );
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
+
+        log.info("End: IaddressService.updateAddress.response: " + response);
         return response;
     }
 

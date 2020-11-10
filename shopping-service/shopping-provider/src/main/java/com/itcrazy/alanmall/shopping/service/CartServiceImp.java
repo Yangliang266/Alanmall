@@ -3,7 +3,6 @@ package com.itcrazy.alanmall.shopping.service;
 import com.alibaba.fastjson.JSON;
 import com.itcrazy.alanmall.common.redis.config.RedissonConfig;
 import com.itcrazy.alanmall.common.cache.CachePrefixFactory;
-import com.itcrazy.alanmall.shopping.constant.GlobalShopConstants;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
 import com.itcrazy.alanmall.shopping.converter.CartItemConverter;
 import com.itcrazy.alanmall.shopping.dal.entitys.Item;
@@ -11,13 +10,11 @@ import com.itcrazy.alanmall.shopping.dal.persistence.ItemMapper;
 import com.itcrazy.alanmall.shopping.dto.*;
 import com.itcrazy.alanmall.shopping.manager.ICartService;
 import com.itcrazy.alanmall.shopping.utils.ExceptionProcessorUtils;
-import com.itcrazy.alanmall.shopping.utils.ShopGeneratorUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.Service;
 import org.redisson.api.RMap;
 import org.springframework.beans.factory.annotation.Autowired;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +34,7 @@ public class CartServiceImp implements ICartService {
 
     @Override
     public CartListByIdResponse getCartListById(CartListByIdRequest cartListByIdRequest) {
-        log.info("Begin: CartServiceImp.getCartListById");
+        log.info("Begin: CartServiceImp.getCartListById.request: " + cartListByIdRequest);
         cartListByIdRequest.requestCheck();
         String cartCacheKey =  CachePrefixFactory.generatorCartKey(cartListByIdRequest.getUserId());
         CartListByIdResponse cartListByIdResponse = new CartListByIdResponse();
@@ -56,15 +53,16 @@ public class CartServiceImp implements ICartService {
             cartListByIdResponse.setCartProductDto(list);
             return cartListByIdResponse;
         } catch (Exception e) {
-            log.error("CartServiceImpl.getCartListById Occur Exception :"+e);
+            log.error("CartServiceImpl.getCartListById.Exception :"+e);
             ExceptionProcessorUtils.wrapperHandlerException(cartListByIdResponse, e);
         }
+        log.info("End: CartServiceImp.getCartListById.response: " + cartListByIdResponse);
         return cartListByIdResponse;
     }
 
     @Override
     public DeleteCartItemResponse deleteCartItem(DeleteCartItemRequest request) {
-        log.info("Begin: CartServiceImp.deleteCartItem");
+        log.info("Begin: CartServiceImp.deleteCartItem.request: " + request);
         request.requestCheck();
         String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
         DeleteCartItemResponse response = new DeleteCartItemResponse();
@@ -82,15 +80,17 @@ public class CartServiceImp implements ICartService {
                 response.setMsg(ShoppingRetCode.SUCCESS.getMessage());
             }
         } catch (Exception e) {
-            log.error("Error: CartServiceImp.deleteCartItem Occur Exception :"+e);
+            log.error("Error: CartServiceImp.deleteCartItem.Exception :"+e);
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
+
+        log.info("End: CartServiceImp.deleteCartItem.response: " + response);
         return response;
     }
 
     @Override
     public DeleteCheckedItemResposne deleteCheckedItems(DeleteCheckedItemRequest request) {
-        log.info("Begin: CartServiceImp deleteCheckedItems");
+        log.info("Begin: CartServiceImp.deleteCheckedItems.request: " + request);
         request.requestCheck();
         String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
         DeleteCheckedItemResposne resposne = new DeleteCheckedItemResposne();
@@ -105,20 +105,20 @@ public class CartServiceImp implements ICartService {
             resposne.setCode(ShoppingRetCode.SUCCESS.getCode());
             resposne.setMsg(ShoppingRetCode.SUCCESS.getMessage());
         } catch (Exception e) {
-            log.error("Error: CartServiceImp.deleteCheckedItems Occur Exception :"+e);
+            log.error("Error: CartServiceImp.deleteCheckedItems.Exception :"+e);
             ExceptionProcessorUtils.wrapperHandlerException(resposne, e);
         }
+
+        log.info("End: CartServiceImp.deleteCheckedItems.response: " + resposne);
         return resposne;
     }
 
     @Override
     public UpdateCartNumResponse updateCartNum(UpdateCartNumRequest request) {
-        log.info("Begin: CartServiceImp updateCartNum");
+        log.info("Begin: CartServiceImp.updateCartNum.request: " + request);
         request.requestCheck();
         String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
         UpdateCartNumResponse response = new UpdateCartNumResponse();
-        response.setCode(ShoppingRetCode.SUCCESS.getCode());
-        response.setMsg(ShoppingRetCode.SUCCESS.getMessage());
 
         try {
             if (redissonConfig.checkMapCache(
@@ -141,17 +141,21 @@ public class CartServiceImp implements ICartService {
                             request.getItemId().toString(),
                             JSON.toJSON(cartProductDto).toString());
                 }
+                response.setCode(ShoppingRetCode.SUCCESS.getCode());
+                response.setMsg(ShoppingRetCode.SUCCESS.getMessage());
             }
         } catch (Exception e) {
-            log.error("CartServiceImp.updateCartNum Occur Exception :" + e);
+            log.error("Error: CartServiceImp.updateCartNum.Exception :" + e);
             ExceptionProcessorUtils.wrapperHandlerException(response,e);
         }
+
+        log.info("End: CartServiceImp.updateCartNum.response " + response);
         return response;
     }
 
     @Override
     public SelectAllItemResponse selectAllItem(SelectAllItemRequest request) {
-        log.info("Begin: CartServiceImp selectAllItem");
+        log.info("Begin: CartServiceImp.selectAllItem.request: " + request);
         request.requestCheck();
         String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
         SelectAllItemResponse response = new SelectAllItemResponse();
@@ -169,15 +173,17 @@ public class CartServiceImp implements ICartService {
             response.setCode(ShoppingRetCode.SUCCESS.getCode());
             response.setMsg(ShoppingRetCode.SUCCESS.getMessage());
         } catch (Exception e) {
-            log.error("CartServiceImp.selectAllItem Occur Exception :" + e);
+            log.error("Error: CartServiceImp.selectAllItem.Exception :" + e);
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
+
+        log.info("End: CartServiceImp.selectAllItem.response: " + response);
         return response;
     }
 
     @Override
     public AddCartResponse addToCart(AddCartRequest addCartRequest) {
-        log.info("Begin: CartServiceImp addToCart");
+        log.info("Begin: CartServiceImp.addToCart.request: " + addCartRequest);
         addCartRequest.requestCheck();
         String cartCacheKey =  CachePrefixFactory.generatorCartKey(addCartRequest.getUserId());
         AddCartResponse addCartResponse = new AddCartResponse();
@@ -203,6 +209,7 @@ public class CartServiceImp implements ICartService {
                         addCartRequest.getItemId().toString(),
                         JSON.toJSON(cartProductDto).toString());
 
+                log.info("End: CartServiceImp.addToCart.response: " + addCartResponse);
                 return addCartResponse;
             }
             // sql 查询商品的具体信息
@@ -214,21 +221,24 @@ public class CartServiceImp implements ICartService {
             cartProductDto.setProductNum(addCartRequest.getNum().longValue());
 
             // 存入缓存redis
-            if (null != item) {
-                redissonConfig.setMapCache(
-                        cartCacheKey,
-                        addCartRequest.getItemId().toString(),
-                        JSON.toJSON(cartProductDto).toString()
-                );
+            if (null == item) {
+                addCartResponse.setCode(ShoppingRetCode.SYSTEM_ERROR.getCode());
+                addCartResponse.setMsg(ShoppingRetCode.SYSTEM_ERROR.getMessage());
+                log.info("Error: CartServiceImpl.addToCart.itemisNull :" + addCartResponse);
                 return addCartResponse;
             }
-            addCartResponse.setCode(ShoppingRetCode.SYSTEM_ERROR.getCode());
-            addCartResponse.setMsg(ShoppingRetCode.SYSTEM_ERROR.getMessage());
-            return addCartResponse;
+            redissonConfig.setMapCache(
+                    cartCacheKey,
+                    addCartRequest.getItemId().toString(),
+                    JSON.toJSON(cartProductDto).toString()
+            );
+
         } catch (Exception e) {
             log.error("CartServiceImpl.addToCart Occur Exception :"+e);
             ExceptionProcessorUtils.wrapperHandlerException(addCartResponse, e);
         }
+
+        log.info("End: CartServiceImp.addToCart.response: " + addCartResponse);
         return addCartResponse;
     }
 

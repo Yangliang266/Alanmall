@@ -22,9 +22,6 @@ import java.util.concurrent.TimeUnit;
 @Service
 @Slf4j
 public class KaptchaServiceImp implements IKaptchaService {
-//    @Autowired
-//    RedissonClient redissonClient;
-
     @Autowired
     RedissonConfig redissonConfig;
 
@@ -33,6 +30,7 @@ public class KaptchaServiceImp implements IKaptchaService {
 
     @Override
     public KaptchaCodeResponse getKaptchaCode(KaptchaCodeRequest kaptchaCodeRequest) {
+        log.info("Begin: KaptchaServiceImp.getKaptchaCode.request: " + kaptchaCodeRequest);
         KaptchaCodeResponse kaptchaCodeResponse = new KaptchaCodeResponse();
         try {
             // 1 获取图片验证码
@@ -48,14 +46,17 @@ public class KaptchaServiceImp implements IKaptchaService {
             kaptchaCodeResponse.setMsg(SysRetCodeConstants.SUCCESS.getMessage());
             kaptchaCodeResponse.setCode(SysRetCodeConstants.SUCCESS.getCode());
         } catch (Exception e) {
-            log.error("KaptchaServiceImpl.getKaptchaCode occur Exception :"+e);
+            log.error("Error: KaptchaServiceImpl.getKaptchaCode.Exception: "+e);
             ExceptionProcessorUtils.wrapperHandlerException(kaptchaCodeResponse,e);
         }
+
+        log.info("End: KaptchaServiceImp.getKaptchaCode.response: " + kaptchaCodeResponse);
         return kaptchaCodeResponse;
     }
 
     @Override
     public KaptchaCodeResponse validateKaptcha(KaptchaCodeRequest kaptchaCodeRequest) {
+        log.info("Begin: KaptchaServiceImp.validateKaptcha.request: " + kaptchaCodeRequest);
         kaptchaCodeRequest.requestCheck();
         KaptchaCodeResponse kaptchaCodeResponse = new KaptchaCodeResponse();
         try {
@@ -67,14 +68,17 @@ public class KaptchaServiceImp implements IKaptchaService {
             if (StringUtils.isNotBlank(code) && StringUtils.equalsIgnoreCase(kaptchaCodeRequest.getCode(),code)) {
                 kaptchaCodeResponse.setCode(SysRetCodeConstants.SUCCESS.getCode());
                 kaptchaCodeResponse.setMsg(SysRetCodeConstants.SUCCESS.getMessage());
+                log.info("End: KaptchaServiceImp.validateKaptcha.response: " + kaptchaCodeResponse);
                 return kaptchaCodeResponse;
             }
             kaptchaCodeResponse.setCode(SysRetCodeConstants.KAPTCHA_CODE_ERROR.getCode());
             kaptchaCodeResponse.setMsg(SysRetCodeConstants.KAPTCHA_CODE_ERROR.getMessage());
         } catch (Exception e) {
-            log.error("KaptchaServiceImpl.validateKaptchaCode occur Exception :"+e);
+            log.error("Error: KaptchaServiceImpl.validateKaptchaCode.Exception: "+e);
             ExceptionProcessorUtils.wrapperHandlerException(kaptchaCodeResponse,e);
         }
+
+        log.info("End: KaptchaServiceImp.validateKaptcha.response: " + kaptchaCodeResponse);
         return kaptchaCodeResponse;
     }
 }

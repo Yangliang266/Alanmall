@@ -35,7 +35,7 @@ public class ProductCateServiceImp implements IProductCateService {
 
     @Override
     public AllProductCateResponse getProductCate(AllProductCateRequest request) {
-        log.info("Begin: ProductCateServiceImp.getPriductCate");
+        log.info("Begin: ProductCateServiceImp.getPriductCate.request: " + request);
         AllProductCateResponse response = new AllProductCateResponse();
         response.setCode(ShoppingRetCode.SUCCESS.getCode());
         response.setMsg(ShoppingRetCode.SUCCESS.getMessage());
@@ -46,6 +46,7 @@ public class ProductCateServiceImp implements IProductCateService {
             if (StringUtils.isNotBlank(json)) {
                 List<ProductCateDto> productCateDtos = JSON.parseArray(json, ProductCateDto.class);
                 response.setProductCateDtoList(productCateDtos);
+                log.info("End: ProductCateServiceImp.getPriductCate.response: " + response);
                 return  response;
             }
 
@@ -67,10 +68,10 @@ public class ProductCateServiceImp implements IProductCateService {
             response.setProductCateDtoList(productCateDtos);
 
         }catch (Exception e) {
-            log.error("Error: ProductCateServiceImp.getPriductCate Occur Exception:" + e);
+            log.error("Error: ProductCateServiceImp.getPriductCate.Exception: " + e);
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
-
+        log.info("End: ProductCateServiceImp.getPriductCate.response: " + response);
         return response;
     }
 }

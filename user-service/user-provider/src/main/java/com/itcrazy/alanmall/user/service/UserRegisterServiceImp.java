@@ -31,6 +31,7 @@ public class UserRegisterServiceImp implements IUserRegisterService {
 
     @Override
     public UserRegisterResponse register(UserRegisterRequest userRegisterRequest) {
+        log.info("Begin:UserRegisterServiceImp.register.request:" + userRegisterRequest);
         UserRegisterResponse userRegisterResponse = new UserRegisterResponse();
         userRegisterRequest.requestCheck();
 
@@ -48,6 +49,7 @@ public class UserRegisterServiceImp implements IUserRegisterService {
         if (memberMapper.insert(member) != 1) {
             userRegisterResponse.setCode(SysRetCodeConstants.USER_REGISTER_FAILED.getCode());
             userRegisterResponse.setMsg(SysRetCodeConstants.USER_REGISTER_FAILED.getMessage());
+            log.info("Failed:UserRegisterServiceImp.register.response:" + userRegisterResponse);
             return userRegisterResponse;
         }
 
@@ -62,10 +64,12 @@ public class UserRegisterServiceImp implements IUserRegisterService {
         if(userVerifyMapper.insert(userVerify)!=1){
             userRegisterResponse.setCode(SysRetCodeConstants.USER_REGISTER_VERIFY_FAILED.getCode());
             userRegisterResponse.setMsg(SysRetCodeConstants.USER_REGISTER_VERIFY_FAILED.getMessage());
+            log.info("Failed:UserRegisterServiceImp.register.response:" + userRegisterResponse);
             return userRegisterResponse;
         }
         userRegisterResponse.setCode(SysRetCodeConstants.SUCCESS.getCode());
         userRegisterResponse.setMsg(SysRetCodeConstants.SUCCESS.getMessage());
+        log.info("End:UserRegisterServiceImp.register.response:" + userRegisterResponse);
         return userRegisterResponse;
     }
 

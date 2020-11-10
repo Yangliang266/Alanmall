@@ -58,7 +58,7 @@ public class ProductServiceImp implements IProductService {
 
     @Override
     public ProductDetailResponse getProductDetail(ProductDetailRequest request) {
-        log.info("Begin: ProductServiceImp.getProductDetail");
+        log.info("Begin: ProductServiceImp.getProductDetail.request: " + request);
         request.requestCheck();
         ProductDetailResponse response = new ProductDetailResponse();
         response.setCode(ShoppingRetCode.SUCCESS.getCode());
@@ -73,6 +73,7 @@ public class ProductServiceImp implements IProductService {
                         ShopGeneratorUtils.getInstance().generatorCartItemKey(request.getId()),
                         GlobalShopConstants.PRODUCT_ITEM_EXPIRE_TIME);
                 response.setProductDetailDto(productDetailDto);
+                log.info("End: ProductServiceImp.getProductDetail.response: " + response);
                 return response;
             }
 
@@ -103,18 +104,18 @@ public class ProductServiceImp implements IProductService {
                     expire(GlobalShopConstants.PRODUCT_ITEM_EXPIRE_TIME,TimeUnit.DAYS);
 
         } catch (Exception e) {
-            log.error("ProductServiceImpl.getProductDetail Occur Exception :"+e);
+            log.error("Error: ProductServiceImpl.getProductDetail.Exception :"+e);
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
+        log.info("End: ProductServiceImp.getProductDetail.response: " + response);
         return response;
     }
 
     @Override
     public AllProductResponse getAllProduct(AllProductRequest request) {
-        log.info("Begin: ProductServiceImp.getAllProduct");
+        log.info("Begin: ProductServiceImp.getAllProduct.request " + request);
         AllProductResponse response = new AllProductResponse();
-        response.setCode(ShoppingRetCode.SUCCESS.getCode());
-        response.setMsg(ShoppingRetCode.SUCCESS.getMessage());
+
         try {
             PageHelper.startPage(request.getPage(), request.getSize());
             PageInfoDto pageInfoDto = productConverter.req2PageInfoDto(request);
@@ -135,11 +136,15 @@ public class ProductServiceImp implements IProductService {
 
             response.setProductDtoList(productDtos);
             response.setTotal(pageInfo.getTotal());
+            response.setCode(ShoppingRetCode.SUCCESS.getCode());
+            response.setMsg(ShoppingRetCode.SUCCESS.getMessage());
 
         } catch (Exception e) {
-            log.error("ProductServiceImpl.getAllProduct Occur Exception :"+e);
+            log.error("Error: ProductServiceImpl.getAllProduct.Exception :" + e);
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
+
+        log.info("End: ProductServiceImp.getAllProduct.response " + response);
         return  response;
     }
 
@@ -156,7 +161,8 @@ public class ProductServiceImp implements IProductService {
                 List<PanelDto> panelDtoList = JSON.parseArray(json, PanelDto.class);
                 Set set = new HashSet(panelDtoList);
                 response.setPanelDtos(set);
-                return  response;
+                log.info("End: ProductServiceImp.recommend.response " + response);
+                return response;
             }
             // sql
             Set panelsets = new HashSet();
@@ -175,9 +181,10 @@ public class ProductServiceImp implements IProductService {
             response.setPanelDtos(panelsets);
 
         } catch (Exception e) {
-            log.error("ProductServiceImpl.recommend Occur Exception :"+e);
+            log.error("Error: ProductServiceImpl.recommend.Exception :" + e);
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
+        log.info("End: ProductServiceImp.recommend.response " + response);
         return response;
     }
 

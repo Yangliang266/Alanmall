@@ -45,6 +45,7 @@ public class ContentServiceImp implements IContentService {
             if (StringUtils.isNotBlank(json)) {
                 List<PanelContentDto> panelContentDtoList = JSON.parseArray(json, PanelContentDto.class);
                 response.setPannelContentDtos(panelContentDtoList);
+                log.info("End: ContentServiceImp.queryNavList.response " + response);
                 return response;
             }
             // sql 查询
@@ -57,9 +58,10 @@ public class ContentServiceImp implements IContentService {
             response.setPannelContentDtos(panelContentDtoList);
 
         } catch (Exception e) {
-            log.info("error: ContentServiceImp.queryNavList Occur Exception :" + e);
+            log.info("error: ContentServiceImp.queryNavList.Exception :" + e);
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
+        log.info("End: ContentServiceImp.queryNavList.response " + response);
         return response;
     }
 }
