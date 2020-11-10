@@ -365,7 +365,41 @@
           this.navList = res.result
         })
       },
+      _getGoodsCategoryList () {
+        getAllGoodsCategories().then(res => {
+          this.goodsCateList = res.result
+          this.goodsCateTree = this._buildCateTree(this.goodsCateList)
+        })
+      },
+      _buildCateTree (goodsCateList) {
+        let parentCateList = goodsCateList.filter(cate => cate.isParent) || []
+        let tree = {}
+        if (parentCateList) {
+          // 遍历父级产品分类
+          for (let parentCate of parentCateList) {
+            let parentCateId = parentCate.id // 父级分类id
+            let parentCateName = parentCate.name // 分类名称
 
+            let childCateList = goodsCateList
+              .filter(cate => cate.parentId === parentCateId && !cate.isParent)  // 获取当前父级父类对应的二级子分类
+              .map(cate => {
+                let childCateId = cate.id
+                // 查询三级分类
+                let children = goodsCateList.filter(cate => cate.parentId === childCateId && !cate.isParent)
+                // 重新构造子分类对象
+                return {
+                  ...cate,
+                  children: children
+                }
+              })
+            tree[parentCateName] = {
+              ...parentCate,
+              children: childCateList
+            }
+          }
+        }
+        return tree
+      },
       // 导航栏文字样式改变
       changePage (v) {
         this.choosePage = v
@@ -445,8 +479,9 @@
       // },
     },
     mounted () {
-      this._getRecommendGoodsAsPhone()
       this._getNavList()
+      this._getGoodsCategoryList()
+      this._getRecommendGoodsAsPhone()
       this.token = getStore('token')
       if (this.login) {
         this._getCartList()
