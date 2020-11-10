@@ -10,6 +10,7 @@
   * [Version 0.9.3  |  2020/10/10](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_register.md)
   * [Version 0.9.4  |  2020/10/16](https://github.com/Yangliang266/Alanmall/blob/master/temp/alanmall_shopping.md)
   * [Version 0.9.5  |  2020/10/20](https://github.com/Yangliang266/Alanmall/blob/master/temp/addCart.md)
+  * [Version 0.9.6  |  2020/10/29](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_address.md)
   
 * [Alanmall日志Bug]
   * [Bug 0.9.5.1  |  2020/9/28](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/version%200.9.8.1.md)
