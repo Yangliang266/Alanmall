@@ -36,24 +36,27 @@ public class CartServiceImp implements ICartService {
     public CartListByIdResponse getCartListById(CartListByIdRequest cartListByIdRequest) {
         log.info("Begin: CartServiceImp.getCartListById.request: " + cartListByIdRequest);
         cartListByIdRequest.requestCheck();
-        String cartCacheKey =  CachePrefixFactory.generatorCartKey(cartListByIdRequest.getUserId());
+        String cartCacheKey = CachePrefixFactory.generatorKey(cartListByIdRequest.getUserId(), CachePrefixFactory.CART_ITEM_CACHE_PREFIX);
         CartListByIdResponse cartListByIdResponse = new CartListByIdResponse();
         cartListByIdResponse.setCode(ShoppingRetCode.SUCCESS.getCode());
         cartListByIdResponse.setMsg(ShoppingRetCode.SUCCESS.getMessage());
         List<CartProductDto> list = new ArrayList();
         try {
             // 查询redis
-            Map<Object, Object> items = redissonConfig.getMap(cartCacheKey);
+            RMap<String, String> items = redissonConfig.getMap(cartCacheKey);
             // 可能会有多个产品被添加到购物车
+
             items.values().forEach(obj -> {
                 // obj转换
-                CartProductDto cartProductDto = JSON.parseObject(obj.toString(), CartProductDto.class);
+                CartProductDto cartProductDto = JSON.parseObject(obj, CartProductDto.class);
                 list.add(cartProductDto);
             });
+
             cartListByIdResponse.setCartProductDto(list);
+            log.info("End: CartServiceImp.getCartListById.response: " + cartListByIdResponse);
             return cartListByIdResponse;
         } catch (Exception e) {
-            log.error("CartServiceImpl.getCartListById.Exception :"+e);
+            log.error("Error: CartServiceImpl.getCartListById.Exception :"+e);
             ExceptionProcessorUtils.wrapperHandlerException(cartListByIdResponse, e);
         }
         log.info("End: CartServiceImp.getCartListById.response: " + cartListByIdResponse);
@@ -64,7 +67,7 @@ public class CartServiceImp implements ICartService {
     public DeleteCartItemResponse deleteCartItem(DeleteCartItemRequest request) {
         log.info("Begin: CartServiceImp.deleteCartItem.request: " + request);
         request.requestCheck();
-        String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
+        String cartCacheKey = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.CART_ITEM_CACHE_PREFIX);
         DeleteCartItemResponse response = new DeleteCartItemResponse();
         try {
             // 检查redis key field是否存在
@@ -92,7 +95,7 @@ public class CartServiceImp implements ICartService {
     public DeleteCheckedItemResposne deleteCheckedItems(DeleteCheckedItemRequest request) {
         log.info("Begin: CartServiceImp.deleteCheckedItems.request: " + request);
         request.requestCheck();
-        String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
+        String cartCacheKey = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.CART_ITEM_CACHE_PREFIX);
         DeleteCheckedItemResposne resposne = new DeleteCheckedItemResposne();
         try {
             RMap items = redissonConfig.getMap(cartCacheKey);
@@ -117,7 +120,7 @@ public class CartServiceImp implements ICartService {
     public UpdateCartNumResponse updateCartNum(UpdateCartNumRequest request) {
         log.info("Begin: CartServiceImp.updateCartNum.request: " + request);
         request.requestCheck();
-        String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
+        String cartCacheKey = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.CART_ITEM_CACHE_PREFIX);
         UpdateCartNumResponse response = new UpdateCartNumResponse();
 
         try {
@@ -157,7 +160,7 @@ public class CartServiceImp implements ICartService {
     public SelectAllItemResponse selectAllItem(SelectAllItemRequest request) {
         log.info("Begin: CartServiceImp.selectAllItem.request: " + request);
         request.requestCheck();
-        String cartCacheKey =  CachePrefixFactory.generatorCartKey(request.getUserId());
+        String cartCacheKey =  CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.CART_ITEM_CACHE_PREFIX);
         SelectAllItemResponse response = new SelectAllItemResponse();
         try {
             Map<Object, Object> items = redissonConfig.getMap(cartCacheKey);
@@ -185,7 +188,7 @@ public class CartServiceImp implements ICartService {
     public AddCartResponse addToCart(AddCartRequest addCartRequest) {
         log.info("Begin: CartServiceImp.addToCart.request: " + addCartRequest);
         addCartRequest.requestCheck();
-        String cartCacheKey =  CachePrefixFactory.generatorCartKey(addCartRequest.getUserId());
+        String cartCacheKey =  CachePrefixFactory.generatorKey(addCartRequest.getUserId(), CachePrefixFactory.CART_ITEM_CACHE_PREFIX);
         AddCartResponse addCartResponse = new AddCartResponse();
         addCartResponse.setCode(ShoppingRetCode.SUCCESS.getCode());
         addCartResponse.setMsg(ShoppingRetCode.SUCCESS.getMessage());

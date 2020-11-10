@@ -34,8 +34,8 @@ public class AddressServiceImp implements IAddressService {
     public GetAddressResponse getAddressDetails(GetAddressRequest request) {
         log.info("Begin: IaddressService.getAddressDetails.request: " + request);
         request.requestCheck();
-        String key = CachePrefixFactory.generatorCartKey(request.getUserId());
-        String field = CachePrefixFactory.generatorAddressKey(request.getUserId());
+        String key = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.USER_INFO);
+        String field = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.ADDRESS_CACHE_KEY);
         GetAddressResponse response = new GetAddressResponse();
         response.setCode(SysRetCodeConstants.SUCCESS.getCode());
         response.setMsg(SysRetCodeConstants.SUCCESS.getMessage());
@@ -49,7 +49,7 @@ public class AddressServiceImp implements IAddressService {
                 return response;
             }
 
-            // sql 查询
+            // sql 查询set
             Example example = new Example(Address.class);
             example.createCriteria().andEqualTo("userId",request.getUserId());
             List<Address> addressDtos = addressMapper.selectByExample(example);
@@ -70,8 +70,8 @@ public class AddressServiceImp implements IAddressService {
     public DeleteAddressResponse deleteAddress(DeleteAddressRequest request) {
         log.info("Begin: IaddressService.deleteAddress.request: " + request);
         request.requestCheck();
-        String key = CachePrefixFactory.generatorCartKey(request.getUserId());
-        String field = CachePrefixFactory.generatorAddressKey(request.getUserId());
+        String key = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.USER_INFO);
+        String field = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.ADDRESS_CACHE_KEY);
         DeleteAddressResponse response = new DeleteAddressResponse();
         try {
             redissonConfig.removeMapCache(key, field);
@@ -99,8 +99,8 @@ public class AddressServiceImp implements IAddressService {
         log.info("Begin: IaddressService.addAddress.request: " + request);
         request.requestCheck();
         AddressAddResponse response = new AddressAddResponse();
-        String key = CachePrefixFactory.generatorCartKey(request.getUserId());
-        String field = CachePrefixFactory.generatorAddressKey(request.getUserId());
+        String key = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.USER_INFO);
+        String field = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.ADDRESS_CACHE_KEY);
 
         try {
             // 延时双删
@@ -129,8 +129,8 @@ public class AddressServiceImp implements IAddressService {
         log.info("Begin :IaddressService.updateAddress.request: " + request);
         request.requestCheck();
         AddressUpdateResponse response = new AddressUpdateResponse();
-        String key = CachePrefixFactory.generatorCartKey(request.getUserId());
-        String field = CachePrefixFactory.generatorAddressKey(request.getUserId());
+        String key = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.USER_INFO);
+        String field = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.ADDRESS_CACHE_KEY);
         try {
             // 延时双删
             redissonConfig.removeMapCache(key, field);

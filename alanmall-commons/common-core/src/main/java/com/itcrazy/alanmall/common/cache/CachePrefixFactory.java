@@ -21,15 +21,19 @@ public class CachePrefixFactory {
     public static final String ADDRESS_CACHE_KEY = "address_cache";
     public final static String CART_ITEM_CACHE_PREFIX="cart_item";
 
-    public static final String generatorCartKey(Long userId) {
-        StringBuilder stringBuilder = new StringBuilder(CART_ITEM_CACHE_PREFIX);
+    public final static String USER_INFO = "user_info";
+
+    public static final String generatorKey(Long userId, String prefix) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (prefix.equals(CART_ITEM_CACHE_PREFIX)) {
+            stringBuilder = new StringBuilder(CART_ITEM_CACHE_PREFIX);
+        } else if(prefix.equals(ADDRESS_CACHE_KEY)) {
+            stringBuilder = new StringBuilder(ADDRESS_CACHE_KEY);
+        } else if(prefix.equals(USER_INFO)) {
+            stringBuilder = new StringBuilder(USER_INFO);
+        }
         stringBuilder.append(":").append(userId);
         return stringBuilder.toString();
     }
 
-    public static final String generatorAddressKey(Long userId) {
-        StringBuilder stringBuilder = new StringBuilder(ADDRESS_CACHE_KEY);
-        stringBuilder.append(":").append(userId);
-        return stringBuilder.toString();
-    }
 }

@@ -43,11 +43,8 @@ public class RedissonConfig {
      **/
     public RBucket setCache(String key, String val) {
         RBucket rBucket = redissonClient.getBucket(key);
-
         rBucket.set(val);
-
         return rBucket;
-
     }
 
     public void setStringCache(String key, String val) {
