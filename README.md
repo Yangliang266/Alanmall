@@ -8,7 +8,7 @@
 
 * [Alanmall流程图log]
   * [Version 0.9.1  |  2020/09/24](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_login.md)
-  * [Version 0.9.2  |  2020/09/26](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_login.md)
+  * [Version 0.9.2  |  2020/09/26](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_op.md)
   * [Version 0.9.3  |  2020/10/10](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_register.md)
   * [Version 0.9.4  |  2020/10/16](https://github.com/Yangliang266/Alanmall/blob/master/temp/alanmall_shopping.md)
   * [Version 0.9.5  |  2020/10/20](https://github.com/Yangliang266/Alanmall/blob/master/temp/addCart.md)
