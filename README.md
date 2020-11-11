@@ -1,18 +1,21 @@
-> Distributed ecological technology - Written by yliang 2020/9/8 | 禁止商业用途，转载请注明
+> Distributed ecological technology
+
+> Written by yliang 2020/9/8 | 禁止商业用途，转载请注明
 
 > 具体代码 点击上方**View code**一览。
 
 > 整体环境部署完毕，部分功能未开发，以下为版本更新，项目构建，项目功能的文件日志 - 持续更新
 
-* [Alanmall版本log]
-  * [Version 0.9.1  |  2020/09/24](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_login.md)
-  * [Version 0.9.2  |  2020/09/26](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_login.md)
-  * [Version 0.9.3  |  2020/10/10](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_register.md)
-  * [Version 0.9.4  |  2020/10/16](https://github.com/Yangliang266/Alanmall/blob/master/temp/alanmall_shopping.md)
-  * [Version 0.9.5  |  2020/10/20](https://github.com/Yangliang266/Alanmall/blob/master/temp/addCart.md)
+* [Alanmall流程图log]
+  * [Version 0.1.1  |  2020/09/24](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_login.md)
+  * [Version 0.1.2  |  2020/09/29](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_op.md)
+  * [Version 0.1.4  |  2020/10/10](https://github.com/Yangliang266/Alanmall/blob/master/temp/addCart.md)
+  * [Version 0.1.5  |  2020/10/23](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_address.md)
+  * [Version 0.1.6  |  2020/11/02](https://github.com/Yangliang266/Alanmall/blob/master/temp/shop_carts.md)
+  * [Version 0.1.8  |  2020/11/10](https://github.com/Yangliang266/Alanmall/blob/master/temp/shop_navList.md)
   
 * [Alanmall日志Bug]
-  * [Bug 0.9.5.1  |  2020/9/28](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/version%200.9.8.1.md)
+  * [Bug 0.1.5.1  |  2020/9/28](https://github.com/YangLiang-SoftWise/Alanmall/blob/master/temp/version%200.9.8.1.md)
   
   
   
