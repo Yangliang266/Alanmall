@@ -1,4 +1,4 @@
-1. **login流程图思路**
+1. **token/cookie传递流程图**
 
  <img src="https://raw.githubusercontent.com/YangLiang-SoftWise/images/master/img/login verify.png" alt="login verify" style="zoom: 33%;" />
 
