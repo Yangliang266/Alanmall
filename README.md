@@ -8,10 +8,10 @@
 
 * [Alanmall流程图log]
   * [Version 0.1.1  |  2020/09/24](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_login.md)
-  * [Version 0.1.2  |  2020/09/26](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_op.md)
-  * [Version 0.1.4  |  2020/10/20](https://github.com/Yangliang266/Alanmall/blob/master/temp/addCart.md)
-  * [Version 0.1.5  |  2020/10/29](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_address.md)
-  * [Version 0.1.6  |  2020/11/07](https://github.com/Yangliang266/Alanmall/blob/master/temp/shop_carts.md)
+  * [Version 0.1.2  |  2020/09/29](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_op.md)
+  * [Version 0.1.4  |  2020/10/10](https://github.com/Yangliang266/Alanmall/blob/master/temp/addCart.md)
+  * [Version 0.1.5  |  2020/10/23](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_address.md)
+  * [Version 0.1.6  |  2020/11/02](https://github.com/Yangliang266/Alanmall/blob/master/temp/shop_carts.md)
   * [Version 0.1.8  |  2020/11/10](https://github.com/Yangliang266/Alanmall/blob/master/temp/shop_navList.md)
   
 * [Alanmall日志Bug]
