@@ -1,10 +1,12 @@
-> Distributed ecological technology - Written by yliang 2020/9/8 | 禁止商业用途，转载请注明
+> Distributed ecological technology
+
+> Written by yliang 2020/9/8 | 禁止商业用途，转载请注明
 
 > 具体代码 点击上方**View code**一览。
 
 > 整体环境部署完毕，部分功能未开发，以下为版本更新，项目构建，项目功能的文件日志 - 持续更新
 
-* [Alanmall版本log]
+* [Alanmall流程图log]
   * [Version 0.9.1  |  2020/09/24](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_login.md)
   * [Version 0.9.2  |  2020/09/26](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_login.md)
   * [Version 0.9.3  |  2020/10/10](https://github.com/Yangliang266/Alanmall/blob/master/temp/user_register.md)
