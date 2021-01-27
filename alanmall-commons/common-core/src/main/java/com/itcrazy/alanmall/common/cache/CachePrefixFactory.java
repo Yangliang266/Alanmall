@@ -18,17 +18,20 @@ public class CachePrefixFactory {
     public final static String HOMEPAGE_CACHE_KEY="home_page";//商品详情缓存前缀
     public final static int HOMEPAGE_EXPIRE_TIME=1; //过期时间
 
-    public static final String ADDRESS_CACHE_KEY = "address_cache";
+    public final static String ADDRESS_CACHE_KEY = "address_cache";
     public final static String CART_ITEM_CACHE_PREFIX="cart_item";
+    public final static String CART_ITEM_CACHE_HOT_KEY="cart_item_cache_hot_key";
 
     public final static String USER_INFO = "user_info";
 
-    public static final String generatorKey(Long userId, String prefix) {
+    public static  String generatorKey(Long userId, String prefix) {
         StringBuilder stringBuilder = new StringBuilder();
         if (prefix.equals(CART_ITEM_CACHE_PREFIX)) {
             stringBuilder = new StringBuilder(CART_ITEM_CACHE_PREFIX);
         } else if(prefix.equals(ADDRESS_CACHE_KEY)) {
             stringBuilder = new StringBuilder(ADDRESS_CACHE_KEY);
+        } else if(prefix.equals(CART_ITEM_CACHE_HOT_KEY)) {
+            stringBuilder = new StringBuilder(CART_ITEM_CACHE_HOT_KEY);
         } else if(prefix.equals(USER_INFO)) {
             stringBuilder = new StringBuilder(USER_INFO);
         }

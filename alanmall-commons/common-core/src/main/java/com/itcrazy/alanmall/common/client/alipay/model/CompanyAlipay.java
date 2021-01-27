@@ -2,14 +2,17 @@ package com.itcrazy.alanmall.common.client.alipay.model;
 
 import com.itcrazy.alanmall.common.framework.model.BaseModelAdapter;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
 /**
  * 商家支付宝帐号配置
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class CompanyAlipay extends BaseModelAdapter {
+	private static final long serialVersionUID = -8469004794436485639L;
 	private Long id;
 	private Long companyId;
 	private Long brandId;
@@ -28,210 +31,6 @@ public class CompanyAlipay extends BaseModelAdapter {
 	private String applyCardUrl;
 
 	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the companyId
-	 */
-	public Long getCompanyId() {
-		return companyId;
-	}
-
-	/**
-	 * @param companyId
-	 *            the companyId to set
-	 */
-	public void setCompanyId(Long companyId) {
-		this.companyId = companyId;
-	}
-
-	/**
-	 * @return the brandId
-	 */
-	public Long getBrandId() {
-		return brandId;
-	}
-
-	/**
-	 * @param brandId
-	 *            the brandId to set
-	 */
-	public void setBrandId(Long brandId) {
-		this.brandId = brandId;
-	}
-
-	/**
-	 * @return the partner
-	 */
-	public String getPartner() {
-		return partner;
-	}
-
-	/**
-	 * @param partner
-	 *            the partner to set
-	 */
-	public void setPartner(String partner) {
-		this.partner = partner;
-	}
-
-	/**
-	 * @return the privateKey
-	 */
-	public String getPrivateKey() {
-		return privateKey;
-	}
-
-	public String getAppId() {
-		return appId;
-	}
-
-	public void setAppId(String appId) {
-		this.appId = appId;
-	}
-
-	/**
-	 * @param privateKey
-	 *            the privateKey to set
-	 */
-	public void setPrivateKey(String privateKey) {
-		this.privateKey = privateKey;
-	}
-
-	/**
-	 * @return the md5Key
-	 */
-	public String getMd5Key() {
-		return md5Key;
-	}
-
-	/**
-	 * @param md5Key
-	 *            the md5Key to set
-	 */
-	public void setMd5Key(String md5Key) {
-		this.md5Key = md5Key;
-	}
-
-	/**
-	 * @return the signType
-	 */
-	public Integer getSignType() {
-		return signType;
-	}
-
-	/**
-	 * @param signType
-	 *            the signType to set
-	 */
-	public void setSignType(Integer signType) {
-		this.signType = signType;
-	}
-
-	/**
-	 * @return the createTime
-	 */
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	/**
-	 * @param createTime
-	 *            the createTime to set
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	/**
-	 * @return the updateTime
-	 */
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-
-	/**
-	 * @param updateTime
-	 *            the updateTime to set
-	 */
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-
-	/**
-	 * @return the createId
-	 */
-	public Long getCreateId() {
-		return createId;
-	}
-
-	/**
-	 * @param createId
-	 *            the createId to set
-	 */
-	public void setCreateId(Long createId) {
-		this.createId = createId;
-	}
-
-	/**
-	 * @return the updateId
-	 */
-	public Long getUpdateId() {
-		return updateId;
-	}
-
-	/**
-	 * @param updateId
-	 *            the updateId to set
-	 */
-	public void setUpdateId(Long updateId) {
-		this.updateId = updateId;
-	}
-
-	/**
-	 * @return the isDeleted
-	 */
-	public Integer getIsDeleted() {
-		return isDeleted;
-	}
-
-	/**
-	 * @param isDeleted
-	 *            the isDeleted to set
-	 */
-	public void setIsDeleted(Integer isDeleted) {
-		this.isDeleted = isDeleted;
-	}
-
-	public Long getStoreId() {
-		return storeId;
-	}
-
-	public void setStoreId(Long storeId) {
-		this.storeId = storeId;
-	}
-
-	public String getPublicKey() {
-		return publicKey;
-	}
-
-	public void setPublicKey(String publicKey) {
-		this.publicKey = publicKey;
-	}
-
-	/**
 	 * 加密方法，默认 RSA2
 	 */
 	public String getSignTypeName() {
@@ -247,11 +46,4 @@ public class CompanyAlipay extends BaseModelAdapter {
 		return "RSA2";
 	}
 
-	public String getApplyCardUrl() {
-		return applyCardUrl;
-	}
-
-	public void setApplyCardUrl(String applyCardUrl) {
-		this.applyCardUrl = applyCardUrl;
-	}
 }

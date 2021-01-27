@@ -3,22 +3,33 @@ dubbo:
     name: alanmall-user
     owner: mathyoung
   registry:
-    address: zookeeper://nexus.maven.com:2181
+    # 服务注册地址 - 可以多地址
+    address: zookeeper://aliyun.alan.com:2181
     check: true
     group: dubbo-dev
     simplified: true
   metadata-report:
-    address: zookeeper://nexus.maven.com:2181
+    address: zookeeper://aliyun.alan.com:2181
     retry-times: 30
     cycle-report: false
     group: dubbo-dev
   scan:
     basePackages: com.itcrazy.alanmall.user
+  consumer:
+    # 负载均衡 - 一致性hash
+    loadbalance: consistenthash
+    # 服务降级
+    # 超时时间
+    timeout: 1000
+    version: 1.0
+    cluster: failfast
+
+
 
 #spring:
 #  redisson:
 #    address:
-#      nexus.maven.com:6379
+#      aliyun.alan.com:6379
 #    timeout: 3000
 #    data-base: 0
 user:

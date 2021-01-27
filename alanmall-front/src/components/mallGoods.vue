@@ -59,7 +59,7 @@
           // 加入购物车动画
           var dom = event.target
           // 获取点击的坐标
-          let elLeft = dom.getBoundingClientRect().left + (dom.offsetWidth / 2)
+          let elLeft = dom.getBoundingClientRect().right + (dom.offsetWidth / 2)
           let elTop = dom.getBoundingClientRect().top + (dom.offsetHeight / 2)
           // 需要触发
           this.ADD_ANIMATION({moveShow: true, elLeft: elLeft, elTop: elTop, img: img})

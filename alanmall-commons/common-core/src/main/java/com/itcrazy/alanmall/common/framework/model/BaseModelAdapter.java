@@ -1,6 +1,10 @@
 package com.itcrazy.alanmall.common.framework.model;
 
 import com.itcrazy.alanmall.common.framework.model.impl.BaseModelImpl;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 public abstract class BaseModelAdapter extends BaseModelImpl {
 
@@ -12,20 +16,13 @@ public abstract class BaseModelAdapter extends BaseModelImpl {
 	public static final int STATUS_FLAG_OK = 0;
 	public static final long ID_DEFAULT = 0; // 默认商家id
 
+	@Getter
 	protected Long id;
+
+	@Getter
+	@Setter
 	private Long officeAreaId;
 
-	public Long getId() {
-		return id;
-	}
 
-	public Long getOfficeAreaId() {
-		officeAreaId = 1L;
-		return officeAreaId;
-	}
-
-	public void setOfficeAreaId(Long officeAreaId) {
-		this.officeAreaId = officeAreaId;
-	}
 
 }

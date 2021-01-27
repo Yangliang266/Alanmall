@@ -1,6 +1,34 @@
 spring:
   profiles:
     active: dev
+#  application:
+#    name: alantest
+#  elasticsearch:
+#    rest:
+#      uris: aliyun.alan.com:9300
+  rabbitmq:
+    username: admin
+    password: admin
+    listener:
+      direct:
+        acknowledge-mode: manual
+      simple:
+        acknowledge-mode: manual
+    addresses: aliyun.alan.com
+    port: 5672
+    virtual-host: /
 
 server:
-  port: 8095
+  port: 8098
+#rocketmq:
+#  name-server: rocketmq.alan.com:9876
+#  producer:
+#    group: gid_test
+#    send-message-timeout: 3000
+
+
+
+
+
+
+

@@ -1,0 +1,34 @@
+dubbo:
+  application:
+    name: order-provider
+    owner: mathyoung
+  registry:
+    address: zookeeper://aliyun.alan.com:2181
+    check: true
+    simplified: true
+    group: dubbo-dev
+  metadata-report:
+    address: zookeeper://aliyun.alan.com:2181
+    retry-times: 30
+    cycle-report: false
+    group: dubbo-dev
+  scan:
+    basePackages: com.itcrazy.alanmall.order.service
+
+spring:
+  redisson:
+    address: aliyun.alan.com:6379
+  rabbitmq:
+    addresses: aliyun.alan.com
+    port: 5672
+    username: admin
+
+
+rocketmq:
+  name-server: aliyun.alan.com:9876
+  producer:
+    group: orderGroup
+    send-message-timeout: 3000
+
+
+

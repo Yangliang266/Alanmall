@@ -12,17 +12,18 @@ import com.itcrazy.alanmall.user.dto.*;
 import com.itcrazy.alanmall.user.utils.ExceptionProcessorUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
-@Service
+@DubboService
 @Slf4j
 public class AddressServiceImp implements IAddressService {
     @Autowired
-    RedissonConfig redissonConfig;
+    RedissonConfig redissonClient;
 
     @Autowired
     AddressMapper addressMapper;
@@ -41,7 +42,7 @@ public class AddressServiceImp implements IAddressService {
         response.setMsg(SysRetCodeConstants.SUCCESS.getMessage());
         try {
             // redis 缓存
-            String json = redissonConfig.getMapField(key, field);
+            String json = redissonClient.getMapField(key, field);
             if(StringUtils.isNotBlank(json)) {
                 List<AddressDto> addressDtoList = JSON.parseArray(json, AddressDto.class);
                 response.setAddressDtos(addressDtoList);
@@ -49,6 +50,7 @@ public class AddressServiceImp implements IAddressService {
                 return response;
             }
 
+            // 高并发 防止雪崩，加锁
             // sql 查询set
             Example example = new Example(Address.class);
             example.createCriteria().andEqualTo("userId",request.getUserId());
@@ -56,7 +58,7 @@ public class AddressServiceImp implements IAddressService {
 
             // redis 存储
             List<AddressDto> addressDtoList = addressConverter.address2List(addressDtos);
-            redissonConfig.setMapCache(key, field, JSON.toJSON(addressDtoList).toString());
+            redissonClient.setMapCache(key, field, JSON.toJSON(addressDtoList).toString());
             response.setAddressDtos(addressDtoList);
         } catch (Exception e) {
             log.error("Error: IaddressService.getAddressDetails.Exception: " + e );
@@ -74,13 +76,13 @@ public class AddressServiceImp implements IAddressService {
         String field = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.ADDRESS_CACHE_KEY);
         DeleteAddressResponse response = new DeleteAddressResponse();
         try {
-            redissonConfig.removeMapCache(key, field);
+            redissonClient.removeMapCache(key, field);
             //采用延时双删
             Example example = new Example(Address.class);
             example.createCriteria().andEqualTo("addressId",request.getAddressId());
             addressMapper.deleteByExample(example);
             Thread.sleep(1000);
-            redissonConfig.removeMapCache(key, field);
+            redissonClient.removeMapCache(key, field);
 
             response.setCode(SysRetCodeConstants.SUCCESS.getCode());
             response.setMsg(SysRetCodeConstants.SUCCESS.getMessage());
@@ -104,7 +106,7 @@ public class AddressServiceImp implements IAddressService {
 
         try {
             // 延时双删
-            redissonConfig.removeMapCache(key, field);
+            redissonClient.removeMapCache(key, field);
             Address address = addressConverter.addReq2Address(request);
             int row = addressMapper.insert(address);
             if (row > 0) {
@@ -113,7 +115,7 @@ public class AddressServiceImp implements IAddressService {
             }
             // 延时双删
             Thread.sleep(1000);
-            redissonConfig.removeMapCache(key, field);
+            redissonClient.removeMapCache(key, field);
 
         } catch (Exception e) {
             log.error("Error: IaddressService.addAddress.Exception: " + e );
@@ -133,7 +135,7 @@ public class AddressServiceImp implements IAddressService {
         String field = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.ADDRESS_CACHE_KEY);
         try {
             // 延时双删
-            redissonConfig.removeMapCache(key, field);
+            redissonClient.removeMapCache(key, field);
 
             Address address = addressConverter.upRes2Address(request);
             int row = addressMapper.updateByPrimaryKey(address);
@@ -143,7 +145,7 @@ public class AddressServiceImp implements IAddressService {
             }
             // 延时双删
             Thread.sleep(1000);
-            redissonConfig.removeMapCache(key, field);
+            redissonClient.removeMapCache(key, field);
 
         } catch (Exception e) {
             log.error("Error: IaddressService.updateAddress.Exception: " + e );

@@ -3,14 +3,26 @@ dubbo:
     name: alanmall-shopping
     owner: mathyoung
   registry:
-    address: zookeeper://nexus.maven.com:2181
+    address: zookeeper://aliyun.alan.com:2181
     check: true
     group: dubbo-dev
     simplified: true
   metadata-report:
-    address: zookeeper://nexus.maven.com:2181
+    address: zookeeper://aliyun.alan.com:2181
     retry-times: 30
     cycle-report: false
     group: dubbo-dev
   scan:
     basePackages: com.itcrazy.alanmall.shopping
+  consumer:
+    # 负载均衡 - 一致性hash
+    loadbalance: consistenthash
+    # 服务降级
+#    mock: true
+    # 响应时间
+    timeout: 5000
+    # 服务容错 - 快速失败 不重试
+    cluster: failfast
+    version: 1.0
+
+

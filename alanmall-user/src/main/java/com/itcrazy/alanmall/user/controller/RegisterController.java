@@ -11,6 +11,7 @@ import com.itcrazy.alanmall.user.dto.KaptchaCodeRequest;
 import com.itcrazy.alanmall.user.dto.KaptchaCodeResponse;
 import com.itcrazy.alanmall.user.dto.UserRegisterRequest;
 import com.itcrazy.alanmall.user.dto.UserRegisterResponse;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,10 +24,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 public class RegisterController {
-    @Reference(timeout = 3000)
+    @DubboReference
     IKaptchaService kaptchaService;
 
-    @Reference(timeout = 3000)
+    @DubboReference
     IUserRegisterService iUserRegisterService;
 
     @PostMapping("/register")

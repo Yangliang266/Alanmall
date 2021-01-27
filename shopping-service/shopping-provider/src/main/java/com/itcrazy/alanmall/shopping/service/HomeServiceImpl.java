@@ -16,6 +16,7 @@ import com.itcrazy.alanmall.shopping.service.cache.CacheManager;
 import com.itcrazy.alanmall.shopping.utils.ExceptionProcessorUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.config.annotation.Service;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +26,13 @@ import java.util.List;
 import java.util.Set;
 
 @Slf4j
-@Service
+@DubboService
 public class HomeServiceImpl implements IHomeService {
-
     @Autowired
     PanelContentMapper panelContentMapper;
+
     @Autowired
     ContentConverter contentConverter;
-//    @Autowired
-//    RedissonConfig redissonConfig;
 
     @Autowired
     CacheManager cacheManager;

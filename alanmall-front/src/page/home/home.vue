@@ -194,6 +194,9 @@
   }
 </script>
 <style lang="scss" rel="stylesheet/scss" scoped>
+  @import "../../assets/style/mixin";
+  @import "../../assets/style/theme";
+  @import "../../assets/style/index";
   .home {
     display: flex;
     flex-direction: column;

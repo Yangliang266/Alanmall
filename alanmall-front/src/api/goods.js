@@ -105,3 +105,8 @@ export const getSearch = (params) => {
 export const getQuickSearch = (params) => {
   return http.fetchGet(apis.getQuickSearch + '/' + params.params.key)
 }
+
+// elasticSearch 出事故话初始化
+export const getSearchInit = (params) => {
+  return http.fetchGet(apis.getSearchInit, params)
+}

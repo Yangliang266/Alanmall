@@ -11,6 +11,7 @@ import com.itcrazy.alanmall.user.utils.VerifyCodeUtils;
 import jdk.nashorn.internal.runtime.GlobalConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.config.annotation.Service;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
@@ -19,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-@Service
+@DubboService
 @Slf4j
 public class KaptchaServiceImp implements IKaptchaService {
     @Autowired

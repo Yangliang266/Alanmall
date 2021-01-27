@@ -2,14 +2,14 @@ package com.itcrazy.alanmall.common.client.alipay.model;
 
 
 import com.itcrazy.alanmall.common.framework.model.BaseModelAdapter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class CardExtInfo extends BaseModelAdapter {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6274473693570324553L;
 
 	private String bizCardNo;
@@ -21,77 +21,5 @@ public class CardExtInfo extends BaseModelAdapter {
 	private String balance;
 	private String templateId;
 	private String frontImageId;
-
-	public String getBizCardNo() {
-		return bizCardNo;
-	}
-
-	public void setBizCardNo(String bizCardNo) {
-		this.bizCardNo = bizCardNo;
-	}
-
-	public String getExternalCardNo() {
-		return externalCardNo;
-	}
-
-	public void setExternalCardNo(String externalCardNo) {
-		this.externalCardNo = externalCardNo;
-	}
-
-	public Date getOpenDate() {
-		return openDate;
-	}
-
-	public void setOpenDate(Date openDate) {
-		this.openDate = openDate;
-	}
-
-	public Date getValidDate() {
-		return validDate;
-	}
-
-	public void setValidDate(Date validDate) {
-		this.validDate = validDate;
-	}
-
-	public String getLevel() {
-		return level;
-	}
-
-	public void setLevel(String level) {
-		this.level = level;
-	}
-
-	public String getPoint() {
-		return point;
-	}
-
-	public void setPoint(String point) {
-		this.point = point;
-	}
-
-	public String getBalance() {
-		return balance;
-	}
-
-	public void setBalance(String balance) {
-		this.balance = balance;
-	}
-
-	public String getTemplateId() {
-		return templateId;
-	}
-
-	public void setTemplateId(String templateId) {
-		this.templateId = templateId;
-	}
-
-	public String getFrontImageId() {
-		return frontImageId;
-	}
-
-	public void setFrontImageId(String frontImageId) {
-		this.frontImageId = frontImageId;
-	}
 
 }

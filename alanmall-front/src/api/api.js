@@ -49,6 +49,7 @@ export const apis = {
   productDet: '/shopping/product',
   delOrder: '/shopping/delOrder',
   getSearch: '/shopping/search',
-  getQuickSearch: '/shopping/search'
+  getQuickSearch: '/shopping/search',
+  getSearchInit: '/shopping/search/init'
 
 }

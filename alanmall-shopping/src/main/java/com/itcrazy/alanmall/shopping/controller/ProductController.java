@@ -8,14 +8,14 @@ import com.itcrazy.alanmall.shopping.forms.PageInfo;
 import com.itcrazy.alanmall.shopping.forms.PageResponse;
 import com.itcrazy.alanmall.shopping.manager.IProductService;
 import com.itcrazy.alanmall.user.annotation.Anoymous;
-import org.apache.dubbo.config.annotation.Reference;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/shopping")
 @RestController
 public class ProductController {
 
-    @Reference(timeout = 3000)
+    @DubboReference
     IProductService iProductService;
 
     @Anoymous

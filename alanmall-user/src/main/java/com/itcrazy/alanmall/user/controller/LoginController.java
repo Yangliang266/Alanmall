@@ -13,6 +13,7 @@ import com.itcrazy.alanmall.user.dto.KaptchaCodeResponse;
 import com.itcrazy.alanmall.user.dto.UserLoginRequest;
 import com.itcrazy.alanmall.user.dto.UserLoginResponse;
 import com.itcrazy.alanmall.user.intercepter.TokenIntercepter;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -26,10 +27,10 @@ import java.util.Map;
 @RequestMapping("/user")
 public class LoginController {
 
-    @Reference(timeout = 3000)
+    @DubboReference
     IUserLoginService iUserLoginService;
 
-    @Reference(timeout = 3000)
+    @DubboReference
     IKaptchaService iKaptchaService;
 
     /**

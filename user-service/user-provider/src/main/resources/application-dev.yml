@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/gpmall?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC
+    url: jdbc:mysql://aliyun.alan.com:3307/gpmall?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC
     username: root
-    password:
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
   redisson:
     address:
-      nexus.maven.com:6379
+      aliyun.alan.com:6379
 #      192.168.1.101:7291,
 #      192.168.1.101:7292,
 #      192.168.1.105:7293,
@@ -17,7 +17,7 @@ spring:
     data-base: 0
 
 #  jedis:
-##    address: nexus.maven.com
+##    address: aliyun.alan.com
 ##    port: 6379
 #    redis-address:
 ##      addressAndPort: 192.168.1.106:7291
@@ -38,17 +38,21 @@ dubbo:
     name: dubbo
     port: 20991
   registry:
-    address: zookeeper://nexus.maven.com:2181
+    address: zookeeper://aliyun.alan.com:2181
     check: true
     group: dubbo-dev
     simplified: true
   metadata-report:
-    address: zookeeper://nexus.maven.com:2181
+    address: zookeeper://aliyun.alan.com:2181
     retry-times: 30
     cycle-report: false
     group: dubbo-dev
   scan:
     basePackages: com.itcrazy.alanmall.user.service
+  provider:
+    version: 1.0
+    cluster: failover
+    retries: 3
 
 
 

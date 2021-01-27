@@ -14,15 +14,15 @@ import com.itcrazy.alanmall.shopping.utils.ExceptionProcessorUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
-@Service
+@DubboService
 @Slf4j
-@Data
 public class ContentServiceImp implements IContentService {
     @Autowired
     RedissonConfig redissonConfig;

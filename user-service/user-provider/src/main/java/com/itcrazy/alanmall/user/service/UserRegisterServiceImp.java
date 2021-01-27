@@ -10,6 +10,7 @@ import com.itcrazy.alanmall.user.dal.mapper.UserVerifyMapper;
 import com.itcrazy.alanmall.user.dto.UserRegisterRequest;
 import com.itcrazy.alanmall.user.dto.UserRegisterResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
@@ -19,8 +20,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+
+@DubboService
 @Slf4j
-@Service
 public class UserRegisterServiceImp implements IUserRegisterService {
 
     @Autowired

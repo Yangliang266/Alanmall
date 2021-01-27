@@ -8,14 +8,14 @@ import com.itcrazy.alanmall.shopping.dto.*;
 import com.itcrazy.alanmall.shopping.forms.CartForm;
 import com.itcrazy.alanmall.shopping.manager.ICartService;
 import com.itcrazy.alanmall.user.intercepter.TokenIntercepter;
-import org.apache.dubbo.config.annotation.Reference;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("shopping")
 public class CartController {
-    @Reference(timeout = 3000)
+    @DubboReference
     ICartService iCartService;
 
     // 添加到购物车

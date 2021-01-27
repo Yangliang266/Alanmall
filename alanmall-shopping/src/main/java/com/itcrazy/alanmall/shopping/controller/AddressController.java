@@ -10,6 +10,7 @@ import com.itcrazy.alanmall.user.IAddressService;
 import com.itcrazy.alanmall.user.dto.*;
 import com.itcrazy.alanmall.user.intercepter.TokenIntercepter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,7 @@ import java.util.Map;
 @RequestMapping("/shopping")
 @Slf4j
 public class AddressController {
-    @Reference(timeout = 3000)
+    @DubboReference
     IAddressService iAddressService;
 
     @GetMapping("/addresses")
@@ -42,7 +43,7 @@ public class AddressController {
 
     // 添加地址信息
     @PostMapping("/addresses")
-    public ResponseData addAddress(@RequestBody AddressForm addressForm, HttpServletRequest servletRequest) {
+    public ResponseData<String> addAddress(@RequestBody AddressForm addressForm, HttpServletRequest servletRequest) {
         String userInfo = (String) servletRequest.getAttribute(TokenIntercepter.USER_INFO_KEY);
         JSONObject object = JSON.parseObject(userInfo);
         Long uid = Long.parseLong(object.get("uid").toString());
@@ -58,9 +59,12 @@ public class AddressController {
         AddressAddResponse response = iAddressService.addAddress(request);
 
         if (response.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
-            return new ResponseUtil().setData(response.getMsg());
+            return new ResponseUtil<String>().setData(response.getMsg());
         }
-        return new ResponseUtil().setErrorMsg(response.getMsg());
+
+        ResponseData<String> stringResponseData = new ResponseUtil<String>().setErrorMsg(response.getMsg());
+
+        return new ResponseUtil<String>().setErrorMsg(response.getMsg());
     }
 
     // 更新地址信息

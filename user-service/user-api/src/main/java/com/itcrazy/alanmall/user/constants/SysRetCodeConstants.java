@@ -1,12 +1,5 @@
 package com.itcrazy.alanmall.user.constants;
 
-/**
- * 腾讯课堂搜索【咕泡学院】
- * 官网：www.gupaoedu.com
- * 风骚的Mic 老师
- * create-date: 2019/7/22-13:06
- * user-service统一错误码为  003
- */
 public enum SysRetCodeConstants {
     // 系统公用
     SUCCESS                             ("000000", "成功"),

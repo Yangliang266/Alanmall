@@ -16,6 +16,7 @@ import com.itcrazy.alanmall.user.utils.JwtTokenUtils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -32,12 +33,12 @@ import java.util.Map;
  * @ClassName UserImp
  * @date 2020/7/8 15:47
  */
-@Service
+@DubboService
 @Slf4j
 public class UserLoginServiceImp implements IUserLoginService {
     @Autowired
     MemberMapper memberMapper;
-//
+
     @Autowired
     UserConverter userConverer;
 

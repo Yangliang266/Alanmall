@@ -3,6 +3,7 @@ package com.itcrazy.alanmall.common.redis.config;
 import lombok.Data;
 import org.redisson.api.RBucket;
 import org.redisson.api.RMap;
+import org.redisson.api.RScoredSortedSet;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -126,4 +127,10 @@ public class RedissonConfig {
         }
         return false;
     }
+
+    public <T> RScoredSortedSet<T> getScoredSortedSet(String hotCache) {
+        return redissonClient.getScoredSortedSet(hotCache);
+    }
+
+
 }

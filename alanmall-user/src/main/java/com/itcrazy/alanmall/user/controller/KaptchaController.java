@@ -8,6 +8,7 @@ import com.itcrazy.alanmall.user.annotation.Anoymous;
 import com.itcrazy.alanmall.user.constants.SysRetCodeConstants;
 import com.itcrazy.alanmall.user.dto.KaptchaCodeRequest;
 import com.itcrazy.alanmall.user.dto.KaptchaCodeResponse;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/user")
 public class KaptchaController {
 
-    @Reference(timeout = 3000)
+    @DubboReference
     IKaptchaService iKaptchaService;
 
     @Anoymous

@@ -11,7 +11,8 @@ import com.itcrazy.alanmall.shopping.manager.IContentService;
 import com.itcrazy.alanmall.shopping.manager.IHomeService;
 import com.itcrazy.alanmall.shopping.manager.IProductCateService;
 import com.itcrazy.alanmall.user.annotation.Anoymous;
-import org.apache.dubbo.config.annotation.Reference;
+import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,20 +21,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/shopping")
 @RestController
 public class HomeController {
-    @Reference(timeout = 3000)
+    @DubboReference(mock = "com.itcrazy.alanmall.shopping.mock.IHomeServiceMock")
     IHomeService iHomeService;
 
-    @Reference(timeout = 3000)
+    @DubboReference(mock = "com.itcrazy.alanmall.shopping.mock.IContentServiceMock")
     IContentService iContentService;
 
-    @Reference(timeout = 3000)
+    @DubboReference(mock = "com.itcrazy.alanmall.shopping.mock.IProductCateServiceMock")
     IProductCateService iProductCateService;
 
     @Anoymous
     @GetMapping("/homepage")
-    public ResponseData homepage(){
+    public ResponseData homepage() {
         HomePageResponse response=iHomeService.home();
-        if(response.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
+        if(ShoppingRetCode.SUCCESS.getCode().equals(response.getCode())) {
             return new ResponseUtil().setData(response.getPanelContentItemDtos());
         }
         return new ResponseUtil().setErrorMsg(response.getMsg());
@@ -44,7 +45,7 @@ public class HomeController {
     public ResponseData navigate() {
         NavListResponse response = iContentService.queryNavList();
 
-        if(response.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
+        if(ShoppingRetCode.SUCCESS.getCode().equals(response.getCode())) {
             return new ResponseUtil().setData(response.getPannelContentDtos());
         }
         return new ResponseUtil().setErrorMsg(response.getMsg());
@@ -58,7 +59,7 @@ public class HomeController {
 
         AllProductCateResponse response = iProductCateService.getProductCate(request);
 
-        if(response.getCode().equals(ShoppingRetCode.SUCCESS.getCode())) {
+        if(ShoppingRetCode.SUCCESS.getCode().equals(response.getCode())) {
             return new ResponseUtil().setData(response.getProductCateDtoList());
         }
         return new ResponseUtil().setErrorMsg(response.getMsg());

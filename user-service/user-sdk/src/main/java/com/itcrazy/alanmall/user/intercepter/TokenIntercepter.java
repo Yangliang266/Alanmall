@@ -11,18 +11,23 @@ import com.itcrazy.alanmall.user.dto.CheckAuthRequest;
 import com.itcrazy.alanmall.user.dto.CheckAuthResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.config.annotation.Reference;
+import org.apache.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 public class TokenIntercepter extends HandlerInterceptorAdapter {
 
-    @Reference(timeout = 3000)
+    @DubboReference(version = "1.0")
     IUserLoginService iUserLoginService;
 
     public static String ACCESS_TOKEN="access_token";
@@ -35,6 +40,9 @@ public class TokenIntercepter extends HandlerInterceptorAdapter {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
+
+
+
         HandlerMethod methodHandle = (HandlerMethod) handler;
         // 2 判断是否被anoymous注解标记 被标记 返回true 不需要拦截
         if (isAnoymous(methodHandle)) {

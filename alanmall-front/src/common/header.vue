@@ -197,6 +197,7 @@
   import { getQuickSearch, getCartList, cartDel, getAllGoodsCategories } from '../api/goods'
   import { loginOut, navList, recommend } from '../api/index'
   import { setStore, getStore, removeStore } from '../utils/storage'
+  import { getSearch, getSearchInit } from '../api/goods.js'
 
   // import store from '../store/'
   import '../../node_modules/element-ui/lib/theme-default/index.css'
@@ -464,7 +465,16 @@
           let data = res.result
           this.recommendPanel = data[0]
         })
+      },
+      // 初始化数据到到elasticsearch
+      _getSearchInit() {
+        getSearchInit().then(res => {
+        // if (res.success === true) {
+        //   this._getSearch()
+        // }
+        })
       }
+      
       // // 通过路由改变导航文字样式
       // getPage () {
       //   let path = this.$route.path
@@ -482,6 +492,7 @@
       this._getNavList()
       this._getGoodsCategoryList()
       this._getRecommendGoodsAsPhone()
+      this._getSearchInit()
       this.token = getStore('token')
       if (this.login) {
         this._getCartList()
