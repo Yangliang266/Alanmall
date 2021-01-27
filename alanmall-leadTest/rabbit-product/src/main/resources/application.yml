@@ -1,0 +1,15 @@
+server:
+  port: 8089
+
+spring:
+  rabbitmq:
+    username: admin
+    password: admin
+    listener:
+      direct:
+        acknowledge-mode: manual
+      simple:
+        acknowledge-mode: manual
+    port: 5672
+    virtual-host: /
+    host: aliyun.alan.com

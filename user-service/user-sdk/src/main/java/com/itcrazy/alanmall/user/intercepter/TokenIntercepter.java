@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.itcrazy.alanmall.common.result.ResponseData;
 import com.itcrazy.alanmall.common.result.ResponseUtil;
 import com.itcrazy.alanmall.common.util.CookieUtil;
-import com.itcrazy.alanmall.user.IUserLoginService;
+import com.itcrazy.alanmall.user.manager.IUserLoginService;
 import com.itcrazy.alanmall.user.annotation.Anoymous;
 import com.itcrazy.alanmall.user.constants.SysRetCodeConstants;
 import com.itcrazy.alanmall.user.dto.CheckAuthRequest;
@@ -12,17 +12,11 @@ import com.itcrazy.alanmall.user.dto.CheckAuthResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.dubbo.config.annotation.Reference;
-import org.apache.http.HttpHeaders;
-import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Slf4j
 public class TokenIntercepter extends HandlerInterceptorAdapter {

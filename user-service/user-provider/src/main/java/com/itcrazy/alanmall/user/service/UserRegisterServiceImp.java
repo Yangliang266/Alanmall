@@ -1,7 +1,7 @@
 package com.itcrazy.alanmall.user.service;
 
 import com.itcrazy.alanmall.common.exception.ValidateException;
-import com.itcrazy.alanmall.user.IUserRegisterService;
+import com.itcrazy.alanmall.user.manager.IUserRegisterService;
 import com.itcrazy.alanmall.user.constants.SysRetCodeConstants;
 import com.itcrazy.alanmall.user.dal.entity.Member;
 import com.itcrazy.alanmall.user.dal.entity.UserVerify;
@@ -11,7 +11,6 @@ import com.itcrazy.alanmall.user.dto.UserRegisterRequest;
 import com.itcrazy.alanmall.user.dto.UserRegisterResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import tk.mybatis.mapper.entity.Example;

@@ -1,4 +1,4 @@
-package com.itcrazy.alanmall.user;
+package com.itcrazy.alanmall.user.manager;
 
 import com.itcrazy.alanmall.user.dto.CheckAuthRequest;
 import com.itcrazy.alanmall.user.dto.CheckAuthResponse;

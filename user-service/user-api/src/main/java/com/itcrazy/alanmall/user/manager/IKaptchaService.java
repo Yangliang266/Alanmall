@@ -1,4 +1,4 @@
-package com.itcrazy.alanmall.user;
+package com.itcrazy.alanmall.user.manager;
 
 import com.itcrazy.alanmall.user.dto.KaptchaCodeRequest;
 import com.itcrazy.alanmall.user.dto.KaptchaCodeResponse;

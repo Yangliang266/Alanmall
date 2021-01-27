@@ -1,6 +1,6 @@
 package com.itcrazy.alanmall.user.service;
 
-import com.itcrazy.alanmall.user.IMemberService;
+import com.itcrazy.alanmall.user.manager.IMemberService;
 import com.itcrazy.alanmall.user.constants.SysRetCodeConstants;
 import com.itcrazy.alanmall.user.converter.MemberConverter;
 import com.itcrazy.alanmall.user.dal.entity.Member;

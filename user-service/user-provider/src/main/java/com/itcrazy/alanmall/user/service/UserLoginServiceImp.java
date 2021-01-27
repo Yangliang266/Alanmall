@@ -10,16 +10,13 @@ import com.itcrazy.alanmall.user.dto.CheckAuthRequest;
 import com.itcrazy.alanmall.user.dto.CheckAuthResponse;
 import com.itcrazy.alanmall.user.dto.UserLoginRequest;
 import com.itcrazy.alanmall.user.dto.UserLoginResponse;
-import com.itcrazy.alanmall.user.IUserLoginService;
+import com.itcrazy.alanmall.user.manager.IUserLoginService;
 import com.itcrazy.alanmall.user.utils.ExceptionProcessorUtils;
 import com.itcrazy.alanmall.user.utils.JwtTokenUtils;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 import tk.mybatis.mapper.entity.Example;
 

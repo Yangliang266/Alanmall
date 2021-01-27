@@ -1,4 +1,4 @@
-package com.itcrazy.alanmall.user;
+package com.itcrazy.alanmall.user.manager;
 
 import com.itcrazy.alanmall.user.dto.QueryMemberRequest;
 import com.itcrazy.alanmall.user.dto.QueryMemberResponse;

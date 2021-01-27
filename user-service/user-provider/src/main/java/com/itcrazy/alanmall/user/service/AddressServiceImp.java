@@ -3,7 +3,7 @@ package com.itcrazy.alanmall.user.service;
 import com.alibaba.fastjson.JSON;
 import com.itcrazy.alanmall.common.cache.CachePrefixFactory;
 import com.itcrazy.alanmall.common.redis.config.RedissonConfig;
-import com.itcrazy.alanmall.user.IAddressService;
+import com.itcrazy.alanmall.user.manager.IAddressService;
 import com.itcrazy.alanmall.user.constants.SysRetCodeConstants;
 import com.itcrazy.alanmall.user.converter.AddressConverter;
 import com.itcrazy.alanmall.user.dal.entity.Address;
@@ -13,7 +13,6 @@ import com.itcrazy.alanmall.user.utils.ExceptionProcessorUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 

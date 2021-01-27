@@ -3,13 +3,12 @@ package com.itcrazy.alanmall.user.controller;
 import com.itcrazy.alanmall.common.result.ResponseData;
 import com.itcrazy.alanmall.common.result.ResponseUtil;
 import com.itcrazy.alanmall.common.util.CookieUtil;
-import com.itcrazy.alanmall.user.IKaptchaService;
 import com.itcrazy.alanmall.user.annotation.Anoymous;
 import com.itcrazy.alanmall.user.constants.SysRetCodeConstants;
 import com.itcrazy.alanmall.user.dto.KaptchaCodeRequest;
 import com.itcrazy.alanmall.user.dto.KaptchaCodeResponse;
+import com.itcrazy.alanmall.user.manager.IKaptchaService;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.*;
 
 
