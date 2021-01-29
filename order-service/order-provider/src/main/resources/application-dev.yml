@@ -19,16 +19,17 @@ spring:
   redisson:
     address: aliyun.alan.com:6379
   rabbitmq:
-    addresses: aliyun.alan.com
-    port: 5672
     username: admin
+    password: admin
+    listener:
+      direct:
+        acknowledge-mode: manual
+      simple:
+        acknowledge-mode: manual
+    port: 5672
+    virtual-host: /
+    host: aliyun.alan.com
 
-
-rocketmq:
-  name-server: aliyun.alan.com:9876
-  producer:
-    group: orderGroup
-    send-message-timeout: 3000
 
 
 

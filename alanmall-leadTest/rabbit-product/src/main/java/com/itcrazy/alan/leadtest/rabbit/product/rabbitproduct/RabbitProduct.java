@@ -1,13 +1,18 @@
 package com.itcrazy.alan.leadtest.rabbit.product.rabbitproduct;
 
+import com.itcrazy.alan.leadtest.rabbit.product.rabbitproduct.dto.MqMessageDto;
+import com.itcrazy.alan.leadtest.rabbit.product.rabbitproduct.service.MqServiceImp;
 import lombok.Data;
-import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Data
 @PropertySource("classpath:rabbitmq.properties")
@@ -23,11 +28,29 @@ public class RabbitProduct {
     @Autowired
     RabbitTemplate template;
 
+    @Autowired
+    MqServiceImp imp;
+
+
     @RequestMapping("/send")
     public String send() {
-        template.convertAndSend(exchange,routingKey, "test");
-        System.out.println("product:ok");
 
-        return "SUCEESS";
+        template.convertAndSend(exchange,routingKey, "test", (message) -> {
+            message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+            return message;
+        });
+
+        System.out.println("send: action_____________");
+
+        MqMessageDto dto = imp.query((long) 170017).getMessageDto();
+
+        if (dto.getStatus() == 1) {
+            System.out.println("send: success_____________");
+            return "SUCEESS";
+        }
+
+        return "false";
+
+
     }
 }

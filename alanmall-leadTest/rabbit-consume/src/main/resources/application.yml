@@ -13,5 +13,17 @@ spring:
     virtual-host: /
     host: aliyun.alan.com
 
+
+  datasource:
+    url: jdbc:mysql://aliyun.alan.com:3307/gpmall?useUnicode=true&characterEncoding=utf8&useOldAliasMetadataBehavior=true&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
 server:
   port: 8090
+
+
+mybatis:
+  mapper-locations: classpath*:com/itcrazy/alan/leadtest/rabbit/consume/rabbitconsume/dal/mapper/*Mapper.xml
+  type-aliases-package: com.itcrazy.alan.leadtest.rabbit.consume.rabbitconsume.dal.entity

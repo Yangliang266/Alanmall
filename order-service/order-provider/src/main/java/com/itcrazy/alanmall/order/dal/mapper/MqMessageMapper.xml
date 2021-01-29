@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itcrazy.alanmall.order.dal.mapper.MqMessageMapper">
+  <resultMap id="BaseResultMap" type="com.itcrazy.alanmall.order.dal.entity.MqMessage">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="msg_id" jdbcType="BIGINT" property="msgId" />
+    <result column="exchange" jdbcType="VARCHAR" property="exchange" />
+    <result column="queue" jdbcType="VARCHAR" property="queue" />
+    <result column="tag" jdbcType="VARCHAR" property="tag" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+  </resultMap>
+
+  <select id="selectMqStatusByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT * FROM tb_mq_message AS t WHERE t.user_id = #{msgId}
+  </select>
+</mapper>

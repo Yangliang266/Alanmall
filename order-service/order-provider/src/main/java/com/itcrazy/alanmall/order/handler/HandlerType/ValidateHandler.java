@@ -1,13 +1,14 @@
 package com.itcrazy.alanmall.order.handler.HandlerType;
 
-import com.alibaba.fastjson.JSON;
 import com.itcrazy.alanmall.order.context.TransHandlerContext;
+import com.itcrazy.alanmall.order.dto.AddAndUpdateMqRequest;
+import com.itcrazy.alanmall.order.dto.MqResponse;
+import com.itcrazy.alanmall.order.manager.IMqService;
+import com.itcrazy.alanmall.order.utils.MqFactory;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.apache.rocketmq.client.producer.SendResult;
-import org.apache.rocketmq.client.producer.SendStatus;
-import org.apache.rocketmq.common.message.Message;
-import org.apache.rocketmq.spring.core.RocketMQTemplate;
+import org.springframework.amqp.core.MessageDeliveryMode;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -15,15 +16,29 @@ import org.springframework.stereotype.Component;
 
 @EqualsAndHashCode(callSuper = true)
 @Component
-@PropertySource("classpath:rocketmq.properties")
+@PropertySource("classpath:base_mq.properties")
 @Data
 public class ValidateHandler extends AbstracTransHandler {
     @Autowired
-    RocketMQTemplate rocketMQTemplate;
+    RabbitTemplate template;
 
+    @Autowired
+    IMqService iMqService;
 
-    @Value("#{rocketmq.topic_first}")
-    private String topic;
+    @Autowired
+    MqFactory factory;
+
+    @Value("${BINDING_KEY}")
+    private String bindingKey;
+
+    @Value("${ORDER_EXCHANGE}")
+    private String exchange;
+
+    @Value("${CREATE_ORDER_VALIDATE_QUEUE}")
+    private String queue;
+
+    @Value("${MQ_STATUS}")
+    private boolean mqStatus;
 
     @Override
     public boolean isAysc() {
@@ -33,21 +48,22 @@ public class ValidateHandler extends AbstracTransHandler {
     @Override
     public boolean doHandler(TransHandlerContext context) {
         try {
-            String json = JSON.toJSONString(context);
-            Message message = new Message(topic, "tagA", "order", json.getBytes());
             // 发送信息
-            SendResult result = rocketMQTemplate.syncSend(topic, message, 3000);
+            template.convertAndSend(exchange, bindingKey, context, message -> {
+                message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
+                return message;
+            });
 
-            if (SendStatus.SEND_OK == result.getSendStatus()) {
-                // context 进行赋值
-                // TODO: 2021/1/21  
-
-                return true;
+            AddAndUpdateMqRequest request = factory.mqReqbuild(exchange,queue,context);
+            // api 验证消费是否消费成功
+            MqResponse mqMessage = iMqService.queryMqStatus(request.getMsgId());
+            if (mqMessage.getMessageDto().getStatus() == 1) {
+                mqStatus = true;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return mqStatus;
 
     }
 

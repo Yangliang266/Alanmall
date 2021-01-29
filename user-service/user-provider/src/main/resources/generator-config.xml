@@ -53,7 +53,7 @@
 <!--               enableDeleteByExample="false"-->
 <!--               selectByExampleQueryId="false"/>-->
 
-        <table tableName="tb_member" domainObjectName="Member"
+        <table tableName="tb_mq_message" domainObjectName="MqMessage"
                enableCountByExample="false"
                enableSelectByExample="false"
                enableUpdateByExample="false"
