@@ -1,15 +1,18 @@
 package com.itcrazy.alanmall.order.consumer;
 
+import com.itcrazy.alanmall.common.cache.CachePrefixFactory;
 import com.itcrazy.alanmall.common.redis.config.RedissonConfig;
 import com.itcrazy.alanmall.order.constant.OrderRetCode;
 import com.itcrazy.alanmall.order.context.CreateOrderContext;
 import com.itcrazy.alanmall.order.context.TransHandlerContext;
+import com.itcrazy.alanmall.order.conveter.MqConverter;
 import com.itcrazy.alanmall.order.dto.AddAndUpdateMqRequest;
 import com.itcrazy.alanmall.order.dto.MqAddAndUpdateResponse;
 import com.itcrazy.alanmall.order.dto.MqResponse;
 import com.itcrazy.alanmall.order.manager.IMqService;
 import com.itcrazy.alanmall.order.utils.ExceptionProcessorUtils;
 import com.itcrazy.alanmall.order.utils.MqFactory;
+import com.itcrazy.alanmall.order.utils.MqTransCondition;
 import com.itcrazy.alanmall.user.dto.QueryMemberRequest;
 import com.itcrazy.alanmall.user.dto.QueryMemberResponse;
 import com.itcrazy.alanmall.user.manager.IMemberService;
@@ -40,6 +43,9 @@ public class VlidateConsumer {
     RedissonConfig redisTemplate;
 
     @Autowired
+    MqConverter mqConverter;
+
+    @Autowired
     IMqService iMqService;
 
     @Autowired
@@ -52,23 +58,24 @@ public class VlidateConsumer {
     private String queue;
 
     @RabbitHandler
-    public void process(CreateOrderContext context, Channel channel, Message message) {
+    public void process(MqTransCondition condition, Channel channel, Message message) {
         MqResponse mqResponse = new MqResponse();
-        AddAndUpdateMqRequest addAndUpdateMqRequest = factory.mqReqbuild(exchange,queue,context);
         QueryMemberRequest request = new QueryMemberRequest();
-        request.setUserId(context.getUserId());
+        request.setUserId(condition.getUserId());
         try {
             // 消费之前进行消费去重
-            mqResponse = iMqService.queryMqStatus(addAndUpdateMqRequest.getMsgId());
+            mqResponse = iMqService.queryMqStatus(condition.getMsgId());
             if (OrderRetCode.SUCCESS.getCode().equals(mqResponse.getCode())) {
                 // 查询订单用户是否权限合理
                 QueryMemberResponse queryMemberResponse = iMemberService.queryMemberById(request);
-                if (null != queryMemberResponse) {
+                if (OrderRetCode.SUCCESS.getCode().equals(queryMemberResponse.getCode())) {
                     // 1 调用provider api告知生产者
+                    AddAndUpdateMqRequest addAndUpdateMqRequest = mqConverter.mqTransCondition2Request(condition);
                     MqAddAndUpdateResponse mqAddAndUpdateResponse = iMqService.addMqMessage(addAndUpdateMqRequest);
                     if (OrderRetCode.SUCCESS.getCode().equals(mqAddAndUpdateResponse.getCode())) {
-                        // 1 将上文放入redis
-                        redisTemplate.setMapCache("CREATE_ORDER_CONTXT: " + context.getUserId(),"BuyerNickName",queryMemberResponse.getUsername());
+                        // 1 放入上下文缓存
+                        condition.setBuyerNickName(queryMemberResponse.getUsername());
+                        MqFactory.getFlyweight(condition, exchange, queue);
                         // 2 消息落库 - 确认正确消费
                         channel.basicAck(message.getMessageProperties().getDeliveryTag(), true);
                     }

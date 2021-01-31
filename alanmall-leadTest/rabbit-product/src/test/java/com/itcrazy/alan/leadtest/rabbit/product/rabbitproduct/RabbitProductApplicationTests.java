@@ -18,11 +18,11 @@ class RabbitProductApplicationTests {
 
 	@Test
 	void contextLoads() {
-//		rabbitProduct.send();
-		Date date = new Date();//获取当前的日期
-		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
-		String str = df.format(date);//获取String类型的时间
-		System.out.println(str);
+		rabbitProduct.send();
+//		Date date = new Date();//获取当前的日期
+//		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
+//		String str = df.format(date);//获取String类型的时间
+//		System.out.println(str);
 	}
 
 }

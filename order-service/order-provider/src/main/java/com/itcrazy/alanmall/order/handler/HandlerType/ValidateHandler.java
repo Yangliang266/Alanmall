@@ -5,6 +5,7 @@ import com.itcrazy.alanmall.order.dto.AddAndUpdateMqRequest;
 import com.itcrazy.alanmall.order.dto.MqResponse;
 import com.itcrazy.alanmall.order.manager.IMqService;
 import com.itcrazy.alanmall.order.utils.MqFactory;
+import com.itcrazy.alanmall.order.utils.MqTransCondition;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.amqp.core.MessageDeliveryMode;
@@ -48,15 +49,16 @@ public class ValidateHandler extends AbstracTransHandler {
     @Override
     public boolean doHandler(TransHandlerContext context) {
         try {
+            // 参数条件控制，由provider提供
+            MqTransCondition condition = MqFactory.getFlyweight(context,exchange,queue);
             // 发送信息
-            template.convertAndSend(exchange, bindingKey, context, message -> {
+            template.convertAndSend(exchange, bindingKey, condition, message -> {
                 message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
                 return message;
             });
-
-            AddAndUpdateMqRequest request = factory.mqReqbuild(exchange,queue,context);
+//
             // api 验证消费是否消费成功
-            MqResponse mqMessage = iMqService.queryMqStatus(request.getMsgId());
+            MqResponse mqMessage = iMqService.queryMqStatus(condition.getMsgId());
             if (mqMessage.getMessageDto().getStatus() == 1) {
                 mqStatus = true;
             }

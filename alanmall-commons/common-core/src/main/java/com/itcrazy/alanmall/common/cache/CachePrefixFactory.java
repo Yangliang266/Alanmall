@@ -21,8 +21,8 @@ public class CachePrefixFactory {
     public final static String ADDRESS_CACHE_KEY = "address_cache";
     public final static String CART_ITEM_CACHE_PREFIX="cart_item";
     public final static String CART_ITEM_CACHE_HOT_KEY="cart_item_cache_hot_key";
-
     public final static String USER_INFO = "user_info";
+    public final static String CREATE_ORDER_CONTXT = "create_order_context";
 
     public static  String generatorKey(Long userId, String prefix) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -34,6 +34,8 @@ public class CachePrefixFactory {
             stringBuilder = new StringBuilder(CART_ITEM_CACHE_HOT_KEY);
         } else if(prefix.equals(USER_INFO)) {
             stringBuilder = new StringBuilder(USER_INFO);
+        } else if(prefix.equals(CREATE_ORDER_CONTXT)) {
+            stringBuilder = new StringBuilder(CREATE_ORDER_CONTXT);
         }
         stringBuilder.append(":").append(userId);
         return stringBuilder.toString();

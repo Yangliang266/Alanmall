@@ -20,6 +20,8 @@ spring:
 
 server:
   port: 8098
+
+
 #rocketmq:
 #  name-server: rocketmq.alan.com:9876
 #  producer:

@@ -12,6 +12,9 @@ public class MqMessage implements Serializable {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "msg_id")
+    private Long msgId;
+
     private String exchange;
 
     private String queue;
@@ -53,6 +56,21 @@ public class MqMessage implements Serializable {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    /**
+     * @param msgId
+     */
+    public void setMsgId(Long msgId) {
+        this.msgId = msgId;
+    }
+
+    /**
+     * @return msgId
+     */
+    public Long getMsgId() {
+        return msgId;
+    }
+
 
     /**
      * @return exchange

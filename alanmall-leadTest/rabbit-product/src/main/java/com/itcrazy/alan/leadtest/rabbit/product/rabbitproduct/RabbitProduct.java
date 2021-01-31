@@ -1,5 +1,6 @@
 package com.itcrazy.alan.leadtest.rabbit.product.rabbitproduct;
 
+import com.alibaba.fastjson.JSON;
 import com.itcrazy.alan.leadtest.rabbit.product.rabbitproduct.dto.MqMessageDto;
 import com.itcrazy.alan.leadtest.rabbit.product.rabbitproduct.service.MqServiceImp;
 import lombok.Data;
@@ -34,20 +35,26 @@ public class RabbitProduct {
 
     @RequestMapping("/send")
     public String send() {
+        MqMessageDto mqMessageDto = new MqMessageDto();
+        mqMessageDto.setStatus(0);
+        mqMessageDto.setExchange(exchange);
+        mqMessageDto.setTag("object");
 
-        template.convertAndSend(exchange,routingKey, "test", (message) -> {
+        String json = JSON.toJSONString(mqMessageDto);
+
+        template.convertAndSend(exchange,routingKey, json, (message) -> {
             message.getMessageProperties().setDeliveryMode(MessageDeliveryMode.PERSISTENT);
             return message;
         });
 
         System.out.println("send: action_____________");
 
-        MqMessageDto dto = imp.query((long) 170017).getMessageDto();
-
-        if (dto.getStatus() == 1) {
-            System.out.println("send: success_____________");
-            return "SUCEESS";
-        }
+//        MqMessageDto dto = imp.query((long) 170017).getMessageDto();
+//
+//        if (dto.getStatus() == 1) {
+//            System.out.println("send: success_____________");
+//            return "SUCEESS";
+//        }
 
         return "false";
 

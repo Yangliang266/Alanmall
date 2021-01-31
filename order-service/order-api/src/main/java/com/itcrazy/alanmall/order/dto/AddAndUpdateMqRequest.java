@@ -15,11 +15,11 @@ import java.util.Date;
 public class AddAndUpdateMqRequest extends AbstractRequest {
     private Long msgId;
 
+    private Long userId;
+
     private String exchange;
 
     private String queue;
-
-    private String tag;
 
     private Integer status;
 
