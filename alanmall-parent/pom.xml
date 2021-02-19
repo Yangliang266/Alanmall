@@ -30,6 +30,7 @@
     <alanmall.user.sdk>1.0-SNAPSHOT</alanmall.user.sdk>
     <alanmall.search>1.0-SNAPSHOT</alanmall.search>
     <alanmall.order>1.0-SNAPSHOT</alanmall.order>
+    <alanmall.pay>1.0-SNAPSHOT</alanmall.pay>
     <!--rabbitmq-->
 <!--    <alanmall.amqp>2.1.6.RELEASE</alanmall.amqp>-->
     <!--dubbo-->
@@ -142,6 +143,11 @@
         <artifactId>order-api</artifactId>
         <groupId>com.itcrazy.alanmall.order</groupId>
         <version>${alanmall.order}</version>
+      </dependency>
+      <dependency>
+        <artifactId>pay-api</artifactId>
+        <groupId>com.itcrazy.alanmall.pay</groupId>
+        <version>${alanmall.pay}</version>
       </dependency>
       <dependency>
         <groupId>com.itcrazy.alanmall.search</groupId>

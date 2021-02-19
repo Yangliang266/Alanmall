@@ -1,0 +1,17 @@
+dubbo:
+  application:
+    owner: mathyoung
+    name: alanmall-pay
+  registry:
+    # 服务注册地址 - 可以多地址
+    address: zookeeper://aliyun.alan.com:2181
+    check: true
+    group: dubbo-dev
+    simplified: true
+  metadata-report:
+    address: zookeeper://aliyun.alan.com:2181
+    retry-times: 30
+    cycle-report: false
+    group: dubbo-dev
+  scan:
+    basePackages: com.itcrazy.alanmall.pay

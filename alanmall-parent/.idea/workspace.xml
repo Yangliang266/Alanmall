@@ -23,103 +23,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5889d0bd-33c4-40ea-b518-4e40bdb27f97" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-consume/src/main/java/com/itcrazy/alan/leadtest/rabbit/consume/rabbitconsume/config/RabbitMqConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-consume/src/main/java/com/itcrazy/alan/leadtest/rabbit/consume/rabbitconsume/consumer/Consumer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-consume/src/main/java/com/itcrazy/alan/leadtest/rabbit/consume/rabbitconsume/model/Company.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-consume/src/main/java/com/itcrazy/alan/leadtest/rabbit/consume/rabbitconsume/model/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/config/RabbitMqConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/model/Company.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/model/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/producer/Producer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/test/CacheFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/test/CacheTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/test/ThreadTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/simpleTest/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/simpleTest/simpleTest.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/simpleTest/src/main/java/com/itcrazy/alanmall/leadtest/simpletest/CacheFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/simpleTest/src/main/java/com/itcrazy/alanmall/leadtest/simpletest/CacheTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/simpleTest/src/main/java/com/itcrazy/alanmall/leadtest/simpletest/Test.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/simpleTest/src/main/java/com/itcrazy/alanmall/leadtest/simpletest/Test1.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/simpleTest/src/main/java/com/itcrazy/alanmall/leadtest/simpletest/ThreadTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-leadTest/simpleTest/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/controller/OrderController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../order-service/order-api/src/main/java/com/itcrazy/alanmall/order/constant/OrderConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../order-service/order-api/src/main/java/com/itcrazy/alanmall/order/dto/CancelOrderRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../order-service/order-api/src/main/java/com/itcrazy/alanmall/order/dto/CancelOrderResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../order-service/order-api/src/main/java/com/itcrazy/alanmall/order/dto/OrderShippingRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/consumer/LogisticalConsume.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/consumer/OrderShippingConsume.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/SendMessageHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/product/CancelOrderProduct.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/product/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/service/OrderCoreServiceImp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/utils/GlobalIdGeneratorUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/resources/generator-config.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../shopping-service/shopping-apis/src/main/java/com/itcrazy/alanmall/shopping/dto/ClearCartItemRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../shopping-service/shopping-apis/src/main/java/com/itcrazy/alanmall/shopping/dto/ClearCartItemResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-tools/src/main/java/com/itcrazy/alanmall/common/redis/config/RedissonConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-tools/src/main/java/com/itcrazy/alanmall/common/redis/config/RedissonConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-leadTest/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-leadTest/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-leadTest/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-leadTest/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-leadTest/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-leadTest/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-consume/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-consume/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-consume/src/main/java/com/itcrazy/alan/leadtest/rabbit/consume/rabbitconsume/ConsumeRabbitConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-consume/src/main/java/com/itcrazy/alan/leadtest/rabbit/consume/rabbitconsume/ConsumeRabbitConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-consume/src/main/java/com/itcrazy/alan/leadtest/rabbit/consume/rabbitconsume/RabbitConsume.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-consume/src/main/java/com/itcrazy/alan/leadtest/rabbit/consume/rabbitconsume/RabbitConsume.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-consume/src/main/resources/rabbitmq.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-consume/src/main/resources/rabbitmq.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/ProductRabbitConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/ProductRabbitConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/RabbitProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/RabbitProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/starter/RabbitProductApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/starter/RabbitProductApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/resources/rabbitmq.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/main/resources/rabbitmq.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/test/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/RabbitProductApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-leadTest/rabbit-product/src/test/java/com/itcrazy/alan/leadtest/rabbit/product/rabbitproduct/RabbitProductApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/resources/application-dev.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-service.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-shopping/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-shopping/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-shopping/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-shopping/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-user/src/main/java/com/itcrazy/alanmall/user/controller/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-user/src/main/java/com/itcrazy/alanmall/user/controller/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-user/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-user/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-api/src/main/java/com/itcrazy/alanmall/order/manager/IOrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-api/src/main/java/com/itcrazy/alanmall/order/manager/IOrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/consumer/ClearCartItemConsumer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/consumer/InitOrderConsumer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/consumer/LogisticalConsumer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/consumer/SubStockConsumer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/consumer/VlidateConsumer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/context/AbsTransHandlerContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/context/AbsTransHandlerContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/context/CreateOrderContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/context/CreateOrderContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/conveter/MqConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/conveter/MqConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/dal/entity/MqMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/dal/entity/MqMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/dal/mapper/MqMessageMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/dal/mapper/MqMessageMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/dal/mapper/MqMessageMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/dal/mapper/MqMessageMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/ClearCartItemHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/ClearCartItemHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/DefaultTransPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/DefaultTransPipeline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/InitOrderHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/InitOrderHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/LogisticalHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/LogisticalHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/SubStockHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/SubStockHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/TransBoundInvoke.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/TransBoundInvoke.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/TransHandlerNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/TransHandlerNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/ValidateHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/handler/HandlerType/ValidateHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/pipelineFactory/OrderProcessTransPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/pipelineFactory/OrderProcessTransPipeline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/service/MqServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/service/MqServiceImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/starter/OrderProviderApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/starter/OrderProviderApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/utils/MqFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/utils/MqFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/utils/MqTransCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/utils/MqTransCondition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/utils/OrderRegCode.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/utils/RabbitConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/utils/RabbitConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/resources/base_mq.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/resources/base_mq.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/test/java/com/itcrazy/alanmall/order/OrderProviderApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/test/java/com/itcrazy/alanmall/order/OrderProviderApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../search-service/search-provider/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../search-service/search-provider/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shopping-service/shopping-apis/src/main/java/com/itcrazy/alanmall/shopping/manager/ICartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../shopping-service/shopping-apis/src/main/java/com/itcrazy/alanmall/shopping/manager/ICartService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shopping-service/shopping-provider/src/main/java/com/itcrazy/alanmall/shopping/service/CartServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../shopping-service/shopping-provider/src/main/java/com/itcrazy/alanmall/shopping/service/CartServiceImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../shopping-service/shopping-provider/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../shopping-service/shopping-provider/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-api/src/main/java/com/itcrazy/alanmall/user/manager/IUserLoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-api/src/main/java/com/itcrazy/alanmall/user/manager/IUserLoginService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/dal/mapper/MemberMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/dal/mapper/MemberMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/dal/mapper/MemberMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/dal/mapper/MemberMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/service/MemberServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/service/MemberServiceImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/service/UserLoginServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/java/com/itcrazy/alanmall/user/service/UserLoginServiceImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-provider/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-provider/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-sdk/src/main/java/com/itcrazy/alanmall/user/intercepter/TokenIntercepter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-sdk/src/main/java/com/itcrazy/alanmall/user/intercepter/TokenIntercepter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,6 +128,7 @@
       <workItem from="1611631248818" duration="21000" />
       <workItem from="1611631502528" duration="627000" />
       <workItem from="1613281665224" duration="896000" />
+      <workItem from="1613743178234" duration="75000" />
     </task>
     <servers />
   </component>
@@ -233,22 +152,22 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="549" y="209" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1611321308793" />
-    <state width="1522" height="227" key="GridCell.Tab.0.bottom" timestamp="1613298435048">
+    <state width="1522" height="227" key="GridCell.Tab.0.bottom" timestamp="1613743252521">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1522" height="227" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1613298435048" />
-    <state width="1522" height="227" key="GridCell.Tab.0.center" timestamp="1613298435048">
+    <state width="1522" height="227" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1613743252521" />
+    <state width="1522" height="227" key="GridCell.Tab.0.center" timestamp="1613743252521">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1522" height="227" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1613298435048" />
-    <state width="1522" height="227" key="GridCell.Tab.0.left" timestamp="1613298435048">
+    <state width="1522" height="227" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1613743252521" />
+    <state width="1522" height="227" key="GridCell.Tab.0.left" timestamp="1613743252521">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1522" height="227" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1613298435048" />
-    <state width="1522" height="227" key="GridCell.Tab.0.right" timestamp="1613298435048">
+    <state width="1522" height="227" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1613743252521" />
+    <state width="1522" height="227" key="GridCell.Tab.0.right" timestamp="1613743252521">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1522" height="227" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1613298435048" />
+    <state width="1522" height="227" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1613743252521" />
     <state x="272" y="96" key="SettingsEditor" timestamp="1609225605740">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -265,9 +184,9 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="425" y="203" width="672" height="677" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1606206526261" />
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1613281742763">
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1613743239255">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1613281742763" />
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1613743239255" />
   </component>
 </project>
