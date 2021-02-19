@@ -14,6 +14,11 @@ import RefreshGoods from '@/page/refresh/refreshgoods'
 import GoodS from '@/page/goods/goods'
 import payment from '@/page/order/payment'
 import order from '@/page/order/order'
+import paysuccess from '@/page/order/paysuccess'
+import Search from '@/page/Search/search'
+import Alipay from '@/page/order/alipay'
+import Wechat from '@/page/order/wechat'
+import QQpay from '@/page/order/qqpay'
 
 
 Vue.use(Router)
@@ -38,7 +43,12 @@ export default new Router({
       name: 'order',
       component: order,
       children: [
-        {path: 'payment/:orderId', name: 'payment', component: payment}
+        {path: 'paysuccess', name: 'paysuccess', component: paysuccess},
+        {path: 'payment/:orderId', name: 'payment', component: payment},
+        {path: '/search', name: 'search', component: Search},
+        {path: 'alipay', name: 'alipay', component: Alipay},
+        {path: 'wechat', name: 'wechat', component: Wechat},
+        {path: 'qqpay', name: 'qqpay', component: QQpay}
       ]
     },
     {path: '/login',name: 'login',component: Login},
