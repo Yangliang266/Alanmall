@@ -12,6 +12,7 @@ import com.itcrazy.alanmall.user.dto.CheckAuthResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboReference;
+import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 @Slf4j
+@Component
 public class TokenIntercepter extends HandlerInterceptorAdapter {
 
-    @DubboReference(version = "1.0")
+    @DubboReference
     IUserLoginService iUserLoginService;
 
     public static String ACCESS_TOKEN="access_token";

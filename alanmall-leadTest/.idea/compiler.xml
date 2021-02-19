@@ -9,6 +9,7 @@
         <module name="rabbit-consume" />
         <module name="rabbit-product" />
         <module name="design-mode" />
+        <module name="simpleTest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

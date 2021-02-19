@@ -6,16 +6,36 @@
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="msg_id" jdbcType="BIGINT" property="msgId" />
     <result column="exchange" jdbcType="VARCHAR" property="exchange" />
     <result column="queue" jdbcType="VARCHAR" property="queue" />
-    <result column="tag" jdbcType="VARCHAR" property="tag" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
   </resultMap>
 
-  <select id="selectMqStatusByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    SELECT * FROM tb_mq_message AS t WHERE t.user_id = #{msgId}
+  <select id="selectMqStatusByMsgId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    SELECT * FROM tb_mq_message WHERE msg_id = #{msgId}
   </select>
+
+  <insert id="mqInsert" parameterType="com.itcrazy.alanmall.order.dal.entity.MqMessage">
+    insert into tb_mq_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="null != userId">user_id,</if>
+      <if test="null != msgId">msg_id,</if>
+      <if test="null != exchange">exchange,</if>
+      <if test="null != queue">queue,</if>
+      <if test="null != status">status,</if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="null != userId">#{userId},</if>
+      <if test="null != msgId">#{msgId},</if>
+      <if test="null != exchange">#{exchange},</if>
+      <if test="null != queue">#{queue},</if>
+      <if test="null != status">#{status},</if>
+    </trim>
+
+  </insert>
 </mapper>

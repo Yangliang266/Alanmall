@@ -2,9 +2,11 @@ package com.itcrazy.alanmall.order.conveter;
 
 import com.itcrazy.alanmall.common.result.AbstractRequest;
 import com.itcrazy.alanmall.common.result.AbstractResponse;
+import com.itcrazy.alanmall.order.constant.OrderRetCode;
 import com.itcrazy.alanmall.order.dto.CreateOrderRequest;
 import com.itcrazy.alanmall.order.context.CreateOrderContext;
 import com.itcrazy.alanmall.order.context.TransHandlerContext;
+import com.itcrazy.alanmall.order.dto.CreateOrderResponse;
 
 public class CreateOrderConvert implements TransConverter {
     @Override
@@ -24,6 +26,11 @@ public class CreateOrderConvert implements TransConverter {
 
     @Override
     public AbstractResponse convertCtx2Respond(TransHandlerContext ctx) {
-        return null;
+        CreateOrderContext createOrderContext=(CreateOrderContext) ctx;
+        CreateOrderResponse createOrderResponse=new CreateOrderResponse();
+        createOrderResponse.setOrderId(createOrderContext.getOrderId());
+        createOrderResponse.setCode(OrderRetCode.SUCCESS.getCode());
+        createOrderResponse.setMsg(OrderRetCode.SUCCESS.getMessage());
+        return createOrderResponse;
     }
 }

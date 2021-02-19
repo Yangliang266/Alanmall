@@ -10,15 +10,17 @@ public class TransHandlerNode {
     private TransHandlerNode next;
 
     public void exec(TransHandlerContext context) {
-        boolean success = handler.doHandler(context);
-        if (null != next) {
-            if (success) {
-                if (handler.isAysc()) {
-                    // todo
+        AbstracTransHandler transHandler = (AbstracTransHandler) handler;
+        if (null != transHandler) {
+            boolean success = transHandler.doHandler(context);
+            if (null != next) {
+                if (success) {
+                    if (handler.isAysc()) {
+                        // todo
+                    }
+                    next.exec(context);
                 }
-                next.exec(context);
             }
         }
-
     }
 }

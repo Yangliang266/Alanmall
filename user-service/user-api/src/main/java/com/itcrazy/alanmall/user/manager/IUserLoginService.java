@@ -21,11 +21,5 @@ public interface IUserLoginService {
      */
     CheckAuthResponse validToken(CheckAuthRequest checkAuthRequest);
 
-    /**
-     * redis 测试
-     * @return
-     */
-    void redissonTest();
 
-    String jedisTest();
 }

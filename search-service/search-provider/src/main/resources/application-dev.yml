@@ -39,8 +39,6 @@ dubbo:
     group: dubbo-dev
   scan:
     basePackages: com.itcrazy.alanmall.search.service
-  provider:
-    version: 1.0
 
 
 

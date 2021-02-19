@@ -2,7 +2,11 @@ package com.itcrazy.alanmall.order.utils;
 
 import com.itcrazy.alanmall.order.context.CreateOrderContext;
 import com.itcrazy.alanmall.order.context.TransHandlerContext;
+import lombok.Data;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -10,27 +14,24 @@ import java.util.concurrent.ConcurrentHashMap;
  * @description: mq 请求封装
  */
 @Component
+@Data
 public class MqFactory {
-    private static ConcurrentHashMap<String, MqTransCondition> pool = new ConcurrentHashMap<String, MqTransCondition>(100);
+    public volatile static MqTransCondition mqTransCondition = new MqTransCondition();
+
+    public static Map<String, MqTransCondition> pool = new ConcurrentHashMap<String, MqTransCondition>();
+
+    private static final FastDateFormat FAST_DATE_FORMAT = FastDateFormat.getInstance("yyyyMMddHHmmss");
 
     public static MqTransCondition getFlyweight(TransHandlerContext context, String exchange, String queue) {
-        MqTransCondition condition = null;
         CreateOrderContext createOrderContext = (CreateOrderContext) context;
         if (pool.containsKey(createOrderContext.getUserId().toString())) {
-            condition = pool.get(createOrderContext.getUserId().toString());
-            condition.setBuyerNickName(createOrderContext.getBuyerNickName());
-            condition.setAddressId(createOrderContext.getAddressId());
-            condition.setBuyProductIds(createOrderContext.getBuyProductIds());
-            condition.setOrderTotal(createOrderContext.getOrderTotal());
-            condition.setCartProductDtoList(createOrderContext.getCartProductDtoList());
-            condition.setStreetName(createOrderContext.getStreetName());
-            condition.setTel(createOrderContext.getTel());
-            condition.setUserName(createOrderContext.getUserName());
-            condition.setUniqueKey(createOrderContext.getUniqueKey());
+            mqTransCondition.setMsgId(Long.valueOf(FAST_DATE_FORMAT.format(System.currentTimeMillis())));
         } else {
-            condition = new MqTransCondition(createOrderContext, exchange, queue);
-            pool.put(condition.getUserId().toString(), condition);
+            MqTransCondition mqTransCondition1 = new MqTransCondition(createOrderContext, exchange, queue);
+            pool.put(mqTransCondition1.getUserId().toString(), mqTransCondition1);
+            mqTransCondition = mqTransCondition1;
         }
-        return condition;
+        return mqTransCondition;
     }
+
 }

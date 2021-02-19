@@ -10,6 +10,8 @@ import java.util.List;
 public class CreateOrderContext extends AbsTransHandlerContext {
     private Long userId;
 
+    private Long msgId;
+
     private Long addressId;
 
     private String tel;

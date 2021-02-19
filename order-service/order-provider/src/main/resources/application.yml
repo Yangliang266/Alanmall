@@ -1,4 +1,9 @@
-
 spring:
+  profiles:
+    active: dev
   application:
     name: alanmall-order
+
+mybatis:
+  mapper-locations: classpath*:com/itcrazy/alanmall/order/dal/mapper/*Mapper.xml"
+  type-aliases-package: com.itcrazy.alanmall.order.dal.entity

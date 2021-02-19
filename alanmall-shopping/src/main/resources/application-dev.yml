@@ -23,6 +23,5 @@ dubbo:
     timeout: 5000
     # 服务容错 - 快速失败 不重试
     cluster: failfast
-    version: 1.0
 
 

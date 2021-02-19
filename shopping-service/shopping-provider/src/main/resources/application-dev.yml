@@ -49,8 +49,6 @@ dubbo:
     group: dubbo-dev
   scan:
     basePackages: com.itcrazy.alanmall.shopping.service
-  provider:
-    version: 1.0
 
 
 

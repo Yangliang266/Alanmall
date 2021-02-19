@@ -9,11 +9,14 @@ import com.itcrazy.alanmall.user.dto.QueryMemberRequest;
 import com.itcrazy.alanmall.user.dto.QueryMemberResponse;
 import com.itcrazy.alanmall.user.utils.ExceptionProcessorUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
 @Slf4j
+@DubboService
+@Component
 public class MemberServiceImp implements IMemberService {
     @Autowired
     MemberMapper memberMapper;
@@ -26,7 +29,7 @@ public class MemberServiceImp implements IMemberService {
         log.info("Begin: MemberServiceImp.queryMemberById.request: " + request.getUserId());
         QueryMemberResponse response = new QueryMemberResponse();
         try {
-            Member member = memberMapper.selectByPrimaryKey(request.getUserId());
+            Member member = memberMapper.selectById(request.getUserId());
             if (null != member) {
                 response = memberConverter.member2Res(member);
                 response.setCode(SysRetCodeConstants.SUCCESS.getCode());

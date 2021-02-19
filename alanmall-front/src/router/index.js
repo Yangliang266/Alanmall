@@ -12,6 +12,8 @@ import checkout from '@/page/checkout/checkout'
 import refreshsearch from '@/page/refresh/refreshsearch'
 import RefreshGoods from '@/page/refresh/refreshgoods'
 import GoodS from '@/page/goods/goods'
+import payment from '@/page/order/payment'
+import order from '@/page/order/order'
 
 
 Vue.use(Router)
@@ -29,6 +31,14 @@ export default new Router({
         {path: 'goods', component: GoodS},
         {path: 'goods/cate/:cateId', component: GoodS},
         {path: '/refreshgoods', name: 'refreshgoods', component: RefreshGoods}
+      ]
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: order,
+      children: [
+        {path: 'payment/:orderId', name: 'payment', component: payment}
       ]
     },
     {path: '/login',name: 'login',component: Login},

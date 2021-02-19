@@ -1,10 +1,6 @@
 package com.itcrazy.alanmall.common.redis.config;
 
-import lombok.Data;
-import org.redisson.api.RBucket;
-import org.redisson.api.RMap;
-import org.redisson.api.RScoredSortedSet;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +13,26 @@ public class RedissonConfig {
     //private static RedissonClient redissonClient = null;
     @Autowired
     RedissonClient redissonClient;
+
+    public String getScript(String script) {
+        return  redissonClient.getScript().scriptLoad(script);
+    }
+
+    public RScript redissonScript() {
+        return redissonClient.getScript();
+    }
+
+    /**
+     * @Author mathyoung
+     * @Description: countLatch
+     * @Param: [lockName, lockNum]
+     * @Return: org.redisson.api.RCountDownLatch
+     */
+    public RCountDownLatch getMqLock(String lockName, int lockNum) {
+        RCountDownLatch rCountDownLatch = redissonClient.getCountDownLatch(lockName);
+        rCountDownLatch.trySetCount(lockNum);
+        return rCountDownLatch;
+    }
 
     /**
      * @Description 检查是否存在缓存

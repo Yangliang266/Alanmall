@@ -21,6 +21,8 @@ public class OrderProcessTransPipeline extends AbstranctTransPipelineFactory<Cre
     private ClearCartItemHandler clearCartItemHandler;
     @Autowired
     private SubStockHandler subStockHandler;
+    @Autowired
+    private SendMessageHandler sendMessageHandler;
 
     @Override
     protected TransHandlerContext createContext() {
@@ -34,10 +36,11 @@ public class OrderProcessTransPipeline extends AbstranctTransPipelineFactory<Cre
 
     @Override
     protected void doBuild(TransPipeline pipeline) {
-        pipeline.addLastNode(validateHandler);
-        pipeline.addLastNode(subStockHandler);
+        pipeline.addLastNode(sendMessageHandler);
+        pipeline.addLastNode(clearCartItemHandler);
         pipeline.addLastNode(logisticalHandler);
         pipeline.addLastNode(initOrderHandler);
-        pipeline.addLastNode(clearCartItemHandler);
+        pipeline.addLastNode(subStockHandler);
+        pipeline.addLastNode(validateHandler);
     }
 }

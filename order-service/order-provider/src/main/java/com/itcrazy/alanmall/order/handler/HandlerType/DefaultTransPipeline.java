@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class DefaultTransPipeline implements TransPipeline {
-    private TransHandlerContext context;
+    private TransHandlerContext context = null;
 
     private TransHandler transHandler;
 
@@ -14,8 +14,8 @@ public class DefaultTransPipeline implements TransPipeline {
     private TransHandlerNode tail;
 
     public DefaultTransPipeline(TransHandlerContext context) {
-        this.context = context;
-        this.tail = head;
+        setContext(context);
+        tail = head;
     }
 
     @Override
@@ -37,24 +37,39 @@ public class DefaultTransPipeline implements TransPipeline {
     public void addLastNode(TransHandler... handlers) {
         TransHandlerNode next = tail;
         for (TransHandler handler: handlers) {
-            if (null == handler) {
-                continue;
+            if (null != handler) {
+                TransHandlerNode node = new TransHandlerNode();
+                node.setHandler(handler);
+                node.setNext(next);
+                next = node;
             }
-            TransHandlerNode node = new TransHandlerNode();
-            node.setHandler(handler);
-            node.setNext(next);
-            next = node;
         }
         tail = next;
     }
 
     @Override
     public void start() {
-        this.head.getNext().exec(this.context);
+        try {
+            tail.exec(getContext());
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public void shutdown() {
 
     }
+
+    @Override
+    public <T extends TransHandlerContext> T getContext() {
+        return (T)context;
+    }
+
+    public void setContext(TransHandlerContext context) {
+        this.context = context;
+    }
+
+
 }

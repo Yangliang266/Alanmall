@@ -22,15 +22,15 @@ public class SearchController {
     @DubboReference(timeout = 3000)
     ISqlSearchService iSqlSearchService;
 
-    @DubboReference(timeout = 3000)
-    IEsSearchService iEsSearchService;
+//    @DubboReference(timeout = 3000)
+//    IEsSearchService iEsSearchService;
 
     @Anoymous
     @GetMapping("/search/{key}")
     public ResponseData search(@PathVariable("key")String key){
         SearchRequest searchRequest = new SearchRequest();
         searchRequest.setKeyword(key);
-        SearchResponse searchResponse = iEsSearchService.fuzzySearch(searchRequest);
+        SearchResponse searchResponse = iSqlSearchService.fuzzySearch(searchRequest);
 
         if (SearchRetCode.SUCCESS.getCode().equals(searchResponse.getCode())) {
             return new ResponseUtil().setData(searchResponse.getItemDtos());
@@ -43,8 +43,8 @@ public class SearchController {
     @GetMapping("/search/init")
     public void searchInit(){
         // 加载数据到Es
-//        iSqlSearchService.initCacheSearch();
-        iEsSearchService.searchInit();
+        iSqlSearchService.initCacheSearch();
+//        iEsSearchService.searchInit();
     }
 
 }

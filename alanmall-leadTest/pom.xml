@@ -12,6 +12,7 @@
     <module>rabbit-product</module>
     <module>rabbit-consume</module>
     <module>design-mode</module>
+    <module>simpleTest</module>
   </modules>
 
   <name>alanmall-leadTest</name>

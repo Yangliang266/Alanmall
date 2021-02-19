@@ -6,6 +6,10 @@ mybatis:
   type-aliases-package: com.itcrazy.alan.leadtest.rabbit.product.rabbitproduct.dal.entity
 
 spring:
+  redisson:
+    address: aliyun.alan.com:6379
+    timeout: 3000
+    data-base: 0
   rabbitmq:
     username: admin
     password: admin

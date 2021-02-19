@@ -14,4 +14,6 @@ public interface ICartService {
     UpdateCartNumResponse updateCartNum(UpdateCartNumRequest request);
 
     SelectAllItemResponse selectAllItem(SelectAllItemRequest request);
+
+    ClearCartItemResponse clearCartItemByUserID(ClearCartItemRequest request);
 }

@@ -1,0 +1,6 @@
+spring:
+  redisson:
+    address: aliyun.alan.com:6379
+    timeout: 3000
+    data-base: 0
+

@@ -19,8 +19,6 @@ public class MqMessage implements Serializable {
 
     private String queue;
 
-    private String tag;
-
     private Integer status;
 
     private Date created;
@@ -98,20 +96,6 @@ public class MqMessage implements Serializable {
      */
     public void setQueue(String queue) {
         this.queue = queue;
-    }
-
-    /**
-     * @return tag
-     */
-    public String getTag() {
-        return tag;
-    }
-
-    /**
-     * @param tag
-     */
-    public void setTag(String tag) {
-        this.tag = tag;
     }
 
     /**

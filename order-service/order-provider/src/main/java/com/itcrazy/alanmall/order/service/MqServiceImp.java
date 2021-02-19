@@ -11,15 +11,15 @@ import com.itcrazy.alanmall.order.manager.IMqService;
 import com.itcrazy.alanmall.order.utils.ExceptionProcessorUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.entity.Example;
 
 /**
  * @Auther: mathyoung
  * @description: mq 消息实现
  */
-@Service
 @Slf4j
+@Component
 public class MqServiceImp implements IMqService {
     @Autowired
     MqMessageMapper mqMessageMapper;
@@ -33,10 +33,10 @@ public class MqServiceImp implements IMqService {
         request.requestCheck();
         try {
             MqMessage mqMessage = converter.req2Mq(request);
-            int flag = mqMessageMapper.insert(mqMessage);
+            int flag = mqMessageMapper.mqInsert(mqMessage);
             if (flag > 0) {
                 response.setMsg(OrderRetCode.SUCCESS.getMessage());
-                response.setMsg(OrderRetCode.SUCCESS.getCode());
+                response.setCode(OrderRetCode.SUCCESS.getCode());
             }
         }catch (Exception e) {
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
@@ -53,7 +53,7 @@ public class MqServiceImp implements IMqService {
             record.setStatus(request.getStatus());
 
             Example example = new Example(MqMessage.class);
-            example.createCriteria().andAllEqualTo(request.getTag());
+            example.createCriteria().andAllEqualTo(request.getMsgId());
 
             int flag = mqMessageMapper.updateByExampleSelective(record,example);
             if (flag > 0) {
@@ -70,7 +70,7 @@ public class MqServiceImp implements IMqService {
     public MqResponse queryMqStatus(Long msgId) {
         MqResponse response = new MqResponse();
         try {
-            MqMessage mqMessage = mqMessageMapper.selectMqStatusByUserId(msgId);
+            MqMessage mqMessage = mqMessageMapper.selectMqStatusByMsgId(msgId);
             if (null != mqMessage) {
                 response.setMsg(OrderRetCode.SUCCESS.getMessage());
                 response.setMsg(OrderRetCode.SUCCESS.getCode());

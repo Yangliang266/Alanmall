@@ -44,12 +44,12 @@ public class CartServiceImp implements ICartService {
         List<CartProductDto> list = new ArrayList();
         try {
             // 查询redis
-            RMap<String, String> items = redissonConfig.getMap(cartCacheKey);
+            RMap items = redissonConfig.getMap(cartCacheKey);
             // 可能会有多个产品被添加到购物车
 
             items.values().forEach(obj -> {
                 // obj转换
-                CartProductDto cartProductDto = JSON.parseObject(obj, CartProductDto.class);
+                CartProductDto cartProductDto = JSON.parseObject(obj.toString(), CartProductDto.class);
                 list.add(cartProductDto);
             });
 
@@ -182,6 +182,26 @@ public class CartServiceImp implements ICartService {
         }
 
         log.info("End: CartServiceImp.selectAllItem.response: " + response);
+        return response;
+    }
+
+    @Override
+    public ClearCartItemResponse clearCartItemByUserID(ClearCartItemRequest request) {
+        ClearCartItemResponse response=new ClearCartItemResponse();
+        try{
+            RMap itemMap = redissonConfig.getMap(CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.CART_ITEM_CACHE_PREFIX));
+            itemMap.values().forEach(obj -> {
+                CartProductDto cartProductDto = JSON.parseObject(obj.toString(), CartProductDto.class);
+                if(request.getProductIds().contains(cartProductDto.getProductId())){
+                    itemMap.remove(cartProductDto.getProductId().toString());
+                }
+            });
+            response.setCode(ShoppingRetCode.SUCCESS.getCode());
+            response.setMsg(ShoppingRetCode.SUCCESS.getMessage());
+        }catch (Exception e){
+            log.error("CartServiceImpl.clearCartItemByUserID Occur Exception :"+e);
+            ExceptionProcessorUtils.wrapperHandlerException(response,e);
+        }
         return response;
     }
 

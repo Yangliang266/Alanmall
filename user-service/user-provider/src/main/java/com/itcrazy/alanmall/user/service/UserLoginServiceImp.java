@@ -145,25 +145,4 @@ public class UserLoginServiceImp implements IUserLoginService {
         log.info("End:UserLoginServiceImpl.validToken.response:" + checkAuthResponse);
         return checkAuthResponse;
     }
-
-    @Override
-    public String jedisTest() {
-//        redissonConfig.setCache("redis","redis1235678",1000);
-//
-//        return redissonConfig.getCache("redis");
-        return "hello";
-    }
-
-    @Override
-    public void redissonTest() {
-////        cacheManager.setCache("alanmall", "hello world 1", 60000);
-//        cacheManager.setMapCache("123","123","no1",60000);
-//
-//        if (cacheManager.checkMapHashCache("123","123","no1")) {
-//            System.out.println("hash 已经存入 redis");
-//            return;
-//        }
-//
-//        System.out.println("hash 未存入 redis");
-    }
 }

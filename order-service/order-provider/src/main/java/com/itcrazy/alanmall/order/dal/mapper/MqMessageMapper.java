@@ -6,5 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface MqMessageMapper extends TKMapper<MqMessage> {
-    MqMessage selectMqStatusByUserId(Long userId);
+    MqMessage selectMqStatusByMsgId(Long msgId);
+
+    Integer mqInsert(MqMessage mqMessage);
 }

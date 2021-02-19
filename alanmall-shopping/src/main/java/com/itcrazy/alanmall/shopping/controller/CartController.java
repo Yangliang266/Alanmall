@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("shopping")
 public class CartController {
-    @DubboReference
+    @DubboReference(timeout = 3000)
     ICartService iCartService;
 
     // 添加到购物车
