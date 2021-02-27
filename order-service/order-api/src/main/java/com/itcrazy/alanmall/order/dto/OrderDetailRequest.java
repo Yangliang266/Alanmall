@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 @Data
 public class OrderDetailRequest extends AbstractRequest {
     private String orderId;
+    private Integer status;
 
     @Override
     public void requestCheck() {

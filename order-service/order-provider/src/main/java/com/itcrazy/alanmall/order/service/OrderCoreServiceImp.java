@@ -2,10 +2,9 @@ package com.itcrazy.alanmall.order.service;
 
 import com.itcrazy.alanmall.order.constant.OrderRetCode;
 import com.itcrazy.alanmall.order.context.AbsTransHandlerContext;
-import com.itcrazy.alanmall.order.dto.CancelOrderRequest;
-import com.itcrazy.alanmall.order.dto.CancelOrderResponse;
-import com.itcrazy.alanmall.order.dto.CreateOrderRequest;
-import com.itcrazy.alanmall.order.dto.CreateOrderResponse;
+import com.itcrazy.alanmall.order.dal.entity.Order;
+import com.itcrazy.alanmall.order.dal.mapper.OrderMapper;
+import com.itcrazy.alanmall.order.dto.*;
 import com.itcrazy.alanmall.order.handler.HandlerType.TransBoundInvoke;
 import com.itcrazy.alanmall.order.manager.IOrderService;
 import com.itcrazy.alanmall.order.pipelineFactory.OrderProcessTransPipeline;
@@ -16,6 +15,9 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import tk.mybatis.mapper.entity.Example;
+
+import javax.annotation.Resource;
 
 /**
  * @Auther: mathyoung
@@ -30,6 +32,9 @@ public class OrderCoreServiceImp implements IOrderService {
 
     @Autowired
     CancelOrderProduct cancelOrderProduct;
+
+    @Resource
+    OrderMapper orderMapper;
 
     @Override
     public CreateOrderResponse createOrder(CreateOrderRequest request) {
@@ -57,5 +62,21 @@ public class OrderCoreServiceImp implements IOrderService {
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
         return response;
+    }
+
+    @Override
+    public DeleteOrderResponse deleteOrder(DeleteOrderRequest request) {
+        return null;
+    }
+
+    @Override
+    public void updateOrder(Integer status, String orderId) {
+
+        Order order = new Order();
+        order.setOrderId(orderId);
+        order.setStatus(status);
+        Example example = new Example(Order.class);
+        example.createCriteria().andEqualTo("orderId", orderId);
+        orderMapper.updateByExampleSelective(order, example);
     }
 }

@@ -5,7 +5,7 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <id column="id" jdbcType="VARCHAR" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="order_id" jdbcType="VARCHAR" property="orderId" />
     <result column="product_name" jdbcType="VARCHAR" property="productName" />

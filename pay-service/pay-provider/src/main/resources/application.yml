@@ -5,3 +5,5 @@ mybatis:
   mapper-locations: classpath*:com/itcrazy/alanmall/pay/dal/mapper/*Mapper.xml"
   type-aliases-package: com.itcrazy.alanmall.pay.dal.entity
 
+
+

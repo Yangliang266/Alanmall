@@ -32,6 +32,10 @@ module.exports = {
       '/shopping/**': {
         target: 'http://localhost:8096',
         changeOrigin: true
+      },
+      '/cashier/**': {
+        target: 'http://localhost:8097',
+        changeOrigin: true
       }
     },
 

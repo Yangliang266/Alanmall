@@ -81,7 +81,8 @@
   }
 </script>
 <style lang="scss" rel="stylesheet/scss" scoped>
-  @import "../../assets/style/mixin";
+   @import "../../assets/style/mixin";
+  @import "../../assets/style/index";
 
   .w {
     padding-top: 40px;

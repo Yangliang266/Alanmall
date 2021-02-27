@@ -1,6 +1,6 @@
 package com.itcrazy.alanmall.common.client.util;
 
-import org.apache.commons.codec.binary.Base64;
+//import org.apache.commons.codec.binary.Base64;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -9,10 +9,13 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
+
 
 @SuppressWarnings("restriction")
 public class BASE64Util {
@@ -148,13 +151,13 @@ public class BASE64Util {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String encryptDES(String key, String encryptStr)
-			throws Exception {
-		Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
-		cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key.getBytes(),"DES"));
-		byte[] encryptedData = cipher.doFinal(encryptStr.getBytes("UTF-8"));
-		return Base64.encodeBase64String(encryptedData);
-	}
+//	public static String encryptDES(String key, String encryptStr)
+//			throws Exception {
+//		Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
+//		cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key.getBytes(),"DES"));
+//		byte[] encryptedData = cipher.doFinal(encryptStr.getBytes("UTF-8"));
+//		return Base64.encodeBase64String(encryptedData);
+//	}
 
 	 /**
      * BASE64解密
@@ -185,4 +188,46 @@ public class BASE64Util {
         byte[] bt = key.getBytes();
         return (new BASE64Encoder()).encodeBuffer(bt);
     }
+
+    //_________________________new_________________________
+	/**
+	 * @Author mathyoung
+	 * @Description: 解密
+	 * @Param: [encodedText]
+	 * @Return: byte[]
+	 */
+	public static byte[] decode(String encodedText){
+		final Base64.Decoder decoder = Base64.getDecoder();
+		return decoder.decode(encodedText);
+	}
+
+	/**
+	 * @Author mathyoung
+	 * @Description: 加密
+	 * @Param: [data]
+	 * @Return: java.lang.String
+	 */
+	public static String encode(byte[] data){
+		final Base64.Encoder encoder = Base64.getEncoder();
+		return encoder.encodeToString(data);
+	}
+
+	public static byte[] decodeURL(String encodedText){
+		final Base64.Decoder decoder = Base64.getUrlDecoder();
+		return decoder.decode(encodedText);
+	}
+
+	public static String encodeURL(byte[] data){
+		final Base64.Encoder encoder = Base64.getUrlEncoder();
+		return encoder.encodeToString(data);
+	}
+
+	public static void main(String[] args) throws Exception {
+		String s = "http://www.baidu.com/--/==/++///op0";
+		System.out.println(encryptBASE64(s));
+
+
+		System.out.println(encodeURL(s.getBytes("utf-8")));
+	}
+
 }

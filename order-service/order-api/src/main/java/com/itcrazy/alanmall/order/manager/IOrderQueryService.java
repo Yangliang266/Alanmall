@@ -9,4 +9,6 @@ import com.itcrazy.alanmall.order.dto.OrderDetailResponse;
  */
 public interface IOrderQueryService {
     OrderDetailResponse getOrderDetail(OrderDetailRequest request);
+
+    OrderDetailResponse checkOrderPayStatus(OrderDetailRequest request);
 }

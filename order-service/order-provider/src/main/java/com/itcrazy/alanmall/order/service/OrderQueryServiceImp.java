@@ -16,6 +16,7 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -64,6 +65,30 @@ public class OrderQueryServiceImp implements IOrderQueryService {
             ExceptionProcessorUtils.wrapperHandlerException(response, e);
         }
         log.info("End: OrderQueryServiceImp.getOrderDetail:" + response);
+        return response;
+    }
+
+    @Override
+    public OrderDetailResponse checkOrderPayStatus(OrderDetailRequest request) {
+        request.requestCheck();
+        OrderDetailResponse response = new OrderDetailResponse();
+        try {
+            log.info("Begin: OrderQueryServiceImp.checkOrderPayStatus:" + request);
+            Example example = new Example(Order.class);
+            example.createCriteria()
+                    .andEqualTo("orderId", request.getOrderId())
+                    .andEqualTo("status", request.getStatus());
+            // 订单的所有物品信息
+            Order order = orderMapper.selectOneByExample(example);
+            if (null != order) {
+                response.setCode(OrderRetCode.SUCCESS.getCode());
+                response.setMsg(OrderRetCode.SUCCESS.getMessage());
+            }
+        }catch (Exception e) {
+            log.info("Error: OrderQueryServiceImp.checkOrderPayStatus.result:{}", response);
+            ExceptionProcessorUtils.wrapperHandlerException(response, e);
+        }
+        log.info("End: OrderQueryServiceImp.checkOrderPayStatus:" + response);
         return response;
     }
 }

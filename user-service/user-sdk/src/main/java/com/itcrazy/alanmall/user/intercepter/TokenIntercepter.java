@@ -36,9 +36,6 @@ public class TokenIntercepter extends HandlerInterceptorAdapter {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
-
-
-
         HandlerMethod methodHandle = (HandlerMethod) handler;
         // 2 判断是否被anoymous注解标记 被标记 返回true 不需要拦截
         if (isAnoymous(methodHandle)) {

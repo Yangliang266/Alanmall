@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Table(name = "tb_payment")
 public class Payment implements Serializable {
     @Id
-    private String id;
+    private Integer id;
 
     /**
      * 支付状态
@@ -43,7 +43,7 @@ public class Payment implements Serializable {
      * 付款人id
      */
     @Column(name = "payer_uid")
-    private Integer payerUid;
+    private Long payerUid;
 
     /**
      * 付款人姓名
@@ -97,14 +97,14 @@ public class Payment implements Serializable {
     /**
      * @return id
      */
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
     /**
      * @param id
      */
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -203,7 +203,7 @@ public class Payment implements Serializable {
      *
      * @return payer_uid - 付款人id
      */
-    public Integer getPayerUid() {
+    public Long getPayerUid() {
         return payerUid;
     }
 
@@ -212,7 +212,7 @@ public class Payment implements Serializable {
      *
      * @param payerUid 付款人id
      */
-    public void setPayerUid(Integer payerUid) {
+    public void setPayerUid(Long payerUid) {
         this.payerUid = payerUid;
     }
 

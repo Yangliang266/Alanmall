@@ -20,6 +20,16 @@
 		<dependency>
 			<groupId>com.itcrazy.alanmall.pay</groupId>
 			<artifactId>pay-api</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-simple</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.itcrazy.alanmall.order</groupId>
+			<artifactId>order-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>tk.mybatis</groupId>
@@ -78,6 +88,29 @@
 			<groupId>org.redisson</groupId>
 			<artifactId>redisson</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.github.tedzhdz</groupId>
+			<artifactId>wxpay-sdk</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-simple</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-simple</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
 	</dependencies>
 
 	<build>

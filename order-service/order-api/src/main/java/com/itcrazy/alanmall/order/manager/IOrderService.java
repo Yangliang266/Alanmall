@@ -8,5 +8,7 @@ public interface IOrderService {
 
     CancelOrderResponse cancelOrder(CancelOrderRequest request);
 
+    DeleteOrderResponse deleteOrder(DeleteOrderRequest request);
 
+    void updateOrder(Integer status,String orderId);
 }

@@ -1,6 +1,11 @@
 import http from './public'
 import {apis} from './api'
 
+// 上传图片
+export const upload = (params) => {
+    return http.fetchPost(apis.upload, params)
+}
+
 // http://localhost:8082/test
 export const getAllTest = () => {
     return http.fetchGet(apis.test)

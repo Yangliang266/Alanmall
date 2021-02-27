@@ -23,21 +23,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5889d0bd-33c4-40ea-b518-4e40bdb27f97" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../pay-service/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/resources/application-dev.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-service.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/AESUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/Signature.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/constants/PayChannelEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/constants/PayReturnCodeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/constants/PaymentConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/constants/RefundCodeEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/dto/PaymentRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/dto/PaymentResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/manager/IEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/manager/PayCoreService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payconfig/WeChatPayConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payconfig/WeChatSignConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/paycontext/AliPayContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/paycontext/Context.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/paycontext/WeChatPayContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payfactory/BasePayment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payfactory/BaseValidate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payfactory/PayValidate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payfactory/Payment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payment/AliPayment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payment/WeChatPayment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payvalidate/AliPayValidate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payvalidate/WechatValidate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/service/PayCoreServiceImp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/util/ParamValidatorUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/resources/apiclient_cert.p12" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-commons/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-core/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/BASE64Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/BASE64Util.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/IPUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/IPUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/MD5Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/MD5Util.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pay-service/pay-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pay-service/pay-api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pay-service/pay-provider/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pay-service/pay-provider/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pay-service/pay-provider/src/test/java/com/itcrazy/alanmall/pay/PayProviderApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/test/java/com/itcrazy/alanmall/pay/PayProviderApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../user-service/user-sdk/src/main/java/com/itcrazy/alanmall/user/intercepter/TokenIntercepter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-sdk/src/main/java/com/itcrazy/alanmall/user/intercepter/TokenIntercepter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,6 +153,8 @@
       <workItem from="1611631502528" duration="627000" />
       <workItem from="1613281665224" duration="896000" />
       <workItem from="1613743178234" duration="75000" />
+      <workItem from="1613870648467" duration="3453000" />
+      <workItem from="1613902102616" duration="1177000" />
     </task>
     <servers />
   </component>
@@ -148,26 +174,26 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="549" y="209" key="FileChooserDialogImpl" timestamp="1611321308793">
+    <state x="549" y="209" key="FileChooserDialogImpl" timestamp="1613880563476">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="549" y="209" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1611321308793" />
-    <state width="1522" height="227" key="GridCell.Tab.0.bottom" timestamp="1613743252521">
+    <state x="549" y="209" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1613880563476" />
+    <state width="1522" height="162" key="GridCell.Tab.0.bottom" timestamp="1613900482900">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1522" height="227" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1613743252521" />
-    <state width="1522" height="227" key="GridCell.Tab.0.center" timestamp="1613743252521">
+    <state width="1522" height="162" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1613900482900" />
+    <state width="1522" height="162" key="GridCell.Tab.0.center" timestamp="1613900482900">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1522" height="227" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1613743252521" />
-    <state width="1522" height="227" key="GridCell.Tab.0.left" timestamp="1613743252521">
+    <state width="1522" height="162" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1613900482900" />
+    <state width="1522" height="162" key="GridCell.Tab.0.left" timestamp="1613900482899">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1522" height="227" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1613743252521" />
-    <state width="1522" height="227" key="GridCell.Tab.0.right" timestamp="1613743252521">
+    <state width="1522" height="162" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1613900482899" />
+    <state width="1522" height="162" key="GridCell.Tab.0.right" timestamp="1613900482900">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state width="1522" height="227" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1613743252521" />
+    <state width="1522" height="162" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1613900482900" />
     <state x="272" y="96" key="SettingsEditor" timestamp="1609225605740">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
@@ -184,9 +210,9 @@
       <screen x="0" y="0" width="1536" height="864" />
     </state>
     <state x="425" y="203" width="672" height="677" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1606206526261" />
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1613743239255">
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup" timestamp="1613871414492">
       <screen x="0" y="0" width="1536" height="864" />
     </state>
-    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1613743239255" />
+    <state x="431" y="181" width="672" height="678" key="search.everywhere.popup/0.0.1536.864@0.0.1536.864" timestamp="1613871414492" />
   </component>
 </project>

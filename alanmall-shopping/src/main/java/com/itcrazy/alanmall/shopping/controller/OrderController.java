@@ -9,6 +9,7 @@ import com.itcrazy.alanmall.order.manager.IOrderQueryService;
 import com.itcrazy.alanmall.order.manager.IOrderService;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
 import com.itcrazy.alanmall.shopping.forms.OrderDetail;
+import com.itcrazy.alanmall.shopping.forms.OrderPay;
 import com.itcrazy.alanmall.user.intercepter.TokenIntercepter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -68,6 +69,21 @@ public class OrderController {
             return new ResponseUtil<OrderDetail>().setData(orderDetail);
         }
         return new ResponseUtil<OrderDetail>().setErrorMsg(response.getMsg());
+    }
+
+    @GetMapping("/order/status/{orderId}/{status}")
+    public ResponseData<OrderDetailResponse> getOrderPayStatus(@PathVariable String orderId,@PathVariable Integer status) {
+        // 根据订单id 查询具体订单
+        OrderDetailRequest request = new OrderDetailRequest();
+        request.setOrderId(orderId);
+        request.setStatus(status);
+        // 总订单详情
+        OrderDetailResponse response  = iOrderQueryService.checkOrderPayStatus(request);
+
+        if (ShoppingRetCode.SUCCESS.getCode().equals(response.getCode())) {
+            return new ResponseUtil<OrderDetailResponse>().setData(response);
+        }
+        return new ResponseUtil<OrderDetailResponse>().setErrorMsg(response.getMsg());
     }
 
     @PutMapping("/order/{id}")

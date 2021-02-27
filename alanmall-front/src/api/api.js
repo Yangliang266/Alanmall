@@ -45,6 +45,7 @@ export const apis = {
   payMent: '/cashier/pay',
   orderList: '/shopping/order',
   getOrderDet: '/shopping/order',
+  getOrderStatus: '/shopping/order/status',
   cancelOrder: '/shopping/cancelOrder',
   productDet: '/shopping/product',
   delOrder: '/shopping/delOrder',

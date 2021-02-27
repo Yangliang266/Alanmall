@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -58,9 +59,22 @@ public class RabbitConfig {
         return new Jackson2JsonMessageConverter();
     }
 
-    public AmqpTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         final RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
+
+//        rabbitTemplate.setMandatory(true);
+//
+//        rabbitTemplate.setChannelTransacted(true);
+//
+//        rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
+//            public void confirm(CorrelationData correlationData, boolean ack, String cause) {
+//                if (!ack) {
+//                    System.out.println("发送消息失败：" + cause);
+//                    throw new RuntimeException("发送异常：" + cause);
+//                }
+//            }
+//        });
         return rabbitTemplate;
     }
 

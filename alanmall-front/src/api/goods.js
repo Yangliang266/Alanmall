@@ -85,6 +85,9 @@ export const orderList = (params) => {
 export const getOrderDet = (params) => {
   return http.fetchGet(apis.getOrderDet + '/' + params.params.orderId)
 }
+export const getOrderStatus = (params) => {
+  return http.fetchGet(apis.getOrderStatus + '/' + params.params.orderId + '/' + params.params.status)
+}
 // 取消订单
 export const cancelOrder = (params) => {
   return http.fetchPost(apis.cancelOrder, params)
