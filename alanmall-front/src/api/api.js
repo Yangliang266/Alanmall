@@ -46,6 +46,7 @@ export const apis = {
   orderList: '/shopping/order',
   getOrderDet: '/shopping/order',
   getOrderStatus: '/shopping/order/status',
+  getOrderAllStatus: '/shopping/order/allstatus',
   cancelOrder: '/shopping/cancelOrder',
   productDet: '/shopping/product',
   delOrder: '/shopping/delOrder',

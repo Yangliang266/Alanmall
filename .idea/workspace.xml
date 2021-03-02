@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="80cb768c-c100-4569-ad5d-24efc54908d0" name="Default Changelist" comment="" />
+    <list default="true" id="80cb768c-c100-4569-ad5d-24efc54908d0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/alanmall-front/config/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/config/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/src/api/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/src/api/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/src/api/goods.js" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/src/api/goods.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/src/api/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/src/common/footer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/src/common/footer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/src/common/header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/src/common/header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/src/components/mallGoods.vue" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/src/components/mallGoods.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/src/page/home/home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/src/page/home/home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/src/page/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/src/page/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/src/page/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/src/page/login/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/src/page/user/user.vue" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/src/page/user/user.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-front/src/store/mutations.js" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-front/src/store/mutations.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/forms/OrderDetail.java" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/forms/OrderDetail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/forms/PageInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/forms/PageInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-api/src/main/java/com/itcrazy/alanmall/order/dto/OrderItemDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-api/src/main/java/com/itcrazy/alanmall/order/dto/OrderItemDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-api/src/main/java/com/itcrazy/alanmall/order/manager/IOrderQueryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-api/src/main/java/com/itcrazy/alanmall/order/manager/IOrderQueryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-provider/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-provider/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/conveter/QueryOrderDetailConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/conveter/QueryOrderDetailConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/service/OrderQueryServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/service/OrderQueryServiceImp.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -17,30 +46,20 @@
     </option>
   </component>
   <component name="ProjectId" id="1eTVKdF1PqiD8ek39v9vC1hZqKv" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
-  </component>
-  <component name="ServiceViewManager">
-    <option name="viewStates">
-      <list>
-        <serviceView>
-          <treeState>
-            <expand />
-            <select />
-          </treeState>
-        </serviceView>
-      </list>
-    </option>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -54,6 +73,7 @@
       <updated>1594345506065</updated>
       <workItem from="1594345507724" duration="88000" />
       <workItem from="1598630126576" duration="13000" />
+      <workItem from="1614579015277" duration="8000" />
     </task>
     <servers />
   </component>

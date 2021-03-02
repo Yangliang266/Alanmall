@@ -21,6 +21,9 @@ import Wechat from '@/page/order/wechat.vue'
 import QQpay from '@/page/order/qqpay.vue'
 
 import addressList from '@/page/user/children/addressList.vue'
+import payorder from '@/page/user/children/payorder.vue'
+import nopayorder from '@/page/user/children/nopayorder.vue'
+import recieveorder from '@/page/user/children/recieveorder.vue'
 import orderList from '@/page/user/children/order.vue'
 import orderDetail from '@/page/user/children/orderDetail.vue'
 import information from '@/page/user/children/information.vue'
@@ -73,6 +76,9 @@ export default new Router({
       redirect: '/user/orderList',
       children: [
         {path: 'orderList', name: '订单列表', component: orderList},
+        {path: 'payorder', name: '未付款列表', component: payorder},
+        {path: 'nopayorder', name: '待收货列表', component: nopayorder},
+        {path: 'recieveorder', name: '已收货列表', component: recieveorder},
         {path: 'orderDetail', name: '订单详情', component: orderDetail},
         {path: 'information', name: '账户资料', component: information},
         {path: 'addressList', name: '收货地址', component: addressList},

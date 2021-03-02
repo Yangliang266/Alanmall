@@ -15,6 +15,7 @@ public class OrderItemDto implements Serializable {
     private String id;
     private String itemId;
     private String orderId;
+    private Integer status;
     private Integer num;
     private String title;
     private BigDecimal price;

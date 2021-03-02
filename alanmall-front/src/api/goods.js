@@ -88,6 +88,9 @@ export const getOrderDet = (params) => {
 export const getOrderStatus = (params) => {
   return http.fetchGet(apis.getOrderStatus + '/' + params.params.orderId + '/' + params.params.status)
 }
+export const getOrderAllStatus = (params) => {
+  return http.fetchGet(apis.getOrderAllStatus, params)
+}
 // 取消订单
 export const cancelOrder = (params) => {
   return http.fetchPost(apis.cancelOrder, params)

@@ -1,5 +1,6 @@
 package com.itcrazy.alanmall.pay.biz.payfactory;
 
+import com.itcrazy.alanmall.common.exception.BizException;
 import com.itcrazy.alanmall.common.result.AbstractRequest;
 import com.itcrazy.alanmall.common.result.AbstractResponse;
 import com.itcrazy.alanmall.pay.biz.paycontext.Context;
@@ -61,10 +62,14 @@ public abstract class BasePayment implements Payment {
 
     protected abstract AbstractResponse generalProcess(Context context) throws Exception;
 
-    protected void beforePrepare(Context context) throws Exception {
-        SortedMap<String, String> sortedMap = new TreeMap<>();
-        context.setSParaTemp(sortedMap);
-    };
+    protected void beforePrepare(Context context) {
+        try {
+            SortedMap<String, String> sortedMap = new TreeMap<>();
+            context.setSParaTemp(sortedMap);
+        }catch (Exception e) {
+            throw new BizException(e);
+        }
+    }
 
 
 }

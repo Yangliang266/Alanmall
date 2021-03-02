@@ -2,6 +2,8 @@ package com.itcrazy.alanmall.pay.biz.paycontext;
 
 import lombok.Data;
 
+import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 
 /**
@@ -15,4 +17,6 @@ public class Context {
     }
 
     private SortedMap<String, String> sParaTemp;
+
+    private List<Object> list;
 }

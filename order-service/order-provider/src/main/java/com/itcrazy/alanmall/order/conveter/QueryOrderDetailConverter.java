@@ -3,6 +3,7 @@ package com.itcrazy.alanmall.order.conveter;
 import com.itcrazy.alanmall.order.dal.entity.Order;
 import com.itcrazy.alanmall.order.dal.entity.OrderItem;
 import com.itcrazy.alanmall.order.dal.entity.OrderShipping;
+import com.itcrazy.alanmall.order.dto.OrderDetailInfo;
 import com.itcrazy.alanmall.order.dto.OrderDetailResponse;
 import com.itcrazy.alanmall.order.dto.OrderItemDto;
 import com.itcrazy.alanmall.order.dto.OrderShippingDto;
@@ -21,8 +22,14 @@ public interface QueryOrderDetailConverter {
     OrderDetailResponse order2Res(Order order);
 
     @Mappings({})
-    List<OrderItemDto> item2dto(List<OrderItem> items);
+    OrderDetailInfo order2detail(Order order);
+
+    @Mappings({})
+    List<OrderItemDto> items2dtos(List<OrderItem> items);
 
     @Mappings({})
     OrderShippingDto shipping2dto(OrderShipping shipping);
+
+    @Mappings({})
+    OrderDetailInfo order2OrderDetail(Order order);
 }

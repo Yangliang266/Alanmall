@@ -15,6 +15,7 @@ public class OrderDetail {
     private String userName;
     private BigDecimal orderTotal;
     private long userId;
+    private Integer status;
     private List<OrderItemDto> goodsList;
     private String tel;
     private String streetName;

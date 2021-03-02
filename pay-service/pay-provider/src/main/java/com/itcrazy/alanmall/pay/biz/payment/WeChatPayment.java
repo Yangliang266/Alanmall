@@ -74,7 +74,7 @@ public class WeChatPayment extends BasePayment {
         WeChatPayContext wechatPaymentContext = new WeChatPayContext();
         wechatPaymentContext.setOutTradeNo(paymentRequest.getTradeNo());
         wechatPaymentContext.setProductId(paymentRequest.getTradeNo());
-        wechatPaymentContext.setSpbillCreateIp("192.168.1.105");
+        wechatPaymentContext.setSpbillCreateIp(paymentRequest.getSpbillCreateIp());
         wechatPaymentContext.setTradeType(PaymentConstants.TradeTypeEnum.NATIVE.getType());
         wechatPaymentContext.setTotalFee(paymentRequest.getTotalFee());
         wechatPaymentContext.setBody(paymentRequest.getSubject());
@@ -87,58 +87,65 @@ public class WeChatPayment extends BasePayment {
     }
 
     @Override
-    protected void beforePrepare(Context context) throws Exception {
+    protected void beforePrepare(Context context) {
         super.beforePrepare(context);
         SortedMap<String, String> paraMap = context.getSParaTemp();
         WeChatPayContext wechatPaymentContext = (WeChatPayContext) context;
 
-        paraMap.put("body", wechatPaymentContext.getBody());
-        paraMap.put("out_trade_no", wechatPaymentContext.getOutTradeNo());
-        //单位分
-        paraMap.put("total_fee", String.valueOf(wechatPaymentContext.getTotalFee().multiply(new BigDecimal("100")).intValue()));
-        paraMap.put("spbill_create_ip", wechatPaymentContext.getSpbillCreateIp());
-        paraMap.put("appid", weChatPayConfig.getWxappId());
-        paraMap.put("mch_id", weChatPayConfig.getWxmchID());
-        paraMap.put("nonce_str", signature.getNonceStr());
-        paraMap.put("trade_type", wechatPaymentContext.getTradeType());
-        paraMap.put("product_id", wechatPaymentContext.getProductId());
-        paraMap.put("fee_type", "CNY");
-        // 此路径是微信服务器调用支付结果通知路径
-        paraMap.put("device_info", "WEB");
-        paraMap.put("notify_url", weChatPayConfig.getWxnotifyUrl());
-        //二维码的失效时间（5分钟）
-        paraMap.put("time_expire", UtilDate.getExpireTime(30 * 60 * 1000L));
-        // 验签加密
+        try {
+            paraMap.put("body", wechatPaymentContext.getBody());
+            paraMap.put("out_trade_no", wechatPaymentContext.getOutTradeNo());
+            //单位分
+            paraMap.put("total_fee", String.valueOf(wechatPaymentContext.getTotalFee().multiply(new BigDecimal("100")).intValue()));
+            paraMap.put("spbill_create_ip", wechatPaymentContext.getSpbillCreateIp());
+            paraMap.put("appid", weChatPayConfig.getWxappId());
+            paraMap.put("mch_id", weChatPayConfig.getWxmchID());
+            paraMap.put("nonce_str", signature.getNonceStr());
+            paraMap.put("trade_type", wechatPaymentContext.getTradeType());
+            paraMap.put("product_id", wechatPaymentContext.getProductId());
+            paraMap.put("fee_type", "CNY");
+            // 此路径是微信服务器调用支付结果通知路径
+            paraMap.put("device_info", "WEB");
+            paraMap.put("notify_url", weChatPayConfig.getWxnotifyUrl());
+            //二维码的失效时间（5分钟）
+            paraMap.put("time_expire", UtilDate.getExpireTime(30 * 60 * 1000L));
+            // 验签加密
 //        String sign = signature.security(paraMap, weChatPayConfig.getWxmchsecret());
-        String sign = WeChatBuildRequest.createSign(paraMap, weChatPayConfig.getWxkey());
-        paraMap.put("sign", sign);
-        System.out.println("sign: "+ sign + "------------------------");
-//        log.info("Wechatprepare:" + ((WeChatPayContext) context).getTest());
+            String sign = WeChatBuildRequest.createSign(paraMap, weChatPayConfig.getWxkey());
+            paraMap.put("sign", sign);
+        } catch (Exception e) {
+            throw new BizException("签名错误", e.getMessage());
+        }
+
     }
 
     @Override
-    protected AbstractResponse generalProcess(Context context) throws Exception {
+    protected AbstractResponse generalProcess(Context context) {
         PaymentResponse response = new PaymentResponse();
         WeChatPayContext chatPayContext = (WeChatPayContext) context;
         // 微信预支付，返回结果(weixin默认加密算法 HMACSHA256)
-        Map<String, String> resultMap = wxPay.unifiedOrder(chatPayContext.getSParaTemp());
-        if (resultMap != null) {
-            if ("SUCCESS".equals(resultMap.get("return_code"))) {
-                if ("SUCCESS".equals(resultMap.get("result_code"))) {
-                    // 预支付，二维码
-                    response.setPrepayId(resultMap.get("prepay_id"));
-                    response.setCodeUrl(resultMap.get("code_url"));
-                    response.setCode(PayReturnCodeEnum.SUCCESS.getCode());
-                    response.setMsg(PayReturnCodeEnum.SUCCESS.getMsg());
+        try {
+            Map<String, String> resultMap = wxPay.unifiedOrder(chatPayContext.getSParaTemp());
+            if (resultMap != null) {
+                if ("SUCCESS".equals(resultMap.get("return_code"))) {
+                    if ("SUCCESS".equals(resultMap.get("result_code"))) {
+                        // 预支付，二维码
+                        response.setPrepayId(resultMap.get("prepay_id"));
+                        response.setCodeUrl(resultMap.get("code_url"));
+                        response.setCode(PayReturnCodeEnum.SUCCESS.getCode());
+                        response.setMsg(PayReturnCodeEnum.SUCCESS.getMsg());
+                    } else {
+                        String errMsg = resultMap.get("err_code") + ":" + resultMap.get("err_code_des");
+                        response.setCode(PayReturnCodeEnum.PAYMENT_PROCESSOR_FAILED.getCode());
+                        response.setMsg(PayReturnCodeEnum.PAYMENT_PROCESSOR_FAILED.getMsg(errMsg));
+                    }
                 } else {
-                    String errMsg = resultMap.get("err_code") + ":" + resultMap.get("err_code_des");
                     response.setCode(PayReturnCodeEnum.PAYMENT_PROCESSOR_FAILED.getCode());
-                    response.setMsg(PayReturnCodeEnum.PAYMENT_PROCESSOR_FAILED.getMsg(errMsg));
+                    response.setMsg(PayReturnCodeEnum.PAYMENT_PROCESSOR_FAILED.getMsg(resultMap.get("return_msg")));
                 }
-            } else {
-                response.setCode(PayReturnCodeEnum.PAYMENT_PROCESSOR_FAILED.getCode());
-                response.setMsg(PayReturnCodeEnum.PAYMENT_PROCESSOR_FAILED.getMsg(resultMap.get("return_msg")));
             }
+        } catch (Exception e) {
+            throw new BizException("支付错误", e.getMessage());
         }
         return response;
     }

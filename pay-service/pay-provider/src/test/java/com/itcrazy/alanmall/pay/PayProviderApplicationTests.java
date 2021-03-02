@@ -22,7 +22,7 @@ class PayProviderApplicationTests {
 	void contextLoads() throws Exception {
 		// ali_pay wechat_pay
 		PaymentRequest request = new PaymentRequest();
-		request.setPayChannel("wechat_pay");
+		request.setPayChannel("ali_pay");
 		request.setOrderFee(BigDecimal.valueOf(0.01));
 		request.setTradeNo("15522006365220210");
 		request.setUserId(62L);
