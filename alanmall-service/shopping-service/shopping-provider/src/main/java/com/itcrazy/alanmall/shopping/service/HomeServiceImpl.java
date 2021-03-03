@@ -1,7 +1,6 @@
 package com.itcrazy.alanmall.shopping.service;
 
 import com.alibaba.fastjson.JSON;
-import com.itcrazy.alanmall.common.redis.config.RedissonConfig;
 import com.itcrazy.alanmall.shopping.constant.GlobalShopConstants;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
 import com.itcrazy.alanmall.shopping.converter.ContentConverter;
@@ -17,8 +16,6 @@ import com.itcrazy.alanmall.shopping.utils.ExceptionProcessorUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.apache.dubbo.config.annotation.Service;
-import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 import java.util.HashSet;

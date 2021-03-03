@@ -29,7 +29,7 @@ import java.util.Objects;
 @Data
 public class SubStockHandler extends AbstracTransHandler{
     @Autowired
-    StockMapper stockMapper;
+    private StockMapper stockMapper;
 
     @Override
     public boolean isAysc() {

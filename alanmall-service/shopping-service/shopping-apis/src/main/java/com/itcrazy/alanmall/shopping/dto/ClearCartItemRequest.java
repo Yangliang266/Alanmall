@@ -4,9 +4,11 @@ import com.itcrazy.alanmall.common.exception.ValidateException;
 import com.itcrazy.alanmall.common.result.AbstractRequest;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class ClearCartItemRequest extends AbstractRequest {
 

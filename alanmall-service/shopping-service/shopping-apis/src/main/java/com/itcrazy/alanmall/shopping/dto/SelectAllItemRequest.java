@@ -4,8 +4,10 @@ import com.itcrazy.alanmall.common.exception.ValidateException;
 import com.itcrazy.alanmall.common.result.AbstractRequest;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.lang3.StringUtils;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class SelectAllItemRequest extends AbstractRequest {
     private Long userId;

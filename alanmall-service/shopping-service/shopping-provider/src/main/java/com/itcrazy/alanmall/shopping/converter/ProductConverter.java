@@ -1,7 +1,9 @@
 package com.itcrazy.alanmall.shopping.converter;
 
 import com.itcrazy.alanmall.shopping.dal.entitys.Item;
-import com.itcrazy.alanmall.shopping.dto.*;
+import com.itcrazy.alanmall.shopping.dto.AllProductRequest;
+import com.itcrazy.alanmall.shopping.dto.ProductDetailDto;
+import com.itcrazy.alanmall.shopping.dto.ProductDto;
 import com.itcrazy.alanmall.shopping.dto.sqldto.PageInfoDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

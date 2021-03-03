@@ -4,7 +4,6 @@ import com.itcrazy.alanmall.common.exception.ValidateException;
 import com.itcrazy.alanmall.common.result.AbstractRequest;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 
 @Data
 public class CartListByIdRequest extends AbstractRequest {

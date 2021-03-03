@@ -1,8 +1,6 @@
 package com.itcrazy.alanmall.shopping.service;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.itcrazy.alanmall.common.redis.config.RedissonConfig;
@@ -10,7 +8,10 @@ import com.itcrazy.alanmall.shopping.constant.GlobalShopConstants;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
 import com.itcrazy.alanmall.shopping.converter.ContentConverter;
 import com.itcrazy.alanmall.shopping.converter.ProductConverter;
-import com.itcrazy.alanmall.shopping.dal.entitys.*;
+import com.itcrazy.alanmall.shopping.dal.entitys.Item;
+import com.itcrazy.alanmall.shopping.dal.entitys.ItemDesc;
+import com.itcrazy.alanmall.shopping.dal.entitys.Panel;
+import com.itcrazy.alanmall.shopping.dal.entitys.PanelContentItem;
 import com.itcrazy.alanmall.shopping.dal.persistence.ItemDescMapper;
 import com.itcrazy.alanmall.shopping.dal.persistence.ItemMapper;
 import com.itcrazy.alanmall.shopping.dal.persistence.PanelContentMapper;
@@ -20,11 +21,9 @@ import com.itcrazy.alanmall.shopping.dto.sqldto.PageInfoDto;
 import com.itcrazy.alanmall.shopping.manager.IProductService;
 import com.itcrazy.alanmall.shopping.utils.ExceptionProcessorUtils;
 import com.itcrazy.alanmall.shopping.utils.ShopGeneratorUtils;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.apache.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;

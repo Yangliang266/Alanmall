@@ -4,7 +4,9 @@ import com.itcrazy.alanmall.common.exception.ValidateException;
 import com.itcrazy.alanmall.common.result.AbstractRequest;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class DeleteCheckedItemRequest extends AbstractRequest {
 
