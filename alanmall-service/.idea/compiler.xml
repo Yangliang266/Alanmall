@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="search-api" />
+        <module name="order-provider" />
+        <module name="user-api" />
+        <module name="search-provider" />
+        <module name="user-sdk" />
+        <module name="pay-provider" />
+        <module name="shopping-apis" />
+        <module name="user-provider" />
+        <module name="pay-api" />
+        <module name="order-api" />
+        <module name="shopping-provider" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

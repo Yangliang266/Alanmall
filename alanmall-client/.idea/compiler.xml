@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="alanmall-pay" />
+        <module name="rabbit-product" />
+        <module name="alanmall-user" />
+        <module name="alanmall-test" />
+        <module name="rabbit-consume" />
+        <module name="design-mode" />
+        <module name="simpleTest" />
+        <module name="alanmall-shopping" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>
