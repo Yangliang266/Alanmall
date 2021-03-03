@@ -18,7 +18,6 @@
     <module>alanmall-shopping</module>
     <module>alanmall-pay</module>
     <module>alanmall-test</module>
-    <module>alanmall-leadTest</module>
   </modules>
 
   <properties>
