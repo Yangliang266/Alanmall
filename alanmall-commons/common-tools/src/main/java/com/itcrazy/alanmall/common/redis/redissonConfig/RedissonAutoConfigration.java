@@ -31,7 +31,7 @@ public class RedissonAutoConfigration {
 //    @ConditionalOnClass({Redisson.class})
     public RedissonClient redissonClient() {
         Config config = new Config();
-        String node = reddissonProperties.getAddress();
+        String node = reddissonProperties.getHost();
         String[] strNode = node.split(",");
 
         if (strNode.length > 1) {

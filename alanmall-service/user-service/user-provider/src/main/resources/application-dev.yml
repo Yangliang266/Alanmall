@@ -6,17 +6,15 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       max-lifetime: 500000
-  redisson:
-    address:
-      aliyun.alan.com:6379
+  redis:
+    host:
+      aliyun.alan.com
 #      192.168.1.101:7291,
 #      192.168.1.101:7292,
 #      192.168.1.105:7293,
 #      192.168.1.105:7294,
 #      192.168.1.106:7295,
 #      192.168.1.106:7296
-    timeout: 3000
-    data-base: 0
 
 #  jedis:
 ##    address: aliyun.alan.com

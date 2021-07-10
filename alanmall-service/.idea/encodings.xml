@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/merchant-service/merchant-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/merchant-service/merchant-provider/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/merchant-service/merchant-provider/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mscard-service/card-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mscard-service/card-provider/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mscard-service/card-provider/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/office-service/office-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/office-service/office-provider/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/office-service/office-provider/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-provider/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-service/order-provider/src/main/resources" charset="UTF-8" />

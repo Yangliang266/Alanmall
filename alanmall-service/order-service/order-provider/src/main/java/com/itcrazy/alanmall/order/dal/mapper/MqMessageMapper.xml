@@ -11,8 +11,8 @@
     <result column="exchange" jdbcType="VARCHAR" property="exchange" />
     <result column="queue" jdbcType="VARCHAR" property="queue" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="created" jdbcType="DATE" property="created" />
+    <result column="updated" jdbcType="DATE" property="updated" />
   </resultMap>
 
   <select id="selectMqStatusByMsgId" parameterType="java.lang.Long" resultMap="BaseResultMap">

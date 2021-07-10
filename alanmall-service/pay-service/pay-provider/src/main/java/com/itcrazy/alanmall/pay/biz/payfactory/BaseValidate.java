@@ -1,7 +1,6 @@
 package com.itcrazy.alanmall.pay.biz.payfactory;
 
 import com.itcrazy.alanmall.common.result.AbstractRequest;
-import com.itcrazy.alanmall.pay.util.ParamValidatorUtils;
 
 /**
  * @Auther: mathyoung

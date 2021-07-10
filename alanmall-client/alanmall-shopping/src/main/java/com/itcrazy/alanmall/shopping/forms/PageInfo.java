@@ -15,4 +15,6 @@ public class PageInfo {
     private Integer priceLte;
 
     private Long cid;
+
+    private Integer status;
 }

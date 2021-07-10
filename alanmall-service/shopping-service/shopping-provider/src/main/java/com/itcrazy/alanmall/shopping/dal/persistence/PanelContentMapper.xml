@@ -11,8 +11,8 @@
     <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
     <result column="pic_url2" jdbcType="VARCHAR" property="picUrl2" />
     <result column="pic_url3" jdbcType="VARCHAR" property="picUrl3" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="created" jdbcType="DATE" property="created" />
+    <result column="updated" jdbcType="DATE" property="updated" />
   </resultMap>
   <resultMap id="BaseResultMapWithItem" type="com.itcrazy.alanmall.shopping.dal.entitys.PanelContentItem">
     <result column="id" jdbcType="INTEGER" property="id" />
@@ -24,8 +24,8 @@
     <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
     <result column="pic_url2" jdbcType="VARCHAR" property="picUrl2" />
     <result column="pic_url3" jdbcType="VARCHAR" property="picUrl3" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="created" jdbcType="DATE" property="created" />
+    <result column="updated" jdbcType="DATE" property="updated" />
     <result column="title" jdbcType="VARCHAR" property="productName"/>
     <result column="price" jdbcType="BIGINT" property="salePrice"/>
     <result column="sell_point" jdbcType="VARCHAR" property="subTitle"/>

@@ -19,7 +19,7 @@
     <result column="pay_success_time" jdbcType="TIMESTAMP" property="paySuccessTime" />
     <result column="complete_time" jdbcType="TIMESTAMP" property="completeTime" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
   </resultMap>
 </mapper>

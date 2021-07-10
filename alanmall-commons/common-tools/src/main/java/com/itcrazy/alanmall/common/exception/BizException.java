@@ -1,13 +1,11 @@
 package com.itcrazy.alanmall.common.exception;
 
 /**
- * 腾讯课堂搜索【咕泡学院】
- * 官网：www.gupaoedu.com
- * 风骚的Mic 老师
- * create-date: 2019/7/22-14:58
  * 业务层异常类
  */
 public class BizException extends BaseBusinessException {
+
+    private static final long serialVersionUID = -8822375444656350515L;
 
     public BizException() {
         super();

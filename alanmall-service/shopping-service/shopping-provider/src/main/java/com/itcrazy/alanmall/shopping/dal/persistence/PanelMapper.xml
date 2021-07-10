@@ -10,8 +10,8 @@
     <result column="limit_num" jdbcType="INTEGER" property="limitNum" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="created" jdbcType="DATE" property="created" />
+    <result column="updated" jdbcType="DATE" property="updated" />
     <result column="product_id" jdbcType="INTEGER" property="productId" />
   </resultMap>
   <sql id="Base_Column_List">

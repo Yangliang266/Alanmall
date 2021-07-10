@@ -1,5 +1,6 @@
 package com.itcrazy.alanmall.user.service;
 
+import com.itcrazy.alanmall.common.exception.AbstractExceptionTemplate;
 import com.itcrazy.alanmall.user.manager.IMemberService;
 import com.itcrazy.alanmall.user.constants.SysRetCodeConstants;
 import com.itcrazy.alanmall.user.converter.MemberConverter;
@@ -12,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Slf4j
 @DubboService

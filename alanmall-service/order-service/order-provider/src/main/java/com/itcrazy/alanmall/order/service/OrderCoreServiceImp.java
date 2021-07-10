@@ -37,6 +37,7 @@ public class OrderCoreServiceImp implements IOrderService {
     OrderMapper orderMapper;
 
     @Override
+    // 模板方法/责任链/工厂方法
     public CreateOrderResponse createOrder(CreateOrderRequest request) {
         CreateOrderResponse response = new CreateOrderResponse();
         try {

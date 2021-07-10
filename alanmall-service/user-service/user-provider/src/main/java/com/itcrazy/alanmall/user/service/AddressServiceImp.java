@@ -1,8 +1,8 @@
 package com.itcrazy.alanmall.user.service;
 
 import com.alibaba.fastjson.JSON;
-import com.itcrazy.alanmall.common.cache.CachePrefixFactory;
 import com.itcrazy.alanmall.common.redis.config.RedissonConfig;
+import com.itcrazy.alanmall.user.constants.GlobalUserConstants;
 import com.itcrazy.alanmall.user.manager.IAddressService;
 import com.itcrazy.alanmall.user.constants.SysRetCodeConstants;
 import com.itcrazy.alanmall.user.converter.AddressConverter;
@@ -34,8 +34,8 @@ public class AddressServiceImp implements IAddressService {
     public GetAddressResponse getAddressDetails(GetAddressRequest request) {
         log.info("Begin: IaddressService.getAddressDetails.request: " + request);
         request.requestCheck();
-        String key = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.USER_INFO);
-        String field = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.ADDRESS_CACHE_KEY);
+        String key = GlobalUserConstants.generatorKey(request.getUserId(), GlobalUserConstants.USER_INFO);
+        String field = GlobalUserConstants.generatorKey(request.getUserId(), GlobalUserConstants.ADDRESS_CACHE_KEY);
         GetAddressResponse response = new GetAddressResponse();
         response.setCode(SysRetCodeConstants.SUCCESS.getCode());
         response.setMsg(SysRetCodeConstants.SUCCESS.getMessage());
@@ -71,8 +71,8 @@ public class AddressServiceImp implements IAddressService {
     public DeleteAddressResponse deleteAddress(DeleteAddressRequest request) {
         log.info("Begin: IaddressService.deleteAddress.request: " + request);
         request.requestCheck();
-        String key = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.USER_INFO);
-        String field = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.ADDRESS_CACHE_KEY);
+        String key = GlobalUserConstants.generatorKey(request.getUserId(), GlobalUserConstants.USER_INFO);
+        String field = GlobalUserConstants.generatorKey(request.getUserId(), GlobalUserConstants.ADDRESS_CACHE_KEY);
         DeleteAddressResponse response = new DeleteAddressResponse();
         try {
             redissonClient.removeMapCache(key, field);
@@ -100,8 +100,8 @@ public class AddressServiceImp implements IAddressService {
         log.info("Begin: IaddressService.addAddress.request: " + request);
         request.requestCheck();
         AddressAddResponse response = new AddressAddResponse();
-        String key = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.USER_INFO);
-        String field = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.ADDRESS_CACHE_KEY);
+        String key = GlobalUserConstants.generatorKey(request.getUserId(), GlobalUserConstants.USER_INFO);
+        String field = GlobalUserConstants.generatorKey(request.getUserId(), GlobalUserConstants.ADDRESS_CACHE_KEY);
 
         try {
             // 延时双删
@@ -130,8 +130,8 @@ public class AddressServiceImp implements IAddressService {
         log.info("Begin :IaddressService.updateAddress.request: " + request);
         request.requestCheck();
         AddressUpdateResponse response = new AddressUpdateResponse();
-        String key = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.USER_INFO);
-        String field = CachePrefixFactory.generatorKey(request.getUserId(), CachePrefixFactory.ADDRESS_CACHE_KEY);
+        String key = GlobalUserConstants.generatorKey(request.getUserId(), GlobalUserConstants.USER_INFO);
+        String field = GlobalUserConstants.generatorKey(request.getUserId(), GlobalUserConstants.ADDRESS_CACHE_KEY);
         try {
             // 延时双删
             redissonClient.removeMapCache(key, field);

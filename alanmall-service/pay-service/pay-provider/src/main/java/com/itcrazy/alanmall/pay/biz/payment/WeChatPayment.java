@@ -197,7 +197,7 @@ public class WeChatPayment extends BasePayment {
             map.forEach(sortedMap::put);
 
             // 由于支付结果中signtype为空, wxPay使用的加密算法为MD5与支付前的算法HMACSHA256不一致，不推荐使用
-            // wxPay.isPayResultNotifySignatureValid(sortedMap);
+             wxPay.isPayResultNotifySignatureValid(sortedMap);
 
             // 由于支付结果中signtype为空, wxPay使用的加密算法与支付前的算法一致，推荐使用
             if (wxPay.isResponseSignatureValid(sortedMap)) {

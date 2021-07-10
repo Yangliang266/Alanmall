@@ -1,6 +1,8 @@
-package com.itcrazy.alanmall.shopping.constant;
+package com.itcrazy.alanmall.shopping.constants;
 
-public class GlobalShopConstants {
+import com.itcrazy.alanmall.common.cache.AbstractCacheConstants;
+
+public class GlobalShopConstants extends AbstractCacheConstants {
 
     public final static String HEADER_PANEL_CACHE_KEY="header_panel"; //导航栏板块缓存
 

@@ -2,7 +2,7 @@ package com.itcrazy.alanmall.shopping.service;
 
 import com.alibaba.fastjson.JSON;
 import com.itcrazy.alanmall.common.redis.config.RedissonConfig;
-import com.itcrazy.alanmall.shopping.constant.GlobalShopConstants;
+import com.itcrazy.alanmall.shopping.constants.GlobalShopConstants;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
 import com.itcrazy.alanmall.shopping.converter.ContentConverter;
 import com.itcrazy.alanmall.shopping.dal.entitys.PanelContent;
@@ -32,6 +32,7 @@ public class ContentServiceImp implements IContentService {
     ContentConverter contentConverter;
 
     @Override
+//    @Cacheable(cacheNames = GlobalShopConstants.HEADER_PANEL_CACHE_KEY)
     public NavListResponse queryNavList() {
         log.info("Begin: ContentServiceImp.queryNavList");
         NavListResponse response = new NavListResponse();
@@ -52,7 +53,9 @@ public class ContentServiceImp implements IContentService {
             example.createCriteria().andEqualTo("panelId", GlobalShopConstants.HEADER_PANEL_ID);
             List<PanelContent> panelContentList = panelContentMapper.selectByExample(example);
             List<PanelContentDto> panelContentDtoList = contentConverter.panelContents2Dto(panelContentList);
+            //-----------------------  统一使用 spring cache 注解 --------------------
             redissonConfig.setCache(GlobalShopConstants.HEADER_PANEL_CACHE_KEY, JSON.toJSON(panelContentDtoList).toString());
+            //-----------------------  统一使用 spring cache 注解 --------------------
             response.setPannelContentDtos(panelContentDtoList);
 
         } catch (Exception e) {

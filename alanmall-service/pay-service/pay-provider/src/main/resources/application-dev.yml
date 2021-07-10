@@ -9,11 +9,10 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
-  redisson:
-    address:
-      aliyun.alan.com:6379
+  redis:
     timeout: 3000
     data-base: 0
+    host: aliyun.alan.com
 
 dubbo:
   application:

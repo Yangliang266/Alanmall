@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.itcrazy.alanmall.common.redis.config.RedissonConfig;
-import com.itcrazy.alanmall.shopping.constant.GlobalShopConstants;
+import com.itcrazy.alanmall.shopping.constants.GlobalShopConstants;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
 import com.itcrazy.alanmall.shopping.converter.ContentConverter;
 import com.itcrazy.alanmall.shopping.converter.ProductConverter;
@@ -57,6 +57,7 @@ public class ProductServiceImp implements IProductService {
     ContentConverter contentConverter;
 
     @Override
+//    @Cacheable(cacheNames = GlobalShopConstants.CART_ITEM_CACHE_PREFIX, key = "#request.getId().toString()")
     public ProductDetailResponse getProductDetail(ProductDetailRequest request) {
         log.info("Begin: ProductServiceImp.getProductDetail.request: " + request);
         request.requestCheck();
@@ -95,13 +96,14 @@ public class ProductServiceImp implements IProductService {
                 // 小图片作为用户选择 放到容器供选择
                 productDetailDto.setProductImageSmall(Arrays.asList(images));
             }
-
             response.setProductDetailDto(productDetailDto);
 
             // 存储到redis
-            redissonConfig.setCache(
+            //-----------------------  统一使用 spring cache 注解 --------------------
+           redissonConfig.setCache(
                     ShopGeneratorUtils.getInstance().generatorCartItemKey(request.getId()), JSON.toJSON(productDetailDto).toString()).
                     expire(GlobalShopConstants.PRODUCT_ITEM_EXPIRE_TIME,TimeUnit.DAYS);
+            //-----------------------  统一使用 spring cache 注解 --------------------
 
         } catch (Exception e) {
             log.error("Error: ProductServiceImpl.getProductDetail.Exception :"+e);
@@ -149,6 +151,7 @@ public class ProductServiceImp implements IProductService {
     }
 
     @Override
+//    @Cacheable(cacheNames = GlobalShopConstants.RECOMMEND_PANEL_CACHE_KEY)
     public RecommendResponse recommend() {
         log.info("Begin: ProductServiceImp.recommend");
         RecommendResponse response = new RecommendResponse();
@@ -176,8 +179,12 @@ public class ProductServiceImp implements IProductService {
                 panelsets.add(panelDto);
                 break;
             }
+
+            //-----------------------  统一使用 spring cache 注解 --------------------
             redissonConfig.setCache(GlobalShopConstants.RECOMMEND_PANEL_CACHE_KEY, JSON.toJSON(panelsets).toString()).
                     expire(GlobalShopConstants.RECOMMEND_CACHE_EXPIRE, TimeUnit.DAYS);
+            //-----------------------  统一使用 spring cache 注解 --------------------
+
             response.setPanelDtos(panelsets);
 
         } catch (Exception e) {

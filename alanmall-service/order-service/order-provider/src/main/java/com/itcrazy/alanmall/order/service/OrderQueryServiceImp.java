@@ -2,7 +2,7 @@ package com.itcrazy.alanmall.order.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.itcrazy.alanmall.order.constant.OrderConstants;
+import com.itcrazy.alanmall.order.constant.GlobalOrderConstants;
 import com.itcrazy.alanmall.order.constant.OrderRetCode;
 import com.itcrazy.alanmall.order.conveter.QueryOrderDetailConverter;
 import com.itcrazy.alanmall.order.dal.entity.Order;
@@ -14,16 +14,13 @@ import com.itcrazy.alanmall.order.dal.mapper.OrderShippingMapper;
 import com.itcrazy.alanmall.order.dto.*;
 import com.itcrazy.alanmall.order.manager.IOrderQueryService;
 import com.itcrazy.alanmall.order.utils.ExceptionProcessorUtils;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.common.utils.CollectionUtils;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -81,8 +78,16 @@ public class OrderQueryServiceImp implements IOrderQueryService {
             log.info("Begin: OrderQueryServiceImp.getOrderList");
             PageHelper.startPage(request.getPage(),request.getSize());
             Example example = new Example(Order.class);
-            example.createCriteria()
-                    .andEqualTo("userId", Integer.valueOf(request.getUserId().toString()));
+
+            // 根据订单状态查询不同的订单列表  总订单表（不需状态） - 未付款 0 - 待收货 > 0 - 已收货 4
+            if (null != request.getStatus()) {
+                example.createCriteria()
+                        .andEqualTo("userId", Integer.valueOf(request.getUserId().toString()))
+                        .andEqualTo("status", request.getStatus());
+            } else {
+                example.createCriteria()
+                        .andEqualTo("userId", Integer.valueOf(request.getUserId().toString()));
+            }
             example.setOrderByClause("create_time desc");
             List<Order> orderList = orderMapper.selectByExample(example);
 
@@ -153,19 +158,19 @@ public class OrderQueryServiceImp implements IOrderQueryService {
 
             orderList.forEach( detail -> {
                 switch(detail.getStatus()) {
-                    case OrderConstants.ORDER_STATUS_INIT:
+                    case GlobalOrderConstants.ORDER_STATUS_INIT:
                         statusResponse.setInitNum(statusResponse.getInitNum() + 1);
                         break;
-                    case OrderConstants.ORDER_STATUS_PAYED:
+                    case GlobalOrderConstants.ORDER_STATUS_PAYED:
                         statusResponse.setPayNum(statusResponse.getPayNum() + 1);
                         break;
-                    case OrderConstants.ORDER_STATUS_UNPUSH:
+                    case GlobalOrderConstants.ORDER_STATUS_UNPUSH:
                         statusResponse.setUnPushNum(statusResponse.getUnPushNum() + 1);
                         break;
-                    case OrderConstants.ORDER_STATUS_PUSH:
+                    case GlobalOrderConstants.ORDER_STATUS_PUSH:
                         statusResponse.setPushNum(statusResponse.getPushNum() + 1);
                         break;
-                    case OrderConstants.ORDER_STATUS_TRANSACTION_SUCCESS:
+                    case GlobalOrderConstants.ORDER_STATUS_TRANSACTION_SUCCESS:
                         statusResponse.setSuccessNum(statusResponse.getSuccessNum() + 1);
                         break;
                     default:

@@ -23,45 +23,93 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5889d0bd-33c4-40ea-b518-4e40bdb27f97" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/AESUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/Signature.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/constants/PayChannelEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/constants/PayReturnCodeEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/constants/PaymentConstants.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/constants/RefundCodeEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/dto/PaymentRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/dto/PaymentResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/manager/IEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-api/src/main/java/com/itcrazy/alanmall/pay/manager/PayCoreService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payconfig/WeChatPayConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payconfig/WeChatSignConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/paycontext/AliPayContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/paycontext/Context.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/paycontext/WeChatPayContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payfactory/BasePayment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payfactory/BaseValidate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payfactory/PayValidate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payfactory/Payment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payment/AliPayment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payment/WeChatPayment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payvalidate/AliPayValidate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/biz/payvalidate/WechatValidate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/service/PayCoreServiceImp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/java/com/itcrazy/alanmall/pay/util/ParamValidatorUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/resources/apiclient_cert.p12" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-core/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-core/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/BASE64Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/BASE64Util.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/IPUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/IPUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/MD5Util.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-commons/common-core/src/main/java/com/itcrazy/alanmall/common/client/util/MD5Util.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-client/.idea/deployment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-client/.idea/sshConfigs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-client/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-client/.idea/webServers.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-user/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-service/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/deployment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__com_alibaba_fastjson_1_2_56.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__com_alibaba_spring_spring_context_support_1_0_8.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__com_google_code_findbugs_jsr305_3_0_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__com_google_code_gson_gson_2_8_6.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__com_google_errorprone_error_prone_annotations_2_2_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__com_google_guava_failureaccess_1_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__com_google_guava_guava_27_0_1_jre.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__com_google_j2objc_j2objc_annotations_1_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__com_itcrazy_alanmall_tomcat_tomcat_api_1_0_SNAPSHOT.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__io_netty_netty_all_4_1_54_Final.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__jline_jline_0_9_94.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__log4j_log4j_1_2_16.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__org_apache_curator_curator_client_4_2_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__org_apache_curator_curator_framework_4_2_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__org_apache_curator_curator_recipes_4_2_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__org_apache_dubbo_dubbo_2_7_8.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__org_apache_dubbo_dubbo_spring_boot_autoconfigure_2_7_8.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__org_apache_dubbo_dubbo_spring_boot_autoconfigure_compatible_2_7_8.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__org_apache_dubbo_dubbo_spring_boot_starter_2_7_8.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__org_apache_yetus_audience_annotations_0_5_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__org_apache_zookeeper_zookeeper_3_4_13.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__org_checkerframework_checker_qual_2_5_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__org_codehaus_mojo_animal_sniffer_annotations_1_17.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__org_javassist_javassist_3_20_0_GA.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/libraries/Maven__org_slf4j_slf4j_log4j12_1_7_25.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/sshConfigs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/.idea/webServers.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/alanmall-tomcat.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/src/main/java/com/itcrazy/alanmall/tomcat/AlanmallTomcatApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/src/main/java/com/itcrazy/alanmall/tomcat/ServletInitializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/src/main/java/com/itcrazy/alanmall/tomcat/controller/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/src/main/java/com/itcrazy/alanmall/tomcat/controller/TomcatController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/src/main/resources/application-dev.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../alanmall-tomcat/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo/src/main/java/com/example/demo/controller/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../demo/web/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/tomcat-api/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/tomcat-api/src/main/java/com/itcrazy/alanmall/tomcat/manager/TomcatTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/tomcat-provider/src/main/java/com/itcrazy/alanmall/tomcat/controller/Test.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/tomcat-provider/src/main/java/com/itcrazy/alanmall/tomcat/controller/TestA.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/tomcat-provider/src/main/java/com/itcrazy/alanmall/tomcat/dal/entitys/Tomcat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/tomcat-provider/src/main/java/com/itcrazy/alanmall/tomcat/dal/persistence/TomcatMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/tomcat-provider/src/main/java/com/itcrazy/alanmall/tomcat/dal/persistence/TomcatMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/tomcat-provider/src/main/java/com/itcrazy/alanmall/tomcat/service/TomcatServiceImp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/tomcat-provider/src/main/java/com/itcrazy/alanmall/tomcat/starter/TomcatProviderApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/tomcat-provider/src/main/resources/application-dev.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/tomcat-provider/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../tomcat-service/tomcat-provider/src/main/resources/generator-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-pay/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-pay/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-pay/src/main/java/com/itcrazy/alanmall/pay/controller/PayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-pay/src/main/java/com/itcrazy/alanmall/pay/controller/PayController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-pay/src/main/java/com/itcrazy/alanmall/pay/starter/AlanmallPayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-pay/src/main/java/com/itcrazy/alanmall/pay/starter/AlanmallPayApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-pay/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-pay/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-pay/src/test/java/com/itcrazy/alanmall/pay/AlanmallPayApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-pay/src/test/java/com/itcrazy/alanmall/pay/AlanmallPayApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/controller/AddressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/controller/AddressController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/controller/CartController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/controller/CartController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/controller/OrderController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/forms/PageInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/forms/PageInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/starter/AlanmallShoppingApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/src/main/java/com/itcrazy/alanmall/shopping/starter/AlanmallShoppingApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-shopping/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-user/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-user/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-user/src/main/java/com/itcrazy/alanmall/user/controller/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-user/src/main/java/com/itcrazy/alanmall/user/controller/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-user/src/main/java/com/itcrazy/alanmall/user/starter/AlanmallUserApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-user/src/main/java/com/itcrazy/alanmall/user/starter/AlanmallUserApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-client/alanmall-user/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-client/alanmall-user/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-front/config/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-front/config/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../order-service/order-provider/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../order-service/order-provider/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pay-service/pay-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pay-service/pay-api/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pay-service/pay-provider/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../pay-service/pay-provider/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pay-service/pay-provider/src/test/java/com/itcrazy/alanmall/pay/PayProviderApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../pay-service/pay-provider/src/test/java/com/itcrazy/alanmall/pay/PayProviderApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../user-service/user-sdk/src/main/java/com/itcrazy/alanmall/user/intercepter/TokenIntercepter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../user-service/user-sdk/src/main/java/com/itcrazy/alanmall/user/intercepter/TokenIntercepter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-service/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-service/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-service/order-service/order-api/src/main/java/com/itcrazy/alanmall/order/dto/OrderListRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-service/order-service/order-api/src/main/java/com/itcrazy/alanmall/order/dto/OrderListRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-service/order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/service/OrderQueryServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-service/order-service/order-provider/src/main/java/com/itcrazy/alanmall/order/service/OrderQueryServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../alanmall-service/user-service/user-provider/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../alanmall-service/user-service/user-provider/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,6 +203,7 @@
       <workItem from="1613743178234" duration="75000" />
       <workItem from="1613870648467" duration="3453000" />
       <workItem from="1613902102616" duration="1177000" />
+      <workItem from="1615372808983" duration="607000" />
     </task>
     <servers />
   </component>

@@ -8,17 +8,35 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="search-api" />
+        <module name="card-provider" />
+        <module name="shopping-apis" />
+        <module name="pay-api" />
+        <module name="merchant-provider" />
+        <module name="office-provider" />
+        <module name="order-api" />
+        <module name="card-api" />
         <module name="order-provider" />
         <module name="user-api" />
         <module name="search-provider" />
         <module name="user-sdk" />
         <module name="pay-provider" />
-        <module name="shopping-apis" />
+        <module name="tomcat-provider" />
+        <module name="merchant-api" />
         <module name="user-provider" />
-        <module name="pay-api" />
-        <module name="order-api" />
         <module name="shopping-provider" />
+        <module name="office-api" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="tomcat-api" target="1.7" />
+      <module name="tomcat-provider" target="1.8" />
+      <module name="tomcat-service" target="1.7" />
+      <module name="tomcats-service" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="tomcat-provider" options="-parameters" />
+    </option>
   </component>
 </project>

@@ -17,7 +17,7 @@ module.exports = {
       //   // pathRewrite: {
       //   //   '^/test': '/'
       //   // }
-      // },
+      // },   
       // '/api/**': {
       //   target: 'http://localhost:8091',
       //   changeOrigin: true
@@ -26,15 +26,15 @@ module.exports = {
       //   // }
       // },
       '/user/**': {
-        target: 'http://localhost:8095',
+        target: 'http://aliyun.alan.com:8086',
         changeOrigin: true
       },
       '/shopping/**': {
-        target: 'http://localhost:8096',
+        target: 'http://aliyun.alan.com:8087',
         changeOrigin: true
       },
       '/cashier/**': {
-        target: 'http://localhost:8097',
+        target: 'http://aliyun.alan.com:8088',
         changeOrigin: true
       }
     },

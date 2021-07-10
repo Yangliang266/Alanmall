@@ -10,9 +10,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @date 2020/7/8 20:37
  */
 @Data
-@ConfigurationProperties(prefix = "spring.redisson",ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "spring.redis",ignoreUnknownFields = false)
 public class ReddissonProperties {
-    private String address;
+    private String host;
 
     private String password;
 

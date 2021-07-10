@@ -1,6 +1,6 @@
 package com.itcrazy.alanmall.shopping.utils;
 
-import com.itcrazy.alanmall.shopping.constant.GlobalShopConstants;
+import com.itcrazy.alanmall.shopping.constants.GlobalShopConstants;
 
 public class ShopGeneratorUtils {
     public String generatorCartItemKey(Long userId) {

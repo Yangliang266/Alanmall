@@ -4,14 +4,16 @@ import com.itcrazy.alanmall.common.exception.ValidateException;
 import com.itcrazy.alanmall.common.result.AbstractRequest;
 import com.itcrazy.alanmall.order.constant.OrderRetCode;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class OrderListRequest extends AbstractRequest {
-
     private Long userId;
     private Integer page;
     private Integer size;
     private String sort;
+    private Integer status;
 
     @Override
     public void requestCheck() {

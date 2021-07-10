@@ -1,5 +1,6 @@
 package com.itcrazy.alanmall.user.service;
 
+import com.itcrazy.alanmall.common.exception.AbstractExceptionTemplate;
 import com.itcrazy.alanmall.common.redis.config.RedissonConfig;
 import com.itcrazy.alanmall.user.manager.IKaptchaService;
 import com.itcrazy.alanmall.user.constants.SysRetCodeConstants;

@@ -11,12 +11,9 @@ import com.itcrazy.alanmall.user.intercepter.TokenIntercepter;
 import com.itcrazy.alanmall.user.manager.IAddressService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/shopping")

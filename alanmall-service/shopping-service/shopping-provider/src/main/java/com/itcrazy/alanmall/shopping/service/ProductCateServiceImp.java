@@ -2,7 +2,7 @@ package com.itcrazy.alanmall.shopping.service;
 
 import com.alibaba.fastjson.JSON;
 import com.itcrazy.alanmall.common.redis.config.RedissonConfig;
-import com.itcrazy.alanmall.shopping.constant.GlobalShopConstants;
+import com.itcrazy.alanmall.shopping.constants.GlobalShopConstants;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
 import com.itcrazy.alanmall.shopping.converter.ProduCateConverter;
 import com.itcrazy.alanmall.shopping.dal.entitys.ItemCat;
@@ -34,6 +34,7 @@ public class ProductCateServiceImp implements IProductCateService {
     ProduCateConverter produCateConverter;
 
     @Override
+//    @Cacheable(cacheNames = GlobalShopConstants.PRODUCT_CATE_CACHE_KEY)
     public AllProductCateResponse getProductCate(AllProductCateRequest request) {
         log.info("Begin: ProductCateServiceImp.getPriductCate.request: " + request);
         AllProductCateResponse response = new AllProductCateResponse();
@@ -61,12 +62,15 @@ public class ProductCateServiceImp implements IProductCateService {
             example.setOrderByClause(orderCol + " " + orderDir);
             List<ItemCat> itemCatList = itemCatMapper.selectByExample(example);
             List<ProductCateDto> productCateDtos = produCateConverter.itemCats2Dto(itemCatList);
+
+            //-----------------------  统一使用 spring cache 注解 --------------------
             redissonConfig.setCache(
                     GlobalShopConstants.PRODUCT_CATE_CACHE_KEY,
                     JSON.toJSON(productCateDtos).toString()
                     ).expire(GlobalShopConstants.PRODUCT_CATE_EXPIRE_TIME,TimeUnit.DAYS);
-            response.setProductCateDtoList(productCateDtos);
+            //-----------------------  统一使用 spring cache 注解 --------------------
 
+            response.setProductCateDtoList(productCateDtos);
         }catch (Exception e) {
             log.error("Error: ProductCateServiceImp.getPriductCate.Exception: " + e);
             ExceptionProcessorUtils.wrapperHandlerException(response, e);

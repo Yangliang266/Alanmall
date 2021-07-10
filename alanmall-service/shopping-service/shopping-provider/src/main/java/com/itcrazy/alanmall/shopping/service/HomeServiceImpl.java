@@ -1,7 +1,7 @@
 package com.itcrazy.alanmall.shopping.service;
 
 import com.alibaba.fastjson.JSON;
-import com.itcrazy.alanmall.shopping.constant.GlobalShopConstants;
+import com.itcrazy.alanmall.shopping.constants.GlobalShopConstants;
 import com.itcrazy.alanmall.shopping.constants.ShoppingRetCode;
 import com.itcrazy.alanmall.shopping.converter.ContentConverter;
 import com.itcrazy.alanmall.shopping.dal.entitys.Panel;
@@ -38,6 +38,7 @@ public class HomeServiceImpl implements IHomeService {
     PanelMapper panelMapper;
 
     @Override
+//    @Cacheable(cacheNames = GlobalShopConstants.HOMEPAGE_CACHE_KEY)
     public HomePageResponse home() {
         log.info("Begin: HomeServiceImpl.homepage");
         HomePageResponse response=new HomePageResponse();
@@ -67,7 +68,11 @@ public class HomeServiceImpl implements IHomeService {
                 panelDto.setPanelContentItems(contentConverter.panelContentItem2Dto(panelContentItems));
                 panelContentItemDtos.add(panelDto);
             });
+
+            //-----------------------  统一使用 spring cache 注解 --------------------
             cacheManager.setCache(GlobalShopConstants.HOMEPAGE_CACHE_KEY,JSON.toJSONString(panelContentItemDtos),GlobalShopConstants.HOMEPAGE_EXPIRE_TIME);
+            //-----------------------  统一使用 spring cache 注解 --------------------
+
             response.setPanelContentItemDtos(panelContentItemDtos);
         }catch (Exception e){
             log.error("Error: HomeServiceImpl.homepage.Exception :" + e);

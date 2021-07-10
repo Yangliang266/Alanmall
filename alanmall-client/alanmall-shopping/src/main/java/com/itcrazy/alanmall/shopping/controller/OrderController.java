@@ -18,14 +18,13 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 
 /**
  * @Auther: mathyoung
  * @description:
  */
-@RequestMapping("shopping")
+@RequestMapping("/shopping")
 @RestController
 @Slf4j
 public class OrderController {
@@ -93,6 +92,7 @@ public class OrderController {
         request.setPage(pageInfo.getPage());
         request.setSize(pageInfo.getSize());
         request.setSort(pageInfo.getSort());
+        request.setStatus(pageInfo.getStatus());
         String userInfo=(String)servletRequest.getAttribute(TokenIntercepter.USER_INFO_KEY);
         JSONObject object= JSON.parseObject(userInfo);
         Long uid=Long.parseLong(object.get("uid").toString());

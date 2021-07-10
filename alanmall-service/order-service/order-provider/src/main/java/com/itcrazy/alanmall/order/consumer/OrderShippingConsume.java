@@ -1,6 +1,6 @@
 package com.itcrazy.alanmall.order.consumer;
 
-import com.itcrazy.alanmall.order.constant.OrderConstants;
+import com.itcrazy.alanmall.order.constant.GlobalOrderConstants;
 import com.itcrazy.alanmall.order.dal.entity.Order;
 import com.itcrazy.alanmall.order.dal.entity.OrderItem;
 import com.itcrazy.alanmall.order.dal.entity.Stock;
@@ -11,7 +11,6 @@ import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import tk.mybatis.mapper.entity.Example;
 
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 
 /**
  * @Auther: mathyoung
- * @description: OrderShipping
+ * @description: OrderShipping 取消订单
  */
 @Component
 @RabbitListener(queues = "CANCEL_ORDER_QUEUE", containerFactory = "simpleRabbitListenerContainerFactory")
@@ -45,13 +44,13 @@ public class OrderShippingConsume {
             //先查询订单是否是待支付状态
             Order order1=orderMapper.selectByPrimaryKey(order);
             //未付款才去走逻辑
-            if(order1.getStatus()==OrderConstants.ORDER_STATUS_INIT){
+            if(order1.getStatus()== GlobalOrderConstants.ORDER_STATUS_INIT){
                 Example example = new Example(Order.class);
-                example.createCriteria().andEqualTo("status",OrderConstants.ORDER_STATUS_TRANSACTION_CANCEL);
+                example.createCriteria().andEqualTo("status", GlobalOrderConstants.ORDER_STATUS_TRANSACTION_CANCEL);
                 //将订单状态改为取消
                 orderMapper.updateByExampleSelective(order,example);
                 //将订单商品的库存状态改为释放
-                orderItemMapper.updateStockStatus(OrderConstants.ORDERITEM_STATUS_RELEASE,context);
+                orderItemMapper.updateStockStatus(GlobalOrderConstants.ORDERITEM_STATUS_RELEASE,context);
                 //将库存还回去
                 List<OrderItem> list=orderItemMapper.queryByOrderId(context);
                 List<Long> itemIds=list.stream().map(OrderItem::getItemId).sorted().collect(Collectors.toList());

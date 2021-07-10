@@ -1,11 +1,8 @@
 package com.itcrazy.alanmall.common.exception;
 /**
- * 腾讯课堂搜索【咕泡学院】
- * 官网：www.gupaoedu.com
- * 风骚的Mic 老师
- * create-date: 2019/7/22-14:56
  */
 public class ValidateException extends BaseBusinessException{
+    private static final long serialVersionUID = 7002857032695348163L;
 
     public ValidateException() {
         super();

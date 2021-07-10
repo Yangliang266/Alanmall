@@ -4,9 +4,7 @@ spring:
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
-  redisson:
-    address:
-      aliyun.alan.com:6379
+  redis:
     #      192.168.1.101:7291,
     #      192.168.1.101:7292,
     #      192.168.1.105:7293,
@@ -15,6 +13,7 @@ spring:
     #      192.168.1.106:7296
     timeout: 3000
     data-base: 0
+    host: aliyun.alan.com
   elasticsearch:
     rest:
       uris: aliyun.alan.com:9200

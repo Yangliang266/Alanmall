@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="alanmall-pay" />
+        <module name="alanmall-mscard" />
         <module name="alanmall-user" />
         <module name="alanmall-test" />
         <module name="alanmall-shopping" />

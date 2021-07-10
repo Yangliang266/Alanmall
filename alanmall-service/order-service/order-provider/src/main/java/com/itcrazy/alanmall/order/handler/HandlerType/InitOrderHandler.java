@@ -1,7 +1,7 @@
 package com.itcrazy.alanmall.order.handler.HandlerType;
 
 import com.itcrazy.alanmall.common.exception.BizException;
-import com.itcrazy.alanmall.order.constant.OrderConstants;
+import com.itcrazy.alanmall.order.constant.GlobalOrderConstants;
 import com.itcrazy.alanmall.order.constant.OrderRetCode;
 import com.itcrazy.alanmall.order.context.CreateOrderContext;
 import com.itcrazy.alanmall.order.context.TransHandlerContext;
@@ -55,7 +55,7 @@ public class InitOrderHandler extends AbstracTransHandler{
             order.setPayment(createOrderContext.getOrderTotal());
             order.setCreateTime(new Date());
             order.setUpdateTime(new Date());
-            order.setStatus(OrderConstants.ORDER_STATUS_INIT);
+            order.setStatus(GlobalOrderConstants.ORDER_STATUS_INIT);
             orderMapper.insert(order); //保存订单
             List<Long> buyProductIds=new ArrayList<>();
             createOrderContext.getCartProductDtoList().parallelStream().forEach(cartProductDto -> {

@@ -1,7 +1,9 @@
 package com.itcrazy.alanmall.order.constant;
 
 
-public class OrderConstants {
+import com.itcrazy.alanmall.common.cache.AbstractCacheConstants;
+
+public class GlobalOrderConstants extends AbstractCacheConstants {
 
     public static final int ORDER_STATUS_INIT=0; //初始化状态
     public static final int ORDER_STATUS_PAYED=1; //已支付

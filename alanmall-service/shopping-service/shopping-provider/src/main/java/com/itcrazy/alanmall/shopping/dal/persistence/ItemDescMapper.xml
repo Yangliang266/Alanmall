@@ -6,8 +6,8 @@
       WARNING - @mbg.generated
     -->
     <id column="item_id" jdbcType="BIGINT" property="itemId" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="created" jdbcType="DATE" property="created" />
+    <result column="updated" jdbcType="DATE" property="updated" />
     <result column="item_desc" jdbcType="LONGVARCHAR" property="itemDesc" />
   </resultMap>
 </mapper>

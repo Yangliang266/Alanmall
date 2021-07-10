@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("shopping")
+@RequestMapping("/shopping")
 public class CartController {
     @DubboReference(timeout = 3000)
     ICartService iCartService;

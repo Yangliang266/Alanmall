@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public interface Payment {
     /**
      * @Author mathyoung
-     * @Description: 微信交易执行
+     * @Description: 交易执行
      * @Param: [request]
      * @Return: T
      */
@@ -19,7 +19,7 @@ public interface Payment {
 
     /**
      * @Author mathyoung
-     * @Description: 微信交易结果处理
+     * @Description: 交易结果处理
      * @Param: [request]
      * @Return: T
      */

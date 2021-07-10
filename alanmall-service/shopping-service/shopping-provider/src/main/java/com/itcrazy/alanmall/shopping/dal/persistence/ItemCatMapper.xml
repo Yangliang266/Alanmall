@@ -13,7 +13,7 @@
     <result column="is_parent" jdbcType="BIT" property="isParent" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="created" jdbcType="TIMESTAMP" property="created" />
-    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+    <result column="created" jdbcType="DATE" property="created" />
+    <result column="updated" jdbcType="DATE" property="updated" />
   </resultMap>
 </mapper>

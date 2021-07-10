@@ -8,7 +8,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="uuid" jdbcType="VARCHAR" property="uuid" />
-    <result column="register_date" jdbcType="TIMESTAMP" property="registerDate" />
+    <result column="register_date" jdbcType="DATE" property="registerDate" />
     <result column="is_verify" jdbcType="VARCHAR" property="isVerify" />
     <result column="is_expire" jdbcType="VARCHAR" property="isExpire" />
   </resultMap>

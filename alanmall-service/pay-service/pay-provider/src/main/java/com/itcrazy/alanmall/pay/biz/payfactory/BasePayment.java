@@ -25,10 +25,10 @@ public abstract class BasePayment implements Payment {
         // 2 参数验证
         paramValidate().check(request);
 
-        // 3 准备工作，将上下文放入treemap
+        // 3 准备工作，将上下文放入treeMap
         beforePrepare(context);
 
-        // 4 执行
+        // 4 执行总核心
         response = generalProcess(context);
 
         // 5 执行善后
@@ -37,8 +37,10 @@ public abstract class BasePayment implements Payment {
         return (T) response;
     }
 
-//    public static Map<String, BasePayment> paymentMap = new ConcurrentHashMap<String, BasePayment>();
-
+    /**
+     * 策略模式 -> 通过hashmap简化 -> 运行遍历所有模式
+     * 初始化 支付宝支付 / 微信支付 放入容器 -> 运行通过客户端选择 -> Basement确定具体执行策略
+     */
     @PostConstruct
     public void init() {
         BasePayment.getInstance().put(getPayChannel(), this);
@@ -48,6 +50,10 @@ public abstract class BasePayment implements Payment {
         private static final Map<String, BasePayment> instance = new HashMap<>();
     }
 
+    /**
+     * 单例实现支付接口
+     * @return
+     */
     public static Map<String, BasePayment> getInstance() {
         return SingletonPay.instance;
     }

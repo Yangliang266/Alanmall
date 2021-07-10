@@ -1,18 +1,15 @@
 package com.itcrazy.alanmall.common.exception;
 
 /**
- * 腾讯课堂搜索【咕泡学院】
- * 官网：www.gupaoedu.com
- * 风骚的Mic 老师
- * create-date: 2019/7/22-14:56
  */
 public class BaseBusinessException extends RuntimeException{
+    private static final long serialVersionUID = 6511828206356895708L;
 
-    protected String          errorCode;
+    protected String errorCode;
 
-    protected String          message;
+    protected String message;
 
-    protected String        extFields;
+    protected String extFields;
 
     public BaseBusinessException() {
         super();
