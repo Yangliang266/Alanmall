@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="40a334b3-d55f-4534-9ad5-b4348a2df29a" name="tomcat_8886" url="http://139.196.44.115">
+        <fileTransfer rootFolder="/usr/local/promn/web/tomcat_8886/webapps" accessType="SFTP" host="192.168.89.138" port="22" sshConfigId="56832512-9c81-4092-a0e4-898b4c4689d4" sshConfig="root@192.168.89.138:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="36833e4f-6a41-4513-a5b6-58a625e60d50" name="tomcat_8887" url="http://139.196..44.115">
+        <fileTransfer rootFolder="/usr/local/promn/web/tomcat_8887/webapps" accessType="SFTP" host="192.168.89.138" port="22" sshConfigId="56832512-9c81-4092-a0e4-898b4c4689d4" sshConfig="root@192.168.89.138:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="dd944441-3deb-41a5-a726-0b8c2673c926" name="tomcat_8888" url="http://139.196.44.115">
+        <fileTransfer rootFolder="/usr/local/promn/web/tomcat_8888/webapps" accessType="SFTP" host="192.168.89.138" port="22" sshConfigId="56832512-9c81-4092-a0e4-898b4c4689d4" sshConfig="root@192.168.89.138:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="d33496f7-bf69-4155-9796-932eabfd28f1" name="tomcat_8880" url="http://192.168.89.138">
+        <fileTransfer rootFolder="/usr/local/web/tomcat_8880/webapps" accessType="SFTP" host="192.168.89.138" port="22" sshConfigId="56832512-9c81-4092-a0e4-898b4c4689d4" sshConfig="root@192.168.89.138:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

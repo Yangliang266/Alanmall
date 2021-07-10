@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="192.168.89.138" id="bdd3bbe2-db3b-41f3-82bf-c2f48bb9a641" port="22" nameFormat="DESCRIPTIVE" username="root" />
+      <sshConfig authType="PASSWORD" host="139.196.44.115" id="65408b1c-38d8-49f7-a671-46e7ee18e678" port="22" nameFormat="DESCRIPTIVE" username="root" />
+      <sshConfig authType="PASSWORD" id="04f323d0-71c9-435c-8b89-d0f9aac6c231" port="22" customName="tomcat_8880" nameFormat="CUSTOM">
+        <option name="customName" value="tomcat_8880" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>
